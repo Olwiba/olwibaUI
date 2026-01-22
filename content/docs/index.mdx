@@ -1,0 +1,58 @@
+---
+title: Get Started
+description: Higher-level UI components and hooks built on @olwiba/cn primitives.
+---
+
+## What is olwibaUI?
+
+`@olwiba/ui` provides app-level components and hooks that extend the primitives from `@olwiba/cn` into reusable patterns for building applications.
+
+## Package Chain
+
+This package sits at the top of the olwiba component chain:
+
+1. **@olwiba/cn** — Base primitives (Button, Card, Dialog, etc.)
+2. **@olwiba/docs** — Documentation components (DocsSidebar, SearchDialog, etc.)
+3. **@olwiba/ui** — App-level components (Spinner, FullPageSpinner, hooks)
+
+## Installation
+
+```bash
+# Configure Verdaccio in bunfig.toml first
+bun add @olwiba/ui @olwiba/cn
+```
+
+Your `bunfig.toml`:
+
+```toml
+[install.scopes]
+"@olwiba" = { url = "https://npm.olwiba.com/", token = "..." }
+```
+
+## Quick Start
+
+```tsx
+import { Spinner, useMounted } from "@olwiba/ui";
+import { Button } from "@olwiba/cn";
+
+function MyComponent() {
+  const mounted = useMounted();
+
+  if (!mounted) {
+    return <Spinner />;
+  }
+
+  return <Button>Ready!</Button>;
+}
+```
+
+## What's Included
+
+### Components
+
+- `Spinner` — Loading spinner with size variants
+- `FullPageSpinner` — Centered full-page loading state
+
+### Hooks
+
+- `useMounted` — Client-side hydration detection

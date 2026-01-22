@@ -6,12 +6,12 @@
 
 Higher-level UI components and hooks for building applications. These extend the primitives from `@olwiba/cn` into reusable patterns.
 
-## Package
+## Package Chain
 
 ```
-npm: @olwiba/ui
-registry: private (Verdaccio)
-peer: @olwiba/cn
+@olwiba/cn      → Base primitives (Button, Card, Dialog, etc.)
+@olwiba/docs    → Documentation components (DocsSidebar, SearchDialog, etc.)
+@olwiba/ui      → App-level components (Spinner, hooks) ← YOU ARE HERE
 ```
 
 ## Installation
@@ -21,49 +21,46 @@ peer: @olwiba/cn
 bun add @olwiba/ui @olwiba/cn
 ```
 
+## Development
+
+```bash
+# Install deps
+bun install
+
+# Run docs site (port 3002)
+bun run web:dev
+
+# Build package
+bun run build
+```
+
 ## Components
 
-- Spinner
-- FullPageSpinner
-- PageHeader
-- Suspensed
-- ThemeSwitchMinimal
-- ThemeColorUpdater
-- VersionBanner
-- RegisterHotkeys
-- RootErrorFallback
-- confetti (canvas-confetti utility)
+- `Spinner` — Loading spinner with size variants
+- `FullPageSpinner` — Centered full-page loading state
 
 ## Hooks
 
-- `useConfirm` — Confirmation dialogs
-- `useControlledOpen` — Dialog/popover state management
 - `useMounted` — Client-side hydration detection
-- `useScrolledPast` — Scroll position tracking
-
-## Context
-
-- `OlwibaUIContext` — Mobile detection, shared UI state
 
 ## Usage
 
 ```tsx
-import { Spinner, useConfirm } from "@olwiba/ui";
+import { Spinner, useMounted } from "@olwiba/ui";
+import { Button } from "@olwiba/cn";
 
 function MyComponent() {
-  const confirm = useConfirm();
+  const mounted = useMounted();
 
-  const handleDelete = async () => {
-    if (await confirm("Delete this item?")) {
-      // delete
-    }
-  };
+  if (!mounted) {
+    return <Spinner />;
+  }
 
-  return <Spinner />;
+  return <Button>Ready!</Button>;
 }
 ```
 
 ## Related
 
 - [@olwiba/cn](https://github.com/Olwiba/olwibaCN) — Base primitives
-- [@genesis/renderer](https://github.com/Olwiba/genesis-renderer) — JSON-to-UI engine
+- [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) — Documentation components

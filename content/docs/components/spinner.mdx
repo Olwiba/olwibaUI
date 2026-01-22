@@ -1,0 +1,42 @@
+---
+title: Spinner
+description: A simple loading spinner component with size variants.
+---
+
+## Usage
+
+```tsx
+import { Spinner, FullPageSpinner } from "@olwiba/ui";
+
+// Basic spinner
+<Spinner />
+
+// Size variants
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+
+// Full page loading
+<FullPageSpinner message="Loading..." />
+```
+
+## Props
+
+### Spinner
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Spinner size |
+| `className` | `string` | — | Additional CSS classes |
+
+### FullPageSpinner
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `message` | `string` | — | Optional loading message |
+
+## Sizes
+
+- `sm` — 16px (4 tailwind units)
+- `md` — 24px (6 tailwind units)  
+- `lg` — 32px (8 tailwind units)

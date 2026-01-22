@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.output/
+.vinxi/
+.source/
+
+# Auth tokens
+bunfig.toml
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Cache
+.cache/
+*.tsbuildinfo
+
+# Generated
+site/routeTree.gen.ts
+bun.lock

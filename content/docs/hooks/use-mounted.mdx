@@ -1,0 +1,52 @@
+---
+title: useMounted
+description: Detect when the component has mounted on the client.
+---
+
+## Usage
+
+```tsx
+import { useMounted } from "@olwiba/ui";
+
+function MyComponent() {
+  const mounted = useMounted();
+
+  // Show loading state during SSR/hydration
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
+
+  // Safe to access browser APIs
+  return <div>Window width: {window.innerWidth}px</div>;
+}
+```
+
+## Why?
+
+This hook is useful for:
+
+- **SSR hydration** — Avoid hydration mismatches when rendering browser-specific content
+- **Browser APIs** — Safely access `window`, `document`, or `localStorage`
+- **Animations** — Trigger entrance animations after mount
+
+## Return Value
+
+| Type | Description |
+|------|-------------|
+| `boolean` | `false` during SSR/initial render, `true` after mount |
+
+## Implementation
+
+```tsx
+import { useEffect, useState } from 'react';
+
+export function useMounted() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return mounted;
+}
+```
