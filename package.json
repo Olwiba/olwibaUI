@@ -19,11 +19,10 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "web:build": "vite build",
-    "web:dev": "vite dev",
+    "web:build": "fumadocs-mdx && vite build",
+    "web:dev": "fumadocs-mdx && vite dev",
     "start": "node .output/server/index.mjs",
     "types:check": "fumadocs-mdx && tsc --noEmit",
-    "postinstall": "fumadocs-mdx",
     "prepublishOnly": "bun run build",
     "release": "npm publish --registry https://npm.olwiba.com/"
   },
