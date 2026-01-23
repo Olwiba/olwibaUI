@@ -21,7 +21,7 @@
     "dev": "tsup --watch",
     "web:build": "fumadocs-mdx && vite build",
     "web:dev": "fumadocs-mdx && vite dev",
-    "start": "node .output/server/index.mjs",
+    "start": "node dist/server/server.js",
     "types:check": "fumadocs-mdx && tsc --noEmit",
     "prepublishOnly": "bun run build",
     "release": "npm publish --registry https://npm.olwiba.com/"
