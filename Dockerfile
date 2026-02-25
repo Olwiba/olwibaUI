@@ -5,15 +5,14 @@ WORKDIR /app
 FROM base AS deps
 ARG NPM_TOKEN
 COPY package.json bun.lock* ./
-RUN echo '[install.scopes]' > bunfig.toml && \
-    echo "\"@olwiba\" = { url = \"https://npm.pkg.github.com/\", token = '${NPM_TOKEN}' }" >> bunfig.toml && \
-    echo "\"@genesis\" = { url = \"https://npm.pkg.github.com/\", token = '${NPM_TOKEN}' }" >> bunfig.toml && \
+RUN test -n "$NPM_TOKEN" || (echo "NPM_TOKEN is required for private package install" && exit 1)
+RUN printf "@olwiba:registry=https://npm.pkg.github.com\n@genesis:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=%s\n" "$NPM_TOKEN" > .npmrc && \
     bun install --frozen-lockfile
 
 # Build
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/bunfig.toml ./bunfig.toml
+COPY --from=deps /app/.npmrc ./.npmrc
 COPY . .
 RUN bun run web:build
 
