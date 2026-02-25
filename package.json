@@ -27,20 +27,18 @@
     "release": "npm publish --registry https://npm.olwiba.com/"
   },
   "dependencies": {
+    "@olwiba/cn": "^0.1.1",
+    "@olwiba/docs": "^0.1.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
     "tailwind-merge": "^3.4.0"
   },
   "peerDependencies": {
-    "@olwiba/cn": ">=0.0.1",
-    "@olwiba/docs": ">=0.0.1",
-    "@tanstack/react-router": ">=1.0.0",
+    "@olwiba/cn": ">=0.1.1",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
-    "@olwiba/cn": "^0.0.2",
-    "@olwiba/docs": "0.0.4",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "^1.151.6",
     "@tanstack/react-router-devtools": "^1.151.6",

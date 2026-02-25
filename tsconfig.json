@@ -16,6 +16,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "@olwiba/ui": ["./src/index.ts"],
+      "@olwiba/ui/*": ["./src/*"],
       "@/*": ["./src/*"],
       "~/*": ["./site/*"],
       "fumadocs-mdx:collections/*": [".source/*"]
