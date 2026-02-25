@@ -11,16 +11,13 @@ description: Higher-level UI components and hooks built on @olwiba/cn primitives
 
 This package sits at the top of the olwiba component chain:
 
-1. **@olwiba/cn** — Base primitives (Button, Card, Dialog, etc.)
+1. **@olwiba/cn** — Base primitives (Button, Card, Dialog, etc.) + confetti
 2. **@olwiba/docs** — Documentation components (DocsSidebar, SearchDialog, etc.)
-3. **@olwiba/ui** — App-level components (Spinner, FullPageSpinner, hooks)
+3. **@olwiba/ui** — App-level components (Spinner, PageHeader, hooks, context)
 
 ## Installation
 
-```bash
-# Configure Verdaccio in bunfig.toml first
-bun add @olwiba/ui @olwiba/cn
-```
+<CopyCommandButton command="bun add @olwiba/ui @olwiba/cn" />
 
 Your `bunfig.toml`:
 
@@ -32,16 +29,18 @@ Your `bunfig.toml`:
 ## Quick Start
 
 ```tsx
-import { Spinner, useMounted } from "@olwiba/ui";
+import { OlwibaUIProvider, Spinner, useMounted } from "@olwiba/ui";
 import { Button } from "@olwiba/cn";
 
+// Wrap your app root
+<OlwibaUIProvider>
+  <App />
+</OlwibaUIProvider>
+
+// Inside a component
 function MyComponent() {
   const mounted = useMounted();
-
-  if (!mounted) {
-    return <Spinner />;
-  }
-
+  if (!mounted) return <Spinner />;
   return <Button>Ready!</Button>;
 }
 ```
@@ -50,9 +49,23 @@ function MyComponent() {
 
 ### Components
 
-- `Spinner` — Loading spinner with size variants
-- `FullPageSpinner` — Centered full-page loading state
+- `Spinner` / `FullPageSpinner` — Loading states
+- `PageHeader` — Page title with description and action slot
+- `Suspensed` — React.Suspense with a default spinner fallback
+- `ThemeSwitchMinimal` — Dark / light mode toggle button
+- `ThemeColorUpdater` — Syncs a color theme to `data-theme` on `<html>`
+- `VersionBanner` — Dismissible version announcement banner
+- `RegisterHotkeys` — Declarative global keyboard shortcut registration
+- `RootErrorFallback` — Full-page error boundary fallback
+- `OlwibaUIProvider` / `useOlwibaUI` — Shared app state context (auto-detects isMobile)
 
 ### Hooks
 
 - `useMounted` — Client-side hydration detection
+- `useConfirm` — Headless async confirmation dialog
+- `useControlledOpen` — Open/close state for modals and drawers
+- `useScrolledPast` — Scroll threshold detection
+
+### Utilities
+
+- `fireConfetti` — Theme-aware confetti burst (re-exported from `@olwiba/cn`)

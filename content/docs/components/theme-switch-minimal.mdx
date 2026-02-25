@@ -1,0 +1,26 @@
+---
+title: ThemeSwitchMinimal
+description: A minimal icon button for toggling dark and light mode.
+---
+
+<ComponentPreview name="theme-switch-minimal" />
+
+## Usage
+
+```tsx
+import { ThemeSwitchMinimal } from "@olwiba/ui";
+
+<ThemeSwitchMinimal />
+```
+
+No props required. Reads and writes to `localStorage` under the `theme` key and toggles the `dark` class on `<html>`.
+
+## How it works
+
+On mount it reads `localStorage.getItem('theme')` (defaulting to `'light'`). On click it toggles between `'dark'` and `'light'`, persists to localStorage, and updates `document.documentElement.classList`.
+
+## Notes
+
+- Self-contained — no context or provider required
+- Uses `Sun` / `Moon` icons from `lucide-react`
+- Built on `Button` from `@olwiba/cn` with `variant="ghost"` and `size="icon"`

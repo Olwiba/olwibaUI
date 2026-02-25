@@ -1,0 +1,45 @@
+---
+title: useControlledOpen
+description: Simple open/close state for modals, drawers, dropdowns, and any toggleable UI.
+---
+
+## Usage
+
+```tsx
+import { useControlledOpen } from "@olwiba/ui";
+import { Dialog } from "@olwiba/cn";
+
+function Example() {
+  const { isOpen, open, close, toggle, setIsOpen } = useControlledOpen();
+
+  return (
+    <>
+      <button onClick={open}>Open dialog</button>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        ...
+      </Dialog>
+    </>
+  );
+}
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `defaultOpen` | `boolean` | `false` | Initial open state |
+
+## Return value
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `isOpen` | `boolean` | Current open state |
+| `open` | `() => void` | Set open to `true` |
+| `close` | `() => void` | Set open to `false` |
+| `toggle` | `() => void` | Toggle between open and closed |
+| `setIsOpen` | `Dispatch<SetStateAction<boolean>>` | Raw setter — useful for `onOpenChange` props |
+
+## Notes
+
+- `setIsOpen` is stable and safe to pass directly to Radix `onOpenChange` handlers
+- All returned functions are memoized with `useCallback`

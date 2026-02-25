@@ -1,0 +1,36 @@
+---
+title: FullPageSpinner
+description: A centered full-page loading state for route-level suspense boundaries.
+---
+
+<ComponentPreview name="full-page-spinner" />
+
+## Usage
+
+```tsx
+import { FullPageSpinner } from "@olwiba/ui";
+
+<FullPageSpinner />
+<FullPageSpinner message="Loading your workspace..." />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `message` | `string` | — | Optional text shown below the spinner |
+
+## Example — route suspense
+
+```tsx
+import { Suspense } from "react";
+import { FullPageSpinner } from "@olwiba/ui";
+
+export default function App() {
+  return (
+    <Suspense fallback={<FullPageSpinner message="Loading..." />}>
+      <Routes />
+    </Suspense>
+  );
+}
+```

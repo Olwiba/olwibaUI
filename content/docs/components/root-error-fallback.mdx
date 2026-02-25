@@ -1,0 +1,32 @@
+---
+title: RootErrorFallback
+description: A full-page error fallback for React error boundaries.
+---
+
+<ComponentPreview name="root-error-fallback" />
+
+## Usage
+
+```tsx
+import { RootErrorFallback } from "@olwiba/ui";
+
+// With react-error-boundary
+import { ErrorBoundary } from "react-error-boundary";
+
+<ErrorBoundary FallbackComponent={RootErrorFallback}>
+  <App />
+</ErrorBoundary>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `error` | `Error` | — | The caught error object |
+| `resetErrorBoundary` | `() => void` | — | Optional reset callback — renders a "Try again" button when provided |
+
+## Notes
+
+- Compatible with `react-error-boundary`'s `FallbackComponent` prop out of the box
+- Uses `AlertTriangle` from `lucide-react` and `Button` from `@olwiba/cn`
+- Occupies the full viewport height (`min-h-svh`) — designed for root-level boundaries

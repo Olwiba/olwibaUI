@@ -5,5 +5,7 @@ export default defineConfig({
   format: ['esm'],
   dts: true,
   clean: true,
-  external: ['react', 'react-dom', '@olwiba/cn', '@olwiba/docs'],
+  external: ['react', 'react-dom', '@olwiba/cn'],
+  sourcemap: true,
+  treeshake: true,
 });

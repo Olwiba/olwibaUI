@@ -1,0 +1,48 @@
+---
+title: RegisterHotkeys
+description: Declaratively register global keyboard shortcuts with modifier support.
+---
+
+<ComponentPreview name="register-hotkeys" />
+
+## Usage
+
+```tsx
+import { RegisterHotkeys } from "@olwiba/ui";
+import type { Hotkey } from "@olwiba/ui";
+
+const hotkeys: Hotkey[] = [
+  { key: 'k', meta: true, handler: () => openSearch(), description: 'Open search' },
+  { key: 'Escape', handler: () => closeModal(), description: 'Close' },
+  { key: '?', shift: true, handler: () => showHelp(), description: 'Show help' },
+];
+
+<RegisterHotkeys hotkeys={hotkeys} />
+```
+
+## Props
+
+### RegisterHotkeys
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `hotkeys` | `Hotkey[]` | — | Array of hotkey definitions |
+
+### Hotkey
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `key` | `string` | — | Key name (`'k'`, `'Escape'`, `'?'`, etc.) |
+| `ctrl` | `boolean` | `false` | Require Ctrl modifier |
+| `meta` | `boolean` | `false` | Require Meta (⌘/Win) modifier |
+| `shift` | `boolean` | `false` | Require Shift modifier |
+| `alt` | `boolean` | `false` | Require Alt modifier |
+| `handler` | `() => void` | — | Function called when the hotkey fires |
+| `description` | `string` | — | Optional label (for documentation) |
+
+## Notes
+
+- Attaches a single `keydown` listener on `document` — no DOM node required
+- Modifier matching is exact: `{ meta: true }` only fires when Meta is held and Ctrl/Shift/Alt are not
+- Renders nothing (`null`) — it is a pure side-effect component
+- Cleans up listeners on unmount

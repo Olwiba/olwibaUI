@@ -1,0 +1,72 @@
+---
+title: useConfirm
+description: A headless confirmation hook that returns state and handlers for wiring up any confirm dialog.
+---
+
+## Usage
+
+```tsx
+import { useConfirm } from "@olwiba/ui";
+import { AlertDialog, AlertDialogContent, AlertDialogTitle,
+         AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@olwiba/cn";
+
+function DeleteButton() {
+  const { confirm, isOpen, options, handleConfirm, handleCancel } = useConfirm();
+
+  const handleDelete = async () => {
+    const ok = await confirm({
+      title: 'Delete item?',
+      description: 'This cannot be undone.',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+    });
+    if (ok) {
+      // proceed with deletion
+    }
+  };
+
+  return (
+    <>
+      <button onClick={handleDelete}>Delete</button>
+
+      <AlertDialog open={isOpen}>
+        <AlertDialogContent>
+          <AlertDialogTitle>{options.title}</AlertDialogTitle>
+          {options.description && <p>{options.description}</p>}
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleCancel}>
+              {options.cancelLabel ?? 'Cancel'}
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirm}>
+              {options.confirmLabel ?? 'Confirm'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}
+```
+
+## Return value
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `confirm` | `(options?: ConfirmOptions) => Promise<boolean>` | Call to open the dialog — resolves `true` on confirm, `false` on cancel |
+| `isOpen` | `boolean` | Whether the dialog should be shown |
+| `options` | `ConfirmOptions` | The options passed to the last `confirm()` call |
+| `handleConfirm` | `() => void` | Resolves the promise with `true` and closes |
+| `handleCancel` | `() => void` | Resolves the promise with `false` and closes |
+
+## ConfirmOptions
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `title` | `string` | Dialog heading |
+| `description` | `string` | Supporting text |
+| `confirmLabel` | `string` | Label for the confirm button |
+| `cancelLabel` | `string` | Label for the cancel button |
+
+## Why headless?
+
+`useConfirm` manages only state and async resolution. You wire up your own dialog component, giving you full control over styling, animations, and which dialog primitive to use.

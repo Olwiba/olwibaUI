@@ -1,0 +1,42 @@
+---
+title: ThemeColorUpdater
+description: Syncs a color theme string to the data-theme attribute on the document root.
+---
+
+<ComponentPreview name="theme-color-updater" />
+
+## Usage
+
+```tsx
+import { ThemeColorUpdater } from "@olwiba/ui";
+
+// Set the active color theme
+<ThemeColorUpdater colorTheme="blue" />
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `colorTheme` | `string` | — | Value written to `data-theme` on `<html>` |
+
+## How it works
+
+This is a renderless component — it returns `null`. On every render where `colorTheme` changes it calls:
+
+```ts
+document.documentElement.setAttribute('data-theme', colorTheme);
+```
+
+Your CSS can then target `[data-theme="blue"]` for color tokens:
+
+```css
+[data-theme="blue"] {
+  --primary: oklch(0.55 0.22 250);
+}
+```
+
+## Notes
+
+- No visible output — purely a side-effect component
+- Pair with a color picker or settings panel in your app layout

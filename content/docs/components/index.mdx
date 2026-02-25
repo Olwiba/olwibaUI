@@ -3,13 +3,20 @@ title: Components
 description: App-level components provided by @olwiba/ui.
 ---
 
-## Overview
-
-These components are higher-level abstractions built on `@olwiba/cn` primitives. They solve common patterns you'll encounter when building apps.
+These are higher-level abstractions built on `@olwiba/cn` primitives. They solve common app patterns so you don't have to.
 
 ## Available Components
 
 | Component | Description |
 |-----------|-------------|
 | [Spinner](/docs/components/spinner) | Loading spinner with size variants |
-| FullPageSpinner | Centered full-page loading state |
+| [FullPageSpinner](/docs/components/full-page-spinner) | Centered full-page loading state |
+| [PageHeader](/docs/components/page-header) | Page title with description and action slot |
+| [Suspensed](/docs/components/suspensed) | React.Suspense wrapper with default spinner fallback |
+| [ThemeSwitchMinimal](/docs/components/theme-switch-minimal) | Icon button to toggle dark / light mode |
+| [ThemeColorUpdater](/docs/components/theme-color-updater) | Syncs a color theme to `data-theme` on `<html>` |
+| [VersionBanner](/docs/components/version-banner) | Dismissible banner for version announcements |
+| [RegisterHotkeys](/docs/components/register-hotkeys) | Declarative global keyboard shortcut registration |
+| [RootErrorFallback](/docs/components/root-error-fallback) | Full-page error boundary fallback |
+| [OlwibaUIContext](/docs/components/olwiba-ui-context) | Context provider for shared app state (isMobile) |
+| [Confetti](/docs/components/confetti) | Theme-aware confetti burst utility |

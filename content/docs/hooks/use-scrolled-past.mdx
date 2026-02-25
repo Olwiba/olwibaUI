@@ -1,0 +1,39 @@
+---
+title: useScrolledPast
+description: Returns true when the page has scrolled past a given Y threshold in pixels.
+---
+
+## Usage
+
+```tsx
+import { useScrolledPast } from "@olwiba/ui";
+
+function StickyHeader() {
+  const scrolledPast = useScrolledPast(100);
+
+  return (
+    <header className={scrolledPast ? 'shadow-md bg-background' : 'bg-transparent'}>
+      ...
+    </header>
+  );
+}
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `threshold` | `number` | Scroll Y position in pixels to check against |
+
+## Return value
+
+| Type | Description |
+|------|-------------|
+| `boolean` | `true` when `window.scrollY > threshold`, `false` otherwise |
+
+## Notes
+
+- Uses a passive scroll listener — no impact on scroll performance
+- Fires immediately on mount to capture current scroll position
+- Listener is cleaned up on unmount
+- Common uses: sticky/floating headers, back-to-top buttons, scroll-triggered animations

@@ -1,59 +1,15 @@
-import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router';
-import * as React from 'react';
-import appCss from '~/styles/app.css?url';
-import { DocsProvider } from '@olwiba/docs';
+import { createDocsRoot, Theme } from '@olwiba/docs';
 import { SiteHeader } from '~/components/SiteHeader';
 import { SiteFooter } from '~/components/SiteFooter';
+import appCss from '~/styles/app.css?url';
 
-const searchItems = [
-  { label: 'Get Started', href: '/docs' },
-  { label: 'Components', href: '/docs/components' },
-  { label: 'Hooks', href: '/docs/hooks' },
-];
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'olwibaUI - App-level Components for TanStack Start' },
-      { name: 'description', content: 'Higher-level UI components and hooks built on @olwiba/cn primitives.' },
-      { property: 'og:title', content: 'olwibaUI' },
-      { property: 'og:description', content: 'App-level components for TanStack Start' },
-      { property: 'og:type', content: 'website' },
-      { name: 'twitter:card', content: 'summary_large_image' },
-    ],
-    links: [
-      { rel: 'stylesheet', href: appCss },
-    ],
-  }),
-  component: RootComponent,
+export const Route = createDocsRoot({
+  meta: {
+    title: 'olwibaUI - App-level Components for TanStack Start',
+    description: 'Higher-level UI components and hooks built on @olwiba/cn primitives.',
+  },
+  header: SiteHeader,
+  footer: SiteFooter,
+  initialTheme: Theme.Purple,
+  cssUrl: appCss,
 });
-
-function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  );
-}
-
-function RootDocument({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <HeadContent />
-      </head>
-      <body className="flex min-h-screen flex-col antialiased [--header-height:3.5rem] [--footer-height:3.5rem]">
-        <DocsProvider searchItems={searchItems}>
-          <SiteHeader />
-          <div className="mx-auto w-full max-w-[1400px] flex-1 border-r border-l border-dashed">
-            {children}
-          </div>
-          <SiteFooter />
-        </DocsProvider>
-        <Scripts />
-      </body>
-    </html>
-  );
-}

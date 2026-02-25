@@ -1,0 +1,33 @@
+---
+title: PageHeader
+description: A consistent top-of-page header with title, optional description, and an action slot.
+---
+
+<ComponentPreview name="page-header" />
+
+## Usage
+
+```tsx
+import { PageHeader } from "@olwiba/ui";
+import { Button } from "@olwiba/cn";
+
+<PageHeader
+  title="Team members"
+  description="Manage who has access to this workspace."
+>
+  <Button>Invite member</Button>
+</PageHeader>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — | Page title (rendered as `<h1>`) |
+| `description` | `string` | — | Optional subtitle below the title |
+| `className` | `string` | — | Additional CSS classes on the wrapper |
+| `children` | `ReactNode` | — | Actions placed to the right of the title |
+
+## Notes
+
+`children` sit in a flex row aligned to the right of the title — ideal for primary CTAs or toolbar buttons. The `pb-6` padding separates the header from the page body without needing extra margin.

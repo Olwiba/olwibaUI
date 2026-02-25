@@ -1,4 +1,17 @@
 {
   "title": "Components",
-  "pages": ["index", "spinner"]
+  "pages": [
+    "index",
+    "spinner",
+    "full-page-spinner",
+    "page-header",
+    "suspensed",
+    "theme-switch-minimal",
+    "theme-color-updater",
+    "version-banner",
+    "register-hotkeys",
+    "root-error-fallback",
+    "olwiba-ui-context",
+    "confetti"
+  ]
 }

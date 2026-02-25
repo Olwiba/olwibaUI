@@ -1,0 +1,35 @@
+---
+title: VersionBanner
+description: A dismissible banner for announcing new versions or updates.
+---
+
+<ComponentPreview name="version-banner" />
+
+## Usage
+
+```tsx
+import { VersionBanner } from "@olwiba/ui";
+
+const [show, setShow] = React.useState(true);
+
+{show && (
+  <VersionBanner
+    version="2.1.0"
+    message="New components available — see what's changed."
+    onDismiss={() => setShow(false)}
+  />
+)}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `version` | `string` | — | Version string displayed as a badge |
+| `message` | `string` | — | Announcement text |
+| `onDismiss` | `() => void` | — | Called when the user clicks the X button |
+
+## Notes
+
+- Dismissal is stateless — the parent controls visibility via `onDismiss`
+- Persist dismissal across sessions with `localStorage` in your parent component
