@@ -3,13 +3,25 @@ title: VersionBanner
 description: A dismissible banner for announcing new versions or updates.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
 <ComponentPreview name="version-banner" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
 
 ## Usage
 
 ```tsx
 import { VersionBanner } from "@olwiba/ui";
+```
 
+```tsx
 const [show, setShow] = React.useState(true);
 
 {show && (
@@ -21,15 +33,12 @@ const [show, setShow] = React.useState(true);
 )}
 ```
 
-## Props
+Dismissal is stateless — the parent controls visibility. Persist across sessions with `localStorage` in your parent component.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `version` | `string` | — | Version string displayed as a badge |
-| `message` | `string` | — | Announcement text |
-| `onDismiss` | `() => void` | — | Called when the user clicks the X button |
+## API Reference
 
-## Notes
-
-- Dismissal is stateless — the parent controls visibility via `onDismiss`
-- Persist dismissal across sessions with `localStorage` in your parent component
+<APIReference name="VersionBanner" props={[
+  { name: "version", type: "string", default: "-" },
+  { name: "message", type: "string", default: "-" },
+  { name: "onDismiss", type: "() => void", default: "-" },
+]} />

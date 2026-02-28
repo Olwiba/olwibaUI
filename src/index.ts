@@ -22,5 +22,3 @@ export { useConfirm, type ConfirmOptions, type UseConfirmReturn } from './hooks/
 export { useControlledOpen, type UseControlledOpenReturn } from './hooks/use-controlled-open';
 export { useScrolledPast } from './hooks/use-scrolled-past';
 
-// Utilities
-export { fireConfetti, type ConfettiOptions } from './lib/confetti';

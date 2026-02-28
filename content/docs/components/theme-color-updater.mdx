@@ -3,32 +3,29 @@ title: ThemeColorUpdater
 description: Syncs a color theme string to the data-theme attribute on the document root.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
 <ComponentPreview name="theme-color-updater" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
 
 ## Usage
 
 ```tsx
 import { ThemeColorUpdater } from "@olwiba/ui";
+```
 
-// Set the active color theme
+```tsx
 <ThemeColorUpdater colorTheme="blue" />
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `colorTheme` | `string` | — | Value written to `data-theme` on `<html>` |
-
-## How it works
-
-This is a renderless component — it returns `null`. On every render where `colorTheme` changes it calls:
-
-```ts
-document.documentElement.setAttribute('data-theme', colorTheme);
-```
-
-Your CSS can then target `[data-theme="blue"]` for color tokens:
+Renderless — returns `null`. Sets `data-theme` on `<html>` on every render. Your CSS targets `[data-theme]` for color tokens:
 
 ```css
 [data-theme="blue"] {
@@ -36,7 +33,8 @@ Your CSS can then target `[data-theme="blue"]` for color tokens:
 }
 ```
 
-## Notes
+## API Reference
 
-- No visible output — purely a side-effect component
-- Pair with a color picker or settings panel in your app layout
+<APIReference name="ThemeColorUpdater" props={[
+  { name: "colorTheme", type: "string", default: "-" },
+]} />

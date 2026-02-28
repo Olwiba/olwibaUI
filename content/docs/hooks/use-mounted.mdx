@@ -3,50 +3,37 @@ title: useMounted
 description: Detect when the component has mounted on the client.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
 ## Usage
 
 ```tsx
 import { useMounted } from "@olwiba/ui";
+```
 
+```tsx
 function MyComponent() {
   const mounted = useMounted();
 
-  // Show loading state during SSR/hydration
-  if (!mounted) {
-    return <div>Loading...</div>;
-  }
+  if (!mounted) return <div>Loading...</div>;
 
-  // Safe to access browser APIs
+  // Safe to access browser APIs after mount
   return <div>Window width: {window.innerWidth}px</div>;
 }
 ```
 
-## Why?
+Useful for SSR hydration mismatches, safely accessing `window`/`document`, and triggering entrance animations after mount.
 
-This hook is useful for:
+## API Reference
 
-- **SSR hydration** — Avoid hydration mismatches when rendering browser-specific content
-- **Browser APIs** — Safely access `window`, `document`, or `localStorage`
-- **Animations** — Trigger entrance animations after mount
-
-## Return Value
-
-| Type | Description |
-|------|-------------|
-| `boolean` | `false` during SSR/initial render, `true` after mount |
-
-## Implementation
-
-```tsx
-import { useEffect, useState } from 'react';
-
-export function useMounted() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return mounted;
-}
-```
+<APIReference name="useMounted → returns" props={[
+  { name: "mounted", type: "boolean", default: "false" },
+]} />

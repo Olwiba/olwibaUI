@@ -1,4 +1,4 @@
 {
-  "title": "olwibaUI",
+  "root": true,
   "pages": ["index", "components", "hooks"]
 }

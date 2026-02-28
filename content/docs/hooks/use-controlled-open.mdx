@@ -3,10 +3,23 @@ title: useControlledOpen
 description: Simple open/close state for modals, drawers, dropdowns, and any toggleable UI.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
 ## Usage
 
 ```tsx
 import { useControlledOpen } from "@olwiba/ui";
+```
+
+```tsx
 import { Dialog } from "@olwiba/cn";
 
 function Example() {
@@ -23,23 +36,18 @@ function Example() {
 }
 ```
 
-## Parameters
+`setIsOpen` is stable and safe to pass directly to Radix `onOpenChange` handlers. All returned functions are memoized with `useCallback`.
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `defaultOpen` | `boolean` | `false` | Initial open state |
+## API Reference
 
-## Return value
+<APIReference name="useControlledOpen" props={[
+  { name: "defaultOpen", type: "boolean", default: "false" },
+]} />
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `isOpen` | `boolean` | Current open state |
-| `open` | `() => void` | Set open to `true` |
-| `close` | `() => void` | Set open to `false` |
-| `toggle` | `() => void` | Toggle between open and closed |
-| `setIsOpen` | `Dispatch<SetStateAction<boolean>>` | Raw setter — useful for `onOpenChange` props |
-
-## Notes
-
-- `setIsOpen` is stable and safe to pass directly to Radix `onOpenChange` handlers
-- All returned functions are memoized with `useCallback`
+<APIReference name="useControlledOpen → returns" props={[
+  { name: "isOpen", type: "boolean", default: "-" },
+  { name: "open", type: "() => void", default: "-" },
+  { name: "close", type: "() => void", default: "-" },
+  { name: "toggle", type: "() => void", default: "-" },
+  { name: "setIsOpen", type: "Dispatch<SetStateAction<boolean>>", default: "-" },
+]} />

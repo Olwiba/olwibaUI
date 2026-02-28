@@ -3,14 +3,25 @@ title: PageHeader
 description: A consistent top-of-page header with title, optional description, and an action slot.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
 <ComponentPreview name="page-header" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
 
 ## Usage
 
 ```tsx
 import { PageHeader } from "@olwiba/ui";
-import { Button } from "@olwiba/cn";
+```
 
+```tsx
 <PageHeader
   title="Team members"
   description="Manage who has access to this workspace."
@@ -19,15 +30,13 @@ import { Button } from "@olwiba/cn";
 </PageHeader>
 ```
 
-## Props
+`children` sit in a flex row aligned to the right of the title — ideal for primary CTAs or toolbar buttons.
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | — | Page title (rendered as `<h1>`) |
-| `description` | `string` | — | Optional subtitle below the title |
-| `className` | `string` | — | Additional CSS classes on the wrapper |
-| `children` | `ReactNode` | — | Actions placed to the right of the title |
+## API Reference
 
-## Notes
-
-`children` sit in a flex row aligned to the right of the title — ideal for primary CTAs or toolbar buttons. The `pb-6` padding separates the header from the page body without needing extra margin.
+<APIReference name="PageHeader" props={[
+  { name: "title", type: "string", default: "-" },
+  { name: "description", type: "string", default: "-" },
+  { name: "className", type: "string", default: "-" },
+  { name: "children", type: "ReactNode", default: "-" },
+]} />

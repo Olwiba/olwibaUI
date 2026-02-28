@@ -3,14 +3,25 @@ title: RegisterHotkeys
 description: Declaratively register global keyboard shortcuts with modifier support.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
 <ComponentPreview name="register-hotkeys" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
 
 ## Usage
 
 ```tsx
-import { RegisterHotkeys } from "@olwiba/ui";
-import type { Hotkey } from "@olwiba/ui";
+import { RegisterHotkeys, type Hotkey } from "@olwiba/ui";
+```
 
+```tsx
 const hotkeys: Hotkey[] = [
   { key: 'k', meta: true, handler: () => openSearch(), description: 'Open search' },
   { key: 'Escape', handler: () => closeModal(), description: 'Close' },
@@ -20,29 +31,20 @@ const hotkeys: Hotkey[] = [
 <RegisterHotkeys hotkeys={hotkeys} />
 ```
 
-## Props
+Attaches a single `keydown` listener on `document` — renders nothing, cleans up on unmount. Modifier matching is exact: `{ meta: true }` only fires when Meta is held and Ctrl/Shift/Alt are not.
 
-### RegisterHotkeys
+## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `hotkeys` | `Hotkey[]` | — | Array of hotkey definitions |
+<APIReference name="RegisterHotkeys" props={[
+  { name: "hotkeys", type: "Hotkey[]", default: "-" },
+]} />
 
-### Hotkey
-
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `key` | `string` | — | Key name (`'k'`, `'Escape'`, `'?'`, etc.) |
-| `ctrl` | `boolean` | `false` | Require Ctrl modifier |
-| `meta` | `boolean` | `false` | Require Meta (⌘/Win) modifier |
-| `shift` | `boolean` | `false` | Require Shift modifier |
-| `alt` | `boolean` | `false` | Require Alt modifier |
-| `handler` | `() => void` | — | Function called when the hotkey fires |
-| `description` | `string` | — | Optional label (for documentation) |
-
-## Notes
-
-- Attaches a single `keydown` listener on `document` — no DOM node required
-- Modifier matching is exact: `{ meta: true }` only fires when Meta is held and Ctrl/Shift/Alt are not
-- Renders nothing (`null`) — it is a pure side-effect component
-- Cleans up listeners on unmount
+<APIReference name="Hotkey" props={[
+  { name: "key", type: "string", default: "-" },
+  { name: "ctrl", type: "boolean", default: "false" },
+  { name: "meta", type: "boolean", default: "false" },
+  { name: "shift", type: "boolean", default: "false" },
+  { name: "alt", type: "boolean", default: "false" },
+  { name: "handler", type: "() => void", default: "-" },
+  { name: "description", type: "string", default: "-" },
+]} />

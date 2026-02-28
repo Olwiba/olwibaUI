@@ -3,11 +3,23 @@ title: useScrolledPast
 description: Returns true when the page has scrolled past a given Y threshold in pixels.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
 ## Usage
 
 ```tsx
 import { useScrolledPast } from "@olwiba/ui";
+```
 
+```tsx
 function StickyHeader() {
   const scrolledPast = useScrolledPast(100);
 
@@ -19,21 +31,14 @@ function StickyHeader() {
 }
 ```
 
-## Parameters
+Uses a passive scroll listener — no impact on scroll performance. Fires immediately on mount and cleans up on unmount.
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `threshold` | `number` | Scroll Y position in pixels to check against |
+## API Reference
 
-## Return value
+<APIReference name="useScrolledPast" props={[
+  { name: "threshold", type: "number", default: "-" },
+]} />
 
-| Type | Description |
-|------|-------------|
-| `boolean` | `true` when `window.scrollY > threshold`, `false` otherwise |
-
-## Notes
-
-- Uses a passive scroll listener — no impact on scroll performance
-- Fires immediately on mount to capture current scroll position
-- Listener is cleaned up on unmount
-- Common uses: sticky/floating headers, back-to-top buttons, scroll-triggered animations
+<APIReference name="useScrolledPast → returns" props={[
+  { name: "scrolledPast", type: "boolean", default: "false" },
+]} />

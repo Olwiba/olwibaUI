@@ -3,13 +3,25 @@ title: Suspensed
 description: A thin wrapper around React.Suspense with a sensible default fallback.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
 <ComponentPreview name="suspensed" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
 
 ## Usage
 
 ```tsx
 import { Suspensed, Spinner } from "@olwiba/ui";
+```
 
+```tsx
 // Default fallback is <Spinner />
 <Suspensed>
   <LazyComponent />
@@ -21,13 +33,9 @@ import { Suspensed, Spinner } from "@olwiba/ui";
 </Suspensed>
 ```
 
-## Props
+## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | Content to render (usually a lazy component) |
-| `fallback` | `ReactNode` | `<Spinner />` | Shown while children are loading |
-
-## Why
-
-Writing `<React.Suspense fallback={<Spinner />}>` on every lazy import is repetitive. `Suspensed` defaults to `<Spinner />` so you only override when needed.
+<APIReference name="Suspensed" props={[
+  { name: "children", type: "ReactNode", default: "-" },
+  { name: "fallback", type: "ReactNode", default: "<Spinner />" },
+]} />

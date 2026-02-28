@@ -3,14 +3,27 @@ title: RootErrorFallback
 description: A full-page error fallback for React error boundaries.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
 <ComponentPreview name="root-error-fallback" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
 
 ## Usage
 
 ```tsx
 import { RootErrorFallback } from "@olwiba/ui";
+```
 
-// With react-error-boundary
+Compatible with `react-error-boundary`'s `FallbackComponent` prop out of the box:
+
+```tsx
 import { ErrorBoundary } from "react-error-boundary";
 
 <ErrorBoundary FallbackComponent={RootErrorFallback}>
@@ -18,15 +31,9 @@ import { ErrorBoundary } from "react-error-boundary";
 </ErrorBoundary>
 ```
 
-## Props
+## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `error` | `Error` | — | The caught error object |
-| `resetErrorBoundary` | `() => void` | — | Optional reset callback — renders a "Try again" button when provided |
-
-## Notes
-
-- Compatible with `react-error-boundary`'s `FallbackComponent` prop out of the box
-- Uses `AlertTriangle` from `lucide-react` and `Button` from `@olwiba/cn`
-- Occupies the full viewport height (`min-h-svh`) — designed for root-level boundaries
+<APIReference name="RootErrorFallback" props={[
+  { name: "error", type: "Error", default: "-" },
+  { name: "resetErrorBoundary", type: "() => void", default: "-" },
+]} />

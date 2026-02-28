@@ -3,48 +3,56 @@ title: OlwibaUIContext
 description: React context provider that supplies shared app state (isMobile) to the component tree.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
 <ComponentPreview name="olwiba-ui-context" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
 
 ## Usage
 
 ```tsx
 import { OlwibaUIProvider, useOlwibaUI } from "@olwiba/ui";
+```
 
-// Wrap your app root — isMobile is auto-detected via useIsMobile() from @olwiba/cn
+Wrap your app root — `isMobile` is auto-detected via `useIsMobile()` from `@olwiba/cn`:
+
+```tsx
 <OlwibaUIProvider>
   <App />
 </OlwibaUIProvider>
+```
 
-// Override with a server-detected value to avoid hydration flicker
+Override with a server-detected value to avoid hydration flicker:
+
+```tsx
 <OlwibaUIProvider isMobile={serverDetectedMobile}>
   <App />
 </OlwibaUIProvider>
+```
 
-// In any child component
+Read the value from any child component:
+
+```tsx
 function Sidebar() {
   const { isMobile } = useOlwibaUI();
   return isMobile ? <MobileNav /> : <DesktopSidebar />;
 }
 ```
 
-## OlwibaUIProvider Props
+## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | The component tree |
-| `isMobile` | `boolean` | auto | Override mobile detection. When omitted, uses `useIsMobile()` from `@olwiba/cn` (768px breakpoint) |
+<APIReference name="OlwibaUIProvider" props={[
+  { name: "children", type: "ReactNode", default: "-" },
+  { name: "isMobile", type: "boolean", default: "auto-detected" },
+]} />
 
-## useOlwibaUI
-
-```ts
-const { isMobile } = useOlwibaUI();
-```
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `isMobile` | `boolean` | `true` when the viewport is below 768px (or when overridden) |
-
-## Notes
-
-- When no `isMobile` prop is passed, the provider calls `useIsMobile()` from `@olwiba/cn` which reactively updates on window resize
-- Pass a server-detected value (e.g. from a TanStack Start server function) to prevent hydration flicker on first render
+<APIReference name="useOlwibaUI" props={[
+  { name: "isMobile", type: "boolean", default: "-" },
+]} />

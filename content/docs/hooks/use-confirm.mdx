@@ -3,10 +3,23 @@ title: useConfirm
 description: A headless confirmation hook that returns state and handlers for wiring up any confirm dialog.
 ---
 
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
 ## Usage
 
 ```tsx
 import { useConfirm } from "@olwiba/ui";
+```
+
+```tsx
 import { AlertDialog, AlertDialogContent, AlertDialogTitle,
          AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@olwiba/cn";
 
@@ -48,25 +61,21 @@ function DeleteButton() {
 }
 ```
 
-## Return value
+`useConfirm` manages only state and async resolution — you wire up your own dialog, giving you full control over styling and which primitive to use.
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `confirm` | `(options?: ConfirmOptions) => Promise<boolean>` | Call to open the dialog — resolves `true` on confirm, `false` on cancel |
-| `isOpen` | `boolean` | Whether the dialog should be shown |
-| `options` | `ConfirmOptions` | The options passed to the last `confirm()` call |
-| `handleConfirm` | `() => void` | Resolves the promise with `true` and closes |
-| `handleCancel` | `() => void` | Resolves the promise with `false` and closes |
+## API Reference
 
-## ConfirmOptions
+<APIReference name="useConfirm → returns" props={[
+  { name: "confirm", type: "(options?: ConfirmOptions) => Promise<boolean>", default: "-" },
+  { name: "isOpen", type: "boolean", default: "-" },
+  { name: "options", type: "ConfirmOptions", default: "-" },
+  { name: "handleConfirm", type: "() => void", default: "-" },
+  { name: "handleCancel", type: "() => void", default: "-" },
+]} />
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `title` | `string` | Dialog heading |
-| `description` | `string` | Supporting text |
-| `confirmLabel` | `string` | Label for the confirm button |
-| `cancelLabel` | `string` | Label for the cancel button |
-
-## Why headless?
-
-`useConfirm` manages only state and async resolution. You wire up your own dialog component, giving you full control over styling, animations, and which dialog primitive to use.
+<APIReference name="ConfirmOptions" props={[
+  { name: "title", type: "string", default: "-" },
+  { name: "description", type: "string", default: "-" },
+  { name: "confirmLabel", type: "string", default: "-" },
+  { name: "cancelLabel", type: "string", default: "-" },
+]} />
