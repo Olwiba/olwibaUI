@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.3
+
+### Changed
+
+- Updated `@olwiba/docs` dependency to `^0.1.5` — picks up search ESC fix, primary-color copy tick icons, consistent `DocsCopyPage` dropdown, mobile layout improvements, and clickable sidebar/mobile-nav category headings.
+
+### Removed
+
+- `confetti` removed from public API — `fireConfetti` and `src/lib/confetti.ts` are no longer exported. The confetti effect on `CopyCommandButton` is handled internally via the CN site; it is not part of the `@olwiba/ui` package surface.
+
 ## 0.0.2
 
 ### Added
