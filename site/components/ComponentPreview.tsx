@@ -13,7 +13,6 @@ const demos: Record<string, React.LazyExoticComponent<React.FC>> = {
   'register-hotkeys': React.lazy(() => import('~/demos/register-hotkeys')),
   'root-error-fallback': React.lazy(() => import('~/demos/root-error-fallback')),
   'olwiba-ui-context': React.lazy(() => import('~/demos/olwiba-ui-context')),
-  'confetti': React.lazy(() => import('~/demos/confetti')),
 };
 
 interface ComponentPreviewProps {
