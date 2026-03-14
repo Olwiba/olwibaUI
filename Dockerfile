@@ -3,10 +3,10 @@ WORKDIR /app
 
 # Install dependencies
 FROM base AS deps
-ARG NPM_TOKEN
+ARG PACKAGES_TOKEN
 COPY package.json bun.lock* ./
-RUN test -n "$NPM_TOKEN" || (echo "NPM_TOKEN is required for private package install" && exit 1)
-RUN printf "@olwiba:registry=https://npm.pkg.github.com\n@genesis:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=%s\n" "$NPM_TOKEN" > .npmrc && \
+RUN test -n "$PACKAGES_TOKEN" || (echo "PACKAGES_TOKEN is required for private package install" && exit 1)
+RUN printf "@olwiba:registry=https://npm.pkg.github.com\n@genesis:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=%s\n" "$PACKAGES_TOKEN" > .npmrc && \
     bun install --frozen-lockfile
 
 # Build

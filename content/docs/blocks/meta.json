@@ -1,0 +1,13 @@
+{
+  "title": "Blocks",
+  "pages": [
+    "index",
+    "auth-split-block",
+    "dashboard-overview-block",
+    "dashboard-shell-block",
+    "marketing-hero-block",
+    "application-sidebar-block",
+    "document-sidebar-block",
+    "login-block"
+  ]
+}

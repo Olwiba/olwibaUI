@@ -34,6 +34,20 @@ bun run web:dev
 bun run build
 ```
 
+## Release Flow
+
+`@olwiba/ui` releases are tag-driven.
+
+1. Finish and verify the local change, using linked upstream packages where needed.
+2. Bump `package.json` when the release contents are final.
+3. Commit and push `master`.
+4. Create a matching version tag, for example `v0.0.4`.
+5. Push the tag: `git push origin v0.0.4`.
+
+The `publish-package` GitHub Actions workflow runs automatically on `v*` tags and checks that the tag matches the package version before publishing. `workflow_dispatch` remains available as a manual fallback.
+
+If the `DISCORD_WEBHOOK_URL` GitHub Actions secret is configured, the publish workflow also sends a Discord notification on both success and failure.
+
 ## Components
 
 - `Spinner` — Loading spinner with size variants
@@ -64,3 +78,15 @@ function MyComponent() {
 
 - [@olwiba/cn](https://github.com/Olwiba/olwibaCN) — Base primitives
 - [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) — Documentation components
+
+
+## Blocks
+
+- AuthSplitBlock - Split auth section
+- DashboardOverviewBlock - Dashboard overview section
+- DashboardShellBlock - Full dashboard shell with sidebar, chart, and table
+- MarketingHeroBlock - Hero + features section
+- ApplicationSidebarBlock - Full application sidebar shell
+- DocumentSidebarBlock - Collapsible docs sidebar shell
+- LoginBlock - Centered login shell
+

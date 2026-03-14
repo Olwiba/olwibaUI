@@ -22,3 +22,14 @@ export { useConfirm, type ConfirmOptions, type UseConfirmReturn } from './hooks/
 export { useControlledOpen, type UseControlledOpenReturn } from './hooks/use-controlled-open';
 export { useScrolledPast } from './hooks/use-scrolled-past';
 
+// Blocks
+export {
+  AuthSplitBlock,
+  DashboardOverviewBlock,
+  DashboardShellBlock,
+  MarketingHeroBlock,
+  ApplicationSidebarBlock,
+  DocumentSidebarBlock,
+  LoginBlock,
+} from './blocks';
+

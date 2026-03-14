@@ -1,0 +1,30 @@
+---
+title: DocumentSidebarBlock
+description: A simple sidebar with collapsible sections for documentation and knowledge-base layouts.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="document-sidebar-block" shellPreview />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { DocumentSidebarBlock } from "@olwiba/ui";
+
+export function Page() {
+  return <DocumentSidebarBlock />;
+}
+```
+
+## API Reference
+
+<APIReference name="DocumentSidebarBlock" props={[]} />

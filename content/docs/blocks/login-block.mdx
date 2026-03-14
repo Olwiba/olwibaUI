@@ -1,0 +1,30 @@
+---
+title: LoginBlock
+description: A centered login shell with muted background and a compact authentication form.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="login-block" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { LoginBlock } from "@olwiba/ui";
+
+export function Page() {
+  return <LoginBlock />;
+}
+```
+
+## API Reference
+
+<APIReference name="LoginBlock" props={[]} />

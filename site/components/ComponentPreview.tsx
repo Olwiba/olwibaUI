@@ -13,6 +13,13 @@ const demos: Record<string, React.LazyExoticComponent<React.FC>> = {
   'register-hotkeys': React.lazy(() => import('~/demos/register-hotkeys')),
   'root-error-fallback': React.lazy(() => import('~/demos/root-error-fallback')),
   'olwiba-ui-context': React.lazy(() => import('~/demos/olwiba-ui-context')),
+  'auth-split-block': React.lazy(() => import('~/demos/auth-split-block')),
+  'dashboard-overview-block': React.lazy(() => import('~/demos/dashboard-overview-block')),
+  'dashboard-shell-block': React.lazy(() => import('~/demos/dashboard-shell-block')),
+  'marketing-hero-block': React.lazy(() => import('~/demos/marketing-hero-block')),
+  'application-sidebar-block': React.lazy(() => import('~/demos/application-sidebar-block')),
+  'document-sidebar-block': React.lazy(() => import('~/demos/document-sidebar-block')),
+  'login-block': React.lazy(() => import('~/demos/login-block')),
 };
 
 interface ComponentPreviewProps {

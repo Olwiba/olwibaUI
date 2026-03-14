@@ -1,16 +1,3 @@
-declare module '@olwiba/cn' {
-  import * as React from 'react';
-
-  export const Button: React.ComponentType<any>;
-  export const AsciiText: React.ComponentType<any>;
-  export function useIsMobile(): boolean;
-
-  export interface ConfettiOptions {
-    [key: string]: unknown;
-  }
-  export function fireConfetti(options?: ConfettiOptions): void;
-}
-
 declare module '@olwiba/docs' {
   import * as React from 'react';
 
@@ -22,9 +9,30 @@ declare module '@olwiba/docs' {
   export function createDocsRoot(config: Record<string, unknown>): unknown;
   export const DocsHeader: React.ComponentType<any>;
   export const DocsLayout: React.ComponentType<any>;
+  export const DocsCopyPage: React.ComponentType<any>;
+  export const DocsMobileNav: React.ComponentType<any>;
+  export const DocsToc: React.ComponentType<any>;
   export const CopyCommandButton: React.ComponentType<any>;
+  export const CopyButton: React.ComponentType<any>;
   export const mdxComponents: Record<string, React.ComponentType<any>>;
   export function extractTextFromReactNode(node: React.ReactNode): string;
+  export function cn(...inputs: any[]): string;
+  export const Sandbox: React.ComponentType<any>;
+  export const CodeFence: React.ComponentType<any>;
+
+  export interface SandboxDefinition {
+    id: string;
+    defaultViewport?: 'desktop' | 'tablet' | 'mobile' | 'custom';
+    files: Array<{ path: string; language: string; code: string }>;
+    preview: React.LazyExoticComponent<React.FC>;
+  }
+
+  export type SandboxRegistryInput =
+    | SandboxDefinition[]
+    | Record<string, SandboxDefinition>;
+
+  export function registerSandboxes(input: SandboxRegistryInput): void;
+  export function getSandboxDefinition(id: string): SandboxDefinition | undefined;
 
   export interface SidebarSection {
     name: string;
@@ -54,3 +62,4 @@ declare module '@olwiba/docs' {
 declare module '@olwiba/docs/server' {
   export function createServer(): unknown;
 }
+
