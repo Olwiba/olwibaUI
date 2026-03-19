@@ -20,8 +20,6 @@ const sidebarSections: SidebarSection[] = [
 ];
 
 export const Route = createFileRoute('/docs/$')({
-  pendingComponent: DocsPagePending,
-  pendingMs: 0,
   component: Page,
   loader: async ({ params }) => {
     const slugs = params._splat?.split('/') ?? [];
@@ -30,26 +28,6 @@ export const Route = createFileRoute('/docs/$')({
     return data;
   },
 });
-
-function DocsPagePending() {
-  return (
-    <div className="w-full flex-1 px-4 pb-6 md:px-6 lg:pb-8">
-      <div className="space-y-4">
-        <div className="h-10 w-64 animate-pulse rounded-md bg-muted" />
-        <div className="h-4 w-full max-w-2xl animate-pulse rounded-md bg-muted" />
-        <div className="h-4 w-full max-w-xl animate-pulse rounded-md bg-muted" />
-      </div>
-      <div className="mt-8 space-y-3">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div
-            key={index}
-            className="h-20 animate-pulse rounded-lg bg-muted/70"
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
 
 const serverLoader = createServerFn({
   method: 'GET',
