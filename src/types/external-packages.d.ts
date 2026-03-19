@@ -8,6 +8,7 @@ declare module '@olwiba/docs' {
 
   export function createDocsRoot(config: Record<string, unknown>): unknown;
   export const DocsHeader: React.ComponentType<any>;
+  export const DocsFooter: React.ComponentType<any>;
   export const DocsLayout: React.ComponentType<any>;
   export const DocsCopyPage: React.ComponentType<any>;
   export const DocsMobileNav: React.ComponentType<any>;
@@ -62,4 +63,5 @@ declare module '@olwiba/docs' {
 declare module '@olwiba/docs/server' {
   export function createServer(): unknown;
 }
+
 
