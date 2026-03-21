@@ -1,0 +1,30 @@
+---
+title: ContactFormBlock
+description: Standalone contact form with name, email, message, and submit.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="contact-form-block" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { ContactFormBlock } from "@olwiba/ui";
+
+export function Page() {
+  return <ContactFormBlock />;
+}
+```
+
+## API Reference
+
+<APIReference name="ContactFormBlock" props={[]} />

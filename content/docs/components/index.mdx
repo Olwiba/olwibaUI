@@ -5,17 +5,57 @@ description: App-level components provided by @olwiba/ui.
 
 These are higher-level abstractions built on `@olwiba/cn` primitives. They solve common app patterns so you don't have to.
 
-## Available Components
+## App Primitives
 
 | Component | Description |
 |-----------|-------------|
-| [Spinner](/docs/components/spinner) | Loading spinner with size variants |
+| [ConfirmDialog](/docs/components/confirm-dialog) | Modal confirmation dialog — UI shell for the useConfirm hook |
+| [EmptyState](/docs/components/empty-state) | Reusable empty state with icon slot, heading, description, and action |
 | [FullPageSpinner](/docs/components/full-page-spinner) | Centered full-page loading state |
+| [Kbd](/docs/components/kbd) | Keyboard shortcut badge — pairs naturally with RegisterHotkeys |
+| [OlwibaUIContext](/docs/components/olwiba-ui-context) | Context provider for shared app state (isMobile) |
 | [PageHeader](/docs/components/page-header) | Page title with description and action slot |
-| [Suspensed](/docs/components/suspensed) | React.Suspense wrapper with default spinner fallback |
-| [ThemeSwitchMinimal](/docs/components/theme-switch-minimal) | Icon button to toggle dark / light mode |
-| [ThemeColorUpdater](/docs/components/theme-color-updater) | Syncs a color theme to `data-theme` on `<html>` |
-| [VersionBanner](/docs/components/version-banner) | Dismissible banner for version announcements |
 | [RegisterHotkeys](/docs/components/register-hotkeys) | Declarative global keyboard shortcut registration |
 | [RootErrorFallback](/docs/components/root-error-fallback) | Full-page error boundary fallback |
-| [OlwibaUIContext](/docs/components/olwiba-ui-context) | Context provider for shared app state (isMobile) |
+| [Spinner](/docs/components/spinner) | Loading spinner with size variants |
+| [Spotlight](/docs/components/spotlight) | Command palette shell with keyboard shortcut trigger and search input |
+| [Suspensed](/docs/components/suspensed) | React.Suspense wrapper with default spinner fallback |
+| [ThemeColorUpdater](/docs/components/theme-color-updater) | Syncs a color theme to `data-theme` on `<html>` |
+| [ThemeSwitchMinimal](/docs/components/theme-switch-minimal) | Icon button to toggle dark / light mode |
+| [VersionBanner](/docs/components/version-banner) | Dismissible banner for version announcements |
+
+## Cards
+
+| Component | Description |
+|-----------|-------------|
+| [FeatureCard](/docs/components/feature-card) | Icon, title, and description card with hover lift effect |
+| [GlassCard](/docs/components/glass-card) | Frosted glass surface card with backdrop blur and translucent border |
+| [ImageCard](/docs/components/image-card) | Card with background image, gradient overlay, and content slot |
+| [PricingCard](/docs/components/pricing-card) | Single pricing tier card with feature list and CTA button |
+| [StatCard](/docs/components/stat-card) | Metric card with value, label, and optional trend indicator |
+| [TestimonialCard](/docs/components/testimonial-card) | Quote card with avatar, name, and role attribution |
+
+## Motion
+
+| Component | Description |
+|-----------|-------------|
+| [CountUp](/docs/components/count-up) | Animated number counter that counts up to a target value on mount or scroll |
+| [FadeIn](/docs/components/fade-in) | Scroll-triggered fade-in animation wrapper using framer-motion |
+| [PageTransition](/docs/components/page-transition) | Route-level page transition wrapper with configurable enter/exit animation |
+| [StaggerChildren](/docs/components/stagger-children) | Cascading child animation wrapper — each child fades in with offset delay |
+
+## Native
+
+| Component | Description |
+|-----------|-------------|
+| [ContextMenu](/docs/components/context-menu) | Right-click context menu with animated entry |
+| [Dock](/docs/components/dock) | macOS-style icon dock with hover magnification animation |
+
+## Decorative
+
+| Component | Description |
+|-----------|-------------|
+| [GlowEffect](/docs/components/glow-effect) | Radial glow accent — static or cursor-following |
+| [GradientBackground](/docs/components/gradient-background) | Animated mesh gradient background for hero sections |
+| [GridPattern](/docs/components/grid-pattern) | Subtle dot or line grid background pattern |
+| [NoiseOverlay](/docs/components/noise-overlay) | Grain texture overlay for adding depth to glassmorphism surfaces |
