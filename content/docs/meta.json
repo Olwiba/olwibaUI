@@ -1,5 +1,5 @@
 {
   "root": true,
-  "pages": ["index", "components", "hooks", "blocks"]
+  "pages": ["index", "blocks", "components", "hooks"]
 }
 

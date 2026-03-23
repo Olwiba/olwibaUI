@@ -2,9 +2,15 @@
   "title": "Hooks",
   "pages": [
     "index",
-    "use-mounted",
     "use-confirm",
     "use-controlled-open",
+    "use-copy-to-clipboard",
+    "use-debounce",
+    "use-intersection-observer",
+    "use-local-storage",
+    "use-media-query",
+    "use-mounted",
+    "use-pagination",
     "use-scrolled-past"
   ]
 }

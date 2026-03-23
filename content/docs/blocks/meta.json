@@ -2,12 +2,28 @@
   "title": "Blocks",
   "pages": [
     "index",
+    "application-sidebar-block",
     "auth-split-block",
+    "contact-form-block",
     "dashboard-overview-block",
     "dashboard-shell-block",
-    "marketing-hero-block",
-    "application-sidebar-block",
     "document-sidebar-block",
-    "login-block"
+    "empty-state-block",
+    "login-block",
+    "not-found-block",
+    "onboarding-block",
+    "settings-layout-block",
+    "user-profile-block",
+    "marketing-cta-block",
+    "marketing-faq-block",
+    "marketing-features-block",
+    "marketing-footer-block",
+    "marketing-hero-block",
+    "marketing-nav-block",
+    "marketing-newsletter-block",
+    "marketing-pricing-block",
+    "marketing-stats-block",
+    "marketing-team-block",
+    "marketing-testimonials-block"
   ]
 }
