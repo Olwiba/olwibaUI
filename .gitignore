@@ -37,4 +37,3 @@ artifacts/
 
 # Generated
 site/routeTree.gen.ts
-bun.lock
