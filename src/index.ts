@@ -44,7 +44,10 @@ export { ConfirmDialog, type ConfirmDialogProps } from './components/ConfirmDial
 export { Kbd, type KbdProps } from './components/Kbd';
 
 // Context
-export { OlwibaUIProvider, useOlwibaUI, type OlwibaUIProviderProps } from './context/OlwibaUIContext';
+export { OlwibaUIProvider, useOlwibaUI, useUIMode, type OlwibaUIProviderProps, type UIMode } from './context/OlwibaUIContext';
+
+// Primitives — mode-aware re-exports of @olwiba/cn components
+export * from './primitives';
 
 // Hooks
 export { useMounted } from './hooks/use-mounted';

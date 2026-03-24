@@ -3,12 +3,16 @@
 import * as React from 'react';
 import { useIsMobile } from '@olwiba/cn';
 
+export type UIMode = 'default' | 'playful' | 'smooth';
+
 interface OlwibaUIContextValue {
   isMobile: boolean;
+  mode: UIMode;
 }
 
 const OlwibaUIContext = React.createContext<OlwibaUIContextValue>({
   isMobile: false,
+  mode: 'default',
 });
 
 export interface OlwibaUIProviderProps {
@@ -18,14 +22,23 @@ export interface OlwibaUIProviderProps {
    * which detects based on a 768px viewport breakpoint.
    */
   isMobile?: boolean;
+  /**
+   * Global component mode. Primitives imported from @olwiba/ui will automatically
+   * apply this mode unless overridden at the component level.
+   *
+   * - `'default'`  — standard square shadcn/Radix appearance
+   * - `'playful'`  — slight rotation + offset drop shadow backdrop
+   * - `'smooth'`   — softer, larger border-radius across all components
+   */
+  mode?: UIMode;
 }
 
-export function OlwibaUIProvider({ children, isMobile: isMobileProp }: OlwibaUIProviderProps) {
+export function OlwibaUIProvider({ children, isMobile: isMobileProp, mode = 'default' }: OlwibaUIProviderProps) {
   const detectedMobile = useIsMobile();
   const isMobile = isMobileProp ?? detectedMobile;
 
   return (
-    <OlwibaUIContext.Provider value={{ isMobile }}>
+    <OlwibaUIContext.Provider value={{ isMobile, mode }}>
       {children}
     </OlwibaUIContext.Provider>
   );
@@ -33,4 +46,9 @@ export function OlwibaUIProvider({ children, isMobile: isMobileProp }: OlwibaUIP
 
 export function useOlwibaUI() {
   return React.useContext(OlwibaUIContext);
+}
+
+/** Returns just the current UI mode from context. */
+export function useUIMode(): UIMode {
+  return React.useContext(OlwibaUIContext).mode;
 }
