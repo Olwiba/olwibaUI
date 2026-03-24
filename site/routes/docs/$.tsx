@@ -17,6 +17,7 @@ const sidebarSections: SidebarSection[] = [
   { name: 'Components', href: '/docs/components' },
   { name: 'Hooks', href: '/docs/hooks' },
   { name: 'Blocks', href: '/docs/blocks' },
+  { name: 'Examples', href: '/docs/examples' },
 ];
 
 export const Route = createFileRoute('/docs/$')({

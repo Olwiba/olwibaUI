@@ -1,0 +1,22 @@
+---
+title: App UI
+description: Full application shell with sidebar navigation, KPI cards, interactive chart, and data table.
+---
+
+<Sandbox id="app-ui-page" shellPreview />
+
+## Usage
+
+```tsx
+import { DashboardShellBlock } from "@olwiba/ui";
+
+export default function AppPage() {
+  return <DashboardShellBlock />;
+}
+```
+
+## Blocks Used
+
+- `MarketingNavBlock` — Top bar with logo and user actions
+- `ApplicationSidebarBlock` — Left sidebar with grouped navigation
+- `DashboardOverviewBlock` — KPI cards, chart, and data table

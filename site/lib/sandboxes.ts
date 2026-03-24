@@ -280,6 +280,105 @@ export default function Example() {
       },
     ],
   },
+  'marketing-page': {
+    id: 'marketing-page',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/marketing-page')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import {
+  MarketingNavBlock,
+  MarketingHeroBlock,
+  MarketingFeaturesBlock,
+  MarketingStatsBlock,
+  MarketingTestimonialsBlock,
+  MarketingPricingBlock,
+  MarketingCtaBlock,
+  MarketingFooterBlock,
+} from "@olwiba/ui";
+
+export default function MarketingPage() {
+  return (
+    <div className="flex flex-col gap-4">
+      <MarketingNavBlock />
+      <MarketingHeroBlock />
+      <MarketingFeaturesBlock />
+      <MarketingStatsBlock />
+      <MarketingTestimonialsBlock />
+      <MarketingPricingBlock />
+      <MarketingCtaBlock />
+      <MarketingFooterBlock />
+    </div>
+  );
+}
+`,
+      },
+    ],
+  },
+  'billing-page': {
+    id: 'billing-page',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/billing-page')),
+    files: [
+      {
+        path: 'app/billing/page.tsx',
+        language: 'tsx',
+        code: `import { StatCard } from "@olwiba/ui";
+import { Badge, Button, Separator, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@olwiba/cn";
+
+// See the full source in the preview for the complete billing page composition.
+export default function BillingPage() {
+  return (
+    <div className="flex min-h-screen flex-col">
+      {/* Nav + sidebar + billing content */}
+    </div>
+  );
+}
+`,
+      },
+    ],
+  },
+  'sign-in-page': {
+    id: 'sign-in-page',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/sign-in-page')),
+    files: [
+      {
+        path: 'app/sign-in/page.tsx',
+        language: 'tsx',
+        code: `import { MarketingNavBlock, AuthSplitBlock } from "@olwiba/ui";
+
+export default function SignInPage() {
+  return (
+    <div className="flex flex-col gap-4">
+      <MarketingNavBlock />
+      <AuthSplitBlock />
+    </div>
+  );
+}
+`,
+      },
+    ],
+  },
+  'app-ui-page': {
+    id: 'app-ui-page',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/app-ui-page')),
+    files: [
+      {
+        path: 'app/dashboard/page.tsx',
+        language: 'tsx',
+        code: `import { DashboardShellBlock } from "@olwiba/ui";
+
+export default function DashboardPage() {
+  return <DashboardShellBlock />;
+}
+`,
+      },
+    ],
+  },
 };
 
 registerSandboxes(uiSandboxes);
