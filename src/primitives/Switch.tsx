@@ -9,14 +9,10 @@ export type SwitchProps = CNSwitchProps;
 export const Switch = React.forwardRef<
   React.ElementRef<typeof CNSwitch>,
   SwitchProps
->(({ playful, ...props }, ref) => {
-  const mode = useUIMode();
-  return (
-    <CNSwitch
-      playful={playful ?? mode === 'playful'}
-      {...props}
-      ref={ref}
-    />
-  );
+>(({ mode, ...props }, ref) => {
+  const ctxMode = useUIMode();
+  // Switch only supports playful — smooth is not applicable
+  const resolvedMode = mode ?? (ctxMode === 'playful' ? 'playful' : undefined);
+  return <CNSwitch mode={resolvedMode} {...props} ref={ref} />;
 });
 Switch.displayName = 'Switch';

@@ -7,16 +7,10 @@ import { useUIMode } from '../context/OlwibaUIContext';
 export type TextareaProps = CNTextareaProps;
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ playful, smooth, ...props }, ref) => {
-    const mode = useUIMode();
-    return (
-      <CNTextarea
-        playful={playful ?? mode === 'playful'}
-        smooth={smooth ?? mode === 'smooth'}
-        {...props}
-        ref={ref}
-      />
-    );
+  ({ mode, ...props }, ref) => {
+    const ctxMode = useUIMode();
+    const resolvedMode = mode ?? (ctxMode !== 'default' ? (ctxMode as "playful" | "smooth") : undefined);
+    return <CNTextarea mode={resolvedMode} {...props} ref={ref} />;
   }
 );
 Textarea.displayName = 'Textarea';

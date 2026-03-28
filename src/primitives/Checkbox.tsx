@@ -9,15 +9,9 @@ export type CheckboxProps = CNCheckboxProps;
 export const Checkbox = React.forwardRef<
   React.ElementRef<typeof CNCheckbox>,
   CheckboxProps
->(({ playful, smooth, ...props }, ref) => {
-  const mode = useUIMode();
-  return (
-    <CNCheckbox
-      playful={playful ?? mode === 'playful'}
-      smooth={smooth ?? mode === 'smooth'}
-      {...props}
-      ref={ref}
-    />
-  );
+>(({ mode, ...props }, ref) => {
+  const ctxMode = useUIMode();
+  const resolvedMode = mode ?? (ctxMode !== 'default' ? (ctxMode as "playful" | "smooth") : undefined);
+  return <CNCheckbox mode={resolvedMode} {...props} ref={ref} />;
 });
 Checkbox.displayName = 'Checkbox';

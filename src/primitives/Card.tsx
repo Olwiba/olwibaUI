@@ -10,16 +10,10 @@ import { useUIMode } from '../context/OlwibaUIContext';
 export type CardProps = CNCardProps;
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ playful, smooth, ...props }, ref) => {
-    const mode = useUIMode();
-    return (
-      <CNCard
-        playful={playful ?? mode === 'playful'}
-        smooth={smooth ?? mode === 'smooth'}
-        {...props}
-        ref={ref}
-      />
-    );
+  ({ mode, ...props }, ref) => {
+    const ctxMode = useUIMode();
+    const resolvedMode = mode ?? (ctxMode !== 'default' ? (ctxMode as "playful" | "smooth") : undefined);
+    return <CNCard mode={resolvedMode} {...props} ref={ref} />;
   }
 );
 Card.displayName = 'Card';
