@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.6
+
+### Fixed
+
+- Updated `@olwiba/cn` to `0.1.5` — picks up the correct `mode?: "playful" | "smooth"` types for Card, Input, Textarea, Checkbox, and Switch (0.1.4 shipped stale compiled output for these components).
+
 ## 0.0.5
 
 ### Fixed
