@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.5
+
+### Fixed
+
+- Updated `@olwiba/cn` dependency to `0.1.4` to pick up the `mode?: "playful" | "smooth"` Button API — the published `0.1.3` only had `playful?: boolean`, causing a DTS build failure in CI.
+
 ## 0.0.4
 
 ### Added
