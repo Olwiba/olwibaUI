@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.4
+
+### Added
+
+- `MarketingHeroSpeedBlock` — asymmetric speed-forward hero with dual-column opposing-scroll live property notification feed (preserves v1 rAF scroll pattern).
+- `MonitorCardBlock` — active-state monitor card with live/paused status badge, last checked, found today/total counts, poll rate, and recent listings list.
+- `NotificationFeedCard` — compact property card with title, meta, source badge, and found timestamp; used inside `MonitorCardBlock` and `MarketingHeroSpeedBlock`.
+- `UpgradePromptBlock` — freemium gate component in two variants: `inline` (dashed-border card in monitor list) and `modal` (tier comparison table + upgrade CTA).
+- `WhatsAppLinkBlock` — pairing code display with live 5-minute countdown, copy-to-clipboard, regenerate link, and connected state with masked phone number.
+- All new block types exported from the package root (`MarketingHeroSpeedBlockProps`, `MonitorCardBlockProps`, `NotificationFeedCardProps`, `PropertyItem`, `UpgradePromptBlockProps`, `WhatsAppLinkBlockProps`).
+
 ## 0.0.3
 
 ### Changed
