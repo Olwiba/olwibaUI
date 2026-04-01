@@ -1,4 +1,5 @@
 export { AuthSplitBlock } from './AuthSplitBlock';
+export { DashboardLayout, type DashboardLayoutProps } from './DashboardLayout';
 export { ContactFormBlock } from './ContactFormBlock';
 export { DashboardOverviewBlock } from './DashboardOverviewBlock';
 export { DashboardShellBlock } from './DashboardShellBlock';
