@@ -2,7 +2,15 @@ export { AuthSplitBlock } from './AuthSplitBlock';
 export { DashboardLayout, type DashboardLayoutProps } from './DashboardLayout';
 export { ContactFormBlock } from './ContactFormBlock';
 export { DashboardOverviewBlock } from './DashboardOverviewBlock';
-export { DashboardShellBlock } from './DashboardShellBlock';
+export {
+  DashboardShellBlock,
+  type DashboardShellBlockProps,
+  type DashboardNavItem,
+  type DashboardShellAction,
+  type DashboardShellUser,
+  type DashboardShellBrand,
+  type DashboardRenderLink,
+} from './DashboardShellBlock';
 export { EmptyStateBlock } from './EmptyStateBlock';
 export { LoginBlock } from './LoginBlock';
 export { MarketingCtaBlock } from './MarketingCtaBlock';
