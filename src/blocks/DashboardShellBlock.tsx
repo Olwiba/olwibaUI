@@ -41,6 +41,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@olwiba/cn';
+import { useUIMode } from '../context/OlwibaUIContext';
 import { ChartAreaInteractive } from './dashboard-shell/ChartAreaInteractive';
 import { dashboardTableData } from './dashboard-shell/data';
 import { DataTable } from './dashboard-shell/DataTable';
@@ -149,6 +150,8 @@ const defaultRenderLink: DashboardRenderLink = ({ href, children, className }) =
 
 function ShellNavUser({ user }: { user: DashboardShellUser }) {
   const { isMobile } = useSidebar();
+  const uiMode = useUIMode();
+  const avatarMode = uiMode !== 'default' ? (uiMode as 'playful' | 'smooth') : undefined;
   const initials = (user.name ?? user.email).slice(0, 2).toUpperCase();
 
   return (
@@ -160,9 +163,9 @@ function ShellNavUser({ user }: { user: DashboardShellUser }) {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale">
+              <Avatar mode={avatarMode} size="sm" className="grayscale">
                 {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
+                <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name ?? user.email}</span>
@@ -181,9 +184,9 @@ function ShellNavUser({ user }: { user: DashboardShellUser }) {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar mode={avatarMode} size="sm">
                   {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                  <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
+                  <AvatarFallback>{initials}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name ?? user.email}</span>
