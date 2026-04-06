@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 import {
   ChevronDown,
   ChevronRight,
@@ -54,6 +55,132 @@ const viewportWidths: Record<Exclude<SandboxViewport, 'custom'>, number> = {
   tablet: 768,
   mobile: 390,
 };
+
+const IFRAME_PREVIEW_DOC = '<!doctype html><html><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><style>html,body,#sandbox-root{height:100%;min-height:100%;margin:0}#sandbox-root{display:flex;flex-direction:column}</style></head><body><div id="sandbox-root"></div></body></html>';
+
+function IframePreview({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const iframeRef = React.useRef<HTMLIFrameElement | null>(null);
+  const [mountNode, setMountNode] = React.useState<HTMLElement | null>(null);
+  const [mountFailed, setMountFailed] = React.useState(false);
+  const reactRootRef = React.useRef<Root | null>(null);
+
+  const setupIframeDocument = React.useCallback(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) return false;
+    const doc = iframe.contentDocument;
+    if (!doc) return false;
+
+    const root = doc.getElementById('sandbox-root');
+    if (!root) return false;
+
+    root.style.height = '100%';
+    root.style.minHeight = '100%';
+    root.style.display = 'flex';
+    root.style.flexDirection = 'column';
+    setMountNode(root as HTMLElement);
+    setMountFailed(false);
+
+    const html = doc.documentElement;
+    const body = doc.body;
+    const sourceHtml = document.documentElement;
+    const sourceBody = document.body;
+
+    html.className = sourceHtml.className;
+    body.className = sourceBody.className;
+
+    const htmlStyle = sourceHtml.getAttribute('style');
+    const bodyStyle = sourceBody.getAttribute('style');
+    if (htmlStyle) html.setAttribute('style', htmlStyle);
+    else html.removeAttribute('style');
+    if (bodyStyle) body.setAttribute('style', bodyStyle);
+    else body.removeAttribute('style');
+
+    html.style.height = '100%';
+    body.style.height = '100%';
+    body.style.margin = '0';
+    body.style.minHeight = '100%';
+
+    if (!doc.head.querySelector('base')) {
+      const base = doc.createElement('base');
+      base.href = document.baseURI;
+      doc.head.appendChild(base);
+    }
+
+    if (!doc.head.querySelector('[data-sandbox-styles="true"]')) {
+      const marker = doc.createElement('meta');
+      marker.setAttribute('data-sandbox-styles', 'true');
+      doc.head.appendChild(marker);
+      const styleNodes = Array.from(
+        document.querySelectorAll('link[rel="stylesheet"], style')
+      );
+      for (const node of styleNodes) {
+        doc.head.appendChild(node.cloneNode(true));
+      }
+    }
+
+    return true;
+  }, []);
+
+  React.useEffect(() => {
+    let retries = 0;
+    const maxRetries = 40;
+    const timer = window.setInterval(() => {
+      if (setupIframeDocument()) {
+        window.clearInterval(timer);
+        return;
+      }
+      retries += 1;
+      if (retries >= maxRetries) {
+        window.clearInterval(timer);
+        setMountFailed(true);
+      }
+    }, 50);
+    return () => window.clearInterval(timer);
+  }, [setupIframeDocument]);
+
+  React.useEffect(() => {
+    if (!mountNode) return;
+    if (!reactRootRef.current) {
+      reactRootRef.current = createRoot(mountNode);
+    }
+    reactRootRef.current.render(<>{children}</>);
+    return () => {
+      reactRootRef.current?.render(<></>);
+    };
+  }, [children, mountNode]);
+
+  React.useEffect(
+    () => () => {
+      reactRootRef.current?.unmount();
+      reactRootRef.current = null;
+    },
+    []
+  );
+
+  return (
+    <div className={cn('h-full w-full', className)}>
+      <iframe
+        ref={iframeRef}
+        className="h-full w-full border-0 bg-transparent"
+        onLoad={setupIframeDocument}
+        sandbox="allow-same-origin allow-scripts"
+        srcDoc={IFRAME_PREVIEW_DOC}
+        title="Sandbox preview"
+      />
+      {!mountNode && mountFailed ? (
+        <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">
+          Preview failed to mount inside iframe.
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 export function DocsSandbox({
   id,
@@ -218,7 +345,7 @@ export function DocsSandbox({
     );
   });
 
-  const previewHeight = height ?? (shellPreview ? 560 : undefined);
+  const previewHeight = height ?? (shellPreview ? 640 : undefined);
 
   const panel = (
     <div className={cn('not-prose my-6 overflow-hidden rounded-lg border border-fd-border bg-fd-background', isExpanded && 'fixed inset-4 z-[210] my-0 flex h-auto max-h-none flex-col rounded-xl shadow-2xl')}>
@@ -254,20 +381,25 @@ export function DocsSandbox({
           <div className="mx-auto min-w-[360px]" ref={containerRef}>
             <div
               className={cn(
-                'relative mx-auto min-h-[320px] overflow-hidden rounded-md border border-fd-border bg-background p-4 transition-[width]',
-                isResizing && 'select-none',
-                shellPreview && 'isolate [transform:translateZ(0)] [contain:layout_paint_style]'
+                'relative mx-auto min-h-[320px] overflow-hidden rounded-md border border-fd-border bg-background transition-[width]',
+                shellPreview ? 'p-0' : 'p-4',
+                isResizing && 'select-none'
               )}
               style={{
                 width: `${previewWidth}px`,
                 ...(previewHeight ? { height: `${isExpanded ? Math.max(previewHeight, 720) : previewHeight}px` } : {}),
               }}
             >
-              <div className={cn('h-full w-full', shellPreview && 'overflow-auto')}>
+              <IframePreview
+                className={cn(
+                  'w-full',
+                  shellPreview ? 'h-full min-h-0 overflow-hidden' : 'h-full'
+                )}
+              >
                 <React.Suspense fallback={<div className="flex h-full items-center justify-center text-sm text-muted-foreground">Loading preview...</div>}>
                   <Preview />
                 </React.Suspense>
-              </div>
+              </IframePreview>
               {viewport === 'custom' ? <button aria-label="Resize preview width" className="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-transparent" onPointerDown={() => setIsResizing(true)} type="button" /> : null}
             </div>
           </div>

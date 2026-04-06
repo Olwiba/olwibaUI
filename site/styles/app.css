@@ -7,6 +7,9 @@
 /* Scan @olwiba packages so Tailwind generates their utility classes */
 @source "../../node_modules/@olwiba/cn/dist";
 @source "../../node_modules/@olwiba/docs/dist";
+/* Also scan local linked repos (bun link ecosystem workflow). */
+@source "../../olwibaCN/src";
+@source "../../olwibaDOCS/src";
 
 @custom-variant dark (&:is(.dark *));
 

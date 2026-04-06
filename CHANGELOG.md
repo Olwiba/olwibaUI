@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.11
+
+### Fixed
+
+- **`DashboardShellBlock`** — `SidebarProvider` uses `h-full min-h-0` when `sidebarPosition="contained"` (or `demo`) so docs sandboxes size to the preview frame instead of `100svh`.
+- **`DocumentSidebarBlock` / `ApplicationSidebarBlock`** — provider + contained sidebar for docs-style shell demos.
+- **`DocsSandbox`** — shell preview frame matches `@olwiba/docs` `Sandbox`: no padding, flex column + `min-h-0` for embedded chrome.
+
 ## 0.0.6
 
 ### Fixed

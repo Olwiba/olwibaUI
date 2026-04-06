@@ -15,6 +15,8 @@ export default defineConfig({
     alias: {
       '@olwiba/ui': resolve('./src/index.ts'),
     },
+    /** Linked `@olwiba/cn` resolves Radix from `olwibaCN/node_modules`; that pulls a second `react` and breaks SSR hooks. */
+    dedupe: ['react', 'react-dom'],
   },
   optimizeDeps: {
     include: ['react-resizable-panels'],
@@ -23,7 +25,11 @@ export default defineConfig({
     },
   },
   ssr: {
-    noExternal: ['react-resizable-panels'],
+    noExternal: [
+      'react-resizable-panels',
+      '@olwiba/cn',
+      '@olwiba/docs',
+    ],
   },
   plugins: [
     mdx(await import('./source.config')),

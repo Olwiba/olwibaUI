@@ -59,6 +59,9 @@ The `demo` prop wraps the shell in a rounded preview card — use it in docs san
   { name: "user", type: "DashboardShellUser", description: "User info and callbacks shown in the sidebar footer dropdown." },
   { name: "pageTitle", type: "string", description: "Title shown in the top header bar next to the sidebar trigger." },
   { name: "renderLink", type: "DashboardRenderLink", description: "Override link rendering for SPA navigation. Default: native <a>." },
+  { name: "collapsible", type: '"icon" | "offcanvas" | "none"', default: '"icon"', description: 'Sidebar collapse behaviour. "icon" collapses to an icon rail and pushes content; "offcanvas" slides off-screen as a drawer overlay; "none" always stays fully visible.' },
+  { name: "sidebarPosition", type: '"viewport" | "contained"', default: '"viewport"', description: "Forwarded to @olwiba/cn Sidebar. Use \"contained\" in docs previews or embedded shells so the rail and main area share one layout; full-page apps use \"viewport\" (fixed to the window)." },
+  { name: "side", type: '"left" | "right"', default: '"left"', description: "Which side the sidebar sits on." },
   { name: "children", type: "ReactNode", description: "Page content rendered in the main area. Omit to show the built-in demo." },
   { name: "demo", type: "boolean", default: "false", description: "Wrap in rounded demo card for docs/storybook previews." },
 ]} />

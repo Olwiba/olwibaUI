@@ -79,7 +79,7 @@ const stats = [
 
 export function ApplicationSidebarBlock() {
   return (
-    <SidebarProvider defaultOpen>
+    <SidebarProvider defaultOpen className="h-full min-h-0">
       <section className="h-full w-full overflow-hidden rounded-2xl border bg-background shadow-sm">
         <div className="flex h-full w-full overflow-hidden">
           <Sidebar collapsible="none" variant="sidebar">

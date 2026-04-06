@@ -107,6 +107,23 @@ export interface DashboardShellBlockProps {
   renderLink?: DashboardRenderLink;
   children?: ReactNode;
   /**
+   * Sidebar collapse behaviour.
+   * - `"icon"` — collapses to a narrow icon rail, content shifts (recommended for desktop dashboards)
+   * - `"offcanvas"` — slides off-screen as a drawer overlay
+   * - `"none"` — always fully visible, never collapses
+   * @default "icon"
+   */
+  collapsible?: 'icon' | 'offcanvas' | 'none';
+  /**
+   * Passed to `@olwiba/cn` `Sidebar`. Use `"contained"` in docs previews or embedded shells so the
+   * sidebar rail and main column stay one layout (not `position: fixed` to the window).
+   * Full-page apps should use `"viewport"` (default).
+   * @default "viewport"
+   */
+  sidebarPosition?: 'viewport' | 'contained';
+  /** Which side the sidebar sits on. @default "left" */
+  side?: 'left' | 'right';
+  /**
    * Wrap in a rounded demo card — use in docs sandboxes.
    * @default false
    */
@@ -229,15 +246,21 @@ function ShellSidebar({
   action,
   user,
   renderLink,
+  collapsible,
+  sidebarPosition,
+  side,
 }: {
   brand: DashboardShellBrand;
   navItems: DashboardNavItem[];
   action?: DashboardShellAction;
   user: DashboardShellUser;
   renderLink: DashboardRenderLink;
+  collapsible: 'icon' | 'offcanvas' | 'none';
+  sidebarPosition: 'viewport' | 'contained';
+  side: 'left' | 'right';
 }) {
   return (
-    <Sidebar collapsible="offcanvas">
+    <Sidebar side={side} collapsible={collapsible} sidebarPosition={sidebarPosition}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -357,19 +380,31 @@ export function DashboardShellBlock({
   user = defaultUser,
   pageTitle = 'Dashboard',
   renderLink = defaultRenderLink,
+  collapsible = 'icon',
+  sidebarPosition = 'viewport',
+  side = 'left',
   children,
   demo = false,
 }: DashboardShellBlockProps = {}) {
   const content = children ?? <DemoContent />;
 
+  const providerLayout =
+    demo || sidebarPosition === 'contained' ? ('embedded' as const) : ('viewport' as const);
+
   const inner = (
-    <SidebarProvider className={demo ? undefined : 'h-svh overflow-hidden'}>
+    <SidebarProvider
+      layout={providerLayout}
+      className={providerLayout === 'viewport' ? 'h-svh overflow-hidden' : 'overflow-hidden'}
+    >
       <ShellSidebar
         brand={brand}
         navItems={navItems}
         action={action}
         user={user}
         renderLink={renderLink}
+        collapsible={collapsible}
+        sidebarPosition={sidebarPosition}
+        side={side}
       />
       <SidebarInset className={demo ? undefined : 'overflow-y-auto'}>
         <ShellHeader pageTitle={pageTitle} />
@@ -385,6 +420,15 @@ export function DashboardShellBlock({
           {inner}
         </div>
       </section>
+    );
+  }
+
+  /** Bound height from the sandbox/parent so `sidebarPosition="contained"` + `layout="embedded"` fill only this region. */
+  if (sidebarPosition === 'contained') {
+    return (
+      <div className="relative flex h-full min-h-0 w-full max-w-full flex-col overflow-hidden">
+        {inner}
+      </div>
     );
   }
 

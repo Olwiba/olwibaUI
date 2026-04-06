@@ -16,10 +16,10 @@ import { AppSidebar } from './document-sidebar/AppSidebar';
 
 export function DocumentSidebarBlock() {
   return (
-    <SidebarProvider>
+    <SidebarProvider className="h-full min-h-0">
       <section className="h-full w-full overflow-hidden rounded-2xl border bg-background shadow-sm">
-        <div className="flex h-full w-full overflow-hidden">
-          <AppSidebar />
+        <div className="flex h-full min-h-0 w-full overflow-hidden">
+          <AppSidebar sidebarPosition="contained" />
           <SidebarInset>
             <header className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
               <SidebarTrigger className="-ml-1" />
