@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.14
+
+### Fixed
+
+- Synced `bun.lock` with the `@olwiba/docs` dependency update so CI `bun install --frozen-lockfile` succeeds during release workflows.
+
 ## 0.0.13
 
 ### Changed
