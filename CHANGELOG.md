@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.13
+
+### Changed
+
+- Docs routing now consumes `DocsLayout` directly from `@olwiba/docs` and removes local `DocsLayout` / `DocsSidebar` forks, aligning UI with the shared docs-shell source-of-truth pipeline.
+- Updated docs package dependency to `0.1.12`.
+- UI dev banner config now uses the shared segmented banner API and responsive fallback behavior synced from upstream docs/CN tooling.
+
 ## 0.0.11
 
 ### Fixed

@@ -1,6 +1,6 @@
 {
   "name": "@olwiba/ui",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": false,
   "type": "module",
   "sideEffects": false,
@@ -31,7 +31,7 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@olwiba/docs": "0.1.10",
+    "@olwiba/docs": "0.1.12",
     "@tanstack/react-table": "^8.21.3",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
