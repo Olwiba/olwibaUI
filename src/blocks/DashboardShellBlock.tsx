@@ -260,7 +260,7 @@ function ShellSidebar({
   side: 'left' | 'right';
 }) {
   return (
-    <Sidebar side={side} collapsible={collapsible} sidebarPosition={sidebarPosition}>
+    <Sidebar side={side} collapsible={collapsible}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -393,8 +393,7 @@ export function DashboardShellBlock({
 
   const inner = (
     <SidebarProvider
-      layout={providerLayout}
-      className={providerLayout === 'viewport' ? 'h-svh overflow-hidden' : 'overflow-hidden'}
+      className={providerLayout === 'viewport' ? 'min-h-svh h-svh overflow-hidden' : 'h-full min-h-0 overflow-hidden'}
     >
       <ShellSidebar
         brand={brand}
