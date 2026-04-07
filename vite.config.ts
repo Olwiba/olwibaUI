@@ -5,6 +5,7 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 import mdx from 'fumadocs-mdx/vite';
 import { resolve } from 'path';
+import { createDevBannerPlugin } from '@olwiba/docs/dev-banner';
 
 export default defineConfig({
   server: {
@@ -32,6 +33,12 @@ export default defineConfig({
     ],
   },
   plugins: [
+    createDevBannerPlugin({
+      segments: [
+        { text: 'olwiba' },
+        { text: 'UI', colorHex: '#a855f7' },
+      ],
+    }),
     mdx(await import('./source.config')),
     tailwindcss(),
     tsConfigPaths({
