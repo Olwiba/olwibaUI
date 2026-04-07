@@ -6,10 +6,9 @@ import browserCollections from 'fumadocs-mdx:collections/browser';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import * as React from 'react';
-import { mdxComponents, CopyCommandButton, extractTextFromReactNode, type PageLoaderData, type TocItem, type SidebarSection } from '@olwiba/docs';
+import { mdxComponents, CopyCommandButton, DocsLayout, extractTextFromReactNode, type PageLoaderData, type TocItem, type SidebarSection } from '@olwiba/docs';
 import { ComponentPreview } from '~/components/ComponentPreview';
 import { DocsSandbox } from '~/components/DocsSandbox';
-import { DocsLayout } from '~/components/DocsLayout';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 
 const sidebarSections: SidebarSection[] = [
