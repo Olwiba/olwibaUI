@@ -1,0 +1,40 @@
+---
+title: EmptyState
+description: Zero-content placeholder with icon, heading, description, and an optional CTA button.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="empty-state" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { EmptyState } from "@olwiba/ui";
+import { FolderOpen } from "lucide-react";
+
+<EmptyState
+  icon={FolderOpen}
+  title="No projects yet"
+  description="Create your first project to get started."
+  action={{ label: "New project", onClick: () => router.push("/new") }}
+/>
+```
+
+## API Reference
+
+<APIReference name="EmptyState" props={[
+  { name: "icon", type: "LucideIcon", description: "Icon rendered above the heading." },
+  { name: "title", type: "string", description: "Primary heading." },
+  { name: "description", type: "string", description: "Supporting copy below the heading." },
+  { name: "action", type: "{ label: string; onClick: () => void }", description: "Optional CTA button." },
+  { name: "className", type: "string", description: "Class applied to the root element." },
+]} />

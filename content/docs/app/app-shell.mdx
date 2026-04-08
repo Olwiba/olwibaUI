@@ -1,0 +1,66 @@
+---
+title: AppShell
+description: Full-page sidebar shell with collapsible nav, user menu, and header. Pass your nav items, brand, and user; get a consistent shell across every route.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="app-shell" shellPreview />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { AppShell } from "@olwiba/ui";
+import { LayoutDashboard, Plus } from "lucide-react";
+import { Link } from "your-router"; // TanStack, Next.js, etc.
+
+export function AppLayout({ children }) {
+  return (
+    <AppShell
+      brand={{ name: "My App", href: "/" }}
+      navItems={[
+        { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", isActive: true },
+      ]}
+      action={{ icon: Plus, label: "New item", href: "/new" }}
+      user={{
+        email: "user@example.com",
+        plan: "free",
+        onSignOut: () => signOut(),
+      }}
+      pageTitle="Dashboard"
+      renderLink={({ href, children }) => <Link to={href}>{children}</Link>}
+    >
+      {children}
+    </AppShell>
+  );
+}
+```
+
+Use `sidebarPosition="contained"` in docs sandboxes or embedded previews so the shell fits its parent rather than filling the viewport:
+
+```tsx
+<AppShell sidebarPosition="contained" />
+```
+
+## API Reference
+
+<APIReference name="AppShell" props={[
+  { name: "brand", type: "AppShellBrand", description: "App name, logo, and href for the sidebar header." },
+  { name: "navItems", type: "AppNavItem[]", description: "Primary navigation links rendered in the sidebar." },
+  { name: "action", type: "AppShellAction", description: "CTA button above nav items (e.g. New item, Quick create)." },
+  { name: "user", type: "AppShellUser", description: "User info and callbacks shown in the sidebar footer dropdown." },
+  { name: "pageTitle", type: "string", default: '"Dashboard"', description: "Title shown in the top header bar." },
+  { name: "renderLink", type: "AppShellRenderLink", description: "Override link rendering for SPA navigation. Default: native <a>." },
+  { name: "collapsible", type: '"icon" | "offcanvas" | "none"', default: '"icon"', description: 'Sidebar collapse behaviour.' },
+  { name: "sidebarPosition", type: '"viewport" | "contained"', default: '"viewport"', description: 'Use "contained" for docs sandboxes or embedded previews; "viewport" for full-page app shells.' },
+  { name: "side", type: '"left" | "right"', default: '"left"', description: "Which side the sidebar sits on." },
+  { name: "children", type: "ReactNode", description: "Page content rendered in the main area." },
+]} />

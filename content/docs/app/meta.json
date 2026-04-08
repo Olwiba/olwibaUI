@@ -1,0 +1,4 @@
+{
+  "title": "App UI",
+  "pages": ["index", "app-shell", "auth-section", "empty-state", "error-page"]
+}

@@ -1,0 +1,31 @@
+---
+title: ErrorPage
+description: Full-page 404 / error fallback with navigation actions.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="error-page" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { ErrorPage } from "@olwiba/ui";
+
+// In a TanStack Router not-found route
+export const Route = createFileRoute("/404")({
+  component: () => <ErrorPage />,
+});
+```
+
+## API Reference
+
+`ErrorPage` takes no props — it renders a self-contained 404 screen with a Go back and Take me home action.

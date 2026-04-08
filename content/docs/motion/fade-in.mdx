@@ -1,0 +1,34 @@
+---
+title: FadeIn
+description: Fade and slide entrance animation wrapper.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="fade-in" />
+
+## Usage
+
+```tsx
+import { FadeIn } from "@olwiba/ui";
+
+<FadeIn>
+  <MyContent />
+</FadeIn>
+
+<FadeIn delay={0.2} duration={0.5} direction="up">
+  <MyContent />
+</FadeIn>
+```
+
+## API Reference
+
+<APIReference name="FadeIn" props={[
+  { name: "children", type: "ReactNode", description: "Content to animate in." },
+  { name: "delay", type: "number", default: "0", description: "Delay before the animation starts (seconds)." },
+  { name: "duration", type: "number", default: "0.4", description: "Animation duration (seconds)." },
+  { name: "direction", type: '"up" | "down" | "left" | "right" | "none"', default: '"up"', description: "Slide direction of the entrance." },
+  { name: "className", type: "string", description: "Class applied to the wrapper." },
+]} />

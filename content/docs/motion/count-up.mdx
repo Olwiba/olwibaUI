@@ -1,0 +1,31 @@
+---
+title: CountUp
+description: Animates a number from 0 to a target value when it enters the viewport.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="count-up" />
+
+## Usage
+
+```tsx
+import { CountUp } from "@olwiba/ui";
+
+<CountUp to={1000} />
+<CountUp to={99.9} decimals={1} suffix="%" duration={2} />
+```
+
+## API Reference
+
+<APIReference name="CountUp" props={[
+  { name: "to", type: "number", description: "Target value to count up to." },
+  { name: "from", type: "number", default: "0", description: "Starting value." },
+  { name: "decimals", type: "number", default: "0", description: "Number of decimal places." },
+  { name: "duration", type: "number", default: "1.5", description: "Animation duration (seconds)." },
+  { name: "prefix", type: "string", description: "String prepended to the number." },
+  { name: "suffix", type: "string", description: "String appended to the number." },
+  { name: "className", type: "string", description: "Class applied to the span." },
+]} />

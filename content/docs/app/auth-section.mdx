@@ -1,0 +1,55 @@
+---
+title: AuthSection
+description: Sign-in screen in centered or split layout. Ships with a default email/password form; override via children.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="auth-section" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { AuthSection } from "@olwiba/ui";
+
+// Centered (default)
+<AuthSection
+  onSubmit={(e) => { e.preventDefault(); signIn() }}
+  onSso={() => signInWithSso()}
+  signUpHref="/register"
+  forgotPasswordHref="/forgot-password"
+/>
+
+// Split layout with decorative panel
+<AuthSection
+  layout="split"
+  onSubmit={(e) => { e.preventDefault(); signIn() }}
+/>
+
+// Custom form
+<AuthSection layout="split">
+  <MyCustomForm />
+</AuthSection>
+```
+
+## API Reference
+
+<APIReference name="AuthSection" props={[
+  { name: "layout", type: '"centered" | "split"', default: '"centered"', description: "Visual layout of the auth screen." },
+  { name: "children", type: "ReactNode", description: "Custom form content. Defaults to the built-in sign-in form." },
+  { name: "panel", type: "ReactNode", description: "Split layout only — custom content for the left decorative panel." },
+  { name: "onSubmit", type: "(e: FormEvent) => void", description: "Form submit handler." },
+  { name: "onSso", type: "() => void", description: "Shows a SSO button when provided." },
+  { name: "signUpHref", type: "string", default: '"#"', description: "Link for the sign-up prompt." },
+  { name: "forgotPasswordHref", type: "string", default: '"#"', description: "Link for the forgot password prompt." },
+  { name: "brand", type: "ReactNode", description: "Logo or brand mark shown above the form title." },
+  { name: "className", type: "string", description: "Class applied to the outer wrapper." },
+]} />

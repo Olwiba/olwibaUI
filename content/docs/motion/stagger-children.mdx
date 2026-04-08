@@ -1,0 +1,31 @@
+---
+title: StaggerChildren
+description: Wraps a list of children and staggers their FadeIn entrance animations.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="stagger-children" />
+
+## Usage
+
+```tsx
+import { StaggerChildren } from "@olwiba/ui";
+
+<StaggerChildren stagger={0.1}>
+  <Card />
+  <Card />
+  <Card />
+</StaggerChildren>
+```
+
+## API Reference
+
+<APIReference name="StaggerChildren" props={[
+  { name: "children", type: "ReactNode", description: "Children to stagger." },
+  { name: "stagger", type: "number", default: "0.1", description: "Delay between each child (seconds)." },
+  { name: "initialDelay", type: "number", default: "0", description: "Delay before the first child animates." },
+  { name: "className", type: "string", description: "Class applied to the wrapper." },
+]} />

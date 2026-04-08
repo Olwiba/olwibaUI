@@ -1,0 +1,18 @@
+{
+  "title": "Marketing",
+  "pages": [
+    "index",
+    "navbar",
+    "footer",
+    "hero-section",
+    "features-section",
+    "cta-section",
+    "pricing-section",
+    "testimonials-section",
+    "team-section",
+    "faq-section",
+    "stats-section",
+    "newsletter-section",
+    "contact-section"
+  ]
+}

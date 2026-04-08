@@ -1,0 +1,29 @@
+---
+title: PageTransition
+description: Wraps route content in a fade entrance animation — drop it around your route component output.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="page-transition" />
+
+## Usage
+
+```tsx
+import { PageTransition } from "@olwiba/ui";
+
+// In a TanStack Router or Next.js layout
+export default function Layout({ children }) {
+  return <PageTransition>{children}</PageTransition>;
+}
+```
+
+## API Reference
+
+<APIReference name="PageTransition" props={[
+  { name: "children", type: "ReactNode", description: "Route content to animate." },
+  { name: "duration", type: "number", default: "0.3", description: "Animation duration (seconds)." },
+  { name: "className", type: "string", description: "Class applied to the wrapper." },
+]} />

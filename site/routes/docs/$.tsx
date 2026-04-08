@@ -13,10 +13,12 @@ import { findNeighbour } from 'fumadocs-core/page-tree';
 
 const sidebarSections: SidebarSection[] = [
   { name: 'Get Started', href: '/docs' },
+  { name: 'App UI', href: '/docs/app' },
+  { name: 'Marketing', href: '/docs/marketing' },
+  { name: 'Overlays', href: '/docs/overlays' },
+  { name: 'Motion', href: '/docs/motion' },
   { name: 'Components', href: '/docs/components' },
   { name: 'Hooks', href: '/docs/hooks' },
-  { name: 'Blocks', href: '/docs/blocks' },
-  { name: 'Examples', href: '/docs/examples' },
 ];
 
 export const Route = createFileRoute('/docs/$')({

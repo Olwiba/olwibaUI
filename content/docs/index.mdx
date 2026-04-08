@@ -1,82 +1,63 @@
 ---
 title: Get Started
-description: Higher-level UI components and hooks built on @olwiba/cn primitives.
+description: App-level components, page sections, and hooks built on @olwiba/cn primitives.
 ---
 
-## What is olwibaUI?
+## What is @olwiba/ui?
 
-`@olwiba/ui` provides app-level components and hooks that extend the primitives from `@olwiba/cn` into reusable patterns for building applications.
+`@olwiba/ui` provides configured page sections, app shells, and hooks that extend `@olwiba/cn` primitives into reusable patterns. Think Tailwind UI — components organized by domain that you drop into your project and wire up.
 
-## Package Chain
+## Package chain
 
-This package sits at the top of the olwiba component chain:
-
-1. **@olwiba/cn** — Base primitives (Button, Card, Dialog, etc.) + confetti
-2. **@olwiba/docs** — Documentation components (DocsSidebar, SearchDialog, etc.)
-3. **@olwiba/ui** — App-level components (Spinner, PageHeader, hooks, context)
+1. **@olwiba/cn** — Base primitives (Button, Card, Dialog, Sidebar, etc.)
+2. **@olwiba/ui** — Configured sections, shells, motion, and hooks built on CN
 
 ## Installation
 
 <CopyCommandButton command="bun add @olwiba/ui @olwiba/cn" />
 
-Your `bunfig.toml`:
-
 ```toml
+# bunfig.toml
 [install.scopes]
 "@olwiba" = { url = "https://npm.olwiba.com/", token = "..." }
 ```
 
-## Quick Start
+## Quick start
 
 ```tsx
-import { OlwibaUIProvider, Spinner, useMounted } from "@olwiba/ui";
-import { Button } from "@olwiba/cn";
+import { OlwibaUIProvider, AppShell } from "@olwiba/ui";
 
-// Wrap your app root
-<OlwibaUIProvider>
-  <App />
-</OlwibaUIProvider>
-
-// Inside a component
-function MyComponent() {
-  const mounted = useMounted();
-  if (!mounted) return <Spinner />;
-  return <Button>Ready!</Button>;
+export function Root() {
+  return (
+    <OlwibaUIProvider>
+      <AppShell
+        brand={{ name: "My App", href: "/" }}
+        navItems={[{ icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" }]}
+        user={{ email: "user@example.com", onSignOut: () => signOut() }}
+      >
+        <Outlet />
+      </AppShell>
+    </OlwibaUIProvider>
+  );
 }
 ```
 
-## What's Included
+## What's included
 
-### Blocks
+### App UI
+Shells and screens for application UIs — `AppShell`, `AuthSection`, `EmptyState`, `ErrorPage`.
 
-- `ApplicationSidebarBlock` / `DocumentSidebarBlock` / `SettingsLayoutBlock` — App shell and navigation layouts
-- `DashboardOverviewBlock` / `DashboardShellBlock` — Dashboard screens with charts, tables, and workspace chrome
-- `AuthSplitBlock` / `LoginBlock` / `OnboardingBlock` — Authentication and onboarding flows
-- `EmptyStateBlock` / `NotFoundBlock` / `UserProfileBlock` / `ContactFormBlock` — Common app screens and account surfaces
-- `MarketingHeroBlock` / `MarketingNavBlock` / `MarketingFooterBlock` — Core marketing page structure
-- `MarketingFeaturesBlock` / `MarketingPricingBlock` / `MarketingTestimonialsBlock` / `MarketingFaqBlock` / `MarketingCtaBlock` / `MarketingStatsBlock` / `MarketingNewsletterBlock` / `MarketingTeamBlock` — Reusable marketing sections
+### Marketing
+Page sections and navigation for marketing sites — `HeroSection`, `FeaturesSection`, `PricingSection`, `Navbar`, `Footer`, and more.
+
+### Overlays
+Background treatments — `Backdrop` with mesh, radial, aurora, grid, noise, and glow variants.
+
+### Motion
+Animation primitives — `FadeIn`, `StaggerChildren`, `CountUp`, `PageTransition`.
 
 ### Components
-
-- `Spinner` / `FullPageSpinner` — Loading states
-- `PageHeader` — Page title with description and action slot
-- `Suspensed` — React.Suspense with a default spinner fallback
-- `ThemeSwitchMinimal` — Dark / light mode toggle button
-- `ThemeColorUpdater` — Syncs a color theme to `data-theme` on `<html>`
-- `VersionBanner` — Dismissible version announcement banner
-- `RegisterHotkeys` — Declarative global keyboard shortcut registration
-- `RootErrorFallback` — Full-page error boundary fallback
-- `OlwibaUIProvider` / `useOlwibaUI` — Shared app state context (auto-detects isMobile)
+Smaller interactive and card components — `Spotlight`, `Dock`, `ConfirmDialog`, card variants, utility components.
 
 ### Hooks
-
-- `useMounted` — Client-side hydration detection
-- `useConfirm` — Headless async confirmation dialog
-- `useControlledOpen` — Open/close state for modals and drawers
-- `useCopyToClipboard` / `useDebounce` / `useIntersectionObserver` — Small interaction and visibility helpers
-- `useLocalStorage` / `useMediaQuery` / `usePagination` — State, responsive, and list management helpers
-- `useScrolledPast` — Scroll threshold detection
-
-### Utilities
-
-- `fireConfetti` — Theme-aware confetti burst (re-exported from `@olwiba/cn`)
+`useMounted`, `useConfirm`, `useControlledOpen`, `useCopyToClipboard`, `useDebounce`, `useIntersectionObserver`, `useLocalStorage`, `useMediaQuery`, `usePagination`, `useScrolledPast`.
