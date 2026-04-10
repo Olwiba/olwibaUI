@@ -1,8 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { OlwibaUIProvider, type UIMode } from '@olwiba/ui';
-import { getUIMode, subscribeUIMode } from '@olwiba/docs';
 
 const demos: Record<string, React.LazyExoticComponent<React.FC>> = {
   'full-page-spinner': React.lazy(() => import('~/demos/full-page-spinner')),
@@ -30,9 +28,6 @@ interface ComponentPreviewProps {
 
 export function ComponentPreview({ name, title }: ComponentPreviewProps) {
   const Demo = demos[name];
-  const [mode, setMode] = React.useState<UIMode>(getUIMode as () => UIMode);
-
-  React.useEffect(() => subscribeUIMode((m) => setMode(m as UIMode)), []);
 
   return (
     <div className="border border-dashed border-border rounded-lg overflow-hidden not-prose my-6">
@@ -44,9 +39,7 @@ export function ComponentPreview({ name, title }: ComponentPreviewProps) {
       <div className="p-8 flex items-center justify-center min-h-[200px]">
         {Demo ? (
           <React.Suspense fallback={<div className="text-muted-foreground text-sm">Loading...</div>}>
-            <OlwibaUIProvider mode={mode}>
-              <Demo />
-            </OlwibaUIProvider>
+            <Demo />
           </React.Suspense>
         ) : (
           <p className="text-muted-foreground text-sm">Demo not found: {name}</p>

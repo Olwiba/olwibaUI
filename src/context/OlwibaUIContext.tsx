@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useIsMobile } from '@olwiba/cn';
+import { useIsMobile, UIVariantProvider, type UIVariant } from '@olwiba/cn';
 
 export type UIMode = 'default' | 'playful' | 'smooth';
 
@@ -37,9 +37,13 @@ export function OlwibaUIProvider({ children, isMobile: isMobileProp, mode = 'def
   const detectedMobile = useIsMobile();
   const isMobile = isMobileProp ?? detectedMobile;
 
+  const variant = mode !== 'default' ? (mode as UIVariant) : undefined;
+
   return (
     <OlwibaUIContext.Provider value={{ isMobile, mode }}>
-      {children}
+      <UIVariantProvider mode={variant}>
+        {children}
+      </UIVariantProvider>
     </OlwibaUIContext.Provider>
   );
 }

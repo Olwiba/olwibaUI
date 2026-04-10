@@ -7,7 +7,6 @@ import {
   AvatarFallback,
   AvatarImage,
   Badge,
-  Button,
   cn,
   Separator,
   Table,
@@ -17,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@olwiba/cn';
-import { StatCard } from '@olwiba/ui';
+import { StatCard, Button } from '@olwiba/ui';
 
 const navItems = [
   { id: 'billing', label: 'Billing', Icon: CreditCard },

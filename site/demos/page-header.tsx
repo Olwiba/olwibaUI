@@ -1,5 +1,4 @@
-import { PageHeader } from '@olwiba/ui';
-import { Button } from '@olwiba/cn';
+import { PageHeader, Button } from '@olwiba/ui';
 
 export default function PageHeaderDemo() {
   return (
