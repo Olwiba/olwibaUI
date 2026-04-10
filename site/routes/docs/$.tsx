@@ -6,9 +6,8 @@ import browserCollections from 'fumadocs-mdx:collections/browser';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import { useFumadocsLoader } from 'fumadocs-core/source/client';
 import * as React from 'react';
-import { mdxComponents, CopyCommandButton, DocsLayout, extractTextFromReactNode, type PageLoaderData, type TocItem, type SidebarSection } from '@olwiba/docs';
+import { mdxComponents, CopyCommandButton, DocsLayout, Sandbox, extractTextFromReactNode, type PageLoaderData, type TocItem, type SidebarSection } from '@olwiba/docs';
 import { ComponentPreview } from '~/components/ComponentPreview';
-import { DocsSandbox } from '~/components/DocsSandbox';
 import { findNeighbour } from 'fumadocs-core/page-tree';
 
 const sidebarSections: SidebarSection[] = [
@@ -84,7 +83,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
             ...mdxComponents,
             ComponentPreview,
             CopyCommandButton,
-            Sandbox: DocsSandbox,
+            Sandbox,
           }}
         />
       </div>
