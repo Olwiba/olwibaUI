@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowLeft, Compass } from 'lucide-react';
-import { Button } from '@olwiba/cn';
+import { Button } from '../primitives/Button';
 
 export function ErrorPage() {
   return (

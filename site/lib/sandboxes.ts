@@ -5,6 +5,89 @@ import {
 } from '@olwiba/docs';
 
 const uiSandboxes: Record<string, SandboxDefinition> = {
+  'app-shell': {
+    id: 'app-shell',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/app-shell')),
+    files: [
+      {
+        path: 'app/layout.tsx',
+        language: 'tsx',
+        code: `import { AppShell } from "@olwiba/ui";
+import { LayoutDashboard, Users, FileText, Settings, Plus } from "lucide-react";
+
+export default function AppLayout({ children }) {
+  return (
+    <AppShell
+      brand={{ name: "Acme App", href: "/" }}
+      navItems={[
+        { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", isActive: true },
+        { icon: Users, label: "Team", href: "/team" },
+        { icon: FileText, label: "Documents", href: "/docs" },
+        { icon: Settings, label: "Settings", href: "/settings" },
+      ]}
+      action={{ icon: Plus, label: "New project", href: "/new" }}
+      user={{
+        name: "Alex Johnson",
+        email: "alex@acme.com",
+        plan: "pro",
+        onSignOut: () => signOut(),
+        onBilling: () => router.push("/billing"),
+      }}
+      pageTitle="Dashboard"
+    >
+      {children}
+    </AppShell>
+  );
+}
+`,
+      },
+    ],
+  },
+  'auth-section': {
+    id: 'auth-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/auth-section')),
+    files: [
+      {
+        path: 'app/sign-in/page.tsx',
+        language: 'tsx',
+        code: `import { AuthSection } from "@olwiba/ui";
+
+// Centered layout (default)
+export default function SignInPage() {
+  return (
+    <AuthSection
+      onSubmit={(e) => { e.preventDefault(); signIn() }}
+      onSso={() => signInWithSso()}
+      signUpHref="/register"
+      forgotPasswordHref="/forgot-password"
+    />
+  );
+}
+`,
+      },
+      {
+        path: 'app/sign-in/split-layout.tsx',
+        language: 'tsx',
+        code: `import { AuthSection } from "@olwiba/ui";
+
+// Split layout with decorative panel
+export default function SignInPage() {
+  return (
+    <AuthSection
+      layout="split"
+      onSubmit={(e) => { e.preventDefault(); signIn() }}
+      onSso={() => signInWithSso()}
+      signUpHref="/register"
+      forgotPasswordHref="/forgot-password"
+    />
+  );
+}
+`,
+      },
+    ],
+  },
   'auth-split-block': {
     id: 'auth-split-block',
     defaultViewport: 'desktop',

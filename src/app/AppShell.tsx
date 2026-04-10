@@ -192,6 +192,7 @@ function ShellSidebar({
   renderLink,
   collapsible,
   side,
+  sidebarPosition,
 }: {
   brand: AppShellBrand;
   navItems: AppNavItem[];
@@ -200,9 +201,10 @@ function ShellSidebar({
   renderLink: AppShellRenderLink;
   collapsible: 'icon' | 'offcanvas' | 'none';
   side: 'left' | 'right';
+  sidebarPosition: 'viewport' | 'contained';
 }) {
   return (
-    <Sidebar side={side} collapsible={collapsible}>
+    <Sidebar side={side} collapsible={collapsible} sidebarPosition={sidebarPosition}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -331,7 +333,8 @@ export function AppShell({
 
   const inner = (
     <SidebarProvider
-      className={isContained ? 'h-full min-h-0 overflow-hidden' : 'min-h-svh h-svh overflow-hidden'}
+      layout={isContained ? 'embedded' : 'viewport'}
+      className={isContained ? 'overflow-hidden' : 'h-svh overflow-hidden'}
     >
       <ShellSidebar
         brand={brand}
@@ -341,6 +344,7 @@ export function AppShell({
         renderLink={renderLink}
         collapsible={collapsible}
         side={side}
+        sidebarPosition={sidebarPosition}
       />
       <SidebarInset className={isContained ? undefined : 'overflow-y-auto'}>
         <ShellHeader pageTitle={pageTitle} />
