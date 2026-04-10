@@ -1,9 +1,9 @@
-import { LoginBlock } from '@/blocks';
+import { AuthSection } from '@olwiba/ui';
 
 export default function LoginBlockDemo() {
   return (
     <div className="w-full max-w-5xl">
-      <LoginBlock />
+      <AuthSection layout="centered" />
     </div>
   );
 }

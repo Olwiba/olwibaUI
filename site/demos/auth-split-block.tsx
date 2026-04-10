@@ -1,9 +1,9 @@
-import { AuthSplitBlock } from '@/blocks';
+import { AuthSection } from '@olwiba/ui';
 
 export default function AuthSplitBlockDemo() {
   return (
     <div className="w-full max-w-5xl">
-      <AuthSplitBlock />
+      <AuthSection layout="split" />
     </div>
   );
 }
