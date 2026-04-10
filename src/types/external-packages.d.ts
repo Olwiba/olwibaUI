@@ -35,6 +35,18 @@ declare module '@olwiba/docs' {
   export function registerSandboxes(input: SandboxRegistryInput): void;
   export function getSandboxDefinition(id: string): SandboxDefinition | undefined;
 
+  export interface UIModeOption {
+    value: string;
+    label: string;
+  }
+  export interface UIModeDropdownProps {
+    modes: UIModeOption[];
+  }
+  export const UIModeDropdown: React.ComponentType<UIModeDropdownProps>;
+  export function getUIMode(): string;
+  export function setUIMode(mode: string): void;
+  export function subscribeUIMode(fn: (mode: string) => void): () => void;
+
   export interface SidebarSection {
     name: string;
     href: string;

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Spinner } from './Spinner';
+import { Spinner } from '@olwiba/cn';
 
 interface SuspensedProps {
   children: React.ReactNode;

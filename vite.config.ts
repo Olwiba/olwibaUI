@@ -30,6 +30,10 @@ export default defineConfig({
       'react-resizable-panels',
       '@olwiba/cn',
       '@olwiba/docs',
+      // Radix packages are deps of @olwiba/cn. Without this they resolve as SSR
+      // externals from olwibaCN/node_modules and pull a second React instance,
+      // causing "Cannot read properties of null (reading 'useMemo')".
+      /^@radix-ui\//,
     ],
   },
   plugins: [

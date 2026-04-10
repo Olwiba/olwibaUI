@@ -80,7 +80,7 @@ export { PricingCard, type PricingCardProps, type PricingFeature } from './compo
 export { ImageCard, type ImageCardProps } from './components/ImageCard';
 
 // ─── Components — utility ────────────────────────────────────────────────────
-export { Spinner, FullPageSpinner } from './components/Spinner';
+export { FullPageSpinner } from './components/Spinner';
 export { PageHeader } from './components/PageHeader';
 export { Suspensed } from './components/Suspensed';
 export { ThemeSwitchMinimal } from './components/ThemeSwitchMinimal';
@@ -88,7 +88,6 @@ export { ThemeColorUpdater } from './components/ThemeColorUpdater';
 export { VersionBanner } from './components/VersionBanner';
 export { RegisterHotkeys, type Hotkey } from './components/RegisterHotkeys';
 export { RootErrorFallback } from './components/RootErrorFallback';
-export { Kbd, type KbdProps } from './components/Kbd';
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 export { useMounted } from './hooks/use-mounted';

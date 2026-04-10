@@ -18,11 +18,12 @@ import {
   Smartphone,
   Tablet,
 } from 'lucide-react';
-import { getSandboxDefinition } from '@olwiba/docs';
+import { getSandboxDefinition, getUIMode, subscribeUIMode } from '@olwiba/docs';
 import { Button, Tabs, TabsList, TabsTrigger } from '@olwiba/cn';
 import { CodeFence } from '@olwiba/docs';
 import { cn } from '@olwiba/docs';
 import { CopyButton } from '@olwiba/docs';
+import { OlwibaUIProvider, type UIMode } from '@olwiba/ui';
 
 type SandboxViewport = 'desktop' | 'tablet' | 'mobile' | 'custom';
 type SandboxMode = 'preview' | 'code';
@@ -191,6 +192,9 @@ export function DocsSandbox({
 }: SandboxProps) {
   const definition = getSandboxDefinition(id);
   const [mode, setMode] = React.useState<SandboxMode>(defaultMode);
+  const [uiMode, setUIMode] = React.useState<UIMode>(getUIMode as () => UIMode);
+
+  React.useEffect(() => subscribeUIMode((m) => setUIMode(m as UIMode)), []);
   const [viewport, setViewport] = React.useState<SandboxViewport>(
     definition?.defaultViewport ?? defaultViewport
   );
@@ -397,7 +401,9 @@ export function DocsSandbox({
                 )}
               >
                 <React.Suspense fallback={<div className="flex h-full items-center justify-center text-sm text-muted-foreground">Loading preview...</div>}>
-                  <Preview />
+                  <OlwibaUIProvider mode={uiMode}>
+                    <Preview />
+                  </OlwibaUIProvider>
                 </React.Suspense>
               </IframePreview>
               {viewport === 'custom' ? <button aria-label="Resize preview width" className="absolute right-0 top-0 h-full w-2 cursor-ew-resize bg-transparent" onPointerDown={() => setIsResizing(true)} type="button" /> : null}

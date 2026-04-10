@@ -18,7 +18,8 @@ bun add @olwiba/ui
 ## Usage
 
 ```tsx
-import { Suspensed, Spinner } from "@olwiba/ui";
+import { Suspensed } from "@olwiba/ui";
+import { Spinner } from "@olwiba/cn";
 ```
 
 ```tsx
@@ -28,7 +29,7 @@ import { Suspensed, Spinner } from "@olwiba/ui";
 </Suspensed>
 
 // Custom fallback
-<Suspensed fallback={<Spinner size="sm" />}>
+<Suspensed fallback={<Spinner className="size-4" />}>
   <LazyComponent />
 </Suspensed>
 ```

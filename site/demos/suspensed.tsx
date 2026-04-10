@@ -1,4 +1,5 @@
-import { Suspensed, Spinner } from '@olwiba/ui';
+import { Suspensed } from '@olwiba/ui';
+import { Spinner } from '@olwiba/cn';
 import * as React from 'react';
 
 const DelayedContent = React.lazy(
