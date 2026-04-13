@@ -1,10 +1,10 @@
 {
   "name": "@olwiba/ui",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "private": false,
   "type": "module",
   "sideEffects": false,
-  "description": "App-level components and hooks built on @olwiba/cn",
+  "description": "App shells, marketing sections, interactive components, and hooks built on @olwiba/cn",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "exports": {
