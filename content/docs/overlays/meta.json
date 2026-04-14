@@ -1,4 +1,4 @@
 {
-  "title": "Overlays",
-  "pages": ["index", "backdrop"]
+  "title": "Layering",
+  "pages": ["index", "underlay", "overlay"]
 }

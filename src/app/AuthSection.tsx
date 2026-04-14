@@ -8,7 +8,7 @@ import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitl
 
 function CenteredAuth({ children }: { children: React.ReactNode }) {
   return (
-    <section className="flex min-h-[720px] w-full flex-col items-center justify-center gap-6 rounded-2xl bg-muted p-6 md:p-10">
+    <section className="flex h-full min-h-[720px] w-full flex-col items-center justify-center gap-6 rounded-2xl bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         {children}
       </div>
@@ -20,23 +20,25 @@ function CenteredAuth({ children }: { children: React.ReactNode }) {
 
 function SplitAuth({ children, panel }: { children: React.ReactNode; panel?: React.ReactNode }) {
   const defaultPanel = (
-    <>
-      <Badge variant="secondary" className="mb-4">Welcome</Badge>
-      <h2 className="text-3xl font-semibold tracking-tight">Build better, ship faster</h2>
-      <p className="mt-3 max-w-md text-muted-foreground">
-        Sign in to continue building with ready-made components and layouts.
-      </p>
+    <div className="flex flex-col gap-6">
+      <Badge variant="secondary" className="w-fit">Welcome</Badge>
+      <div className="space-y-3">
+        <h2 className="text-3xl font-semibold tracking-tight">Build better, ship faster</h2>
+        <p className="max-w-md text-muted-foreground">
+          Sign in to continue building with ready-made components and layouts.
+        </p>
+      </div>
       <div className="space-y-3 text-sm text-muted-foreground">
         <div className="flex items-center gap-2"><ShieldCheck className="size-4" /> Type-safe components</div>
         <div className="flex items-center gap-2"><Sparkles className="size-4" /> Polished defaults</div>
         <div className="flex items-center gap-2"><Building2 className="size-4" /> Plug-and-play shells</div>
       </div>
-    </>
+    </div>
   );
 
   return (
-    <section className="grid min-h-[560px] overflow-hidden rounded-2xl border bg-card lg:grid-cols-2">
-      <div className="relative hidden p-8 lg:flex lg:flex-col lg:justify-between">
+    <section className="grid h-full min-h-[560px] overflow-hidden rounded-2xl border bg-card lg:grid-cols-2">
+      <div className="relative hidden p-8 pb-16 lg:flex lg:flex-col lg:justify-center">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-muted" />
         <div className="relative z-10">{panel ?? defaultPanel}</div>
       </div>
@@ -125,14 +127,14 @@ export function AuthSection({
 
   if (layout === 'split') {
     return (
-      <div className={className}>
+      <div className={cn('h-full', className)}>
         <SplitAuth panel={panel}>{form}</SplitAuth>
       </div>
     );
   }
 
   return (
-    <div className={cn(className)}>
+    <div className={cn('h-full', className)}>
       <CenteredAuth>{form}</CenteredAuth>
     </div>
   );

@@ -1,0 +1,60 @@
+---
+title: Overlay
+description: Dim, scrim, and loading overlays that sit in front of content inside a container.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<ComponentPreview name="overlay" noPadding />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { Overlay } from "@olwiba/ui";
+
+// Overlay sits on top — place after your content in a relative container
+<div className="relative overflow-hidden rounded-xl">
+  {/* your content */}
+  <Overlay variant="loading" label="Saving..." />
+</div>
+
+// Dim — semi-transparent wash over content
+<Overlay variant="dim" opacity={0.5} />
+
+// Scrim — gradient fade from an edge (great for image text legibility)
+<Overlay variant="scrim" direction="bottom" />
+```
+
+## API Reference
+
+<APIReference name="Overlay" props={[
+  { name: "variant", type: '"dim" | "scrim" | "loading"', description: "Selects the overlay treatment." },
+  { name: "className", type: "string", description: "Class applied to the root element." },
+]} />
+
+### Dim variant
+
+<APIReference name="Overlay (dim)" props={[
+  { name: "opacity", type: "number", default: "0.5", description: "Opacity of the background wash." },
+]} />
+
+### Scrim variant
+
+<APIReference name="Overlay (scrim)" props={[
+  { name: "direction", type: '"top" | "bottom" | "left" | "right"', default: '"bottom"', description: "Direction the gradient fades toward." },
+  { name: "color", type: "string", default: '"var(--background)"', description: "The opaque color the scrim fades to." },
+]} />
+
+### Loading variant
+
+<APIReference name="Overlay (loading)" props={[
+  { name: "label", type: "string", description: "Optional status label shown below the spinner." },
+]} />

@@ -1,38 +1,207 @@
 # @olwiba/ui
 
-> App-level components and UI hooks built on `@olwiba/cn`.
+> App shells, marketing sections, interactive components, and hooks built on `@olwiba/cn`.
 
 ## What This Is
 
-Higher-level UI components and hooks for building applications. These extend the primitives from `@olwiba/cn` into reusable patterns.
+`@olwiba/ui` is the app-level package in the Olwiba ecosystem.
+
+Use it for:
+- application shells and auth surfaces
+- empty, loading, and error states
+- reusable marketing page sections
+- interactive helpers such as spotlights, docks, and confirm dialogs
+- motion, overlay, and mode-aware primitive composition
+
+Use `@olwiba/docs` for documentation layout and navigation primitives such as `DocsLayout`, `DocsSidebar`, and docs search.
 
 ## Package Chain
 
-```
-@olwiba/cn      → Base primitives (Button, Card, Dialog, etc.)
-@olwiba/docs    → Documentation components (DocsSidebar, SearchDialog, etc.)
-@olwiba/ui      → App-level components (Spinner, hooks) ← YOU ARE HERE
+```text
+@olwiba/cn      -> Base primitives, styling foundations, and low-level interactions
+@olwiba/docs    -> Documentation layouts, navigation, and MDX-facing docs UI
+@olwiba/ui      -> App-level shells, marketing sections, interactive components, and hooks
 ```
 
 ## Installation
 
 ```bash
-# Configure Verdaccio in bunfig.toml first
 bun add @olwiba/ui @olwiba/cn
+```
+
+Peer dependencies:
+- `react`
+- `react-dom`
+- `@olwiba/cn`
+
+## Quick Start
+
+Wrap your app in `OlwibaUIProvider` if you want a shared UI mode for the package's mode-aware primitives and components.
+
+```tsx
+import {
+  AppShell,
+  EmptyState,
+  OlwibaUIProvider,
+} from "@olwiba/ui";
+
+function App() {
+  return (
+    <OlwibaUIProvider mode="smooth">
+      <AppShell pageTitle="Dashboard">
+        <EmptyState
+          title="No projects yet"
+          description="Create your first project to get started."
+        />
+      </AppShell>
+    </OlwibaUIProvider>
+  );
+}
+```
+
+## Export Surface
+
+### Context and mode helpers
+
+- `OlwibaUIProvider`
+- `useOlwibaUI`
+- `useUIMode`
+- `cn`
+
+### App surfaces
+
+- `AppShell`
+- `AuthSection`
+- `EmptyState`
+- `ErrorPage`
+
+### Marketing sections
+
+- `HeroSection`
+- `FeaturesSection`
+- `CtaSection`
+- `PricingSection`
+- `TestimonialsSection`
+- `TeamSection`
+- `FaqSection`
+- `StatsSection`
+- `NewsletterSection`
+- `ContactSection`
+- `Navbar`
+- `Footer`
+
+### Overlays and motion
+
+- `Underlay`
+- `Overlay`
+- `FadeIn`
+- `StaggerChildren`
+- `CountUp`
+- `PageTransition`
+
+### Interactive components
+
+- `Spotlight`
+- `Dock`
+- `ContextMenu`
+- `ConfirmDialog`
+
+### Cards and utility components
+
+- `GlassCard`
+- `FeatureCard`
+- `StatCard`
+- `TestimonialCard`
+- `PricingCard`
+- `ImageCard`
+- `FullPageSpinner`
+- `PageHeader`
+- `Suspensed`
+- `ThemeSwitchMinimal`
+- `ThemeColorUpdater`
+- `VersionBanner`
+- `RegisterHotkeys`
+- `RootErrorFallback`
+
+If you need the primitive `Spinner`, import it from `@olwiba/cn`. `@olwiba/ui` exports `FullPageSpinner`.
+
+### Hooks
+
+- `useMounted`
+- `useConfirm`
+- `useControlledOpen`
+- `useScrolledPast`
+- `useCopyToClipboard`
+- `useDebounce`
+- `useIntersectionObserver`
+- `useLocalStorage`
+- `useMediaQuery`
+- `usePagination`
+
+### Mode-aware primitive re-exports
+
+- `Button`
+- `Card`
+- `CardHeader`
+- `CardTitle`
+- `CardDescription`
+- `CardContent`
+- `CardFooter`
+- `Badge`
+- `Input`
+- `Textarea`
+- `Checkbox`
+- `Switch`
+
+## Example: Auth Surface
+
+```tsx
+import { AuthSection } from "@olwiba/ui";
+
+export function LoginPage() {
+  return (
+    <AuthSection
+      layout="split"
+      signUpHref="/signup"
+      forgotPasswordHref="/forgot-password"
+    />
+  );
+}
+```
+
+## Example: Marketing Page
+
+```tsx
+import {
+  CtaSection,
+  FeaturesSection,
+  HeroSection,
+  Navbar,
+  Footer,
+} from "@olwiba/ui";
+
+export function LandingPage() {
+  return (
+    <main className="space-y-8">
+      <Navbar />
+      <HeroSection />
+      <FeaturesSection />
+      <CtaSection />
+      <Footer />
+    </main>
+  );
+}
 ```
 
 ## Development
 
 ```bash
-# Install deps
 bun install
-
-# Run docs site (port 3002)
 bun run web:dev
-
-# Build package
 bun run build
 ```
+
+`web:dev` starts the local package site on port `3002`.
 
 ## Release Flow
 
@@ -48,45 +217,8 @@ The `publish-package` GitHub Actions workflow runs automatically on `v*` tags an
 
 If the `DISCORD_WEBHOOK_URL` GitHub Actions secret is configured, the publish workflow also sends a Discord notification on both success and failure.
 
-## Components
-
-- `Spinner` — Loading spinner with size variants
-- `FullPageSpinner` — Centered full-page loading state
-
-## Hooks
-
-- `useMounted` — Client-side hydration detection
-
-## Usage
-
-```tsx
-import { Spinner, useMounted } from "@olwiba/ui";
-import { Button } from "@olwiba/cn";
-
-function MyComponent() {
-  const mounted = useMounted();
-
-  if (!mounted) {
-    return <Spinner />;
-  }
-
-  return <Button>Ready!</Button>;
-}
-```
-
 ## Related
 
-- [@olwiba/cn](https://github.com/Olwiba/olwibaCN) — Base primitives
-- [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) — Documentation components
-
-
-## Blocks
-
-- AuthSplitBlock - Split auth section
-- DashboardOverviewBlock - Dashboard overview section
-- DashboardShellBlock - Full dashboard shell with sidebar, chart, and table
-- MarketingHeroBlock - Hero + features section
-- ApplicationSidebarBlock - Full application sidebar shell
-- DocumentSidebarBlock - Collapsible docs sidebar shell
-- LoginBlock - Centered login shell
+- [@olwiba/cn](https://github.com/Olwiba/olwibaCN) - Base primitives
+- [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) - Documentation framework and docs shell components
 

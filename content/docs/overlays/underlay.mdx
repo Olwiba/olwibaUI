@@ -1,0 +1,56 @@
+---
+title: Underlay
+description: Grid patterns and glow effects that sit behind content inside a container.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<ComponentPreview name="underlay" noPadding />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { Underlay } from "@olwiba/ui";
+
+// Place inside a relative container — content goes on top with z-10
+<div className="relative overflow-hidden rounded-xl">
+  <Underlay variant="dots" />
+  <div className="relative z-10 p-8">Content</div>
+</div>
+
+// Glow — follows cursor when followCursor is true
+<div className="relative overflow-hidden rounded-xl">
+  <Underlay variant="glow" size={400} followCursor />
+  <div className="relative z-10 p-8">Hover me</div>
+</div>
+```
+
+## API Reference
+
+<APIReference name="Underlay" props={[
+  { name: "variant", type: '"dots" | "lines" | "cross" | "glow"', description: "Selects the visual treatment." },
+  { name: "className", type: "string", description: "Class applied to the root element." },
+]} />
+
+### Grid variants (`dots`, `lines`, `cross`)
+
+<APIReference name="Underlay (grid)" props={[
+  { name: "size", type: "number", default: "24", description: "Pattern tile size in pixels." },
+]} />
+
+### Glow variant
+
+<APIReference name="Underlay (glow)" props={[
+  { name: "size", type: "number", default: "400", description: "Diameter of the glow orb in pixels." },
+  { name: "color", type: "string", default: '"color-mix(in oklch, var(--primary) 45%, transparent)"', description: "Glow color." },
+  { name: "followCursor", type: "boolean", default: "false", description: "Tracks cursor position within the container." },
+  { name: "blur", type: '"sm" | "md" | "lg" | "xl"', default: '"lg"', description: "Blur intensity of the glow." },
+]} />

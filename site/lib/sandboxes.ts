@@ -462,6 +462,223 @@ export default function DashboardPage() {
       },
     ],
   },
+
+  // ─── Marketing ───────────────────────────────────────────────────────────────
+
+  'hero-section': {
+    id: 'hero-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/hero-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { HeroSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <HeroSection />;
+}
+`,
+      },
+    ],
+  },
+  'navbar': {
+    id: 'navbar',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/navbar')),
+    files: [
+      {
+        path: 'app/layout.tsx',
+        language: 'tsx',
+        code: `import { Navbar } from "@olwiba/ui";
+
+export default function Layout({ children }) {
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
+}
+`,
+      },
+    ],
+  },
+  'features-section': {
+    id: 'features-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/features-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { FeaturesSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <FeaturesSection />;
+}
+`,
+      },
+    ],
+  },
+  'stats-section': {
+    id: 'stats-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/stats-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { StatsSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <StatsSection />;
+}
+`,
+      },
+    ],
+  },
+  'faq-section': {
+    id: 'faq-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/faq-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { FaqSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <FaqSection />;
+}
+`,
+      },
+    ],
+  },
+  'pricing-section': {
+    id: 'pricing-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/pricing-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { PricingSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <PricingSection />;
+}
+`,
+      },
+    ],
+  },
+  'testimonials-section': {
+    id: 'testimonials-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/testimonials-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { TestimonialsSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <TestimonialsSection />;
+}
+`,
+      },
+    ],
+  },
+  'team-section': {
+    id: 'team-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/team-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { TeamSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <TeamSection />;
+}
+`,
+      },
+    ],
+  },
+  'cta-section': {
+    id: 'cta-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/cta-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { CtaSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <CtaSection />;
+}
+`,
+      },
+    ],
+  },
+  'newsletter-section': {
+    id: 'newsletter-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/newsletter-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { NewsletterSection } from "@olwiba/ui";
+
+export default function Page() {
+  return <NewsletterSection />;
+}
+`,
+      },
+    ],
+  },
+  'footer': {
+    id: 'footer',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/footer')),
+    files: [
+      {
+        path: 'app/layout.tsx',
+        language: 'tsx',
+        code: `import { Footer } from "@olwiba/ui";
+
+export default function Layout({ children }) {
+  return (
+    <>
+      {children}
+      <Footer />
+    </>
+  );
+}
+`,
+      },
+    ],
+  },
+  'contact-section': {
+    id: 'contact-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/contact-section')),
+    files: [
+      {
+        path: 'app/contact/page.tsx',
+        language: 'tsx',
+        code: `import { ContactSection } from "@olwiba/ui";
+
+export default function ContactPage() {
+  return <ContactSection />;
+}
+`,
+      },
+    ],
+  },
 };
 
 registerSandboxes(uiSandboxes);

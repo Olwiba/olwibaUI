@@ -56,8 +56,9 @@ export { ContactSection } from './marketing/ContactSection';
 export { Navbar } from './marketing/Navbar';
 export { Footer } from './marketing/Footer';
 
-// ─── Overlays ─────────────────────────────────────────────────────────────────
-export { Backdrop, type BackdropProps, type BackdropVariant } from './overlays/Backdrop';
+// ─── Layering ─────────────────────────────────────────────────────────────────
+export { Underlay, type UnderlayProps, type UnderlayVariant } from './overlays/Underlay';
+export { Overlay, type OverlayProps, type OverlayVariant } from './overlays/Overlay';
 
 // ─── Motion ───────────────────────────────────────────────────────────────────
 export { FadeIn, type FadeInProps } from './motion/FadeIn';

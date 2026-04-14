@@ -70,6 +70,11 @@
     to { height: 0; }
   }
 
+  @keyframes gradient {
+    0%, 100% { opacity: 1; background-position: 0% 50%; }
+    50% { opacity: 0.8; background-position: 100% 50%; }
+  }
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
