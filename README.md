@@ -74,6 +74,7 @@ function App() {
 - `AuthSection`
 - `EmptyState`
 - `ErrorPage`
+- `UpgradePrompt`
 
 ### Marketing sections
 
@@ -164,6 +165,37 @@ export function LoginPage() {
       layout="split"
       signUpHref="/signup"
       forgotPasswordHref="/forgot-password"
+    />
+  );
+}
+```
+
+## Example: Upgrade Prompt
+
+```tsx
+import { UpgradePrompt } from "@olwiba/ui";
+
+const rows = [
+  { label: "Projects", currentValue: "1", upgradedValue: "10" },
+  { label: "Sync rate", currentValue: "15 min", upgradedValue: "1 min" },
+];
+
+export function BillingGate() {
+  return (
+    <UpgradePrompt
+      variant="comparison"
+      eyebrow="Pro plan"
+      title="Unlock faster monitoring"
+      description="Keep the structure shared while leaving copy, pricing, and limits in the product."
+      currentPlanLabel="Starter"
+      upgradedPlanLabel="Pro"
+      rows={rows}
+      footer="Upgrade when the starter cap begins slowing the workflow down."
+      secondaryActionLabel="Maybe later"
+      onSecondaryAction={() => {}}
+      onClose={() => {}}
+      primaryActionLabel="Upgrade - £15/mo"
+      onPrimaryAction={() => {}}
     />
   );
 }

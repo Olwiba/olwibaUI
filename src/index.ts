@@ -40,6 +40,12 @@ export {
   ErrorPage,
 } from './app/ErrorPage';
 
+export {
+  UpgradePrompt,
+  type UpgradePromptProps,
+  type UpgradeComparisonRow,
+} from './app/UpgradePrompt';
+
 // ─── Marketing — page sections ────────────────────────────────────────────────
 export { HeroSection } from './marketing/HeroSection';
 export { FeaturesSection } from './marketing/FeaturesSection';

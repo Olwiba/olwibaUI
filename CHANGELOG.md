@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.0.20
+
+### Added
+
+- `UpgradePrompt` as a reusable app-level upgrade/paywall block in `@olwiba/ui`, with `banner` and `comparison` variants.
+
+### Changed
+
+- Generalized the upgrade block API so products provide their own copy, pricing, plan labels, limits, and comparison rows instead of inheriting rmBot-specific assumptions.
+- Documented the new block in the package README with a downstream-configurable example.
+
 ## 0.0.14
 
 ### Fixed
