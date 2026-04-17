@@ -12,6 +12,7 @@ export interface NavbarProps {
     primary?: { label: string; href: string };
     secondary?: { label: string; href: string };
   };
+  actions?: React.ReactNode;
   renderLink?: AppShellRenderLink;
 }
 
@@ -23,6 +24,7 @@ export function Navbar({
   brand,
   navLinks,
   cta,
+  actions,
   renderLink = defaultRenderLink,
 }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
@@ -61,6 +63,7 @@ export function Navbar({
 
         {/* Desktop CTAs */}
         <div className="hidden items-center gap-3 md:flex">
+          {actions}
           {cta?.secondary &&
             renderLink({
               href: cta.secondary.href,
@@ -119,6 +122,7 @@ export function Navbar({
               ))}
             </nav>
             <div className="mt-6 flex flex-col gap-2">
+              {actions && <div className="flex justify-end">{actions}</div>}
               {cta?.secondary &&
                 renderLink({
                   href: cta.secondary.href,
