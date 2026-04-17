@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Quote } from 'lucide-react';
+import { Quote, Star } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage, cn } from '@olwiba/cn';
 
 export interface TestimonialCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -11,6 +11,7 @@ export interface TestimonialCardProps extends React.HTMLAttributes<HTMLDivElemen
   company?: string;
   avatar?: string;
   initials?: string;
+  rating?: number;
 }
 
 export function TestimonialCard({
@@ -20,6 +21,7 @@ export function TestimonialCard({
   company,
   avatar,
   initials,
+  rating,
   className,
   ...props
 }: TestimonialCardProps) {
@@ -29,6 +31,21 @@ export function TestimonialCard({
       {...props}
     >
       <Quote className="size-4 text-muted-foreground/40" />
+      {rating != null && (
+        <div className="flex gap-0.5">
+          {Array.from({ length: 5 }, (_, i) => (
+            <Star
+              key={i}
+              className={cn(
+                'size-4',
+                i < rating
+                  ? 'fill-current text-amber-400'
+                  : 'text-muted-foreground/30',
+              )}
+            />
+          ))}
+        </div>
+      )}
       <p className="flex-1 text-sm leading-relaxed">{quote}</p>
       <div className="flex items-center gap-3">
         <Avatar className="size-9 rounded-xl">

@@ -1,57 +1,111 @@
 'use client';
 
 import * as React from 'react';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Separator } from '@olwiba/cn';
+import { ArrowRight } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from '@olwiba/cn';
+import { FadeIn } from '../motion/FadeIn';
+import type { AppShellRenderLink } from '../app/AppShell';
 
-const features = [
-  {
-    title: 'Composable by default',
-    description: 'Every section is built from olwibaCN primitives so you can re-arrange quickly.',
-  },
-  {
-    title: 'Consistent tokens',
-    description: 'Spacing, colors, and radius stay aligned across app surfaces.',
-  },
-  {
-    title: 'Production-friendly',
-    description: 'These blocks are designed to drop into real app pages, not only demos.',
-  },
-];
+export interface HeroSectionProps {
+  heading: string;
+  badge?: string;
+  description: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  heroImage: React.ReactNode;
+  avatarUrls?: string[];
+  socialProofText?: string;
+  renderLink?: AppShellRenderLink;
+}
 
-export function HeroSection() {
+const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
+  <a href={href} className={className}>{children}</a>
+);
+
+export function HeroSection({
+  heading,
+  badge,
+  description,
+  primaryCta,
+  secondaryCta,
+  heroImage,
+  avatarUrls,
+  socialProofText,
+  renderLink = defaultRenderLink,
+}: HeroSectionProps) {
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
-      <div className="relative px-6 py-14 sm:px-10 sm:py-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,hsl(var(--primary)/0.18),transparent_40%),radial-gradient(circle_at_80%_20%,hsl(var(--chart-2)/0.12),transparent_30%)]" />
-        <div className="relative mx-auto max-w-4xl text-center">
-          <Badge className="mb-4" variant="secondary">Base UI Blocks</Badge>
-          <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-            Ship polished screens with olwibaCN-powered building blocks
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-pretty text-muted-foreground">
-            Start with production-ready sections and tailor content, structure, and interactions to your product.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button size="lg">Get started <ArrowRight className="ml-2 size-4" /></Button>
-            <Button size="lg" variant="outline">View examples</Button>
-          </div>
+    <section className="overflow-hidden">
+      <div className="px-6 py-14 sm:px-10 sm:py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          {/* Left - text content */}
+          <FadeIn direction="left">
+            <div className="flex flex-col gap-6">
+              {badge && (
+                <div>
+                  <Badge variant="secondary">{badge}</Badge>
+                </div>
+              )}
+              <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+                {heading}
+              </h1>
+              <p className="max-w-lg text-pretty text-lg text-muted-foreground">
+                {description}
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                {renderLink({
+                  href: primaryCta.href,
+                  children: (
+                    <Button size="lg">
+                      {primaryCta.label}
+                      <ArrowRight className="ml-2 size-4" />
+                    </Button>
+                  ),
+                })}
+                {secondaryCta &&
+                  renderLink({
+                    href: secondaryCta.href,
+                    children: (
+                      <Button size="lg" variant="outline">
+                        {secondaryCta.label}
+                      </Button>
+                    ),
+                  })}
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Right - hero image */}
+          <FadeIn direction="right" delay={200}>
+            <div className="overflow-hidden rounded-2xl">
+              {heroImage}
+            </div>
+          </FadeIn>
         </div>
-      </div>
 
-      <Separator />
-
-      <div className="grid gap-4 p-6 sm:grid-cols-3 sm:p-8">
-        {features.map((feature) => (
-          <Card key={feature.title}>
-            <CardHeader className="space-y-3">
-              <CheckCircle2 className="size-5 text-primary" />
-              <CardTitle className="text-base">{feature.title}</CardTitle>
-              <CardDescription>{feature.description}</CardDescription>
-            </CardHeader>
-            <CardContent />
-          </Card>
-        ))}
+        {/* Avatar social proof row */}
+        {(avatarUrls?.length || socialProofText) && (
+          <FadeIn direction="up" delay={400}>
+            <div className="mx-auto mt-12 flex max-w-6xl items-center gap-4">
+              {avatarUrls && avatarUrls.length > 0 && (
+                <div className="flex -space-x-3">
+                  {avatarUrls.map((url, i) => (
+                    <Avatar key={i} className="size-9 border-2 border-background">
+                      <AvatarImage src={url} alt="" />
+                      <AvatarFallback className="text-xs">
+                        {String.fromCharCode(65 + (i % 26))}
+                      </AvatarFallback>
+                    </Avatar>
+                  ))}
+                </div>
+              )}
+              {socialProofText && (
+                <p className="text-sm font-medium text-muted-foreground">
+                  {socialProofText}
+                </p>
+              )}
+            </div>
+          </FadeIn>
+        )}
       </div>
     </section>
   );

@@ -38,6 +38,7 @@ export {
 
 export {
   ErrorPage,
+  type ErrorPageProps,
 } from './app/ErrorPage';
 
 export {
@@ -47,20 +48,22 @@ export {
 } from './app/UpgradePrompt';
 
 // ─── Marketing — page sections ────────────────────────────────────────────────
-export { HeroSection } from './marketing/HeroSection';
-export { FeaturesSection } from './marketing/FeaturesSection';
-export { CtaSection } from './marketing/CtaSection';
-export { PricingSection } from './marketing/PricingSection';
-export { TestimonialsSection } from './marketing/TestimonialsSection';
+export { SectionTitle, type SectionTitleProps } from './marketing/SectionTitle';
+export { HeroSection, type HeroSectionProps } from './marketing/HeroSection';
+export { FeaturesSection, type FeaturesSectionProps } from './marketing/FeaturesSection';
+export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
+export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
+export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/TestimonialsSection';
 export { TeamSection } from './marketing/TeamSection';
-export { FaqSection } from './marketing/FaqSection';
-export { StatsSection } from './marketing/StatsSection';
+export { FaqSection, type FaqSectionProps } from './marketing/FaqSection';
+export { StatsSection, type StatsSectionProps } from './marketing/StatsSection';
 export { NewsletterSection } from './marketing/NewsletterSection';
 export { ContactSection } from './marketing/ContactSection';
 
 // ─── Marketing — elements ─────────────────────────────────────────────────────
-export { Navbar } from './marketing/Navbar';
-export { Footer } from './marketing/Footer';
+export { Navbar, type NavbarProps } from './marketing/Navbar';
+export { Footer, type FooterProps } from './marketing/Footer';
+export { LogoStrip, type LogoStripProps } from './marketing/LogoStrip';
 
 // ─── Layering ─────────────────────────────────────────────────────────────────
 export { Underlay, type UnderlayProps, type UnderlayVariant } from './overlays/Underlay';
@@ -88,11 +91,12 @@ export { ImageCard, type ImageCardProps } from './components/ImageCard';
 
 // ─── Components — utility ────────────────────────────────────────────────────
 export { FullPageSpinner } from './components/Spinner';
-export { PageHeader } from './components/PageHeader';
+export { PageHeader, type PageHeaderProps, type PageHeaderBreadcrumb, type PageHeaderBackButton } from './components/PageHeader';
 export { Suspensed } from './components/Suspensed';
 export { ThemeSwitchMinimal } from './components/ThemeSwitchMinimal';
 export { ThemeColorUpdater } from './components/ThemeColorUpdater';
 export { VersionBanner } from './components/VersionBanner';
+export { DevBanner, type DevBannerProps } from './components/DevBanner';
 export { RegisterHotkeys, type Hotkey } from './components/RegisterHotkeys';
 export { RootErrorFallback } from './components/RootErrorFallback';
 
