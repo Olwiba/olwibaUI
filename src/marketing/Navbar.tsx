@@ -82,11 +82,6 @@ export function Navbar() {
           </SheetContent>
         </Sheet>
       </nav>
-
-      <Separator />
-      <div className="flex items-center justify-center px-6 py-8 text-sm text-muted-foreground">
-        Resize the preview pane to see the mobile menu
-      </div>
     </section>
   );
 }
