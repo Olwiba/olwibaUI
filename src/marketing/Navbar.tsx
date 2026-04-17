@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button, Separator, Sheet, SheetContent, SheetTrigger } from '@olwiba/cn';
 import type { AppShellRenderLink } from '../app/AppShell';
+import { ThemeSwitchMinimal } from '../components/ThemeSwitchMinimal';
 
 export interface NavbarProps {
   brand: { name: string; logo?: React.ReactNode; href?: string };
@@ -12,7 +13,7 @@ export interface NavbarProps {
     primary?: { label: string; href: string };
     secondary?: { label: string; href: string };
   };
-  actions?: React.ReactNode;
+  showThemeToggle?: boolean;
   renderLink?: AppShellRenderLink;
 }
 
@@ -24,7 +25,7 @@ export function Navbar({
   brand,
   navLinks,
   cta,
-  actions,
+  showThemeToggle = false,
   renderLink = defaultRenderLink,
 }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
@@ -63,7 +64,6 @@ export function Navbar({
 
         {/* Desktop CTAs */}
         <div className="hidden items-center gap-3 md:flex">
-          {actions}
           {cta?.secondary &&
             renderLink({
               href: cta.secondary.href,
@@ -74,6 +74,7 @@ export function Navbar({
               href: cta.primary.href,
               children: <Button size="sm">{cta.primary.label}</Button>,
             })}
+          {showThemeToggle && <ThemeSwitchMinimal />}
         </div>
 
         {/* Mobile drawer */}
@@ -86,10 +87,7 @@ export function Navbar({
           </SheetTrigger>
           <SheetContent side="right" className="w-72">
             <div className="flex items-center justify-between pb-4">
-              <span
-                onClick={() => setOpen(false)}
-                className="cursor-pointer"
-              >
+              <span onClick={() => setOpen(false)} className="cursor-pointer">
                 {renderLink({
                   href: brandHref,
                   children: (
@@ -104,10 +102,13 @@ export function Navbar({
                   ),
                 })}
               </span>
-              <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-                <X className="size-4" />
-                <span className="sr-only">Close menu</span>
-              </Button>
+              <div className="flex items-center gap-1">
+                {showThemeToggle && <ThemeSwitchMinimal />}
+                <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+                  <X className="size-4" />
+                  <span className="sr-only">Close menu</span>
+                </Button>
+              </div>
             </div>
             <Separator />
             <nav className="mt-4 flex flex-col gap-1">
@@ -122,7 +123,6 @@ export function Navbar({
               ))}
             </nav>
             <div className="mt-6 flex flex-col gap-2">
-              {actions && <div className="flex justify-end">{actions}</div>}
               {cta?.secondary &&
                 renderLink({
                   href: cta.secondary.href,
