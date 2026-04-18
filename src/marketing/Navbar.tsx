@@ -33,8 +33,8 @@ export function Navbar({
 
   return (
     <section className="overflow-hidden rounded-2xl border bg-card">
-      <nav className="flex h-16 items-center justify-between px-6">
-        {/* Brand */}
+      <nav className="grid h-16 grid-cols-[1fr_auto_1fr] items-center px-6">
+        {/* Brand — left column */}
         {renderLink({
           href: brandHref,
           children: (
@@ -49,7 +49,7 @@ export function Navbar({
           ),
         })}
 
-        {/* Desktop nav links */}
+        {/* Desktop nav links — center column, truly centered */}
         <div className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
             <span key={link.label}>
@@ -62,8 +62,8 @@ export function Navbar({
           ))}
         </div>
 
-        {/* Desktop CTAs */}
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Desktop CTAs — right column, right-aligned */}
+        <div className="hidden items-center justify-end gap-3 md:flex">
           {cta?.secondary &&
             renderLink({
               href: cta.secondary.href,
@@ -77,10 +77,10 @@ export function Navbar({
           {showThemeToggle && <ThemeSwitchMinimal />}
         </div>
 
-        {/* Mobile drawer */}
+        {/* Mobile drawer — right column on small screens */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button variant="ghost" size="icon" className="justify-self-end md:hidden">
               <Menu className="size-5" />
               <span className="sr-only">Open menu</span>
             </Button>
