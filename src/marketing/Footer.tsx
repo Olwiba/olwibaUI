@@ -1,12 +1,11 @@
 'use client';
 
-import { Separator } from '@olwiba/cn';
 import type { ReactNode } from 'react';
 import type { AppShellRenderLink } from '../app/AppShell';
 
 export interface FooterProps {
-  brand: { name: string; logo?: ReactNode; description?: string; href?: string };
-  columns: Array<{ heading: string; links: Array<{ label: string; href: string }> }>;
+  brand: { name: string; logo?: ReactNode; href?: string };
+  navLinks?: Array<{ label: string; href: string }>;
   socialLinks?: Array<{ label: string; href: string; icon: ReactNode }>;
   legal?: string;
   renderLink?: AppShellRenderLink;
@@ -18,7 +17,7 @@ const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) =>
 
 export function Footer({
   brand,
-  columns,
+  navLinks,
   socialLinks,
   legal,
   renderLink = defaultRenderLink,
@@ -27,70 +26,62 @@ export function Footer({
   const copyrightText = legal ?? `\u00A9 ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
 
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
-      <footer className="px-6 py-10 sm:px-10 sm:py-14">
-        <div className="grid gap-8 sm:grid-cols-2 lg:flex lg:gap-8">
-          {/* Brand */}
-          <div className="space-y-4 lg:flex-[1.5]">
-            {renderLink({
-              href: brandHref,
-              children: (
-                <span className="flex items-center gap-2 font-semibold">
-                  {brand.logo && (
-                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                      {brand.logo}
-                    </span>
-                  )}
-                  <span>{brand.name}</span>
-                </span>
-              ),
-            })}
-            {brand.description && (
-              <p className="max-w-xs text-sm text-muted-foreground">
-                {brand.description}
-              </p>
-            )}
-            {socialLinks && socialLinks.length > 0 && (
-              <div className="flex items-center gap-3">
-                {socialLinks.map(({ label, href, icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                  >
-                    {icon}
-                  </a>
-                ))}
+    <footer className="bg-gray-900">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+        {/* Brand */}
+        <div className="flex justify-center">
+          {renderLink({
+            href: brandHref,
+            className: 'flex items-center gap-2',
+            children: (
+              <>
+                {brand.logo && (
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-white">
+                    {brand.logo}
+                  </span>
+                )}
+                <span className="text-lg font-semibold text-white">{brand.name}</span>
+              </>
+            ),
+          })}
+        </div>
+
+        {/* Nav links */}
+        {navLinks && navLinks.length > 0 && (
+          <nav className="mt-10 flex flex-wrap justify-center gap-x-12 gap-y-3" aria-label="Footer">
+            {navLinks.map(({ label, href }) => (
+              <div key={label}>
+                {renderLink({
+                  href,
+                  className: 'text-sm/6 text-gray-400 hover:text-white transition-colors',
+                  children: label,
+                })}
               </div>
-            )}
+            ))}
+          </nav>
+        )}
+
+        {/* Social icons */}
+        {socialLinks && socialLinks.length > 0 && (
+          <div className="mt-10 flex justify-center gap-x-10">
+            {socialLinks.map(({ label, href, icon }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="text-gray-400 hover:text-gray-300 transition-colors"
+              >
+                {icon}
+              </a>
+            ))}
           </div>
+        )}
 
-          {/* Link columns */}
-          {columns.map((col) => (
-            <div key={col.heading} className="space-y-3 lg:flex-1">
-              <div className="text-sm font-medium">{col.heading}</div>
-              <ul className="space-y-2">
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    {renderLink({
-                      href: link.href,
-                      className: 'text-sm text-muted-foreground transition-colors hover:text-foreground',
-                      children: link.label,
-                    })}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <Separator className="mt-10" />
-
-        <div className="mt-6 text-center text-sm text-muted-foreground">
-          <span>{copyrightText}</span>
-        </div>
-      </footer>
-    </section>
+        {/* Copyright */}
+        <p className="mt-10 text-center text-sm/6 text-gray-500">
+          {copyrightText}
+        </p>
+      </div>
+    </footer>
   );
 }

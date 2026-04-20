@@ -650,11 +650,23 @@ export default function Page() {
         language: 'tsx',
         code: `import { Footer } from "@olwiba/ui";
 
+const navLinks = [
+  { label: "Features", href: "#" },
+  { label: "Pricing", href: "#" },
+  { label: "About", href: "#" },
+  { label: "Blog", href: "#" },
+  { label: "Privacy", href: "#" },
+  { label: "Terms", href: "#" },
+];
+
 export default function Layout({ children }) {
   return (
     <>
       {children}
-      <Footer />
+      <Footer
+        brand={{ name: "Nexus Inc" }}
+        navLinks={navLinks}
+      />
     </>
   );
 }
