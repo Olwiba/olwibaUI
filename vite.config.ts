@@ -5,7 +5,7 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 import mdx from 'fumadocs-mdx/vite';
 import { resolve } from 'path';
-import { createDevBannerPlugin } from '@olwiba/docs/dev-banner';
+import { createDevBannerPlugin } from '@olwiba/dx';
 
 export default defineConfig({
   server: {
