@@ -20,7 +20,7 @@
       },
       "devDependencies": {
         "@olwiba/cn": "0.1.12",
-        "@olwiba/dx": "0.0.1",
+        "@olwiba/dx": "0.0.2",
         "@tailwindcss/vite": "^4.1.18",
         "@tanstack/react-router": "1.154.8",
         "@tanstack/react-router-devtools": "1.154.8",
@@ -202,7 +202,7 @@
 
     "@olwiba/docs": ["@olwiba/docs@0.1.16", "https://npm.pkg.github.com/download/@olwiba/docs/0.1.16/ef5e2861aae7d17f297f21175acc33403cac179f", { "dependencies": { "clsx": "^2.1.1", "fumadocs-core": "^16.4.7", "fumadocs-ui": "^16.4.7", "hono": "^4.7.0", "lucide-react": "^0.562.0", "sonner": "^2.0.7", "tailwind-merge": "^3.4.0" }, "peerDependencies": { "@olwiba/cn": ">=0.1.2", "@tanstack/react-router": ">=1.0.0", "react": ">=18.0.0", "react-dom": ">=18.0.0" } }, "sha512-4W82qQs7AURiVsawDas73CA0mL9521BfP+cJJ9IECOIdl4jurY3ylJWIj/c1o1CP/FLs6wL7bqJJcvHgWt694Q=="],
 
-    "@olwiba/dx": ["@olwiba/dx@0.0.1", "https://npm.pkg.github.com/download/@olwiba/dx/0.0.1/8aa1a995c592bb320decd41acb279d1a242af394", {}, "sha512-VcaSBcqn49AxxCuuKQn5PN4Giat3IHv+t4Fl/9gKX9gm5f8n8s97DAYTfnN/ahcU/omcppHMuAPXc2EIU791Cw=="],
+    "@olwiba/dx": ["@olwiba/dx@0.0.2", "https://npm.pkg.github.com/download/@olwiba/dx/0.0.2/18f6288b917b168f72e2a54eff9efdc321923b9b", {}, "sha512-GUPHW0o8LNvA0r6NJceUDw+N9wTiiL+Ctq60YhpdWiiIs3qAmjYT/iv+dOhFF+90dZ24Jtu/8EnkOKDML0hJJQ=="],
 
     "@oozcitak/dom": ["@oozcitak/dom@2.0.2", "", { "dependencies": { "@oozcitak/infra": "^2.0.2", "@oozcitak/url": "^3.0.0", "@oozcitak/util": "^10.0.0" } }, "sha512-GjpKhkSYC3Mj4+lfwEyI1dqnsKTgwGy48ytZEhm4A/xnH/8z9M3ZVXKr/YGQi3uCLs1AEBS+x5T2JPiueEDW8w=="],
 
