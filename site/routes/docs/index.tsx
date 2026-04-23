@@ -1,12 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { DocsPage, clientLoader, getDocsSlugsFromPath, serverLoader } from '~/lib/docs-page';
+import { DocsPage, clientLoader, serverLoader } from '~/lib/docs-page';
 import type { PageLoaderData } from '@olwiba/docs';
 
-export const Route = createFileRoute('/docs/$')({
+export const Route = createFileRoute('/docs/')({
   component: Page,
-  loader: async ({ location }) => {
-    const locationSlugs = getDocsSlugsFromPath(location.pathname);
-    const slugs = locationSlugs;
+  loader: async () => {
+    const slugs = [''];
     const data = (await serverLoader({ data: slugs })) as PageLoaderData;
     await clientLoader.preload(data.path);
     return data;

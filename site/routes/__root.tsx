@@ -1,7 +1,8 @@
-import { createDocsRoot, Theme } from '@olwiba/docs';
+import { createDocsRoot } from '@olwiba/docs';
 import { SiteHeader } from '~/components/SiteHeader';
 import { SiteFooter } from '~/components/SiteFooter';
 import { UIModeWrapper } from '~/components/UIModeWrapper';
+import { projectConfig } from '~/project.config';
 import appCss from '~/styles/app.css?url';
 
 export const Route = createDocsRoot({
@@ -19,7 +20,7 @@ export const Route = createDocsRoot({
   ],
   header: SiteHeader,
   footer: SiteFooter,
-  initialTheme: Theme.Purple,
+  initialTheme: projectConfig.theme.initialDocsTheme,
   cssUrl: appCss,
   wrapper: UIModeWrapper,
 });

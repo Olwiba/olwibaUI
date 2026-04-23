@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { OlwibaUIProvider, type UIMode } from '@olwiba/ui';
 import { getUIMode, subscribeUIMode } from '@olwiba/docs';
+import { projectThemeStyleCss } from '~/project.config';
 
 /**
  * Root-level provider that keeps OlwibaUIProvider in sync with the
@@ -14,5 +15,10 @@ export function UIModeWrapper({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => subscribeUIMode((m) => setMode(m as UIMode)), []);
 
-  return <OlwibaUIProvider mode={mode}>{children}</OlwibaUIProvider>;
+  return (
+    <>
+      <style>{projectThemeStyleCss}</style>
+      <OlwibaUIProvider mode={mode}>{children}</OlwibaUIProvider>
+    </>
+  );
 }

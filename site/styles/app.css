@@ -91,8 +91,8 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
 
-  /* Purple theme — overridden dynamically by ActiveThemeProvider */
-  --primary: oklch(0.546 0.245 293);
+  /* Project accent */
+  --primary: var(--project-brand-accent);
   --primary-foreground: oklch(0.985 0 0);
 
   --secondary: oklch(0.97 0 0);
@@ -104,7 +104,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.546 0.245 293);
+  --ring: var(--project-brand-accent);
 
   --chart-1: oklch(0.623 0.214 291);
   --chart-2: oklch(0.546 0.245 293);
@@ -114,7 +114,7 @@
 
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.546 0.245 293);
+  --sidebar-primary: var(--project-brand-accent);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
@@ -138,7 +138,7 @@
   --popover: oklch(0.269 0 0);
   --popover-foreground: oklch(0.985 0 0);
 
-  --primary: oklch(0.623 0.214 291);
+  --primary: var(--project-brand-accent-dark);
   --primary-foreground: oklch(0.985 0 0);
 
   --secondary: oklch(0.269 0 0);
@@ -150,7 +150,7 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.623 0.214 291);
+  --ring: var(--project-brand-accent-dark);
 
   --chart-1: oklch(0.623 0.214 291);
   --chart-2: oklch(0.546 0.245 293);
@@ -160,7 +160,7 @@
 
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.623 0.214 291);
+  --sidebar-primary: var(--project-brand-accent-dark);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);

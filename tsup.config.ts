@@ -1,5 +1,6 @@
 import { defineConfig } from 'tsup';
 import { createTsupBannerHook } from '@olwiba/dx';
+import { projectBanner } from './site/project.config';
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -9,10 +10,5 @@ export default defineConfig({
   external: ['react', 'react-dom', '@olwiba/cn'],
   sourcemap: true,
   treeshake: true,
-  onSuccess: createTsupBannerHook({
-    segments: [
-      { text: 'olwiba' },
-      { text: 'UI', colorHex: '#a855f7' },
-    ],
-  }),
+  onSuccess: createTsupBannerHook(projectBanner),
 });
