@@ -29,7 +29,7 @@
 
 `@olwiba/ui` is the app-level package in the Nexus ecosystem.
 
-It provides application shells, auth surfaces, marketing sections, interactive components, motion primitives, and utility hooks — all built on `@olwiba/cn`.
+It provides application shells, auth surfaces, marketing sections, interactive components, motion primitives, and utility hooks - all built on `@olwiba/cn`.
 
 Use `@olwiba/docs` for documentation layout and navigation primitives such as `DocsLayout` and `DocsSidebar`.
 
@@ -78,8 +78,8 @@ function App() {
 
 ## Ecosystem
 
-- [@olwiba/cn](https://github.com/Olwiba/olwibaCN) — base primitives
-- [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) — documentation framework
+- [@olwiba/cn](https://github.com/Olwiba/olwibaCN) - base primitives
+- [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) - documentation framework
 
 ## Contributing
 
