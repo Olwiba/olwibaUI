@@ -1,5 +1,12 @@
 # Changelog
 
+
+## 0.0.27
+
+### Added
+
+- `IsometricPlane` component and `iso:generate` pipeline now wired up and available for use
+
 ## 0.0.20
 
 ### Added

@@ -1,26 +1,44 @@
-# @olwiba/ui
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="./public/olwibaUI--light.gif" />
+    <source media="(prefers-color-scheme: dark)" srcset="./public/olwibaUI.gif" />
+    <img src="./public/olwibaUI.gif" alt="olwibaUI" style="width: 100%;" />
+  </picture>
+</p>
 
-> App shells, marketing sections, interactive components, and hooks built on `@olwiba/cn`.
+<p align="center">
+  <strong>Olwiba's app-level package. Shells, sections, interactive blocks, and hooks.</strong>
+</p>
+
+<p align="center">
+  <a href="https://ui.olwiba.com">Documentation</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Olwiba/olwibaUI/issues/new?template=bug_report.md">🪲 Report a bug</a> ·
+  <a href="https://github.com/Olwiba/olwibaUI/issues/new?template=feature_request.md">✨ Feature request</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/sponsors/Olwiba"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=22c55e" alt="Sponsor" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/Olwiba/olwibaUI?label=license&logo=github" alt="License" /></a>
+  <a href="https://github.com/Olwiba/olwibaUI/issues"><img src="https://img.shields.io/github/issues/Olwiba/olwibaUI" alt="Issues" /></a>
+</p>
 
 ## What This Is
 
-`@olwiba/ui` is the app-level package in the Olwiba ecosystem.
+`@olwiba/ui` is the app-level package in the Nexus ecosystem.
 
-Use it for:
-- application shells and auth surfaces
-- empty, loading, and error states
-- reusable marketing page sections
-- interactive helpers such as spotlights, docks, and confirm dialogs
-- motion, overlay, and mode-aware primitive composition
+It provides application shells, auth surfaces, marketing sections, interactive components, motion primitives, and utility hooks — all built on `@olwiba/cn`.
 
-Use `@olwiba/docs` for documentation layout and navigation primitives such as `DocsLayout`, `DocsSidebar`, and docs search.
+Use `@olwiba/docs` for documentation layout and navigation primitives such as `DocsLayout` and `DocsSidebar`.
 
 ## Package Chain
 
 ```text
-@olwiba/cn      -> Base primitives, styling foundations, and low-level interactions
-@olwiba/docs    -> Documentation layouts, navigation, and MDX-facing docs UI
-@olwiba/ui      -> App-level shells, marketing sections, interactive components, and hooks
+@olwiba/cn   -> base primitives and styling foundations
+@olwiba/docs -> documentation layouts and docs shell components
+@olwiba/ui   -> app shells, marketing sections, interactive blocks, and hooks
 ```
 
 ## Installation
@@ -29,21 +47,10 @@ Use `@olwiba/docs` for documentation layout and navigation primitives such as `D
 bun add @olwiba/ui @olwiba/cn
 ```
 
-Peer dependencies:
-- `react`
-- `react-dom`
-- `@olwiba/cn`
-
-## Quick Start
-
-Wrap your app in `OlwibaUIProvider` if you want a shared UI mode for the package's mode-aware primitives and components.
+Peer dependencies: `@olwiba/cn`, `react`, `react-dom`
 
 ```tsx
-import {
-  AppShell,
-  EmptyState,
-  OlwibaUIProvider,
-} from "@olwiba/ui";
+import { AppShell, EmptyState, OlwibaUIProvider } from "@olwiba/ui";
 
 function App() {
   return (
@@ -59,198 +66,33 @@ function App() {
 }
 ```
 
-## Export Surface
+## What's Included
 
-### Context and mode helpers
+**App Surfaces** AppShell, AuthSection, EmptyState, ErrorPage, UpgradePrompt  
+**Marketing** HeroSection, FeaturesSection, CtaSection, PricingSection, Navbar, Footer, and more  
+**Interactive** Spotlight, Dock, ContextMenu, ConfirmDialog  
+**Cards** GlassCard, FeatureCard, StatCard, TestimonialCard, PricingCard, ImageCard  
+**Motion** FadeIn, StaggerChildren, CountUp, PageTransition  
+**Layering** Underlay, Overlay  
+**Hooks** useMounted, useConfirm, useControlledOpen, useScrolledPast, and more  
 
-- `OlwibaUIProvider`
-- `useOlwibaUI`
-- `useUIMode`
-- `cn`
+## Ecosystem
 
-### App surfaces
+- [@olwiba/cn](https://github.com/Olwiba/olwibaCN) — base primitives
+- [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) — documentation framework
 
-- `AppShell`
-- `AuthSection`
-- `EmptyState`
-- `ErrorPage`
-- `UpgradePrompt`
+## Contributing
 
-### Marketing sections
+Bug reports, pull requests & feature requests are welcome.
+Open an issue first for anything beyond a small fix.
 
-- `HeroSection`
-- `FeaturesSection`
-- `CtaSection`
-- `PricingSection`
-- `TestimonialsSection`
-- `TeamSection`
-- `FaqSection`
-- `StatsSection`
-- `NewsletterSection`
-- `ContactSection`
-- `Navbar`
-- `Footer`
+<br/>
+<br/>
 
-### Overlays and motion
+<p align="center">
+  Built with 💖 by <a href="https://github.com/Olwiba">Olwiba</a>
+</p>
 
-- `Underlay`
-- `Overlay`
-- `FadeIn`
-- `StaggerChildren`
-- `CountUp`
-- `PageTransition`
-
-### Interactive components
-
-- `Spotlight`
-- `Dock`
-- `ContextMenu`
-- `ConfirmDialog`
-
-### Cards and utility components
-
-- `GlassCard`
-- `FeatureCard`
-- `StatCard`
-- `TestimonialCard`
-- `PricingCard`
-- `ImageCard`
-- `FullPageSpinner`
-- `PageHeader`
-- `Suspensed`
-- `ThemeSwitchMinimal`
-- `ThemeColorUpdater`
-- `VersionBanner`
-- `RegisterHotkeys`
-- `RootErrorFallback`
-
-If you need the primitive `Spinner`, import it from `@olwiba/cn`. `@olwiba/ui` exports `FullPageSpinner`.
-
-### Hooks
-
-- `useMounted`
-- `useConfirm`
-- `useControlledOpen`
-- `useScrolledPast`
-- `useCopyToClipboard`
-- `useDebounce`
-- `useIntersectionObserver`
-- `useLocalStorage`
-- `useMediaQuery`
-- `usePagination`
-
-### Mode-aware primitive re-exports
-
-- `Button`
-- `Card`
-- `CardHeader`
-- `CardTitle`
-- `CardDescription`
-- `CardContent`
-- `CardFooter`
-- `Badge`
-- `Input`
-- `Textarea`
-- `Checkbox`
-- `Switch`
-
-## Example: Auth Surface
-
-```tsx
-import { AuthSection } from "@olwiba/ui";
-
-export function LoginPage() {
-  return (
-    <AuthSection
-      layout="split"
-      signUpHref="/signup"
-      forgotPasswordHref="/forgot-password"
-    />
-  );
-}
-```
-
-## Example: Upgrade Prompt
-
-```tsx
-import { UpgradePrompt } from "@olwiba/ui";
-
-const rows = [
-  { label: "Projects", currentValue: "1", upgradedValue: "10" },
-  { label: "Sync rate", currentValue: "15 min", upgradedValue: "1 min" },
-];
-
-export function BillingGate() {
-  return (
-    <UpgradePrompt
-      variant="comparison"
-      eyebrow="Pro plan"
-      title="Unlock faster monitoring"
-      description="Keep the structure shared while leaving copy, pricing, and limits in the product."
-      currentPlanLabel="Starter"
-      upgradedPlanLabel="Pro"
-      rows={rows}
-      footer="Upgrade when the starter cap begins slowing the workflow down."
-      secondaryActionLabel="Maybe later"
-      onSecondaryAction={() => {}}
-      onClose={() => {}}
-      primaryActionLabel="Upgrade - £15/mo"
-      onPrimaryAction={() => {}}
-    />
-  );
-}
-```
-
-## Example: Marketing Page
-
-```tsx
-import {
-  CtaSection,
-  FeaturesSection,
-  HeroSection,
-  Navbar,
-  Footer,
-} from "@olwiba/ui";
-
-export function LandingPage() {
-  return (
-    <main className="space-y-8">
-      <Navbar />
-      <HeroSection />
-      <FeaturesSection />
-      <CtaSection />
-      <Footer />
-    </main>
-  );
-}
-```
-
-## Development
-
-```bash
-bun install
-bun run web:dev
-bun run build
-```
-
-`web:dev` starts the local package site on port `3002`.
-
-## Release Flow
-
-`@olwiba/ui` releases are tag-driven.
-
-1. Finish and verify the local change, using linked upstream packages where needed.
-2. Bump `package.json` when the release contents are final.
-3. Commit and push `master`.
-4. Create a matching version tag, for example `v0.0.4`.
-5. Push the tag: `git push origin v0.0.4`.
-
-The `publish-package` GitHub Actions workflow runs automatically on `v*` tags and checks that the tag matches the package version before publishing. `workflow_dispatch` remains available as a manual fallback.
-
-If the `DISCORD_WEBHOOK_URL` GitHub Actions secret is configured, the publish workflow also sends a Discord notification on both success and failure.
-
-## Related
-
-- [@olwiba/cn](https://github.com/Olwiba/olwibaCN) - Base primitives
-- [@olwiba/docs](https://github.com/Olwiba/olwibaDOCS) - Documentation framework and docs shell components
-
+<p align="center">
+  <a href="https://buymeacoffee.com/olwiba"><img src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?logo=buymeacoffee&logoColor=black" alt="Buy Me A Coffee" /></a>
+</p>
