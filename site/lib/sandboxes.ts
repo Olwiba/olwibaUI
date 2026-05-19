@@ -691,6 +691,452 @@ export default function ContactPage() {
       },
     ],
   },
+
+  // ─── Components ──────────────────────────────────────────────────────────────
+
+  'dock': {
+    id: 'dock',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/dock')),
+    files: [{ path: 'components/Dock.tsx', language: 'tsx', code: `import { Dock } from "@olwiba/ui";
+import { Bell, Home, Settings } from "lucide-react";
+
+const items = [
+  { icon: Home, label: "Home", onClick: () => {} },
+  { icon: Bell, label: "Notifications", onClick: () => {} },
+  { icon: Settings, label: "Settings", onClick: () => {} },
+];
+
+export default function Example() {
+  return <Dock items={items} />;
+}
+` }],
+  },
+
+  'spotlight': {
+    id: 'spotlight',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/spotlight')),
+    files: [{ path: 'components/SpotlightDemo.tsx', language: 'tsx', code: `import { Spotlight } from "@olwiba/ui";
+import { LayoutDashboard, Settings } from "lucide-react";
+
+const groups = [
+  {
+    heading: "Pages",
+    items: [
+      { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard className="size-4" />, onSelect: () => {} },
+    ],
+  },
+  {
+    heading: "Settings",
+    items: [
+      { id: "settings", label: "Settings", icon: <Settings className="size-4" />, onSelect: () => {} },
+    ],
+  },
+];
+
+export default function Example() {
+  return <Spotlight groups={groups} />;
+}
+` }],
+  },
+
+  'confirm-dialog': {
+    id: 'confirm-dialog',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/confirm-dialog')),
+    files: [{ path: 'components/ConfirmDemo.tsx', language: 'tsx', code: `import { ConfirmDialog, useConfirm } from "@olwiba/ui";
+import { Button } from "@olwiba/cn";
+
+export default function Example() {
+  const { confirm, isOpen, options, handleConfirm, handleCancel } = useConfirm();
+
+  async function handleDelete() {
+    const ok = await confirm({
+      title: "Delete project?",
+      description: "This cannot be undone.",
+      confirmLabel: "Delete",
+    });
+    if (ok) console.log("Deleted");
+  }
+
+  return (
+    <>
+      <Button variant="destructive" onClick={handleDelete}>Delete project</Button>
+      <ConfirmDialog
+        isOpen={isOpen}
+        options={options}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        destructive
+      />
+    </>
+  );
+}
+` }],
+  },
+
+  'context-menu': {
+    id: 'context-menu',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/context-menu')),
+    files: [{ path: 'components/ContextMenuDemo.tsx', language: 'tsx', code: `import { ContextMenu } from "@olwiba/ui";
+
+const items = [
+  { type: "item" as const, label: "Open", shortcut: "↵" },
+  { type: "separator" as const },
+  { type: "item" as const, label: "Delete", shortcut: "⌫" },
+];
+
+export default function Example() {
+  return (
+    <ContextMenu items={items}>
+      <div className="rounded-xl border border-dashed p-8 text-sm text-muted-foreground">
+        Right-click here
+      </div>
+    </ContextMenu>
+  );
+}
+` }],
+  },
+
+  'glass-card': {
+    id: 'glass-card',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/glass-card')),
+    files: [{ path: 'components/GlassCardDemo.tsx', language: 'tsx', code: `import { GlassCard } from "@olwiba/ui";
+
+export default function Example() {
+  return (
+    <div className="bg-gradient-to-br from-violet-500 to-cyan-400 p-12 rounded-2xl">
+      <GlassCard blur="md" className="p-6">
+        <h3 className="font-semibold">Glass card</h3>
+        <p className="text-sm text-muted-foreground mt-1">Frosted glass effect.</p>
+      </GlassCard>
+    </div>
+  );
+}
+` }],
+  },
+
+  'feature-card': {
+    id: 'feature-card',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/feature-card')),
+    files: [{ path: 'components/FeatureCardDemo.tsx', language: 'tsx', code: `import { FeatureCard } from "@olwiba/ui";
+import { Zap } from "lucide-react";
+
+export default function Example() {
+  return (
+    <FeatureCard
+      icon={Zap}
+      title="Fast by default"
+      description="Built on optimised primitives."
+      href="/docs"
+    />
+  );
+}
+` }],
+  },
+
+  'stat-card': {
+    id: 'stat-card',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/stat-card')),
+    files: [{ path: 'components/StatCardDemo.tsx', language: 'tsx', code: `import { StatCard } from "@olwiba/ui";
+
+export default function Example() {
+  return (
+    <div className="grid grid-cols-3 gap-4">
+      <StatCard label="Revenue" value="£24,200" delta="+12%" trend="up" description="vs last month" />
+      <StatCard label="Users" value="3,841" delta="+4%" trend="up" />
+      <StatCard label="Churn" value="1.8%" delta="+0.3%" trend="down" />
+    </div>
+  );
+}
+` }],
+  },
+
+  'testimonial-card': {
+    id: 'testimonial-card',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/testimonial-card')),
+    files: [{ path: 'components/TestimonialCardDemo.tsx', language: 'tsx', code: `import { TestimonialCard } from "@olwiba/ui";
+
+export default function Example() {
+  return (
+    <TestimonialCard
+      quote="The component library cut our setup time in half."
+      name="Sarah Chen"
+      role="Product Engineer"
+      company="Vercel"
+      initials="SC"
+      rating={5}
+    />
+  );
+}
+` }],
+  },
+
+  'pricing-card': {
+    id: 'pricing-card',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/pricing-card')),
+    files: [{ path: 'components/PricingCardDemo.tsx', language: 'tsx', code: `import { PricingCard } from "@olwiba/ui";
+
+const features = [
+  { label: "Unlimited projects", included: true },
+  { label: "Priority support", included: true },
+  { label: "Custom domains", included: true },
+  { label: "SLA guarantee", included: false },
+];
+
+export default function Example() {
+  return (
+    <PricingCard
+      name="Pro"
+      price="£15"
+      description="For teams shipping production apps."
+      features={features}
+      cta="Upgrade to Pro"
+      highlighted
+      badge="Most popular"
+      onSelect={() => {}}
+    />
+  );
+}
+` }],
+  },
+
+  'image-card': {
+    id: 'image-card',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/image-card')),
+    files: [{ path: 'components/ImageCardDemo.tsx', language: 'tsx', code: `import { ImageCard } from "@olwiba/ui";
+
+export default function Example() {
+  return (
+    <ImageCard
+      src="https://picsum.photos/seed/landscape/640/360"
+      alt="Landscape"
+      overlay="subtle"
+    >
+      <h3 className="font-semibold text-lg text-white">Mountain escape</h3>
+      <p className="text-sm text-white/80">Swiss Alps</p>
+    </ImageCard>
+  );
+}
+` }],
+  },
+
+  // ─── Motion ──────────────────────────────────────────────────────────────────
+
+  'count-up': {
+    id: 'count-up',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/count-up')),
+    files: [{ path: 'components/CountUpDemo.tsx', language: 'tsx', code: `import { CountUp } from "@olwiba/ui";
+
+export default function Example() {
+  return (
+    <div className="flex gap-8 text-center">
+      <div>
+        <CountUp to={12400} prefix="£" duration={1800} className="text-3xl font-bold" />
+        <p className="text-sm text-muted-foreground">Revenue</p>
+      </div>
+      <div>
+        <CountUp to={98.6} decimals={1} suffix="%" duration={1800} className="text-3xl font-bold" />
+        <p className="text-sm text-muted-foreground">Uptime</p>
+      </div>
+    </div>
+  );
+}
+` }],
+  },
+
+  'fade-in': {
+    id: 'fade-in',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/fade-in')),
+    files: [{ path: 'components/FadeInDemo.tsx', language: 'tsx', code: `import { FadeIn } from "@olwiba/ui";
+
+export default function Example() {
+  return (
+    <FadeIn direction="up" delay={100}>
+      <div className="rounded-xl border bg-card p-6">
+        <h3 className="font-semibold">Fades in from below</h3>
+        <p className="text-sm text-muted-foreground mt-1">Triggered on intersection.</p>
+      </div>
+    </FadeIn>
+  );
+}
+` }],
+  },
+
+  'stagger-children': {
+    id: 'stagger-children',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/stagger-children')),
+    files: [{ path: 'components/StaggerDemo.tsx', language: 'tsx', code: `import { StaggerChildren } from "@olwiba/ui";
+
+export default function Example() {
+  return (
+    <StaggerChildren className="flex flex-col gap-2" stagger={80}>
+      {["Dashboard", "Analytics", "Projects", "Team"].map((item) => (
+        <div key={item} className="rounded-xl border bg-card px-4 py-3 text-sm">
+          {item}
+        </div>
+      ))}
+    </StaggerChildren>
+  );
+}
+` }],
+  },
+
+  'page-transition': {
+    id: 'page-transition',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/page-transition')),
+    files: [{ path: 'routes/page.tsx', language: 'tsx', code: `import { PageTransition } from "@olwiba/ui";
+
+export default function Page() {
+  return (
+    <PageTransition variant="slide-up">
+      <main className="p-6">
+        <h1 className="text-2xl font-bold">Page content</h1>
+        <p className="text-muted-foreground mt-2">Animates in on mount.</p>
+      </main>
+    </PageTransition>
+  );
+}
+` }],
+  },
+
+  // ─── Hooks ───────────────────────────────────────────────────────────────────
+
+  'use-copy-to-clipboard': {
+    id: 'use-copy-to-clipboard',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/use-copy-to-clipboard')),
+    files: [{ path: 'components/CopyButton.tsx', language: 'tsx', code: `import { useCopyToClipboard } from "@olwiba/ui";
+import { Button } from "@olwiba/cn";
+import { Check, Copy } from "lucide-react";
+
+export function CopyButton({ text }: { text: string }) {
+  const [copied, copy] = useCopyToClipboard();
+
+  return (
+    <Button size="sm" variant="outline" onClick={() => copy(text)}>
+      {copied ? <Check className="size-4 text-emerald-500" /> : <Copy className="size-4" />}
+      {copied ? "Copied" : "Copy"}
+    </Button>
+  );
+}
+` }],
+  },
+
+  'use-debounce': {
+    id: 'use-debounce',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/use-debounce')),
+    files: [{ path: 'components/SearchInput.tsx', language: 'tsx', code: `import { useDebounce } from "@olwiba/ui";
+import { Input } from "@olwiba/cn";
+import React from "react";
+
+export function SearchInput() {
+  const [query, setQuery] = React.useState("");
+  const debounced = useDebounce(query, 400);
+
+  // debounced updates 400ms after the user stops typing
+  console.log("Search for:", debounced);
+
+  return <Input placeholder="Search..." value={query} onChange={(e) => setQuery(e.target.value)} />;
+}
+` }],
+  },
+
+  'use-intersection-observer': {
+    id: 'use-intersection-observer',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/use-intersection-observer')),
+    files: [{ path: 'components/LazySection.tsx', language: 'tsx', code: `import { useIntersectionObserver } from "@olwiba/ui";
+
+export function LazySection() {
+  const [ref, isVisible] = useIntersectionObserver({ threshold: 0.5 });
+
+  return (
+    <div ref={ref as React.RefObject<HTMLDivElement>} className={isVisible ? "opacity-100" : "opacity-0"}>
+      {isVisible ? "Now visible!" : "Waiting to enter viewport..."}
+    </div>
+  );
+}
+` }],
+  },
+
+  'use-local-storage': {
+    id: 'use-local-storage',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/use-local-storage')),
+    files: [{ path: 'components/ThemePicker.tsx', language: 'tsx', code: `import { useLocalStorage } from "@olwiba/ui";
+
+export function ThemePicker() {
+  const [theme, setTheme] = useLocalStorage<"light" | "dark">("theme", "light");
+
+  return (
+    <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+      Current: {theme}
+    </button>
+  );
+}
+` }],
+  },
+
+  'use-media-query': {
+    id: 'use-media-query',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/use-media-query')),
+    files: [{ path: 'components/ResponsiveLayout.tsx', language: 'tsx', code: `import { useMediaQuery } from "@olwiba/ui";
+
+export function ResponsiveLayout() {
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+
+  return (
+    <div>
+      <p>{isDesktop ? "Desktop layout" : "Mobile layout"}</p>
+      <p>{prefersDark ? "Dark mode" : "Light mode"}</p>
+    </div>
+  );
+}
+` }],
+  },
+
+  'use-pagination': {
+    id: 'use-pagination',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/use-pagination')),
+    files: [{ path: 'components/PaginatedList.tsx', language: 'tsx', code: `import { usePagination } from "@olwiba/ui";
+import { Button } from "@olwiba/cn";
+
+const ITEMS = Array.from({ length: 20 }, (_, i) => \`Item \${i + 1}\`);
+
+export function PaginatedList() {
+  const { page, totalPages, offset, pageSize, hasPrev, hasNext, prev, next } = usePagination(ITEMS.length, 5);
+  const visible = ITEMS.slice(offset, offset + pageSize);
+
+  return (
+    <div className="space-y-2">
+      {visible.map((item) => <div key={item} className="rounded border p-2 text-sm">{item}</div>)}
+      <div className="flex gap-2">
+        <Button size="sm" variant="outline" disabled={!hasPrev} onClick={prev}>Prev</Button>
+        <span className="text-sm self-center">{page} / {totalPages}</span>
+        <Button size="sm" variant="outline" disabled={!hasNext} onClick={next}>Next</Button>
+      </div>
+    </div>
+  );
+}
+` }],
+  },
 };
 
 registerSandboxes(uiSandboxes);

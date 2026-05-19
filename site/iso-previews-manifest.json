@@ -1,1 +1,282 @@
-[]
+[
+  {
+    "name": "app-shell",
+    "theme": "light",
+    "file": "app-shell-light.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "app-shell",
+    "theme": "dark",
+    "file": "app-shell-dark.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "auth-section",
+    "theme": "light",
+    "file": "auth-section-light.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "auth-section",
+    "theme": "dark",
+    "file": "auth-section-dark.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "empty-state",
+    "theme": "light",
+    "file": "empty-state-light.png",
+    "width": 698,
+    "height": 382
+  },
+  {
+    "name": "empty-state",
+    "theme": "dark",
+    "file": "empty-state-dark.png",
+    "width": 698,
+    "height": 382
+  },
+  {
+    "name": "error-page",
+    "theme": "light",
+    "file": "error-page-light.png",
+    "width": 698,
+    "height": 626
+  },
+  {
+    "name": "error-page",
+    "theme": "dark",
+    "file": "error-page-dark.png",
+    "width": 698,
+    "height": 626
+  },
+  {
+    "name": "dock",
+    "theme": "light",
+    "file": "dock-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "dock",
+    "theme": "dark",
+    "file": "dock-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "feature-card",
+    "theme": "light",
+    "file": "feature-card-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "feature-card",
+    "theme": "dark",
+    "file": "feature-card-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "glass-card",
+    "theme": "light",
+    "file": "glass-card-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "glass-card",
+    "theme": "dark",
+    "file": "glass-card-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "image-card",
+    "theme": "light",
+    "file": "image-card-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "image-card",
+    "theme": "dark",
+    "file": "image-card-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "pricing-card",
+    "theme": "light",
+    "file": "pricing-card-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "pricing-card",
+    "theme": "dark",
+    "file": "pricing-card-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "spotlight",
+    "theme": "light",
+    "file": "spotlight-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "spotlight",
+    "theme": "dark",
+    "file": "spotlight-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "stat-card",
+    "theme": "light",
+    "file": "stat-card-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "stat-card",
+    "theme": "dark",
+    "file": "stat-card-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "testimonial-card",
+    "theme": "light",
+    "file": "testimonial-card-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "testimonial-card",
+    "theme": "dark",
+    "file": "testimonial-card-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "context-menu",
+    "theme": "light",
+    "file": "context-menu-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "context-menu",
+    "theme": "dark",
+    "file": "context-menu-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "confirm-dialog",
+    "theme": "light",
+    "file": "confirm-dialog-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "confirm-dialog",
+    "theme": "dark",
+    "file": "confirm-dialog-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "count-up",
+    "theme": "light",
+    "file": "count-up-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "count-up",
+    "theme": "dark",
+    "file": "count-up-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "fade-in",
+    "theme": "light",
+    "file": "fade-in-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "fade-in",
+    "theme": "dark",
+    "file": "fade-in-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "stagger-children",
+    "theme": "light",
+    "file": "stagger-children-light.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "stagger-children",
+    "theme": "dark",
+    "file": "stagger-children-dark.png",
+    "width": 666,
+    "height": 320
+  },
+  {
+    "name": "contact-section",
+    "theme": "light",
+    "file": "contact-section-light.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "contact-section",
+    "theme": "dark",
+    "file": "contact-section-dark.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "cta-section",
+    "theme": "light",
+    "file": "cta-section-light.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "cta-section",
+    "theme": "dark",
+    "file": "cta-section-dark.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "faq-section",
+    "theme": "light",
+    "file": "faq-section-light.png",
+    "width": 666,
+    "height": 640
+  },
+  {
+    "name": "faq-section",
+    "theme": "dark",
+    "file": "faq-section-dark.png",
+    "width": 666,
+    "height": 640
+  }
+]

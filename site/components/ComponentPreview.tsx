@@ -80,7 +80,7 @@ export function ComponentPreview({ name, title, noPadding }: ComponentPreviewPro
               <span className="text-sm text-muted-foreground">{title}</span>
             </div>
           )}
-          <div className={noPadding ? 'min-h-[200px]' : 'p-8 flex items-center justify-center min-h-[200px]'}>
+          <div data-slot="component-preview-canvas" className={noPadding ? 'min-h-[200px]' : 'p-8 flex items-center justify-center min-h-[200px]'}>
             {Demo ? (
               <React.Suspense fallback={<div className="text-muted-foreground text-sm">Loading...</div>}>
                 <Demo />
