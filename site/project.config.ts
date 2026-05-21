@@ -15,12 +15,12 @@ export const projectConfig = {
   id: "olwibaUI",
   label: "olwibaUI",
   brandAccent: {
-    hex: "#a855f7",
-    lightOklch: "oklch(0.546 0.245 293)",
-    darkOklch: "oklch(0.623 0.214 291)",
+    hex: "#84cc16",
+    lightOklch: "oklch(0.648 0.200 131.684)",
+    darkOklch: "oklch(0.841 0.238 132.900)",
   },
   theme: {
-    initialDocsTheme: "purple",
+    initialDocsTheme: "lime",
   },
 } as const satisfies ProjectThemeConfig
 
