@@ -52,53 +52,108 @@ function SplitAuth({ children, panel }: { children: React.ReactNode; panel?: Rea
 // ─── Shared form slot ─────────────────────────────────────────────────────────
 
 export interface AuthFormProps {
+  /** Controls form title, fields, and footer text. @default 'signin' */
+  mode?: 'signin' | 'signup';
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   onSso?: () => void;
+  /** (signin) Link to the sign-up page */
   signUpHref?: string;
+  /** (signup) Link back to the sign-in page */
+  signInHref?: string;
   forgotPasswordHref?: string;
   brand?: React.ReactNode;
+  /** Error message displayed below the form fields */
+  error?: string;
+  /** Disables the submit button and shows a loading label */
+  loading?: boolean;
 }
 
-function DefaultForm({ onSubmit, onSso, signUpHref = '#', forgotPasswordHref = '#', brand }: AuthFormProps) {
+function DefaultForm({
+  mode = 'signin',
+  onSubmit,
+  onSso,
+  signUpHref = '#',
+  signInHref = '#',
+  forgotPasswordHref = '#',
+  brand,
+  error,
+  loading,
+}: AuthFormProps) {
+  const isSignUp = mode === 'signup';
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
         {brand && <div className="mb-2">{brand}</div>}
-        <CardTitle>Sign in</CardTitle>
-        <CardDescription>Enter your email and password to continue.</CardDescription>
+        <CardTitle>{isSignUp ? 'Create an account' : 'Sign in'}</CardTitle>
+        <CardDescription>
+          {isSignUp
+            ? 'Enter your details to create your account.'
+            : 'Enter your email and password to continue.'}
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <form onSubmit={onSubmit} className="space-y-4">
+          {isSignUp && (
+            <div className="space-y-2">
+              <Label htmlFor="auth-name">Name</Label>
+              <Input id="auth-name" name="name" type="text" placeholder="Your name" autoComplete="name" />
+            </div>
+          )}
           <div className="space-y-2">
             <Label htmlFor="auth-email">Email</Label>
-            <Input id="auth-email" type="email" placeholder="name@company.com" />
+            <Input id="auth-email" name="email" type="email" placeholder="name@company.com" autoComplete="email" />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="auth-password">Password</Label>
-              {forgotPasswordHref && (
+              {!isSignUp && forgotPasswordHref && (
                 <a className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground" href={forgotPasswordHref}>
                   Forgot password?
                 </a>
               )}
             </div>
-            <Input id="auth-password" type="password" placeholder="••••••••" />
+            <Input
+              id="auth-password"
+              name="password"
+              type="password"
+              placeholder="••••••••"
+              autoComplete={isSignUp ? 'new-password' : 'current-password'}
+            />
           </div>
+          {error && (
+            <p className="text-sm font-medium text-destructive">{error}</p>
+          )}
           <div className="flex flex-col gap-2">
-            <Button type="submit" className="w-full">Continue</Button>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Please wait…' : isSignUp ? 'Create account' : 'Sign in'}
+            </Button>
             {onSso && (
-              <Button type="button" variant="outline" className="w-full" onClick={onSso}>Use SSO</Button>
+              <Button type="button" variant="outline" className="w-full" onClick={onSso} disabled={loading}>
+                Use SSO
+              </Button>
             )}
           </div>
         </form>
-        {signUpHref && (
-          <p className="text-center text-xs text-muted-foreground">
-            New here?{' '}
-            <a className="text-foreground underline underline-offset-4" href={signUpHref}>
-              Create an account
-            </a>
-          </p>
-        )}
+        <p className="text-center text-xs text-muted-foreground">
+          {isSignUp ? (
+            <>
+              Already have an account?{' '}
+              <a className="text-foreground underline underline-offset-4" href={signInHref}>
+                Sign in
+              </a>
+            </>
+          ) : (
+            signUpHref && (
+              <>
+                New here?{' '}
+                <a className="text-foreground underline underline-offset-4" href={signUpHref}>
+                  Create an account
+                </a>
+              </>
+            )
+          )}
+        </p>
       </CardContent>
     </Card>
   );
@@ -107,9 +162,9 @@ function DefaultForm({ onSubmit, onSso, signUpHref = '#', forgotPasswordHref = '
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 export interface AuthSectionProps extends AuthFormProps {
-  /** Visual layout of the auth screen */
+  /** Visual layout of the auth screen. @default 'centered' */
   layout?: 'centered' | 'split';
-  /** Custom form/card content. Defaults to the built-in sign-in form. */
+  /** Custom form/card content. Defaults to the built-in form. */
   children?: React.ReactNode;
   /** (split layout only) Custom content for the left decorative panel */
   panel?: React.ReactNode;

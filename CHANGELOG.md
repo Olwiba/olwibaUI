@@ -1,6 +1,13 @@
 # Changelog
 
 
+
+## 0.0.29
+
+### Fixed
+
+- `Switch`: removed invalid `mode` prop pass-through — CN Switch has no `mode` prop
+
 ## 0.0.27
 
 ### Added
