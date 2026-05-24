@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { GalleryVerticalEnd, Building2, ShieldCheck, Sparkles } from 'lucide-react';
+import { Building2, ShieldCheck, Sparkles } from 'lucide-react';
 import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, Label, cn } from '@olwiba/cn';
 import type { AppShellRenderLink } from './AppShell';
 
@@ -11,10 +11,15 @@ const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) =>
 
 // ─── Centered layout ──────────────────────────────────────────────────────────
 
-function CenteredAuth({ children }: { children: React.ReactNode }) {
+function CenteredAuth({ children, brand }: { children: React.ReactNode; brand?: React.ReactNode }) {
   return (
-    <section className="flex h-full min-h-[720px] w-full flex-col items-center justify-center gap-6 rounded-2xl bg-muted p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
+    <section className="flex min-h-screen flex-col justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      {brand && (
+        <div className="mx-auto w-full max-w-md text-center mb-8">
+          {brand}
+        </div>
+      )}
+      <div className="mx-auto w-full max-w-md">
         {children}
       </div>
     </section>
@@ -66,6 +71,7 @@ export interface AuthFormProps {
   /** (signup) Link back to the sign-in page */
   signInHref?: string;
   forgotPasswordHref?: string;
+  /** Brand node — in centered layout renders above the card; in split layout renders inside the card */
   brand?: React.ReactNode;
   /** Error message displayed below the form fields */
   error?: string;
@@ -90,7 +96,7 @@ function DefaultForm({
   const isSignUp = mode === 'signup';
 
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full">
       <CardHeader>
         {brand && <div className="mb-2">{brand}</div>}
         <CardTitle>{isSignUp ? 'Create an account' : 'Sign in'}</CardTitle>
@@ -109,7 +115,7 @@ function DefaultForm({
             </div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="auth-email">Email</Label>
+            <Label htmlFor="auth-email">Email address</Label>
             <Input id="auth-email" name="email" type="email" placeholder="name@company.com" autoComplete="email" />
           </div>
           <div className="space-y-2">
@@ -182,9 +188,8 @@ export function AuthSection({
   className,
   ...formProps
 }: AuthSectionProps) {
-  const form = children ?? <DefaultForm {...formProps} />;
-
   if (layout === 'split') {
+    const form = children ?? <DefaultForm {...formProps} />;
     return (
       <div className={cn('h-full', className)}>
         <SplitAuth panel={panel}>{form}</SplitAuth>
@@ -192,9 +197,12 @@ export function AuthSection({
     );
   }
 
+  // Centered: brand renders above the card, not inside it
+  const { brand, ...restFormProps } = formProps;
+  const form = children ?? <DefaultForm {...restFormProps} />;
   return (
-    <div className={cn('h-full', className)}>
-      <CenteredAuth>{form}</CenteredAuth>
-    </div>
+    <CenteredAuth brand={brand} className={className}>
+      {form}
+    </CenteredAuth>
   );
 }
