@@ -3,6 +3,11 @@
 import * as React from 'react';
 import { GalleryVerticalEnd, Building2, ShieldCheck, Sparkles } from 'lucide-react';
 import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, Label, cn } from '@olwiba/cn';
+import type { AppShellRenderLink } from './AppShell';
+
+const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
+  <a href={href} className={className}>{children}</a>
+);
 
 // ─── Centered layout ──────────────────────────────────────────────────────────
 
@@ -66,6 +71,8 @@ export interface AuthFormProps {
   error?: string;
   /** Disables the submit button and shows a loading label */
   loading?: boolean;
+  /** Render prop for links — use to inject framework-native link components (e.g. TanStack Router Link) */
+  renderLink?: AppShellRenderLink;
 }
 
 function DefaultForm({
@@ -78,6 +85,7 @@ function DefaultForm({
   brand,
   error,
   loading,
+  renderLink = defaultRenderLink,
 }: AuthFormProps) {
   const isSignUp = mode === 'signup';
 
@@ -107,11 +115,11 @@ function DefaultForm({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="auth-password">Password</Label>
-              {!isSignUp && forgotPasswordHref && (
-                <a className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground" href={forgotPasswordHref}>
-                  Forgot password?
-                </a>
-              )}
+              {!isSignUp && forgotPasswordHref && renderLink({
+                href: forgotPasswordHref,
+                className: 'text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground',
+                children: 'Forgot password?',
+              })}
             </div>
             <Input
               id="auth-password"
@@ -139,17 +147,13 @@ function DefaultForm({
           {isSignUp ? (
             <>
               Already have an account?{' '}
-              <a className="text-foreground underline underline-offset-4" href={signInHref}>
-                Sign in
-              </a>
+              {renderLink({ href: signInHref, className: 'text-foreground underline underline-offset-4', children: 'Sign in' })}
             </>
           ) : (
             signUpHref && (
               <>
                 New here?{' '}
-                <a className="text-foreground underline underline-offset-4" href={signUpHref}>
-                  Create an account
-                </a>
+                {renderLink({ href: signUpHref, className: 'text-foreground underline underline-offset-4', children: 'Create an account' })}
               </>
             )
           )}
