@@ -89,6 +89,8 @@ export interface AppShellProps {
   pageTitle?: string;
   /** Slot rendered at the start of the top header bar, after the sidebar trigger. */
   headerStart?: ReactNode;
+  /** Slot rendered at the end of the top header bar. */
+  headerEnd?: ReactNode;
   /** Override link rendering for SPA navigation. Defaults to a native <a>. */
   renderLink?: AppShellRenderLink;
   children?: ReactNode;
@@ -205,18 +207,26 @@ function ShellSidebar({
   side: 'left' | 'right';
   sidebarPosition: 'viewport' | 'contained';
 }) {
+  const fallbackLogo = typeof brand.name === 'string' ? brand.name.slice(0, 1).toUpperCase() : null;
+
   return (
     <Sidebar side={side} collapsible={collapsible} sidebarPosition={sidebarPosition}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
+            <SidebarMenuButton asChild tooltip={typeof brand.name === 'string' ? brand.name : undefined} className="data-[slot=sidebar-menu-button]:!p-1.5">
               {renderLink({
                 href: brand.href ?? '#',
                 children: (
                   <>
-                    {brand.logo}
-                    <span className="text-base font-semibold">{brand.name}</span>
+                    {brand.logo ?? (
+                      <span className="flex size-4 shrink-0 items-center justify-center text-sm font-semibold">
+                        {fallbackLogo}
+                      </span>
+                    )}
+                    <span className="min-w-0 truncate text-base font-semibold group-data-[collapsible=icon]:hidden">
+                      {brand.name}
+                    </span>
                   </>
                 ),
               })}
@@ -289,7 +299,15 @@ function ShellSidebar({
   );
 }
 
-function ShellHeader({ pageTitle, headerStart }: { pageTitle: string; headerStart?: ReactNode }) {
+function ShellHeader({
+  pageTitle,
+  headerStart,
+  headerEnd,
+}: {
+  pageTitle: string;
+  headerStart?: ReactNode;
+  headerEnd?: ReactNode;
+}) {
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -301,6 +319,11 @@ function ShellHeader({ pageTitle, headerStart }: { pageTitle: string; headerStar
         )}
         <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
         <h1 className="text-base font-medium">{pageTitle}</h1>
+        {headerEnd && (
+          <div className="ml-auto flex items-center gap-1">
+            {headerEnd}
+          </div>
+        )}
       </div>
     </header>
   );
@@ -331,6 +354,7 @@ export function AppShell({
   user = defaultUser,
   pageTitle = 'Dashboard',
   headerStart,
+  headerEnd,
   renderLink = defaultRenderLink,
   collapsible = 'icon',
   sidebarPosition = 'viewport',
@@ -355,7 +379,7 @@ export function AppShell({
         sidebarPosition={sidebarPosition}
       />
       <SidebarInset className={isContained ? undefined : 'overflow-y-auto'}>
-        <ShellHeader pageTitle={pageTitle} headerStart={headerStart} />
+        <ShellHeader pageTitle={pageTitle} headerStart={headerStart} headerEnd={headerEnd} />
         {children}
       </SidebarInset>
     </SidebarProvider>
