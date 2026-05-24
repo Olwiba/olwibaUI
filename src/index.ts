@@ -100,6 +100,10 @@ export { DevBanner, type DevBannerProps } from './components/DevBanner';
 export { RegisterHotkeys, type Hotkey } from './components/RegisterHotkeys';
 export { RootErrorFallback } from './components/RootErrorFallback';
 
+// ─── Blog ────────────────────────────────────────────────────────────────────
+export { PostCard, type PostCardProps } from './blog/PostCard';
+export { PostList, type PostListProps } from './blog/PostList';
+
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 export { useMounted } from './hooks/use-mounted';
 export { useConfirm, type ConfirmOptions, type UseConfirmReturn } from './hooks/use-confirm';

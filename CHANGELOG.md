@@ -2,6 +2,13 @@
 
 
 
+
+## 0.0.33
+
+### Changed
+
+- No notable changes.
+
 ## 0.0.29
 
 ### Fixed
