@@ -22,7 +22,12 @@ export function ThemeSwitchMinimal() {
 
   return (
     <Button variant="ghost" size="icon" onClick={toggle} className="size-8" aria-label="Toggle theme">
-      {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+      <span
+        key={theme}
+        className="inline-flex size-4 items-center justify-center animate-in fade-in zoom-in-75 spin-in-90 duration-200 motion-reduce:animate-none"
+      >
+        {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+      </span>
     </Button>
   );
 }

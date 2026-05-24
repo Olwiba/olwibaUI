@@ -87,6 +87,8 @@ export interface AppShellProps {
   user?: AppShellUser;
   /** Text shown in the top header bar */
   pageTitle?: string;
+  /** Slot rendered at the start of the top header bar, after the sidebar trigger. */
+  headerStart?: ReactNode;
   /** Override link rendering for SPA navigation. Defaults to a native <a>. */
   renderLink?: AppShellRenderLink;
   children?: ReactNode;
@@ -287,11 +289,16 @@ function ShellSidebar({
   );
 }
 
-function ShellHeader({ pageTitle }: { pageTitle: string }) {
+function ShellHeader({ pageTitle, headerStart }: { pageTitle: string; headerStart?: ReactNode }) {
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
+        {headerStart && (
+          <div className="flex items-center gap-1">
+            {headerStart}
+          </div>
+        )}
         <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
         <h1 className="text-base font-medium">{pageTitle}</h1>
       </div>
@@ -323,6 +330,7 @@ export function AppShell({
   action,
   user = defaultUser,
   pageTitle = 'Dashboard',
+  headerStart,
   renderLink = defaultRenderLink,
   collapsible = 'icon',
   sidebarPosition = 'viewport',
@@ -347,7 +355,7 @@ export function AppShell({
         sidebarPosition={sidebarPosition}
       />
       <SidebarInset className={isContained ? undefined : 'overflow-y-auto'}>
-        <ShellHeader pageTitle={pageTitle} />
+        <ShellHeader pageTitle={pageTitle} headerStart={headerStart} />
         {children}
       </SidebarInset>
     </SidebarProvider>
