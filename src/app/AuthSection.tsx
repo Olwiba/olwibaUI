@@ -2,7 +2,10 @@
 
 import * as React from 'react';
 import { Building2, ShieldCheck, Sparkles } from 'lucide-react';
-import { Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Input, Label, cn } from '@olwiba/cn';
+import { Badge, CardContent, CardDescription, CardHeader, CardTitle, Label, cn } from '@olwiba/cn';
+import { Button } from '../primitives/Button';
+import { Card } from '../primitives/Card';
+import { Input } from '../primitives/Input';
 import type { AppShellRenderLink } from './AppShell';
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
@@ -11,9 +14,9 @@ const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) =>
 
 // ─── Centered layout ──────────────────────────────────────────────────────────
 
-function CenteredAuth({ children, brand }: { children: React.ReactNode; brand?: React.ReactNode }) {
+function CenteredAuth({ children, brand, className }: { children: React.ReactNode; brand?: React.ReactNode; className?: string }) {
   return (
-    <section className="flex min-h-screen flex-col justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+    <section className={cn('flex min-h-screen flex-col justify-center bg-background py-12 px-4 sm:px-6 lg:px-8', className)}>
       {brand && (
         <div className="mx-auto w-full max-w-md text-center mb-8">
           {brand}
