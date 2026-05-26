@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.38
+
+### Added
+
+- `ChangelogCard` and `ChangelogList` for product and package changelog pages.
+
 ## 0.0.37
 
 ### Changed
