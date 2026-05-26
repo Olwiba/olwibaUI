@@ -1,6 +1,6 @@
 {
   "name": "@olwiba/ui",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "private": false,
   "type": "module",
   "sideEffects": false,
@@ -43,11 +43,18 @@
     "zod": "^4.3.6"
   },
   "peerDependencies": {
+    "@content-collections/mdx": ">=0.2.0",
     "@olwiba/cn": ">=0.1.2",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
+  "peerDependenciesMeta": {
+    "@content-collections/mdx": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@content-collections/mdx": "^0.2.2",
     "@olwiba/cn": "^0.1.15",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "1.154.8",

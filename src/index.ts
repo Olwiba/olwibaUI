@@ -81,6 +81,10 @@ export { Dock, type DockProps, type DockItem } from './components/Dock';
 export { ContextMenu, type ContextMenuProps, type ContextMenuDef } from './components/ContextMenu';
 export { ConfirmDialog, type ConfirmDialogProps } from './components/ConfirmDialog';
 
+// ─── Components — device mockups ────────────────────────────────────────────
+export { PhoneFrame, type PhoneFrameProps } from './components/PhoneFrame';
+export { AppScreen } from './components/AppScreen';
+
 // ─── Components — cards ───────────────────────────────────────────────────────
 export { GlassCard, type GlassCardProps } from './components/GlassCard';
 export { FeatureCard, type FeatureCardProps } from './components/FeatureCard';
@@ -103,6 +107,7 @@ export { RootErrorFallback } from './components/RootErrorFallback';
 // ─── Blog ────────────────────────────────────────────────────────────────────
 export { PostCard, type PostCardProps } from './blog/PostCard';
 export { PostList, type PostListProps } from './blog/PostList';
+export { MdxContent, type MdxContentProps } from './blog/MdxContent';
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 export { useMounted } from './hooks/use-mounted';

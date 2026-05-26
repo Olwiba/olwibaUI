@@ -4,6 +4,7 @@ import * as React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from '@olwiba/cn';
 import { FadeIn } from '../motion/FadeIn';
+import { PhoneFrame } from '../components/PhoneFrame';
 import type { AppShellRenderLink } from '../app/AppShell';
 
 export interface HeroSectionProps {
@@ -12,7 +13,9 @@ export interface HeroSectionProps {
   description: string;
   primaryCta: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
-  heroImage: React.ReactNode;
+  heroImage?: React.ReactNode;
+  media?: 'image' | 'phone' | 'none';
+  phoneSize?: 'sm' | 'md' | 'lg';
   avatarUrls?: string[];
   socialProofText?: string;
   renderLink?: AppShellRenderLink;
@@ -29,6 +32,8 @@ export function HeroSection({
   primaryCta,
   secondaryCta,
   heroImage,
+  media = 'image',
+  phoneSize = 'lg',
   avatarUrls,
   socialProofText,
   renderLink = defaultRenderLink,
@@ -74,12 +79,22 @@ export function HeroSection({
             </div>
           </FadeIn>
 
-          {/* Right - hero image */}
-          <FadeIn direction="right" delay={200}>
-            <div className="overflow-hidden rounded-2xl">
-              {heroImage}
-            </div>
-          </FadeIn>
+          {/* Right - media */}
+          {media !== 'none' && (
+            <FadeIn direction="right" delay={200}>
+              {media === 'phone' ? (
+                <div className="flex justify-center">
+                  <PhoneFrame size={phoneSize}>
+                    {heroImage}
+                  </PhoneFrame>
+                </div>
+              ) : (
+                <div className="overflow-hidden rounded-2xl">
+                  {heroImage}
+                </div>
+              )}
+            </FadeIn>
+          )}
         </div>
 
         {/* Avatar social proof row */}

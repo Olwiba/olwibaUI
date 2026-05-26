@@ -7,7 +7,7 @@ export default defineConfig({
   format: ['esm'],
   dts: true,
   clean: true,
-  external: ['react', 'react-dom', '@olwiba/cn'],
+  external: ['react', 'react-dom', '@olwiba/cn', '@content-collections/mdx'],
   sourcemap: true,
   treeshake: true,
   onSuccess: createTsupBannerHook(projectBanner),
