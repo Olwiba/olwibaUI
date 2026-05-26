@@ -1,9 +1,10 @@
 # Changelog
 
+## 0.0.37
 
+### Changed
 
-
-
+- `ContactSection` and `NewsletterSection` accept optional copy and contact-info props for template consumers.
 
 ## 0.0.35
 

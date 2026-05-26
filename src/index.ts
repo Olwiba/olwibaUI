@@ -57,8 +57,8 @@ export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/
 export { TeamSection } from './marketing/TeamSection';
 export { FaqSection, type FaqSectionProps } from './marketing/FaqSection';
 export { StatsSection, type StatsSectionProps } from './marketing/StatsSection';
-export { NewsletterSection } from './marketing/NewsletterSection';
-export { ContactSection } from './marketing/ContactSection';
+export { NewsletterSection, type NewsletterSectionProps } from './marketing/NewsletterSection';
+export { ContactSection, type ContactSectionProps, type ContactInfoItem } from './marketing/ContactSection';
 
 // ─── Marketing — elements ─────────────────────────────────────────────────────
 export { Navbar, type NavbarProps } from './marketing/Navbar';
