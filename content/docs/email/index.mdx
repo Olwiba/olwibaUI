@@ -1,0 +1,32 @@
+---
+title: Email
+description: React Email blocks for transactional messages.
+---
+
+Email follows the same stack as web UI:
+
+| Layer | Package | Role |
+|-------|---------|------|
+| Primitives | `@olwiba/cn/email` | Lego — `EmailText`, `EmailButton`, `EmailSection`, … |
+| Blocks | `@olwiba/ui/email` | Real templates — `ActionEmail`, `NoticeEmail` |
+| App | genesis | Copy + URLs only — imports **UI blocks** |
+
+**Apps should import `@olwiba/ui/email`, not CN directly.**
+
+```tsx
+import { ActionEmail } from "@olwiba/ui/email";
+import { render } from "@react-email/render";
+
+const html = await render(
+  <ActionEmail
+    appName="Genesis"
+    preview="Sign in"
+    heading="Sign in with one click"
+    description="This link expires soon."
+    actionLabel="Sign in"
+    actionUrl={url}
+  />
+);
+```
+
+Custom Olwiba email blocks belong in `@olwiba/ui/email`. New lego pieces belong in `@olwiba/cn/email`.

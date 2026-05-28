@@ -1,79 +1,31 @@
-declare module '@olwiba/docs' {
-  import * as React from 'react';
-
-  export const Theme: {
-    Purple: string;
-    [key: string]: string;
+declare module '@olwiba/cn/email' {
+  export const emailTheme: {
+    pageBackground: string;
+    cardBackground: string;
+    cardBorder: string;
+    mutedBackground: string;
+    text: string;
+    mutedText: string;
+    link: string;
+    buttonText: string;
+    defaultBrandColor: string;
+    fontFamily: string;
   };
 
-  export function createDocsRoot(config: Record<string, unknown>): unknown;
-  export const DocsHeader: React.ComponentType<any>;
-  export const DocsFooter: React.ComponentType<any>;
-  export const DocsLayout: React.ComponentType<any>;
-  export const DocsCopyPage: React.ComponentType<any>;
-  export const DocsMobileNav: React.ComponentType<any>;
-  export const DocsToc: React.ComponentType<any>;
-  export const CopyCommandButton: React.ComponentType<any>;
-  export const CopyButton: React.ComponentType<any>;
-  export const mdxComponents: Record<string, React.ComponentType<any>>;
-  export function extractTextFromReactNode(node: React.ReactNode): string;
-  export function cn(...inputs: any[]): string;
-  export const Sandbox: React.ComponentType<any>;
-  export const CodeFence: React.ComponentType<any>;
+  export type EmailTheme = typeof emailTheme;
 
-  export interface SandboxDefinition {
-    id: string;
-    defaultViewport?: 'desktop' | 'tablet' | 'mobile' | 'custom';
-    files: Array<{ path: string; language: string; code: string }>;
-    preview: React.LazyExoticComponent<React.FC>;
-  }
-
-  export type SandboxRegistryInput =
-    | SandboxDefinition[]
-    | Record<string, SandboxDefinition>;
-
-  export function registerSandboxes(input: SandboxRegistryInput): void;
-  export function getSandboxDefinition(id: string): SandboxDefinition | undefined;
-
-  export interface UIModeOption {
-    value: string;
-    label: string;
-  }
-  export interface UIModeDropdownProps {
-    modes: UIModeOption[];
-  }
-  export const UIModeDropdown: React.ComponentType<UIModeDropdownProps>;
-  export function getUIMode(): string;
-  export function setUIMode(mode: string): void;
-  export function subscribeUIMode(fn: (mode: string) => void): () => void;
-
-  export interface SidebarSection {
-    name: string;
-    href: string;
-  }
-
-  export interface TocItem {
-    title: string;
-    url: string;
-    depth: number;
-  }
-
-  export interface PageLoaderData {
-    path: string;
-    url: string;
-    pageTree: unknown;
-    frontmatter: { title?: string; description?: string };
-    toc: TocItem[];
-    rawContent: string;
-    neighbours: {
-      previous: { url: string; name: string } | null;
-      next: { url: string; name: string } | null;
-    };
-  }
+  export function EmailRoot(props: { children?: React.ReactNode }): JSX.Element;
+  export function EmailHead(props: { children?: React.ReactNode }): JSX.Element;
+  export function EmailBody(props: { children?: React.ReactNode; style?: React.CSSProperties }): JSX.Element;
+  export function EmailPreview(props: { children?: string }): JSX.Element;
+  export function EmailContainer(props: { children?: React.ReactNode; style?: React.CSSProperties }): JSX.Element;
+  export function EmailSection(props: { children?: React.ReactNode; style?: React.CSSProperties }): JSX.Element;
+  export function EmailText(props: {
+    children?: React.ReactNode;
+    variant?: 'default' | 'muted' | 'caption';
+    style?: React.CSSProperties;
+  }): JSX.Element;
+  export function EmailHeading(props: { children?: React.ReactNode; style?: React.CSSProperties }): JSX.Element;
+  export function EmailLink(props: { href: string; children?: React.ReactNode; style?: React.CSSProperties }): JSX.Element;
+  export function EmailButton(props: { href: string; label: string; brandColor?: string }): JSX.Element;
 }
-
-declare module '@olwiba/docs/server' {
-  export function createServer(): unknown;
-}
-
-

@@ -74,6 +74,14 @@ export function NewsletterSection({
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
               <Input
                 type="email"
                 placeholder={placeholder}

@@ -219,7 +219,11 @@ function ShellSidebar({
                 href: brand.href ?? '#',
                 children: (
                   <>
-                    {brand.logo ?? (
+                    {brand.logo ? (
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                        {brand.logo}
+                      </span>
+                    ) : (
                       <span className="flex size-4 shrink-0 items-center justify-center text-sm font-semibold">
                         {fallbackLogo}
                       </span>

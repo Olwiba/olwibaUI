@@ -1,5 +1,12 @@
 # Changelog
 
+
+## 0.0.41
+
+### Changed
+
+- Updated ecosystem package dependencies
+
 ## 0.0.38
 
 ### Added

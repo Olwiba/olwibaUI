@@ -1,4 +1,4 @@
 {
   "root": true,
-  "pages": ["index", "app", "marketing", "overlays", "motion", "components", "hooks"]
+  "pages": ["index", "app", "marketing", "email", "overlays", "motion", "components", "hooks"]
 }

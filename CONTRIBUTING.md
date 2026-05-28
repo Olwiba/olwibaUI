@@ -30,6 +30,7 @@ src
 ├── marketing
 ├── motion
 ├── overlays
+├── email
 ├── primitives
 └── types
 ```
@@ -38,6 +39,7 @@ src
 | ------------------- | -------------------------------------------------------------------- |
 | `src/app/`          | App shell blocks (sidebars, headers, layouts).                       |
 | `src/marketing/`    | Marketing-style sections (hero, pricing, features).                  |
+| `src/email/`        | React Email blocks for transactional messages (`@olwiba/ui/email`). |
 | `src/blog/`         | Blog-style components and layouts.                                   |
 | `src/overlays/`     | Modals, drawers, sheets, and other overlay patterns.                 |
 | `src/motion/`       | Motion primitives and animation helpers.                             |

@@ -106,28 +106,37 @@ export function ContactSection({
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
+              <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <Label htmlFor="contact-first">First name</Label>
-                  <Input id="contact-first" placeholder="Olivia" required />
+                  <Input id="contact-first" name="firstName" placeholder="Olivia" required />
                 </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="contact-last">Last name</Label>
-                  <Input id="contact-last" placeholder="Reed" required />
+                  <Input id="contact-last" name="lastName" placeholder="Reed" required />
                 </div>
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="contact-email">Email</Label>
-                <Input id="contact-email" type="email" placeholder="olivia@company.com" required />
+                <Input id="contact-email" name="email" type="email" placeholder="olivia@company.com" required />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="contact-subject">Subject</Label>
-                <Input id="contact-subject" placeholder="How can we help?" required />
+                <Input id="contact-subject" name="subject" placeholder="How can we help?" required />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="contact-message">Message</Label>
                 <Textarea
                   id="contact-message"
+                  name="message"
                   placeholder="Tell us what you're working on..."
                   className="min-h-28 resize-none"
                   required
