@@ -14,6 +14,9 @@ export {
 // ─── Primitives — mode-aware re-exports of @olwiba/cn components ─────────────
 export * from './primitives';
 
+// ─── Layout — grid, stack, section primitives ────────────────────────────────
+export * from './layout';
+
 // ─── App — shells, auth, feedback ────────────────────────────────────────────
 export {
   AppShell,

@@ -1,6 +1,13 @@
 # Changelog
 
 
+
+## 0.0.42
+
+### Changed
+
+- No notable changes.
+
 ## 0.0.41
 
 ### Changed
