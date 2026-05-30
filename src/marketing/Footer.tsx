@@ -26,7 +26,7 @@ export function Footer({
   const copyrightText = legal ?? `\u00A9 ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
 
   return (
-    <footer className="overflow-hidden rounded-2xl border bg-foreground text-background">
+    <footer className="overflow-hidden rounded-2xl border bg-muted text-foreground">
       <div className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
         {/* Brand */}
         <div className="flex justify-center">
@@ -36,11 +36,11 @@ export function Footer({
             children: (
               <>
                 {brand.logo && (
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-background/10 text-background">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground/10 text-foreground">
                     {brand.logo}
                   </span>
                 )}
-                <span className="text-lg font-semibold text-background">{brand.name}</span>
+                <span className="text-lg font-semibold text-foreground">{brand.name}</span>
               </>
             ),
           })}
@@ -53,7 +53,7 @@ export function Footer({
               <div key={label}>
                 {renderLink({
                   href,
-                  className: 'text-sm/6 text-background/70 transition-colors hover:text-background',
+                  className: 'text-sm/6 text-muted-foreground transition-colors hover:text-foreground',
                   children: label,
                 })}
               </div>
@@ -69,7 +69,7 @@ export function Footer({
                 key={label}
                 href={href}
                 aria-label={label}
-                className="text-background/70 transition-colors hover:text-background"
+                className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 {icon}
               </a>
@@ -78,7 +78,7 @@ export function Footer({
         )}
 
         {/* Copyright */}
-        <p className="mt-10 text-center text-sm/6 text-background/50">
+        <p className="mt-10 text-center text-sm/6 text-muted-foreground/70">
           {copyrightText}
         </p>
       </div>
