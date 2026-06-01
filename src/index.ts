@@ -113,8 +113,8 @@ export { PostList, type PostListProps } from './blog/PostList';
 export { ChangelogList, type ChangelogListProps } from './blog/ChangelogList';
 export { ChangelogCard, type ChangelogCardProps } from './blog/ChangelogCard';
 
-// ─── MDX — import from @olwiba/ui/mdx (requires @content-collections/mdx peer) ─
-// MdxContent is not exported here to avoid forcing @content-collections/mdx on all consumers.
+// ─── MDX ──────────────────────────────────────────────────────────────────────
+export { MdxContent, type MdxContentProps } from './blog/MdxContent';
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 export { useMounted } from './hooks/use-mounted';
