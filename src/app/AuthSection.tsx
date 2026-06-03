@@ -82,6 +82,8 @@ export interface AuthFormProps {
   loading?: boolean;
   /** Render prop for links — use to inject framework-native link components (e.g. TanStack Router Link) */
   renderLink?: AppShellRenderLink;
+  /** Optional content rendered below the form — use for social auth buttons or other additions */
+  footer?: React.ReactNode;
 }
 
 function DefaultForm({
@@ -95,6 +97,7 @@ function DefaultForm({
   error,
   loading,
   renderLink = defaultRenderLink,
+  footer,
 }: AuthFormProps) {
   const isSignUp = mode === 'signup';
 
@@ -167,6 +170,7 @@ function DefaultForm({
             )
           )}
         </p>
+        {footer && <div>{footer}</div>}
       </CardContent>
     </Card>
   );
