@@ -6,10 +6,10 @@ import { Button } from '@olwiba/cn';
 
 interface RootErrorFallbackProps {
   error: Error;
-  resetErrorBoundary?: () => void;
+  reset: () => void;
 }
 
-export function RootErrorFallback({ error, resetErrorBoundary }: RootErrorFallbackProps) {
+export function RootErrorFallback({ error, reset }: RootErrorFallbackProps) {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-8 text-center">
       <div className="flex flex-col items-center gap-3">
@@ -19,11 +19,9 @@ export function RootErrorFallback({ error, resetErrorBoundary }: RootErrorFallba
           {error.message || 'An unexpected error occurred.'}
         </p>
       </div>
-      {resetErrorBoundary && (
-        <Button onClick={resetErrorBoundary} variant="outline">
-          Try again
-        </Button>
-      )}
+      <Button onClick={reset} variant="outline">
+        Try again
+      </Button>
     </div>
   );
 }

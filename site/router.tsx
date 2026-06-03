@@ -1,4 +1,5 @@
 import { createRouter } from '@tanstack/react-router';
+import { RootErrorFallback } from '@olwiba/ui';
 import { routeTree } from './routeTree.gen';
 
 export function getRouter() {
@@ -7,6 +8,7 @@ export function getRouter() {
     defaultPreload: 'intent',
     defaultStaleReloadMode: 'blocking',
     scrollRestoration: true,
+    defaultErrorComponent: RootErrorFallback,
   });
 }
 
