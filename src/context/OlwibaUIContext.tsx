@@ -8,11 +8,13 @@ export type UIMode = 'default' | 'playful' | 'smooth';
 interface OlwibaUIContextValue {
   isMobile: boolean;
   mode: UIMode;
+  setMode: (mode: UIMode) => void;
 }
 
 const OlwibaUIContext = React.createContext<OlwibaUIContextValue>({
   isMobile: false,
   mode: 'default',
+  setMode: () => {},
 });
 
 export interface OlwibaUIProviderProps {
@@ -33,14 +35,15 @@ export interface OlwibaUIProviderProps {
   mode?: UIMode;
 }
 
-export function OlwibaUIProvider({ children, isMobile: isMobileProp, mode = 'default' }: OlwibaUIProviderProps) {
+export function OlwibaUIProvider({ children, isMobile: isMobileProp, mode: initialMode = 'default' }: OlwibaUIProviderProps) {
   const detectedMobile = useIsMobile();
   const isMobile = isMobileProp ?? detectedMobile;
+  const [mode, setMode] = React.useState<UIMode>(initialMode);
 
   const variant = mode !== 'default' ? (mode as UIVariant) : undefined;
 
   return (
-    <OlwibaUIContext.Provider value={{ isMobile, mode }}>
+    <OlwibaUIContext.Provider value={{ isMobile, mode, setMode }}>
       <UIVariantProvider mode={variant}>
         {children}
       </UIVariantProvider>

@@ -101,6 +101,7 @@ export { FullPageSpinner } from './components/Spinner';
 export { PageHeader, type PageHeaderProps, type PageHeaderBreadcrumb, type PageHeaderBackButton } from './components/PageHeader';
 export { Suspensed } from './components/Suspensed';
 export { ThemeSwitchMinimal } from './components/ThemeSwitchMinimal';
+export { ModeSwitchMinimal } from './components/ModeSwitchMinimal';
 export { ThemeColorUpdater } from './components/ThemeColorUpdater';
 export { VersionBanner } from './components/VersionBanner';
 export { DevBanner, type DevBannerProps } from './components/DevBanner';

@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button, Separator, Sheet, SheetContent, SheetTrigger } from '@olwiba/cn';
 import type { AppShellRenderLink } from '../app/AppShell';
-import { ThemeSwitchMinimal } from '../components/ThemeSwitchMinimal';
 
 export interface NavbarProps {
   brand: { name: string; logo?: React.ReactNode; href?: string };
@@ -13,7 +12,8 @@ export interface NavbarProps {
     primary?: { label: string; href: string };
     secondary?: { label: string; href: string };
   };
-  showThemeToggle?: boolean;
+  /** Icon-button controls rendered right-of-nav, left-of-CTA. Pass e.g. ModeSwitchMinimal, ThemeSwitchMinimal. */
+  controls?: React.ReactNode[];
   renderLink?: AppShellRenderLink;
 }
 
@@ -25,11 +25,12 @@ export function Navbar({
   brand,
   navLinks,
   cta,
-  showThemeToggle = false,
+  controls,
   renderLink = defaultRenderLink,
 }: NavbarProps) {
   const [open, setOpen] = React.useState(false);
   const brandHref = brand.href ?? '/';
+  const hasRightContent = controls?.length || cta?.primary || cta?.secondary;
 
   return (
     <section className="overflow-hidden rounded-2xl border bg-card">
@@ -49,8 +50,8 @@ export function Navbar({
           ),
         })}
 
-        {/* Desktop nav links — center column, truly centered */}
-        <div className="hidden items-center gap-1 md:flex">
+        {/* Desktop nav links — center column when right content exists, else shift right */}
+        <div className={`hidden items-center gap-1 md:flex ${!hasRightContent ? 'col-span-2 justify-end' : ''}`}>
           {navLinks.map((link) => (
             <span key={link.label}>
               {renderLink({
@@ -62,20 +63,27 @@ export function Navbar({
           ))}
         </div>
 
-        {/* Desktop CTAs — right column, right-aligned */}
-        <div className="hidden items-center justify-end gap-3 md:flex">
-          {cta?.secondary &&
-            renderLink({
-              href: cta.secondary.href,
-              children: <Button variant="ghost" size="sm">{cta.secondary.label}</Button>,
-            })}
-          {cta?.primary &&
-            renderLink({
-              href: cta.primary.href,
-              children: <Button size="sm">{cta.primary.label}</Button>,
-            })}
-          {showThemeToggle && <ThemeSwitchMinimal />}
-        </div>
+        {/* Desktop right — controls + CTA */}
+        {hasRightContent && (
+          <div className="hidden items-center justify-end gap-2 md:flex">
+            {controls?.map((control, i) => (
+              <React.Fragment key={i}>{control}</React.Fragment>
+            ))}
+            {(cta?.secondary || cta?.primary) && controls?.length ? (
+              <div className="mx-1 h-4 w-px bg-border" />
+            ) : null}
+            {cta?.secondary &&
+              renderLink({
+                href: cta.secondary.href,
+                children: <Button variant="ghost" size="sm">{cta.secondary.label}</Button>,
+              })}
+            {cta?.primary &&
+              renderLink({
+                href: cta.primary.href,
+                children: <Button size="sm">{cta.primary.label}</Button>,
+              })}
+          </div>
+        )}
 
         {/* Mobile drawer — right column on small screens */}
         <Sheet open={open} onOpenChange={setOpen}>
@@ -103,7 +111,9 @@ export function Navbar({
                 })}
               </span>
               <div className="flex items-center gap-1">
-                {showThemeToggle && <ThemeSwitchMinimal />}
+                {controls?.map((control, i) => (
+                  <React.Fragment key={i}>{control}</React.Fragment>
+                ))}
                 <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                   <X className="size-4" />
                   <span className="sr-only">Close menu</span>
