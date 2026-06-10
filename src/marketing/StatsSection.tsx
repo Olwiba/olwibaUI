@@ -1,6 +1,6 @@
 'use client';
 
-import { Separator } from '@olwiba/cn';
+import { Separator, cn, useUIVariant } from '@olwiba/cn';
 import { SectionTitle } from './SectionTitle';
 import { StaggerChildren } from '../motion/StaggerChildren';
 import { CountUp } from '../motion/CountUp';
@@ -33,8 +33,15 @@ export function StatsSection({
   badge = 'By the numbers',
   stats,
 }: StatsSectionProps) {
+  const mode = useUIVariant()
+  const sectionClasses = cn(
+    'overflow-hidden bg-card',
+    mode === 'smooth' && 'rounded-3xl border',
+    mode === 'playful' && 'rounded-2xl border-primary/25 border',
+    !mode && 'rounded-2xl border',
+  )
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
+    <section className={sectionClasses}>
       <div className="relative px-6 py-14 sm:px-10 sm:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,hsl(var(--primary)/0.08),transparent_60%)]" />
         <div className="relative mx-auto max-w-4xl">

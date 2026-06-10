@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { Button } from '@olwiba/cn';
+import { Button, cn, useUIVariant } from '@olwiba/cn';
 import { FadeIn } from '../motion/FadeIn';
 import type { AppShellRenderLink } from '../app/AppShell';
 
@@ -26,13 +26,20 @@ export function CtaSection({
   footnote,
   renderLink = defaultRenderLink,
 }: CtaSectionProps) {
+  const mode = useUIVariant()
+  const sectionClasses = cn(
+    'overflow-hidden bg-card',
+    mode === 'smooth' && 'rounded-3xl border',
+    mode === 'playful' && 'rounded-2xl border-primary/25 border',
+    !mode && 'rounded-2xl border',
+  )
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
+    <section className={sectionClasses}>
       <div className="relative px-6 py-16 sm:px-10 sm:py-24">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.15),transparent_70%)]" />
         <FadeIn direction="up">
           <div className="relative mx-auto max-w-2xl text-center">
-            <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <div className={cn('mb-4 inline-flex h-10 w-10 items-center justify-center bg-primary/10 text-primary', mode === 'smooth' ? 'rounded-3xl' : 'rounded-2xl')}>
               <Sparkles className="size-5" />
             </div>
             <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">

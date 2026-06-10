@@ -1,6 +1,6 @@
 'use client';
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@olwiba/cn';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, cn, useUIVariant } from '@olwiba/cn';
 import { SectionTitle } from './SectionTitle';
 import { FadeIn } from '../motion/FadeIn';
 
@@ -17,8 +17,15 @@ export function FaqSection({
   badge = 'FAQ',
   items,
 }: FaqSectionProps) {
+  const mode = useUIVariant()
+  const sectionClasses = cn(
+    'overflow-hidden bg-card',
+    mode === 'smooth' && 'rounded-3xl border',
+    mode === 'playful' && 'rounded-2xl border-primary/25 border',
+    !mode && 'rounded-2xl border',
+  )
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
+    <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">
         <div className="mx-auto max-w-3xl">
           <SectionTitle title={title} description={description} badge={badge} />

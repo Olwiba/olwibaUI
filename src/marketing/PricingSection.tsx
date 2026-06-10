@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Badge, cn } from '@olwiba/cn';
+import { Badge, Button, cn, useUIVariant } from '@olwiba/cn';
 import { PricingCard, type PricingFeature } from '../components/PricingCard';
 import { StaggerChildren } from '../motion/StaggerChildren';
 import type { AppShellRenderLink } from '../app/AppShell';
@@ -42,9 +42,16 @@ export function PricingSection({
   footnote,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
+  const mode = useUIVariant()
+  const sectionClasses = cn(
+    'overflow-hidden bg-card',
+    mode === 'smooth' && 'rounded-3xl border',
+    mode === 'playful' && 'rounded-2xl border-primary/25 border',
+    !mode && 'rounded-2xl border',
+  )
 
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
+    <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">
         <div className="mx-auto max-w-5xl">
           {/* Header */}
@@ -63,7 +70,9 @@ export function PricingSection({
 
             {/* Billing toggle */}
             <div className="mt-6 inline-flex items-center gap-3 rounded-full border bg-muted p-1">
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setAnnual(false)}
                 className={cn(
                   'rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
@@ -71,8 +80,10 @@ export function PricingSection({
                 )}
               >
                 Monthly
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => setAnnual(true)}
                 className={cn(
                   'flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
@@ -83,7 +94,7 @@ export function PricingSection({
                 {saveBadge && (
                   <Badge variant="secondary" className="text-xs">{saveBadge}</Badge>
                 )}
-              </button>
+              </Button>
             </div>
           </div>
 
