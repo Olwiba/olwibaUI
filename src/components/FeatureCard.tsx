@@ -3,7 +3,7 @@
 import * as React from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
-import { cn } from '@olwiba/cn';
+import { cn, useUIVariant } from '@olwiba/cn';
 
 export interface FeatureCardProps extends React.HTMLAttributes<HTMLDivElement> {
   icon: LucideIcon;
@@ -13,16 +13,28 @@ export interface FeatureCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function FeatureCard({ icon: Icon, title, description, href, className, ...props }: FeatureCardProps) {
-  const content = (
+  const mode = useUIVariant();
+
+  const cardInner = (
     <div
       className={cn(
-        'group relative flex flex-col gap-4 rounded-2xl border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md',
+        'group relative flex flex-col gap-4 border bg-card p-6 transition-all duration-200',
+        mode === 'playful'
+          ? 'rounded-2xl rotate-[0.3deg]'
+          : mode === 'smooth'
+            ? 'rounded-3xl hover:-translate-y-0.5 hover:shadow-md'
+            : 'rounded-2xl hover:-translate-y-0.5 hover:shadow-md',
         href && 'cursor-pointer',
-        className,
+        mode !== 'playful' && className,
       )}
-      {...props}
+      {...(mode !== 'playful' ? props : {})}
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+      <div
+        className={cn(
+          'flex h-10 w-10 items-center justify-center bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground',
+          mode === 'smooth' ? 'rounded-2xl' : 'rounded-xl',
+        )}
+      >
         <Icon className="size-5" />
       </div>
       <div className="space-y-1.5">
@@ -36,6 +48,19 @@ export function FeatureCard({ icon: Icon, title, description, href, className, .
       </div>
     </div>
   );
+
+  const content =
+    mode === 'playful' ? (
+      <div className={cn('group/playful relative', className)} {...props}>
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 rounded-2xl bg-border transition-transform duration-200 translate-x-[5px] translate-y-[5px] -rotate-[0.5deg] group-hover/playful:-rotate-[1.5deg] group-hover/playful:translate-x-[6px] group-hover/playful:translate-y-[6px]"
+        />
+        {cardInner}
+      </div>
+    ) : (
+      cardInner
+    );
 
   if (href) {
     return <a href={href} className="block">{content}</a>;

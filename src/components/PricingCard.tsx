@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Check, Minus } from 'lucide-react';
-import { Badge, Button, cn, Separator } from '@olwiba/cn';
+import { Badge, Button, cn, Separator, useUIVariant } from '@olwiba/cn';
 
 export interface PricingFeature {
   label: string;
@@ -34,14 +34,21 @@ export function PricingCard({
   className,
   ...props
 }: PricingCardProps) {
-  return (
+  const mode = useUIVariant();
+
+  const cardInner = (
     <div
       className={cn(
-        'relative flex flex-col rounded-2xl border p-6',
+        'relative flex flex-col border p-6',
+        mode === 'playful'
+          ? 'rounded-2xl rotate-[0.3deg]'
+          : mode === 'smooth'
+            ? 'rounded-3xl'
+            : 'rounded-2xl',
         highlighted ? 'border-primary bg-primary/5 shadow-sm' : 'bg-card',
-        className,
+        mode !== 'playful' && className,
       )}
-      {...props}
+      {...(mode !== 'playful' ? props : {})}
     >
       {badge && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -87,4 +94,21 @@ export function PricingCard({
       </ul>
     </div>
   );
+
+  if (mode === 'playful') {
+    return (
+      <div className={cn('group/playful relative', className)} {...props}>
+        <div
+          aria-hidden="true"
+          className={cn(
+            'absolute inset-0 rounded-2xl transition-transform duration-200 translate-x-[5px] translate-y-[5px] -rotate-[0.5deg] group-hover/playful:-rotate-[1.5deg] group-hover/playful:translate-x-[6px] group-hover/playful:translate-y-[6px]',
+            highlighted ? 'bg-primary/20' : 'bg-border',
+          )}
+        />
+        {cardInner}
+      </div>
+    );
+  }
+
+  return cardInner;
 }
