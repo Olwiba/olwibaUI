@@ -15,15 +15,13 @@
 
 ### Changed
 
-- chore: update ecosystem packages
-
+- Updated ecosystem packages: `@olwiba/docs` 0.1.27 → 0.1.29.
 ## 0.1.4
 
 ### Changed
 
-- chore: update ecosystem packages
-- ci: add workflow_dispatch tag input for manual republish
-
+- Updated ecosystem packages: `@olwiba/dx` 0.0.10 → 0.0.18, `@olwiba/cn` 0.1.17 → 0.1.20, `@olwiba/docs` 0.1.25 → 0.1.27.
+- Publish workflow now accepts a `tag` input via `workflow_dispatch` for manual republishing of a specific release tag.
 ## 0.1.2
 
 ### Changed
