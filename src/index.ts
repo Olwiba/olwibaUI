@@ -54,6 +54,7 @@ export {
 export { SectionTitle, type SectionTitleProps } from './marketing/SectionTitle';
 export { HeroSection, type HeroSectionProps } from './marketing/HeroSection';
 export { FeaturesSection, type FeaturesSectionProps } from './marketing/FeaturesSection';
+export { CarouselSection, type CarouselSectionProps } from './marketing/CarouselSection';
 export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
 export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
 export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/TestimonialsSection';

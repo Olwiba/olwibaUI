@@ -59,6 +59,7 @@ export function StaggerChildren({
     <div ref={ref} className={cn(className)} {...props}>
       {React.Children.map(children, (child, i) => (
         <div
+          className="h-full"
           style={{
             transition: `opacity ${duration}ms ease, transform ${duration}ms ease`,
             transitionDelay: `${delay + i * stagger}ms`,

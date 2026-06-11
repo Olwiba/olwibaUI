@@ -18,7 +18,7 @@ export function FeatureCard({ icon: Icon, title, description, href, className, .
   const cardInner = (
     <div
       className={cn(
-        'group relative flex flex-col gap-4 border bg-card p-6 transition-all duration-200',
+        'group relative flex h-full flex-col gap-4 border bg-card p-6 transition-all duration-200',
         mode === 'playful'
           ? 'rounded-2xl rotate-[0.3deg]'
           : mode === 'smooth'
@@ -51,7 +51,7 @@ export function FeatureCard({ icon: Icon, title, description, href, className, .
 
   const content =
     mode === 'playful' ? (
-      <div className={cn('group/playful relative', className)} {...props}>
+      <div className={cn('group/playful relative h-full', className)} {...props}>
         <div
           aria-hidden="true"
           className="absolute inset-0 rounded-2xl bg-border transition-transform duration-200 translate-x-[5px] translate-y-[5px] -rotate-[0.5deg] group-hover/playful:-rotate-[1.5deg] group-hover/playful:translate-x-[6px] group-hover/playful:translate-y-[6px]"
@@ -63,7 +63,7 @@ export function FeatureCard({ icon: Icon, title, description, href, className, .
     );
 
   if (href) {
-    return <a href={href} className="block">{content}</a>;
+    return <a href={href} className="block h-full">{content}</a>;
   }
 
   return content;
