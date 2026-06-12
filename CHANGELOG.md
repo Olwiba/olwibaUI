@@ -1,74 +1,56 @@
 # Changelog
 
-
-
-
-
-
-
-
-
-
-
-
 ## 0.1.5
 
 ### Changed
 
 - Updated ecosystem packages: `@olwiba/docs` 0.1.27 → 0.1.29.
+
 ## 0.1.4
 
 ### Changed
 
 - Updated ecosystem packages: `@olwiba/dx` 0.0.10 → 0.0.18, `@olwiba/cn` 0.1.17 → 0.1.20, `@olwiba/docs` 0.1.25 → 0.1.27.
 - Publish workflow now accepts a `tag` input via `workflow_dispatch` for manual republishing of a specific release tag.
+
+## 0.1.3
+
+### Added
+
+- Mode support for `FeatureCard`, `TestimonialCard`, and `PricingCard`.
+- Mode awareness for marketing section containers.
+
 ## 0.1.2
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.1.1
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.1.0
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.46
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.45
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.44
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.43
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.42
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.41
 
@@ -90,21 +72,15 @@
 
 ## 0.0.35
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.34
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.33
 
-### Changed
-
-- No notable changes.
+No user-facing changes.
 
 ## 0.0.29
 
