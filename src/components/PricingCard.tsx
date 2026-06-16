@@ -17,7 +17,8 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   features: PricingFeature[];
   cta: string;
   highlighted?: boolean;
-  badge?: string;
+  disabled?: boolean;
+  badge?: React.ReactNode;
   onSelect?: () => void;
 }
 
@@ -29,6 +30,7 @@ export function PricingCard({
   features,
   cta,
   highlighted = false,
+  disabled = false,
   badge,
   onSelect,
   className,
@@ -39,20 +41,21 @@ export function PricingCard({
   const cardInner = (
     <div
       className={cn(
-        'relative flex flex-col border p-6',
+        'relative flex flex-col border p-6 transition-opacity',
         mode === 'playful'
           ? 'rounded-2xl rotate-[0.3deg]'
           : mode === 'smooth'
             ? 'rounded-3xl'
             : 'rounded-2xl',
         highlighted ? 'border-primary bg-primary/5 shadow-sm' : 'bg-card',
+        disabled && 'pointer-events-none opacity-40 select-none',
         mode !== 'playful' && className,
       )}
       {...(mode !== 'playful' ? props : {})}
     >
       {badge && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <Badge>{badge}</Badge>
+          {typeof badge === 'string' ? <Badge>{badge}</Badge> : badge}
         </div>
       )}
 
@@ -69,6 +72,7 @@ export function PricingCard({
         variant={highlighted ? 'default' : 'outline'}
         className="mt-6 w-full"
         onClick={onSelect}
+        disabled={disabled}
       >
         {cta}
       </Button>

@@ -36,3 +36,4 @@ artifacts/
 
 # Generated
 site/routeTree.gen.ts
+.gstack/

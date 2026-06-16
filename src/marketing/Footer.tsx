@@ -35,11 +35,7 @@ export function Footer({
             className: 'flex items-center gap-2',
             children: (
               <>
-                {brand.logo && (
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground/10 text-foreground">
-                    {brand.logo}
-                  </span>
-                )}
+                {brand.logo}
                 <span className="text-lg font-semibold text-foreground">{brand.name}</span>
               </>
             ),

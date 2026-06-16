@@ -63,6 +63,8 @@ export { FaqSection, type FaqSectionProps } from './marketing/FaqSection';
 export { StatsSection, type StatsSectionProps } from './marketing/StatsSection';
 export { NewsletterSection, type NewsletterSectionProps } from './marketing/NewsletterSection';
 export { ContactSection, type ContactSectionProps, type ContactInfoItem } from './marketing/ContactSection';
+export { ComparisonSection, type ComparisonSectionProps, type ComparisonColumn } from './marketing/ComparisonSection';
+export { QualificationSection, type QualificationSectionProps, type QualificationColumn } from './marketing/QualificationSection';
 
 // ─── Marketing — elements ─────────────────────────────────────────────────────
 export { Navbar, type NavbarProps } from './marketing/Navbar';
@@ -77,6 +79,8 @@ export { Overlay, type OverlayProps, type OverlayVariant } from './overlays/Over
 export { FadeIn, type FadeInProps } from './motion/FadeIn';
 export { StaggerChildren, type StaggerChildrenProps } from './motion/StaggerChildren';
 export { CountUp, type CountUpProps } from './motion/CountUp';
+export { CountdownTimer, type CountdownTimerProps } from './motion/CountdownTimer';
+export { AnimatedPill, type AnimatedPillProps } from './motion/AnimatedPill';
 export { PageTransition, type PageTransitionProps } from './motion/PageTransition';
 
 // ─── Components — interactive ────────────────────────────────────────────────

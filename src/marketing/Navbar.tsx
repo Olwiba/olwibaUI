@@ -40,11 +40,7 @@ export function Navbar({
           href: brandHref,
           children: (
             <span className="flex items-center gap-2 font-semibold">
-              {brand.logo && (
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-                  {brand.logo}
-                </span>
-              )}
+              {brand.logo}
               <span>{brand.name}</span>
             </span>
           ),
@@ -100,11 +96,7 @@ export function Navbar({
                   href: brandHref,
                   children: (
                     <span className="flex items-center gap-2 font-semibold">
-                      {brand.logo && (
-                        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                          {brand.logo}
-                        </span>
-                      )}
+                      {brand.logo}
                       <span>{brand.name}</span>
                     </span>
                   ),

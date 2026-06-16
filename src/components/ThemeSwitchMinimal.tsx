@@ -4,14 +4,14 @@ import * as React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@olwiba/cn';
 
-export function ThemeSwitchMinimal() {
-  const [theme, setThemeState] = React.useState<'light' | 'dark'>('dark');
+function getInitialTheme(): 'light' | 'dark' {
+  if (typeof document === 'undefined') return 'dark';
+  const stored = localStorage.getItem('theme') as 'light' | 'dark' | null;
+  return stored ?? (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+}
 
-  React.useEffect(() => {
-    const stored = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const resolved = stored ?? (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    setThemeState(resolved);
-  }, []);
+export function ThemeSwitchMinimal() {
+  const [theme, setThemeState] = React.useState<'light' | 'dark'>(getInitialTheme);
 
   const toggle = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
