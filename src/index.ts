@@ -54,8 +54,12 @@ export {
 export { SectionTitle, type SectionTitleProps } from './marketing/SectionTitle';
 export { HeroSection, type HeroSectionProps } from './marketing/HeroSection';
 export { FeaturesSection, type FeaturesSectionProps } from './marketing/FeaturesSection';
+export { GroupedFeaturesSection, type GroupedFeaturesSectionProps, type GroupedFeatureGroup } from './marketing/GroupedFeaturesSection';
+export { StepsSection, type StepsSectionProps, type StepItem } from './marketing/StepsSection';
+export { TechStackSection, type TechStackSectionProps, type TechStackItem } from './marketing/TechStackSection';
 export { CarouselSection, type CarouselSectionProps } from './marketing/CarouselSection';
 export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
+export { CtaCardSection, type CtaCardSectionProps } from './marketing/CtaCardSection';
 export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
 export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/TestimonialsSection';
 export { TeamSection } from './marketing/TeamSection';
@@ -117,7 +121,7 @@ export { RootErrorFallback } from './components/RootErrorFallback';
 export { PostCard, type PostCardProps } from './blog/PostCard';
 export { PostList, type PostListProps } from './blog/PostList';
 export { ChangelogList, type ChangelogListProps } from './blog/ChangelogList';
-export { ChangelogCard, type ChangelogCardProps } from './blog/ChangelogCard';
+export { ChangelogCard, type ChangelogCardProps, type ChangelogHighlight, type ChangelogReleaseType } from './blog/ChangelogCard';
 
 // ─── MDX ──────────────────────────────────────────────────────────────────────
 export { MdxContent, type MdxContentProps } from './blog/MdxContent';
