@@ -26,7 +26,7 @@ export function Footer({
   const copyrightText = legal ?? `\u00A9 ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
 
   return (
-    <footer className="overflow-hidden rounded-2xl border bg-muted text-foreground">
+    <footer className="overflow-hidden rounded-2xl border bg-card text-foreground">
       <div className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
         {/* Brand */}
         <div className="flex justify-center">
