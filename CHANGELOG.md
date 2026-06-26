@@ -2,6 +2,14 @@
 
 
 
+
+## 0.1.8
+
+### Fixed
+
+- Move docs to dev dependency
+- Authenticate GitHub Packages publish
+
 ## 0.1.7
 
 No user-facing changes.

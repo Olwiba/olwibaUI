@@ -90,6 +90,7 @@ export function FlowBracket({
   // CSS dot: extent as % of container width
   const ep = `${(extent / 10).toFixed(1)}%`;
   // Dots travel bottom → top (sync → genesis/docs direction), fade in/out at card edges
+  // fb-drr: reversed — top → bottom (docs → sync direction) used when reverseRight=true
   const dotKeyframes = animate ? `
 @keyframes fb-dl{
   0%{top:${anchorBottom}%;left:0;opacity:0}
@@ -106,6 +107,14 @@ export function FlowBracket({
   80%{top:${anchorTop}%;left:calc(100% + ${ep});opacity:1}
   94%{top:${anchorTop}%;left:100%;opacity:0}
   100%{top:${anchorTop}%;left:100%;opacity:0}
+}
+@keyframes fb-drr{
+  0%{top:${anchorTop}%;left:100%;opacity:0}
+  6%{opacity:1}
+  20%{top:${anchorTop}%;left:calc(100% + ${ep})}
+  80%{top:${anchorBottom}%;left:calc(100% + ${ep});opacity:1}
+  94%{top:${anchorBottom}%;left:100%;opacity:0}
+  100%{top:${anchorBottom}%;left:100%;opacity:0}
 }` : '';
 
   const dotBase: React.CSSProperties = {
@@ -158,7 +167,7 @@ export function FlowBracket({
       {animate && right && (
         <div
           aria-hidden
-          style={{ ...dotBase, backgroundColor: cr, animation: `fb-dr ${animateDur} ease-in-out 1.8s infinite` }}
+          style={{ ...dotBase, backgroundColor: cr, animation: `${reverseRight ? 'fb-drr' : 'fb-dr'} ${animateDur} ease-in-out 1.8s infinite` }}
         />
       )}
     </div>
