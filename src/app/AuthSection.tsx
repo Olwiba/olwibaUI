@@ -84,6 +84,10 @@ export interface AuthFormProps {
   renderLink?: AppShellRenderLink;
   /** Optional content rendered below the form — use for social auth buttons or other additions */
   footer?: React.ReactNode;
+  /** Pre-fill the email field (e.g. from demo credential links). Triggers a brief border highlight animation. */
+  defaultEmail?: string;
+  /** Pre-fill the password field (e.g. from demo credential links). Triggers a brief border highlight animation. */
+  defaultPassword?: string;
 }
 
 function DefaultForm({
@@ -98,11 +102,19 @@ function DefaultForm({
   loading,
   renderLink = defaultRenderLink,
   footer,
+  defaultEmail,
+  defaultPassword,
 }: AuthFormProps) {
   const isSignUp = mode === 'signup';
+  const hasPrefill = !!(defaultEmail || defaultPassword);
+  const prefillStyle = (active: boolean): React.CSSProperties | undefined =>
+    active ? { animation: 'auth-prefill 1.6s ease-out 0.35s 1 both' } : undefined;
 
   return (
     <Card className="w-full">
+      {hasPrefill && (
+        <style>{`@keyframes auth-prefill{0%{box-shadow:0 0 0 0 hsl(var(--primary)/0)}40%{box-shadow:0 0 0 3px hsl(var(--primary)/0.4)}100%{box-shadow:0 0 0 0 hsl(var(--primary)/0)}}`}</style>
+      )}
       <CardHeader>
         {brand && <div className="mb-2">{brand}</div>}
         <CardTitle>{isSignUp ? 'Create an account' : 'Sign in'}</CardTitle>
@@ -122,7 +134,15 @@ function DefaultForm({
           )}
           <div className="space-y-2">
             <Label htmlFor="auth-email">Email address</Label>
-            <Input id="auth-email" name="email" type="email" placeholder="name@company.com" autoComplete="email" />
+            <Input
+              id="auth-email"
+              name="email"
+              type="email"
+              placeholder="name@company.com"
+              autoComplete="email"
+              defaultValue={defaultEmail}
+              style={prefillStyle(!!defaultEmail)}
+            />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -139,6 +159,8 @@ function DefaultForm({
               type="password"
               placeholder="••••••••"
               autoComplete={isSignUp ? 'new-password' : 'current-password'}
+              defaultValue={defaultPassword}
+              style={prefillStyle(!!defaultPassword)}
             />
           </div>
           {error && (

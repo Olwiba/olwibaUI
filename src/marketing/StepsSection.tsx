@@ -5,6 +5,7 @@ import { SectionTitle } from './SectionTitle';
 import { FadeIn } from '../motion/FadeIn';
 
 export interface StepItem {
+  emoji?: string;
   title: string;
   description: string;
 }
@@ -37,28 +38,25 @@ export function StepsSection({
           <SectionTitle badge={badge} title={title} description={description} />
 
           <div className="mt-12">
-            {/* Desktop: horizontal row with connecting lines */}
+            {/* Desktop: horizontal row */}
             <div className="hidden sm:grid" style={{ gridTemplateColumns: `repeat(${steps.length}, 1fr)` }}>
               {steps.map((step, i) => (
                 <FadeIn key={step.title} direction="up" delay={i * 80}>
                   <div className="relative flex flex-col items-center text-center px-4">
-                    {/* Connecting line */}
+                    {/* Dashed connector to next step */}
                     {i < steps.length - 1 && (
                       <div
                         aria-hidden="true"
-                        className="absolute top-5 left-1/2 w-full border-t border-dashed border-border"
+                        className="absolute top-6 left-1/2 w-full border-t border-dashed border-border"
                       />
                     )}
-                    {/* Number badge */}
-                    <div
-                      className={cn(
-                        'relative z-10 flex h-10 w-10 shrink-0 items-center justify-center bg-primary text-primary-foreground text-sm font-semibold',
-                        mode === 'smooth' ? 'rounded-2xl' : 'rounded-xl',
+                    {/* Emoji badge (or fallback number) */}
+                    <div className="relative z-10 mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted text-2xl">
+                      {step.emoji ?? (
+                        <span className="text-sm font-semibold text-primary">{i + 1}</span>
                       )}
-                    >
-                      {i + 1}
                     </div>
-                    <h3 className="mt-4 font-semibold">{step.title}</h3>
+                    <h3 className="font-semibold text-foreground">{step.title}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
                   </div>
                 </FadeIn>
@@ -70,24 +68,21 @@ export function StepsSection({
               {steps.map((step, i) => (
                 <FadeIn key={step.title} direction="up" delay={i * 80}>
                   <div className="relative flex gap-4 pb-8 last:pb-0">
-                    {/* Vertical connecting line */}
+                    {/* Vertical connector */}
                     {i < steps.length - 1 && (
                       <div
                         aria-hidden="true"
-                        className="absolute left-5 top-10 bottom-0 w-px border-l border-dashed border-border"
+                        className="absolute left-[23px] top-14 bottom-0 w-px border-l border-dashed border-border"
                       />
                     )}
-                    {/* Number badge */}
-                    <div
-                      className={cn(
-                        'relative z-10 flex h-10 w-10 shrink-0 items-center justify-center bg-primary text-primary-foreground text-sm font-semibold',
-                        mode === 'smooth' ? 'rounded-2xl' : 'rounded-xl',
+                    {/* Emoji badge (or fallback number) */}
+                    <div className="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-muted text-2xl">
+                      {step.emoji ?? (
+                        <span className="text-sm font-semibold text-primary">{i + 1}</span>
                       )}
-                    >
-                      {i + 1}
                     </div>
-                    <div className="pt-1.5">
-                      <h3 className="font-semibold">{step.title}</h3>
+                    <div className="pt-3">
+                      <h3 className="font-semibold text-foreground">{step.title}</h3>
                       <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
                     </div>
                   </div>

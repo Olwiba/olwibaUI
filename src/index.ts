@@ -58,11 +58,12 @@ export { GroupedFeaturesSection, type GroupedFeaturesSectionProps, type GroupedF
 export { StepsSection, type StepsSectionProps, type StepItem } from './marketing/StepsSection';
 export { TechStackSection, type TechStackSectionProps, type TechStackItem } from './marketing/TechStackSection';
 export { CarouselSection, type CarouselSectionProps } from './marketing/CarouselSection';
+export { FeatureMarqueeSection, type FeatureMarqueeSectionProps, type FeatureMarqueeRow, type FeatureMarqueeItem } from './marketing/FeatureMarqueeSection';
 export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
 export { CtaCardSection, type CtaCardSectionProps } from './marketing/CtaCardSection';
 export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
 export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/TestimonialsSection';
-export { TeamSection } from './marketing/TeamSection';
+export { TeamSection, type TeamMember, type TeamSectionProps } from './marketing/TeamSection';
 export { FaqSection, type FaqSectionProps } from './marketing/FaqSection';
 export { StatsSection, type StatsSectionProps } from './marketing/StatsSection';
 export { NewsletterSection, type NewsletterSectionProps } from './marketing/NewsletterSection';
@@ -105,12 +106,17 @@ export { TestimonialCard, type TestimonialCardProps } from './components/Testimo
 export { PricingCard, type PricingCardProps, type PricingFeature } from './components/PricingCard';
 export { ImageCard, type ImageCardProps } from './components/ImageCard';
 
+// ─── Components — diagram ────────────────────────────────────────────────────
+export { FlowConnector, type FlowConnectorProps } from './components/FlowConnector';
+export { FlowBracket, type FlowBracketProps } from './components/FlowBracket';
+
 // ─── Components — utility ────────────────────────────────────────────────────
 export { FullPageSpinner } from './components/Spinner';
 export { PageHeader, type PageHeaderProps, type PageHeaderBreadcrumb, type PageHeaderBackButton } from './components/PageHeader';
 export { Suspensed } from './components/Suspensed';
 export { ThemeSwitchMinimal } from './components/ThemeSwitchMinimal';
 export { ModeSwitchMinimal } from './components/ModeSwitchMinimal';
+export { BrandColorSwitchMinimal } from './components/BrandColorSwitchMinimal';
 export { ThemeColorUpdater } from './components/ThemeColorUpdater';
 export { VersionBanner } from './components/VersionBanner';
 export { DevBanner, type DevBannerProps } from './components/DevBanner';
