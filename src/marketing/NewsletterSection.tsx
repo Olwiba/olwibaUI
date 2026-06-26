@@ -57,13 +57,14 @@ export function NewsletterSection({
       <div className="relative px-6 py-14 sm:px-10 sm:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.1),transparent_60%)]" />
         <div className="relative mx-auto max-w-xl text-center">
-          <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-            <Mail className="size-5" />
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <div className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Mail className="size-4" />
+            </div>
+            <Badge variant="secondary">
+              {badge}
+            </Badge>
           </div>
-
-          <Badge variant="secondary" className="mb-3">
-            {badge}
-          </Badge>
           <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
           <p className="mx-auto mt-4 max-w-sm text-pretty text-muted-foreground">{description}</p>
 
