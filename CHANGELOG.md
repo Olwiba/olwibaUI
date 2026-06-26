@@ -1,5 +1,24 @@
 # Changelog
 
+
+## 0.1.6
+
+### Added
+
+- Emoji steps, configurable TeamSection, FlowBracket/Connector animation
+- Update ChangelogCard, barrel exports, add marketing section components
+- Add ComparisonSection, QualificationSection, AnimatedPill, CountdownTimer
+
+### Changed
+
+- Ignore *.stackdump files
+- Tidy CHANGELOG and add missing 0.1.3 entry
+- Rewrite 0.1.4 and 0.1.5 changelog entries
+
+### Fixed
+
+- Use bg-card to match other marketing block sections
+
 ## 0.1.5
 
 ### Changed
