@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { StatusIndicator } from '@olwiba/cn';
 import type { AppShellRenderLink } from '../app/AppShell';
 
 export interface FooterProps {
@@ -8,6 +9,7 @@ export interface FooterProps {
   navLinks?: Array<{ label: string; href: string }>;
   socialLinks?: Array<{ label: string; href: string; icon: ReactNode }>;
   legal?: string;
+  status?: { label: string; operational?: boolean };
   renderLink?: AppShellRenderLink;
 }
 
@@ -20,6 +22,7 @@ export function Footer({
   navLinks,
   socialLinks,
   legal,
+  status,
   renderLink = defaultRenderLink,
 }: FooterProps) {
   const brandHref = brand.href ?? '/';
@@ -77,6 +80,21 @@ export function Footer({
         <p className="mt-10 text-center text-sm/6 text-muted-foreground/70">
           {copyrightText}
         </p>
+
+        {/* Status */}
+        {status && (
+          <div className="mt-4 flex justify-center">
+            <div className="inline-flex items-center rounded-full border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+              <StatusIndicator
+                pulse={status.operational !== false}
+                dotClassName={status.operational !== false ? 'text-emerald-500' : 'text-destructive'}
+                size="sm"
+              >
+                {status.label}
+              </StatusIndicator>
+            </div>
+          </div>
+        )}
       </div>
     </footer>
   );

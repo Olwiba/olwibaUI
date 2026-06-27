@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Mail, MapPin, MessageSquare, Send, type LucideIcon } from 'lucide-react';
-import { Badge, Button, Checkbox, Input, Label, Separator, Textarea } from '@olwiba/cn';
+import { ChevronDown, Mail, MessageSquare, Send, type LucideIcon } from 'lucide-react';
+import { Badge, Button, Input, Label, Textarea } from '@olwiba/cn';
 
 export type ContactInfoItem = {
   label: string;
@@ -22,9 +22,13 @@ export interface ContactSectionProps {
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
 }
 
-const defaultContactInfoResolved: ContactInfoItem[] = [
-  { icon: Mail, label: 'Email', value: 'hello@olwiba.com' },
-  { icon: MapPin, label: 'Base', value: 'Aotearoa New Zealand' },
+const PHONE_PREFIXES = [
+  { label: 'US +1', value: '+1-US' },
+  { label: 'NZ +64', value: '+64-NZ' },
+  { label: 'AU +61', value: '+61-AU' },
+  { label: 'UK +44', value: '+44-UK' },
+  { label: 'CA +1', value: '+1-CA' },
+  { label: 'EU', value: '+0-EU' },
 ];
 
 const defaults = {
@@ -41,7 +45,7 @@ export function ContactSection({
   badge = defaults.badge,
   title = defaults.title,
   description = defaults.description,
-  contactInfo = defaultContactInfoResolved,
+  contactInfo,
   privacyHref,
   successTitle = defaults.successTitle,
   successDescription = defaults.successDescription,
@@ -58,137 +62,212 @@ export function ContactSection({
 
   return (
     <section className="overflow-hidden rounded-2xl border bg-card">
-      <div className="grid lg:grid-cols-[1fr_1.4fr]">
+      <div className="px-6 py-14 sm:px-10 sm:py-20">
 
-        {/* Left panel */}
-        <div className="relative overflow-hidden bg-primary px-8 py-12 text-primary-foreground">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary-foreground)/0.12),transparent_55%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,hsl(var(--primary-foreground)/0.06),transparent_60%)]" />
-          <div className="relative flex h-full flex-col gap-8">
-            <div>
-              <Badge
-                variant="secondary"
-                className="mb-4 bg-primary-foreground/15 text-primary-foreground hover:bg-primary-foreground/20"
-              >
-                {badge}
-              </Badge>
-              <h2 className="text-3xl font-semibold leading-tight">{title}</h2>
-              <p className="mt-3 text-sm leading-relaxed text-primary-foreground/70">{description}</p>
+        {/* Header */}
+        <div className="mx-auto max-w-2xl text-center">
+          {badge && (
+            <div className="mb-4 flex justify-center">
+              <Badge variant="secondary">{badge}</Badge>
             </div>
+          )}
+          <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+            {title}
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">{description}</p>
 
-            <Separator className="bg-primary-foreground/20" />
-
-            <div className="space-y-5">
+          {contactInfo && contactInfo.length > 0 && (
+            <div className="mt-8 flex flex-wrap justify-center gap-6">
               {contactInfo.map(({ icon: Icon = Mail, label, value }) => (
-                <div key={label} className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-foreground/10">
-                    <Icon className="size-4" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-medium uppercase tracking-wider text-primary-foreground/50">{label}</div>
-                    <div className="mt-0.5 text-sm font-medium">{value}</div>
-                  </div>
+                <div key={label} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Icon className="size-4 shrink-0" />
+                  <span>{value}</span>
                 </div>
               ))}
             </div>
-
-            <div className="mt-auto">
-              <p className="text-xs text-primary-foreground/40">
-                Response within one business day.
-              </p>
-            </div>
-          </div>
+          )}
         </div>
 
-        {/* Right panel — form */}
-        <div className="p-8 sm:p-10">
-          {submitted ? (
-            <div className="flex h-full min-h-[360px] flex-col items-center justify-center gap-5 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                <MessageSquare className="size-6" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">{successTitle}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground">{successDescription}</p>
-              </div>
-              <Button variant="outline" size="sm" onClick={() => setSubmitted(false)}>
-                {sendAnotherLabel}
-              </Button>
+        {/* Body */}
+        {submitted ? (
+          <div className="mx-auto mt-16 max-w-xl text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <MessageSquare className="size-6" />
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {/* honeypot */}
-              <input type="text" name="_hp" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
+            <h3 className="mt-5 text-lg font-semibold">{successTitle}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{successDescription}</p>
+            <Button variant="outline" size="sm" className="mt-6" onClick={() => setSubmitted(false)}>
+              {sendAnotherLabel}
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20">
+            {/* Honeypot */}
+            <input
+              type="text"
+              name="_hp"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="hidden"
+            />
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-1.5">
-                  <Label htmlFor="contact-first">First name</Label>
-                  <Input id="contact-first" name="firstName" placeholder="Olivia" required />
+            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+              {/* First name */}
+              <div>
+                <Label htmlFor="contact-first" className="block text-sm/6 font-semibold">
+                  First name
+                </Label>
+                <div className="mt-2.5">
+                  <Input
+                    id="contact-first"
+                    name="firstName"
+                    autoComplete="given-name"
+                    placeholder="First"
+                    required
+                  />
                 </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="contact-last">Last name</Label>
-                  <Input id="contact-last" name="lastName" placeholder="Reed" required />
+              </div>
+
+              {/* Last name */}
+              <div>
+                <Label htmlFor="contact-last" className="block text-sm/6 font-semibold">
+                  Last name
+                </Label>
+                <div className="mt-2.5">
+                  <Input
+                    id="contact-last"
+                    name="lastName"
+                    autoComplete="family-name"
+                    placeholder="Last"
+                    required
+                  />
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-1.5">
-                  <Label htmlFor="contact-company" className="flex gap-1">
-                    Company
-                    <span className="text-muted-foreground">(optional)</span>
-                  </Label>
-                  <Input id="contact-company" name="company" placeholder="Acme Inc." />
+              {/* Company */}
+              <div className="sm:col-span-2">
+                <Label htmlFor="contact-company" className="block text-sm/6 font-semibold">
+                  Company{' '}
+                  <span className="font-normal text-muted-foreground">(optional)</span>
+                </Label>
+                <div className="mt-2.5">
+                  <Input
+                    id="contact-company"
+                    name="company"
+                    autoComplete="organization"
+                    placeholder="Acme Inc."
+                  />
                 </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="contact-phone" className="flex gap-1">
-                    Phone
-                    <span className="text-muted-foreground">(optional)</span>
-                  </Label>
-                  <Input id="contact-phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
+              </div>
+
+              {/* Email */}
+              <div className="sm:col-span-2">
+                <Label htmlFor="contact-email" className="block text-sm/6 font-semibold">
+                  Email
+                </Label>
+                <div className="mt-2.5">
+                  <Input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@company.com"
+                    required
+                  />
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="contact-email">Work email</Label>
-                <Input id="contact-email" name="email" type="email" placeholder="olivia@company.com" required />
+              {/* Phone */}
+              <div className="sm:col-span-2">
+                <Label htmlFor="contact-phone" className="block text-sm/6 font-semibold">
+                  Phone number{' '}
+                  <span className="font-normal text-muted-foreground">(optional)</span>
+                </Label>
+                <div className="mt-2.5 flex overflow-hidden rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+                  <div className="relative flex shrink-0 items-center border-r border-input">
+                    <select
+                      name="countryCode"
+                      aria-label="Country code"
+                      defaultValue="+1-US"
+                      className="h-full appearance-none bg-transparent py-2 pl-3 pr-7 text-sm text-foreground focus:outline-none"
+                    >
+                      {PHONE_PREFIXES.map(({ label, value }) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-1.5 size-3.5 shrink-0 text-muted-foreground" />
+                  </div>
+                  <input
+                    id="contact-phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="123-456-7890"
+                    className="min-w-0 grow bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="contact-subject">Subject</Label>
-                <Input id="contact-subject" name="subject" placeholder="How can we help?" required />
+              {/* Message */}
+              <div className="sm:col-span-2">
+                <Label htmlFor="contact-message" className="block text-sm/6 font-semibold">
+                  Message
+                </Label>
+                <div className="mt-2.5">
+                  <Textarea
+                    id="contact-message"
+                    name="message"
+                    rows={4}
+                    placeholder="Tell us what you're working on..."
+                    className="resize-none"
+                    required
+                  />
+                </div>
               </div>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="contact-message">Message</Label>
-                <Textarea
-                  id="contact-message"
-                  name="message"
-                  placeholder="Tell us what you're working on..."
-                  className="min-h-32 resize-none"
-                  required
-                />
-              </div>
-
+              {/* Privacy toggle */}
               {privacyHref && (
-                <div className="flex items-start gap-3">
-                  <Checkbox id="contact-privacy" name="privacy" required className="mt-0.5" />
-                  <Label htmlFor="contact-privacy" className="text-sm font-normal leading-snug text-muted-foreground">
-                    By submitting this form you agree to our{' '}
-                    <a href={privacyHref} className="font-medium text-foreground underline-offset-2 hover:underline">
+                <div className="flex gap-x-4 sm:col-span-2">
+                  <div className="flex h-6 items-center">
+                    <div className="group relative inline-flex h-5 w-8 shrink-0 cursor-pointer rounded-full border border-input bg-muted p-px transition-colors duration-200 ease-in-out focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 has-[:checked]:border-primary has-[:checked]:bg-primary">
+                      <span className="size-4 rounded-full bg-background shadow-sm transition-transform duration-200 ease-in-out group-has-[:checked]:translate-x-3" />
+                      <input
+                        id="contact-privacy"
+                        name="privacy"
+                        type="checkbox"
+                        required
+                        aria-label="Agree to privacy policy"
+                        className="absolute inset-0 size-full cursor-pointer appearance-none focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                  <Label
+                    htmlFor="contact-privacy"
+                    className="cursor-pointer text-sm font-normal leading-snug text-muted-foreground"
+                  >
+                    By selecting this, you agree to our{' '}
+                    <a
+                      href={privacyHref}
+                      className="font-medium text-foreground underline-offset-2 hover:underline"
+                    >
                       privacy policy
                     </a>
                     .
                   </Label>
                 </div>
               )}
+            </div>
 
+            <div className="mt-10">
               <Button type="submit" className="w-full">
-                Send message
+                Let's talk
                 <Send className="ml-2 size-4" />
               </Button>
-            </form>
-          )}
-        </div>
+            </div>
+          </form>
+        )}
 
       </div>
     </section>

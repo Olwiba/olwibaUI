@@ -1,6 +1,5 @@
 'use client';
 
-import { Check, Minus } from 'lucide-react';
 import { cn, useUIVariant } from '@olwiba/cn';
 import { SectionTitle } from './SectionTitle';
 import { StaggerChildren } from '../motion/StaggerChildren';
@@ -45,9 +44,9 @@ export function ComparisonSection({
               <div
                 key={col.label}
                 className={cn(
-                  'flex flex-col rounded-2xl border p-6',
+                  'flex h-full flex-col rounded-2xl border p-6',
                   col.highlighted
-                    ? 'border-foreground bg-foreground text-background'
+                    ? 'border-primary bg-primary/10 ring-1 ring-primary/20'
                     : 'border-border bg-muted/40',
                 )}
               >
@@ -55,26 +54,16 @@ export function ComparisonSection({
                   <p
                     className={cn(
                       'text-xs font-semibold uppercase tracking-widest',
-                      col.highlighted ? 'text-background/60' : 'text-muted-foreground',
+                      col.highlighted ? 'text-primary/80' : 'text-muted-foreground',
                     )}
                   >
                     {col.label}
                   </p>
-                  <p
-                    className={cn(
-                      'mt-2 text-2xl font-bold tracking-tight',
-                      col.highlighted ? 'text-background' : 'text-foreground',
-                    )}
-                  >
+                  <p className="mt-2 text-2xl font-bold tracking-tight text-foreground">
                     {col.cost}
                   </p>
                   {col.costDetail && (
-                    <p
-                      className={cn(
-                        'mt-1 text-sm',
-                        col.highlighted ? 'text-background/60' : 'text-muted-foreground',
-                      )}
-                    >
+                    <p className="mt-1 text-sm text-muted-foreground">
                       {col.costDetail}
                     </p>
                   )}
@@ -84,14 +73,14 @@ export function ComparisonSection({
                   {col.items.map((item) => (
                     <li key={item} className="flex items-start gap-2.5">
                       {col.highlighted ? (
-                        <Check className="mt-0.5 size-4 shrink-0 text-background/70" />
+                        <span className="mt-0.5 shrink-0 text-sm leading-none">⚡</span>
                       ) : (
-                        <Minus className="mt-0.5 size-4 shrink-0 text-muted-foreground/50" />
+                        <span className="mt-0.5 shrink-0 text-sm leading-none">❌</span>
                       )}
                       <span
                         className={cn(
                           'text-sm leading-snug',
-                          col.highlighted ? 'text-background/90' : 'text-muted-foreground',
+                          col.highlighted ? 'text-foreground' : 'text-muted-foreground',
                         )}
                       >
                         {item}

@@ -63,11 +63,8 @@ export function FeatureMarqueeSection({
           {rows.map((row, i) => {
             const direction = row.direction ?? (i % 2 === 0 ? 'left' : 'right');
             const reversed = direction === 'right';
-            // For right-scroll rows: reverse source order so item 0 starts on the right
-            // and items enter from the right in natural reading order.
-            const source = reversed ? [...row.items].reverse() : row.items;
             // Repeat enough that one set exceeds 4K viewport (~3840px).
-            const set = Array.from({ length: 4 }, () => source).flat();
+            const set = Array.from({ length: 4 }, () => row.items).flat();
             const items = [...set, ...set];
 
             return (
@@ -87,7 +84,7 @@ export function FeatureMarqueeSection({
                     pauseOnHover && 'group-hover:[animation-play-state:paused]',
                   )}
                   style={{
-                    animation: `feature-marquee-left ${duration} linear infinite`,
+                    animation: `${reversed ? 'feature-marquee-right' : 'feature-marquee-left'} ${duration} linear infinite`,
                   }}
                 >
                   {items.map((item, j) => {
@@ -113,6 +110,10 @@ export function FeatureMarqueeSection({
         @keyframes feature-marquee-left {
           from { transform: translateX(0); }
           to { transform: translateX(-50%); }
+        }
+        @keyframes feature-marquee-right {
+          from { transform: translateX(-50%); }
+          to { transform: translateX(0); }
         }
       `}</style>
     </section>
