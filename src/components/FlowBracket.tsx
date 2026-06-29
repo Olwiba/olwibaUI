@@ -18,7 +18,7 @@ export interface FlowBracketProps {
    * Defaults to 22.
    */
   extent?: number;
-  /** Show open-chevron arrowhead at the top (destination) end. Default: true. */
+  /** Show open-chevron arrowhead at the destination end. Default: true. */
   arrow?: boolean;
   /** CSS color for both bracket lines and animated dots. Defaults to muted slate. */
   color?: string;
@@ -46,16 +46,14 @@ export interface FlowBracketProps {
   children: React.ReactNode;
 }
 
-const MARKER_L = 'fb-ml';
-const MARKER_R = 'fb-mr';
-
 /**
  * Wraps children in a relative container and draws square bracket lines on the
  * left and/or right outside edges — connecting the top of the first child down
  * to the bottom of the last child (e.g. docs → SYNC direction).
  *
- * Bracket lines use `overflow: visible` on the SVG to draw into the parent's padding.
- * Ensure the parent section/container has enough horizontal padding for `extent`.
+ * Arrowheads are rendered as absolutely-positioned SVGs (not SVG markers) so
+ * they render at a consistent pixel size regardless of the bracket SVG's aspect
+ * ratio (which spans the full section height with preserveAspectRatio="none").
  */
 export function FlowBracket({
   anchorTop = 8,
@@ -80,17 +78,15 @@ export function FlowBracket({
   const cl = colorLeft ?? color;
   const cr = colorRight ?? color;
 
-  // Left bracket: bottom → top (arrowhead at top, pointing into genesis)
+  // Left bracket: bottom → top (arrowhead at top, pointing right into genesis)
   const leftD  = `M 0,${anchorBottom} L ${L},${anchorBottom} L ${L},${anchorTop} L 0,${anchorTop}`;
-  // Right bracket: reversed = top → bottom (arrowhead at bottom, pointing into sync)
+  // Right bracket: reversed = top → bottom (arrowhead at bottom, pointing left into sync)
   const rightD = reverseRight
     ? `M 1000,${anchorTop} L ${R},${anchorTop} L ${R},${anchorBottom} L 1000,${anchorBottom}`
     : `M 1000,${anchorBottom} L ${R},${anchorBottom} L ${R},${anchorTop} L 1000,${anchorTop}`;
 
   // CSS dot: extent as % of container width
   const ep = `${(extent / 10).toFixed(1)}%`;
-  // Dots travel bottom → top (sync → genesis/docs direction), fade in/out at card edges
-  // fb-drr: reversed — top → bottom (docs → sync direction) used when reverseRight=true
   const dotKeyframes = animate ? `
 @keyframes fb-dl{
   0%{top:${anchorBottom}%;left:0;opacity:0}
@@ -127,6 +123,25 @@ export function FlowBracket({
     opacity: 0,
   };
 
+  // Shared arrowhead polyline props — same chevron shape as ecosystem connector markers
+  const chevronProps = {
+    fill: 'none',
+    strokeWidth: '1.5',
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
+
+  // Arrowhead SVG style — positioned in CSS space so it renders at a fixed pixel size
+  // regardless of the bracket SVG's non-uniform scale (preserveAspectRatio="none")
+  const arrowBase: React.CSSProperties = {
+    position: 'absolute',
+    width: 10,
+    height: 8,
+    overflow: 'visible',
+    pointerEvents: 'none',
+    transform: 'translate(-50%, -50%)',
+  };
+
   return (
     <div className={className} style={{ position: 'relative', ...style }}>
       {animate && <style>{dotKeyframes}</style>}
@@ -137,23 +152,41 @@ export function FlowBracket({
         className="pointer-events-none absolute inset-0"
         style={{ width: '100%', height: '100%', overflow: 'visible' }}
       >
-        <defs>
-          <marker id={MARKER_L} markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
-            <polyline points="1,1 8,4 1,7" fill="none" stroke={cl} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </marker>
-          <marker id={MARKER_R} markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
-            <polyline points="1,1 8,4 1,7" fill="none" stroke={cr} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </marker>
-        </defs>
-        {left  && (
-          <path d={leftD}  fill="none" stroke={cl} strokeWidth={1.5} strokeDasharray="5,4"
-            vectorEffect="non-scaling-stroke" {...(arrow ? { markerEnd: `url(#${MARKER_L})` } : {})} />
+        {left && (
+          <path d={leftD} fill="none" style={{ stroke: cl }} strokeWidth={1.5} strokeDasharray="5,4"
+            vectorEffect="non-scaling-stroke" />
         )}
         {right && (
-          <path d={rightD} fill="none" stroke={cr} strokeWidth={1.5} strokeDasharray="5,4"
-            vectorEffect="non-scaling-stroke" {...(arrow ? { markerEnd: `url(#${MARKER_R})` } : {})} />
+          <path d={rightD} fill="none" style={{ stroke: cr }} strokeWidth={1.5} strokeDasharray="5,4"
+            vectorEffect="non-scaling-stroke" />
         )}
       </svg>
+
+      {/* Left bracket arrowhead — tip points right (→) into the genesis/docs tier */}
+      {arrow && left && (
+        <svg
+          aria-hidden
+          viewBox="0 0 10 8"
+          style={{ ...arrowBase, top: `${anchorTop}%`, left: 0 }}
+        >
+          <polyline points="1,1 8,4 1,7" style={{ stroke: cl }} {...chevronProps} />
+        </svg>
+      )}
+
+      {/* Right bracket arrowhead — tip points left (←) into the destination tier */}
+      {arrow && right && (
+        <svg
+          aria-hidden
+          viewBox="0 0 10 8"
+          style={{
+            ...arrowBase,
+            top: reverseRight ? `${anchorBottom}%` : `${anchorTop}%`,
+            left: '100%',
+          }}
+        >
+          <polyline points="9,1 2,4 9,7" style={{ stroke: cr }} {...chevronProps} />
+        </svg>
+      )}
 
       {children}
 
