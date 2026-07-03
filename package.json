@@ -41,7 +41,7 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@olwiba/dx": "0.0.18",
+    "@olwiba/dx": "0.0.19",
     "@tanstack/react-table": "^8.21.3",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
