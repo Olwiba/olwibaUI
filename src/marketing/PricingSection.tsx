@@ -15,6 +15,8 @@ export interface PricingPlan {
   cta: string;
   highlighted?: boolean;
   disabled?: boolean;
+  /** Disables only the CTA button, leaving the rest of the card interactive. */
+  ctaDisabled?: boolean;
   features: PricingFeature[];
   /** Overrides computed price display (e.g. "$?" for community/reach-out tiers). */
   priceDisplay?: string;
@@ -33,6 +35,8 @@ export interface PricingSectionProps {
   footnote?: string;
   mode?: 'subscription' | 'one-time';
   foundingDeadline?: string;
+  /** Rendered below each plan's CTA button (e.g. a "Get notified" link). */
+  renderPlanFooter?: (plan: PricingPlan) => React.ReactNode;
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
@@ -50,6 +54,7 @@ export function PricingSection({
   footnote,
   mode = 'subscription',
   foundingDeadline,
+  renderPlanFooter,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
   const isOneTime = mode === 'one-time';
@@ -139,7 +144,9 @@ export function PricingSection({
                   cta={plan.cta}
                   highlighted={plan.highlighted}
                   disabled={plan.disabled}
+                  ctaDisabled={plan.ctaDisabled}
                   badge={badge}
+                  footer={renderPlanFooter?.(plan)}
                 />
               );
             })}

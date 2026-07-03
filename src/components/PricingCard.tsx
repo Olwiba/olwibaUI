@@ -18,7 +18,11 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   cta: string;
   highlighted?: boolean;
   disabled?: boolean;
+  /** Disables only the CTA button, leaving the rest of the card interactive. */
+  ctaDisabled?: boolean;
   badge?: React.ReactNode;
+  /** Rendered directly below the CTA button (e.g. a "Get notified" link). */
+  footer?: React.ReactNode;
   onSelect?: () => void;
 }
 
@@ -31,7 +35,9 @@ export function PricingCard({
   cta,
   highlighted = false,
   disabled = false,
+  ctaDisabled = false,
   badge,
+  footer,
   onSelect,
   className,
   ...props
@@ -72,10 +78,12 @@ export function PricingCard({
         variant={highlighted ? 'default' : 'outline'}
         className="mt-6 w-full"
         onClick={onSelect}
-        disabled={disabled}
+        disabled={disabled || ctaDisabled}
       >
         {cta}
       </Button>
+
+      {footer && <div className="mt-3 text-center text-sm">{footer}</div>}
 
       <Separator className="my-6" />
 
