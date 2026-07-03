@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button, Separator, Sheet, SheetContent, SheetTrigger } from '@olwiba/cn';
 import type { AppShellRenderLink } from '../app/AppShell';
 
@@ -81,16 +81,17 @@ export function Navbar({
           </div>
         )}
 
-        {/* Mobile drawer — right column on small screens */}
+        {/* Mobile drawer — trigger on the right, panel slides in from the left */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="justify-self-end md:hidden">
+            <Button variant="ghost" size="icon" className="col-start-3 justify-self-end md:hidden">
               <Menu className="size-5" />
               <span className="sr-only">Open menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-72">
-            <div className="flex items-center justify-between pb-4">
+          <SheetContent side="left" className="w-72">
+            {/* Brand row alone at the top — leaves the top-right corner to the built-in close */}
+            <div className="flex items-center pb-4">
               <span onClick={() => setOpen(false)} className="cursor-pointer">
                 {renderLink({
                   href: brandHref,
@@ -102,16 +103,14 @@ export function Navbar({
                   ),
                 })}
               </span>
-              <div className="flex items-center gap-1">
-                {controls?.map((control, i) => (
+            </div>
+            {controls?.length ? (
+              <div className="mb-4 flex w-full items-center justify-between gap-1">
+                {controls.map((control, i) => (
                   <React.Fragment key={i}>{control}</React.Fragment>
                 ))}
-                <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-                  <X className="size-4" />
-                  <span className="sr-only">Close menu</span>
-                </Button>
               </div>
-            </div>
+            ) : null}
             <Separator />
             <nav className="mt-4 flex flex-col gap-1">
               {navLinks.map((link) => (

@@ -129,7 +129,9 @@ export function BrandColorSwitchMinimal() {
           <span className="relative inline-flex size-4 items-center justify-center">
             <Palette className="size-4" />
             <span
-              className="absolute -bottom-0.5 -right-0.5 size-1.5 rounded-full ring-1 ring-background"
+              className={`absolute -bottom-0.5 -right-0.5 size-1.5 rounded-full ring-1 ring-background${
+                active === 'zinc' ? ' dark:ring-white/25' : ''
+              }`}
               style={{ background: activeHex }}
             />
           </span>
@@ -147,7 +149,11 @@ export function BrandColorSwitchMinimal() {
               className="group flex flex-col items-center gap-1"
             >
               <span
-                className="flex size-7 items-center justify-center rounded-full ring-offset-background transition-all group-hover:scale-110"
+                // Zinc's swatch is near-black — give it a border in dark mode so it
+                // doesn't vanish into the popover background (transparent in light)
+                className={`flex size-7 items-center justify-center rounded-full ring-offset-background transition-all group-hover:scale-110${
+                  color.name === 'zinc' ? ' border border-transparent dark:border-white/25' : ''
+                }`}
                 style={{
                   background: PREVIEW_HEX[color.name],
                   boxShadow:

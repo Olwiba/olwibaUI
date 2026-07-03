@@ -8,6 +8,10 @@ export interface FlowBracketProps {
    * Defaults to 8 (near the top of the first child).
    */
   anchorTop?: number;
+  /** Per-side override for the top anchor of the left bracket. Falls back to anchorTop. */
+  anchorTopLeft?: number;
+  /** Per-side override for the top anchor of the right bracket. Falls back to anchorTop. */
+  anchorTopRight?: number;
   /**
    * Vertical anchor for the bottom connection as a percentage of the wrapper height (0–100).
    * Defaults to 92 (near the bottom of the last child).
@@ -57,6 +61,8 @@ export interface FlowBracketProps {
  */
 export function FlowBracket({
   anchorTop = 8,
+  anchorTopLeft,
+  anchorTopRight,
   anchorBottom = 92,
   extent = 22,
   arrow = true,
@@ -77,13 +83,15 @@ export function FlowBracket({
 
   const cl = colorLeft ?? color;
   const cr = colorRight ?? color;
+  const aTL = anchorTopLeft ?? anchorTop;
+  const aTR = anchorTopRight ?? anchorTop;
 
   // Left bracket: bottom → top (arrowhead at top, pointing right into genesis)
-  const leftD  = `M 0,${anchorBottom} L ${L},${anchorBottom} L ${L},${anchorTop} L 0,${anchorTop}`;
+  const leftD  = `M 0,${anchorBottom} L ${L},${anchorBottom} L ${L},${aTL} L 0,${aTL}`;
   // Right bracket: reversed = top → bottom (arrowhead at bottom, pointing left into sync)
   const rightD = reverseRight
-    ? `M 1000,${anchorTop} L ${R},${anchorTop} L ${R},${anchorBottom} L 1000,${anchorBottom}`
-    : `M 1000,${anchorBottom} L ${R},${anchorBottom} L ${R},${anchorTop} L 1000,${anchorTop}`;
+    ? `M 1000,${aTR} L ${R},${aTR} L ${R},${anchorBottom} L 1000,${anchorBottom}`
+    : `M 1000,${anchorBottom} L ${R},${anchorBottom} L ${R},${aTR} L 1000,${aTR}`;
 
   // CSS dot: extent as % of container width
   const ep = `${(extent / 10).toFixed(1)}%`;
@@ -92,22 +100,22 @@ export function FlowBracket({
   0%{top:${anchorBottom}%;left:0;opacity:0}
   6%{opacity:1}
   20%{top:${anchorBottom}%;left:-${ep}}
-  80%{top:${anchorTop}%;left:-${ep};opacity:1}
-  94%{top:${anchorTop}%;left:0;opacity:0}
-  100%{top:${anchorTop}%;left:0;opacity:0}
+  80%{top:${aTL}%;left:-${ep};opacity:1}
+  94%{top:${aTL}%;left:0;opacity:0}
+  100%{top:${aTL}%;left:0;opacity:0}
 }
 @keyframes fb-dr{
   0%{top:${anchorBottom}%;left:100%;opacity:0}
   6%{opacity:1}
   20%{top:${anchorBottom}%;left:calc(100% + ${ep})}
-  80%{top:${anchorTop}%;left:calc(100% + ${ep});opacity:1}
-  94%{top:${anchorTop}%;left:100%;opacity:0}
-  100%{top:${anchorTop}%;left:100%;opacity:0}
+  80%{top:${aTR}%;left:calc(100% + ${ep});opacity:1}
+  94%{top:${aTR}%;left:100%;opacity:0}
+  100%{top:${aTR}%;left:100%;opacity:0}
 }
 @keyframes fb-drr{
-  0%{top:${anchorTop}%;left:100%;opacity:0}
+  0%{top:${aTR}%;left:100%;opacity:0}
   6%{opacity:1}
-  20%{top:${anchorTop}%;left:calc(100% + ${ep})}
+  20%{top:${aTR}%;left:calc(100% + ${ep})}
   80%{top:${anchorBottom}%;left:calc(100% + ${ep});opacity:1}
   94%{top:${anchorBottom}%;left:100%;opacity:0}
   100%{top:${anchorBottom}%;left:100%;opacity:0}
@@ -167,7 +175,7 @@ export function FlowBracket({
         <svg
           aria-hidden
           viewBox="0 0 10 8"
-          style={{ ...arrowBase, top: `${anchorTop}%`, left: 0 }}
+          style={{ ...arrowBase, top: `${aTL}%`, left: 0 }}
         >
           <polyline points="1,1 8,4 1,7" style={{ stroke: cl }} {...chevronProps} />
         </svg>
@@ -180,7 +188,7 @@ export function FlowBracket({
           viewBox="0 0 10 8"
           style={{
             ...arrowBase,
-            top: reverseRight ? `${anchorBottom}%` : `${anchorTop}%`,
+            top: reverseRight ? `${anchorBottom}%` : `${aTR}%`,
             left: '100%',
           }}
         >
