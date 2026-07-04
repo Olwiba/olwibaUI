@@ -6,6 +6,14 @@
 
 
 
+
+## 0.1.12
+
+### Fixed
+
+- `AuthSection` prefill glow now renders with `color-mix` for correct theming.
+- Mobile fixes for the `Navbar` drawer and diagram components (`FlowBracket`, `BrandColorSwitchMinimal`).
+
 ## 0.1.11
 
 No user-facing changes.
