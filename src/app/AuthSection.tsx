@@ -113,7 +113,8 @@ function DefaultForm({
   return (
     <Card className="w-full">
       {hasPrefill && (
-        <style>{`@keyframes auth-prefill{0%{box-shadow:0 0 0 0 hsl(var(--primary)/0)}40%{box-shadow:0 0 0 3px hsl(var(--primary)/0.4)}100%{box-shadow:0 0 0 0 hsl(var(--primary)/0)}}`}</style>
+        // Theme tokens hold full color values (oklch), so opacity must come from color-mix, not hsl(var()/a)
+        <style>{`@keyframes auth-prefill{0%{box-shadow:0 0 0 0 transparent}40%{box-shadow:0 0 0 3px color-mix(in oklab,var(--primary) 45%,transparent),0 0 16px 2px color-mix(in oklab,var(--primary) 35%,transparent)}100%{box-shadow:0 0 0 0 transparent}}`}</style>
       )}
       <CardHeader>
         {brand && <div className="mb-2">{brand}</div>}
