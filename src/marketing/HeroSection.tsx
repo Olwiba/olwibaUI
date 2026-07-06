@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from '@olwiba/cn';
 import { FadeIn } from '../motion/FadeIn';
 import { PhoneFrame } from '../components/PhoneFrame';
 import type { AppShellRenderLink } from '../app/AppShell';
+import { marketingSectionSpacing } from './section-spacing';
 
 export interface HeroSectionProps {
   heading: string;
@@ -40,7 +41,7 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="overflow-hidden">
-      <div className="px-6 py-14 sm:px-10 sm:py-20">
+      <div className={marketingSectionSpacing.hero}>
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left - text content */}
           <FadeIn direction="left">
