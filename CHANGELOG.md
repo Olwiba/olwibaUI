@@ -7,6 +7,15 @@
 
 
 
+
+## 0.1.13
+
+### Added
+
+- Bug report + feature request links in footer and docs
+- Share-feedback sidebar dialog + client bundle leak fix
+- Share hero section spacing
+
 ## 0.1.12
 
 ### Fixed

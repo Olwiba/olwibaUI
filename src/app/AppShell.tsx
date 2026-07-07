@@ -61,6 +61,7 @@ export interface AppShellUser {
   plan?: string;
   onSignOut?: () => void;
   onBilling?: () => void;
+  onNotifications?: () => void;
 }
 
 export interface AppShellBrand {
@@ -159,19 +160,25 @@ function NavUser({ user }: { user: AppShellUser }) {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              {user.onBilling && (
-                <DropdownMenuItem onClick={user.onBilling}>
-                  <CreditCardIcon />
-                  Billing
-                </DropdownMenuItem>
-              )}
-              <DropdownMenuItem>
-                <BellIcon />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+            {(user.onBilling || user.onNotifications) && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  {user.onBilling && (
+                    <DropdownMenuItem onClick={user.onBilling}>
+                      <CreditCardIcon />
+                      Billing
+                    </DropdownMenuItem>
+                  )}
+                  {user.onNotifications && (
+                    <DropdownMenuItem onClick={user.onNotifications}>
+                      <BellIcon />
+                      Notifications
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuGroup>
+              </>
+            )}
             {user.onSignOut && (
               <>
                 <DropdownMenuSeparator />

@@ -125,7 +125,7 @@ export { RegisterHotkeys, type Hotkey } from './components/RegisterHotkeys';
 export { RootErrorFallback } from './components/RootErrorFallback';
 
 // ─── Blog ────────────────────────────────────────────────────────────────────
-export { PostCard, type PostCardProps } from './blog/PostCard';
+export { PostCard, type PostCardProps, type PostAuthor } from './blog/PostCard';
 export { PostList, type PostListProps } from './blog/PostList';
 export { ChangelogList, type ChangelogListProps } from './blog/ChangelogList';
 export { ChangelogCard, type ChangelogCardProps, type ChangelogHighlight, type ChangelogReleaseType } from './blog/ChangelogCard';
