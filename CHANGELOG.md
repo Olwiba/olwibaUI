@@ -8,6 +8,13 @@
 
 
 
+
+## 0.1.14
+
+### Fixed
+
+- Export Enchanted
+
 ## 0.1.13
 
 ### Added
