@@ -3,7 +3,7 @@
 import type { LucideIcon } from 'lucide-react';
 import { cn, useUIVariant } from '@olwiba/cn';
 import { FeatureCard } from '../components/FeatureCard';
-import { Carousel } from '../components/Carousel';
+import { Carousel } from '../mechanics/Carousel';
 import { SectionTitle } from './SectionTitle';
 import { StaggerChildren } from '../motion/StaggerChildren';
 import { FadeIn } from '../motion/FadeIn';

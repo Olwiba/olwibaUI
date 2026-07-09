@@ -84,10 +84,8 @@ export { FeaturesSection, type FeaturesSectionProps } from './marketing/Features
 export { GroupedFeaturesSection, type GroupedFeaturesSectionProps, type GroupedFeatureGroup } from './marketing/GroupedFeaturesSection';
 export { StepsSection, type StepsSectionProps, type StepItem } from './marketing/StepsSection';
 export { TechStackSection, type TechStackSectionProps, type TechStackItem } from './marketing/TechStackSection';
-export { CarouselSection, type CarouselSectionProps } from './marketing/CarouselSection';
 export { FeatureMarqueeSection, type FeatureMarqueeSectionProps, type FeatureMarqueeRow, type FeatureMarqueeItem } from './marketing/FeatureMarqueeSection';
 export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
-export { CtaCardSection, type CtaCardSectionProps } from './marketing/CtaCardSection';
 export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
 export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/TestimonialsSection';
 export { TeamSection, type TeamMember, type TeamSectionProps } from './marketing/TeamSection';
@@ -115,8 +113,10 @@ export { CountdownTimer, type CountdownTimerProps } from './motion/CountdownTime
 export { AnimatedPill, type AnimatedPillProps } from './motion/AnimatedPill';
 export { PageTransition, type PageTransitionProps } from './motion/PageTransition';
 
+// ─── Mechanics — behavior wrappers that play any children ────────────────────
+export { Carousel, type CarouselProps } from './mechanics/Carousel';
+
 // ─── Components — interactive ────────────────────────────────────────────────
-export { Carousel, type CarouselProps } from './components/Carousel';
 export { Spotlight, type SpotlightProps, type SpotlightGroup, type SpotlightItem } from './components/Spotlight';
 export { Dock, type DockProps, type DockItem } from './components/Dock';
 export { ContextMenu, type ContextMenuProps, type ContextMenuDef } from './components/ContextMenu';
