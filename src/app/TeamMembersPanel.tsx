@@ -50,39 +50,45 @@ export interface TeamMembersPanelProps {
   description?: string;
 }
 
-function InviteDialog({ roles, onInvite }: { roles: string[]; onInvite?: (email: string, role: string) => void }) {
+function InviteDialog({ roles, onInvite, onClose }: { roles: string[]; onInvite?: (email: string, role: string) => void; onClose: () => void }) {
   const [email, setEmail] = React.useState('');
   const [role, setRole] = React.useState(roles[roles.length - 1] ?? roles[0]);
 
   return (
     <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Invite a team member</DialogTitle>
-        <DialogDescription>They&rsquo;ll get an email invite to join this workspace.</DialogDescription>
-      </DialogHeader>
-      <div className="space-y-4 py-2">
-        <div className="space-y-2">
-          <Label htmlFor="invite-email">Email address</Label>
-          <Input id="invite-email" type="email" placeholder="name@company.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onInvite?.(email, role);
+          onClose();
+        }}
+      >
+        <DialogHeader>
+          <DialogTitle>Invite a team member</DialogTitle>
+          <DialogDescription>They&rsquo;ll get an email invite to join this workspace.</DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="invite-email">Email address</Label>
+            <Input id="invite-email" type="email" required placeholder="name@company.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <Label>Role</Label>
+            <Select value={role} onValueChange={setRole}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {roles.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div className="space-y-2">
-          <Label>Role</Label>
-          <Select value={role} onValueChange={setRole}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {roles.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <DialogFooter>
-        <DialogClose asChild>
-          <Button variant="outline">Cancel</Button>
-        </DialogClose>
-        <DialogClose asChild>
-          <Button disabled={!email} onClick={() => onInvite?.(email, role)}>Send invite</Button>
-        </DialogClose>
-      </DialogFooter>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button type="button" variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button type="submit">Send invite</Button>
+        </DialogFooter>
+      </form>
     </DialogContent>
   );
 }
@@ -100,6 +106,7 @@ export function TeamMembersPanel({
   title = 'Team members',
   description = 'Manage who has access to this workspace.',
 }: TeamMembersPanelProps) {
+  const [inviteOpen, setInviteOpen] = React.useState(false);
   const columns = React.useMemo<ColumnDef<TeamMemberRecord>[]>(() => [
     {
       accessorKey: 'name',
@@ -132,7 +139,7 @@ export function TeamMembersPanel({
           <Badge variant="secondary">{row.original.role}</Badge>
         ),
     },
-    {
+    ...(onRemove ? [{
       id: 'actions',
       header: '',
       cell: ({ row }) => (
@@ -144,29 +151,32 @@ export function TeamMembersPanel({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="text-destructive" onClick={() => onRemove?.(row.original.id)}>
+            <DropdownMenuItem className="text-destructive" onClick={() => onRemove(row.original.id)}>
               Remove member
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ),
       enableSorting: false,
-    },
+    } satisfies ColumnDef<TeamMemberRecord>] : []),
   ], [roles, onRoleChange, onRemove]);
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-base font-semibold">{title}</h2>
           <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button><UserPlus className="size-4" /> Invite member</Button>
-          </DialogTrigger>
-          <InviteDialog roles={roles} onInvite={onInvite} />
-        </Dialog>
+        {onInvite && (
+          <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
+            <DialogTrigger asChild>
+              <Button><UserPlus className="size-4" /> Invite member</Button>
+            </DialogTrigger>
+            {/* key resets the form fields each time the dialog opens */}
+            <InviteDialog key={String(inviteOpen)} roles={roles} onInvite={onInvite} onClose={() => setInviteOpen(false)} />
+          </Dialog>
+        )}
       </div>
       <DataTable columns={columns} data={members} searchKey="name" searchPlaceholder="Search members…" pageSize={0} />
     </div>

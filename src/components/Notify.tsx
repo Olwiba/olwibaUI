@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { toast } from 'sonner';
-import { CheckCircle2, Inbox, Info, X } from 'lucide-react';
+import { AlertCircle, AlertTriangle, CheckCircle2, Inbox, Info, X } from 'lucide-react';
 import { cn } from '@olwiba/cn';
 import { Button } from '../primitives/Button';
 
@@ -12,7 +12,7 @@ export interface NotifyAction {
 }
 
 export interface NotificationToastProps {
-  variant?: 'success' | 'info' | 'message';
+  variant?: 'success' | 'info' | 'warning' | 'error' | 'message';
   title: string;
   description?: string;
   /** Avatar image — overrides the variant icon (e.g. for a message-from-a-person toast). */
@@ -27,6 +27,8 @@ export interface NotificationToastProps {
 const variantIcon = {
   success: <CheckCircle2 className="size-5 text-primary" />,
   info: <Info className="size-5 text-muted-foreground" />,
+  warning: <AlertTriangle className="size-5 text-amber-500 dark:text-amber-400" />,
+  error: <AlertCircle className="size-5 text-destructive" />,
   message: <Inbox className="size-5 text-muted-foreground" />,
 } as const;
 

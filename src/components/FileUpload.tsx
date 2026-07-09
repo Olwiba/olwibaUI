@@ -66,6 +66,9 @@ export function FileUpload({
   const [isDragging, setIsDragging] = React.useState(false);
   const [validationError, setValidationError] = React.useState<string | null>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  // dragenter/dragleave fire for every child element crossed — count them so the
+  // highlight doesn't flicker while moving over the icon/text inside the zone
+  const dragDepth = React.useRef(0);
   const files = filesProp ?? internalFiles;
 
   const setFiles = React.useCallback(
@@ -92,7 +95,8 @@ export function FileUpload({
   const handleFiles = (fileList: FileList | null) => {
     if (!fileList || disabled) return;
     const incoming = Array.from(fileList);
-    const room = maxFiles ? Math.max(0, maxFiles - files.length) : Infinity;
+    // Single mode replaces the current file, so the existing queue never counts against maxFiles
+    const room = maxFiles && multiple ? Math.max(0, maxFiles - files.length) : maxFiles || Infinity;
     if (maxFiles && room <= 0) {
       setValidationError(`You can only add up to ${maxFiles} file${maxFiles === 1 ? '' : 's'}.`);
       return;
@@ -124,11 +128,26 @@ export function FileUpload({
         role="button"
         tabIndex={disabled ? -1 : 0}
         onClick={() => !disabled && inputRef.current?.click()}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') inputRef.current?.click(); }}
-        onDragOver={(e) => { e.preventDefault(); if (!disabled) setIsDragging(true); }}
-        onDragLeave={() => setIsDragging(false)}
+        onKeyDown={(e) => {
+          if (disabled) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            inputRef.current?.click();
+          }
+        }}
+        onDragOver={(e) => e.preventDefault()}
+        onDragEnter={(e) => {
+          e.preventDefault();
+          dragDepth.current += 1;
+          if (!disabled) setIsDragging(true);
+        }}
+        onDragLeave={() => {
+          dragDepth.current = Math.max(0, dragDepth.current - 1);
+          if (dragDepth.current === 0) setIsDragging(false);
+        }}
         onDrop={(e) => {
           e.preventDefault();
+          dragDepth.current = 0;
           setIsDragging(false);
           handleFiles(e.dataTransfer.files);
         }}
@@ -154,7 +173,7 @@ export function FileUpload({
         />
       </div>
 
-      {validationError && <p className="text-sm font-medium text-destructive">{validationError}</p>}
+      {validationError && <p role="alert" className="text-sm font-medium text-destructive">{validationError}</p>}
 
       {files.length > 0 && (
         <ul className="space-y-2">

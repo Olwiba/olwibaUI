@@ -135,7 +135,10 @@ export function DataTable<TData>({
                   const canSort = header.column.getCanSort();
                   const sortDir = header.column.getIsSorted();
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      aria-sort={sortDir === 'asc' ? 'ascending' : sortDir === 'desc' ? 'descending' : canSort ? 'none' : undefined}
+                    >
                       {header.isPlaceholder ? null : canSort ? (
                         <button
                           type="button"
@@ -161,7 +164,11 @@ export function DataTable<TData>({
                   key={row.id}
                   data-state={row.getIsSelected() ? 'selected' : undefined}
                   onClick={() => onRowClick?.(row.original)}
-                  className={cn(onRowClick && 'cursor-pointer')}
+                  tabIndex={onRowClick ? 0 : undefined}
+                  onKeyDown={onRowClick ? (e) => {
+                    if (e.key === 'Enter' && e.target === e.currentTarget) onRowClick(row.original);
+                  } : undefined}
+                  className={cn(onRowClick && 'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring')}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
@@ -179,20 +186,23 @@ export function DataTable<TData>({
         </Table>
       </div>
 
-      {pageSize > 0 && table.getPageCount() > 1 && (
+      {(selectable || (pageSize > 0 && table.getPageCount() > 1)) && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
-            {selectable && `${table.getFilteredSelectedRowModel().rows.length} of ${table.getFilteredRowModel().rows.length} selected · `}
-            Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            {selectable && `${table.getFilteredSelectedRowModel().rows.length} of ${table.getFilteredRowModel().rows.length} selected`}
+            {selectable && pageSize > 0 && table.getPageCount() > 1 && ' · '}
+            {pageSize > 0 && table.getPageCount() > 1 && `Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}
           </p>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-              <ChevronLeft className="size-4" /> Previous
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-              Next <ChevronRight className="size-4" />
-            </Button>
-          </div>
+          {pageSize > 0 && table.getPageCount() > 1 && (
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+                <ChevronLeft className="size-4" /> Previous
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+                Next <ChevronRight className="size-4" />
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>

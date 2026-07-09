@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Check } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { cn } from '@olwiba/cn';
 import { Button } from '../primitives/Button';
 
@@ -57,8 +57,15 @@ export function OnboardingWizard({
   const handleNext = async () => {
     if (current.onNext) {
       setPending(true);
-      const result = await current.onNext();
-      setPending(false);
+      let result: boolean | string;
+      try {
+        result = await current.onNext();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+        return;
+      } finally {
+        setPending(false);
+      }
       if (result === false) { setError('Please complete this step before continuing.'); return; }
       if (typeof result === 'string') { setError(result); return; }
     }
@@ -75,9 +82,13 @@ export function OnboardingWizard({
 
   return (
     <div className={cn('w-full max-w-lg space-y-8', className)}>
-      <ol className="flex items-center">
+      <ol className="flex items-center" aria-label="Progress">
         {steps.map((step, i) => (
-          <li key={step.id} className={cn('flex items-center', i !== steps.length - 1 && 'flex-1')}>
+          <li
+            key={step.id}
+            aria-current={i === index ? 'step' : undefined}
+            className={cn('flex items-center', i !== steps.length - 1 && 'flex-1')}
+          >
             <div
               className={cn(
                 'flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-medium',
@@ -85,6 +96,7 @@ export function OnboardingWizard({
               )}
             >
               {i < index ? <Check className="size-4" /> : i + 1}
+              <span className="sr-only">{step.title}{i < index ? ' (completed)' : ''}</span>
             </div>
             {i !== steps.length - 1 && (
               <div className={cn('mx-2 h-px flex-1', i < index ? 'bg-primary' : 'bg-border')} />
@@ -99,7 +111,7 @@ export function OnboardingWizard({
           {current.description && <p className="mt-1 text-sm text-muted-foreground">{current.description}</p>}
         </div>
         <div>{current.content}</div>
-        {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+        {error && <p role="alert" className="text-sm font-medium text-destructive">{error}</p>}
       </div>
 
       <div className="flex items-center justify-between">
@@ -107,6 +119,7 @@ export function OnboardingWizard({
           Back
         </Button>
         <Button type="button" onClick={handleNext} disabled={pending}>
+          {pending && <Loader2 className="size-4 animate-spin" />}
           {pending ? 'Please wait…' : isLast ? completeLabel : 'Continue'}
         </Button>
       </div>

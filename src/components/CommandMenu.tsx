@@ -54,7 +54,13 @@ export function CommandMenu({
 }: CommandMenuProps) {
   const internal = useControlledOpen(false);
   const isOpen = openProp ?? internal.isOpen;
-  const setOpen = onOpenChange ?? internal.setIsOpen;
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      if (openProp === undefined) internal.setIsOpen(next);
+      onOpenChange?.(next);
+    },
+    [openProp, onOpenChange, internal.setIsOpen],
+  );
 
   const runItem = (item: CommandMenuItem) => {
     setOpen(false);

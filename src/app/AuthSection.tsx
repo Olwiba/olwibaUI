@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Building2, ShieldCheck, Sparkles } from 'lucide-react';
+import { Building2, Loader2, ShieldCheck, Sparkles } from 'lucide-react';
 import {
   Badge,
   CardContent,
@@ -243,17 +243,18 @@ function DefaultForm({
           )}
 
           {error && (
-            <p className="text-sm font-medium text-destructive">{error}</p>
+            <p role="alert" className="text-sm font-medium text-destructive">{error}</p>
           )}
           {success && (
-            <p className="text-sm font-medium text-primary">{success}</p>
+            <p role="status" className="text-sm font-medium text-primary">{success}</p>
           )}
 
           <div className="flex flex-col gap-2">
             <Button type="submit" className="w-full" disabled={loading || (isVerify && code.length < codeLength)}>
+              {loading && <Loader2 className="size-4 animate-spin" />}
               {loading ? 'Please wait…' : copy.submit}
             </Button>
-            {onSso && mode === 'signin' && (
+            {onSso && (mode === 'signin' || mode === 'signup') && (
               <Button type="button" variant="outline" className="w-full" onClick={onSso} disabled={loading}>
                 Use SSO
               </Button>

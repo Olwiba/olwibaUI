@@ -64,12 +64,14 @@ export function BillingPanel({
   onUpdatePaymentMethod,
   className,
 }: BillingPanelProps) {
+  // Dates and amounts are display strings — sorting them would be lexicographic, so keep it off
   const invoiceColumns = React.useMemo<ColumnDef<BillingInvoice>[]>(() => [
-    { accessorKey: 'date', header: 'Date' },
-    { accessorKey: 'amount', header: 'Amount' },
+    { accessorKey: 'date', header: 'Date', enableSorting: false },
+    { accessorKey: 'amount', header: 'Amount', enableSorting: false },
     {
       accessorKey: 'status',
       header: 'Status',
+      enableSorting: false,
       cell: ({ row }) => (
         <Badge variant={invoiceStatusVariant[row.original.status]} className="capitalize">
           {row.original.status}
@@ -108,17 +110,21 @@ export function BillingPanel({
           </div>
           {usage && usage.length > 0 && (
             <div className="mt-4 space-y-4">
-              {usage.map((metric) => (
-                <div key={metric.label} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-sm">
-                    <span>{metric.label}</span>
-                    <span className="text-muted-foreground">
-                      {metric.used}{metric.unit} / {metric.limit}{metric.unit}
-                    </span>
+              {usage.map((metric) => {
+                const overLimit = metric.limit > 0 && metric.used > metric.limit;
+                const percent = metric.limit > 0 ? Math.min(100, (metric.used / metric.limit) * 100) : 0;
+                return (
+                  <div key={metric.label} className="space-y-1.5">
+                    <div className="flex items-center justify-between text-sm">
+                      <span>{metric.label}</span>
+                      <span className={overLimit ? 'font-medium text-destructive' : 'text-muted-foreground'}>
+                        {metric.used}{metric.unit} / {metric.limit}{metric.unit}
+                      </span>
+                    </div>
+                    <Progress value={percent} className={overLimit ? '[&>div]:bg-destructive' : undefined} />
                   </div>
-                  <Progress value={(metric.used / metric.limit) * 100} />
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </SettingsSection>

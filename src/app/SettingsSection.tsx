@@ -6,7 +6,7 @@ export interface SettingsSectionProps {
   description?: string;
   /** Form fields, buttons, or any content for the right-hand column — e.g. a `<form>`. */
   children: React.ReactNode;
-  /** Styles the content column for a destructive action (e.g. "Delete account"). @default false */
+  /** Marks the section as a destructive action (e.g. "Delete account") — renders the title in the destructive color. @default false */
   danger?: boolean;
   className?: string;
 }
