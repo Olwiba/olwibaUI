@@ -9,6 +9,22 @@
 
 
 
+## 0.1.15
+
+### Added
+
+- `AuthSection` — new `forgot-password`, `reset-password`, and `verify` (OTP) modes on the existing form
+- `DataTable` — sortable, filterable, paginated table built on TanStack Table
+- `FileUpload` — drag-and-drop file picker with validated queue
+- `CommandMenu` — global Cmd+K / Ctrl+K command palette
+- `notify()` / `NotificationToast` — rich toast notifications via sonner
+- `SettingsSection` — reusable settings-page row block
+- `TeamMembersPanel` — member list with role management and invite dialog
+- `BillingPanel` — in-app plan, usage, payment method, and invoice history view
+- `OnboardingWizard` — stateful multi-step onboarding flow
+
+Each new block ships with a docs page, live demo, and sandbox.
+
 ## 0.1.14
 
 ### Fixed
