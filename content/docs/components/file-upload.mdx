@@ -1,0 +1,35 @@
+---
+title: FileUpload
+description: Drag-and-drop file picker with a validated upload queue.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="file-upload" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { FileUpload } from "@olwiba/ui";
+
+<FileUpload
+  multiple
+  accept="image/png,image/jpeg"
+  maxSizeMb={5}
+  hint="PNG or JPG, up to 5MB each"
+/>
+```
+
+Progress and status are presentation-only — wire `files`/`onFilesChange` to your own upload layer to drive them, or leave the component uncontrolled and use `onFilesAdded` to kick off your own request per file.
+
+## API Reference
+
+<APIReference name="FileUpload" props={[]} />

@@ -1,0 +1,35 @@
+---
+title: TeamMembersPanel
+description: Member list with role management and an invite dialog.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="team-members-panel" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { TeamMembersPanel } from "@olwiba/ui";
+
+<TeamMembersPanel
+  members={members}
+  onInvite={(email, role) => inviteMember(email, role)}
+  onRoleChange={(id, role) => updateRole(id, role)}
+  onRemove={(id) => removeMember(id)}
+/>
+```
+
+Built on top of `DataTable` — pass `roles` to customize the options offered in the invite dialog and per-row role menu.
+
+## API Reference
+
+<APIReference name="TeamMembersPanel" props={[]} />

@@ -1,0 +1,41 @@
+---
+title: OnboardingWizard
+description: Stateful multi-step onboarding flow.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="onboarding-wizard" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { OnboardingWizard } from "@olwiba/ui";
+
+<OnboardingWizard
+  onComplete={() => router.push("/dashboard")}
+  steps={[
+    { id: "welcome", title: "Welcome", content: <WelcomeStep /> },
+    {
+      id: "workspace",
+      title: "Name your workspace",
+      content: <WorkspaceNameStep />,
+      onNext: () => (name.trim() ? true : "Give your workspace a name to continue."),
+    },
+  ]}
+/>
+```
+
+One component driven by a `steps` array — swap the array to reshape the flow rather than hand-building a new wizard per feature. `onNext` can return `false` or an error string to block advancing.
+
+## API Reference
+
+<APIReference name="OnboardingWizard" props={[]} />

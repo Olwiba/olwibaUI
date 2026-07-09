@@ -1,6 +1,6 @@
 ---
 title: AuthSection
-description: Sign-in screen in centered or split layout. Ships with a default email/password form; override via children.
+description: Sign in, sign up, forgot/reset password, and code verification — one form, five modes.
 ---
 
 <div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
@@ -38,18 +38,36 @@ import { AuthSection } from "@olwiba/ui";
 <AuthSection layout="split">
   <MyCustomForm />
 </AuthSection>
+
+// Forgot password
+<AuthSection mode="forgot-password" signInHref="/sign-in" onSubmit={handleForgotPassword} success={sent ? "Check your inbox for a reset link." : undefined} />
+
+// Reset password (reached via the emailed link)
+<AuthSection mode="reset-password" signInHref="/sign-in" onSubmit={handleResetPassword} />
+
+// Verify code (email verification or 2FA)
+<AuthSection mode="verify" destination={email} onSubmit={handleVerify} onResend={handleResend} />
 ```
+
+Every mode shares the same `AuthSection`/`DefaultForm` — swap `mode` rather than reaching for a separate screen component per auth step.
 
 ## API Reference
 
 <APIReference name="AuthSection" props={[
+  { name: "mode", type: '"signin" | "signup" | "forgot-password" | "reset-password" | "verify"', default: '"signin"', description: "Controls form title, fields, and footer text." },
   { name: "layout", type: '"centered" | "split"', default: '"centered"', description: "Visual layout of the auth screen." },
-  { name: "children", type: "ReactNode", description: "Custom form content. Defaults to the built-in sign-in form." },
+  { name: "children", type: "ReactNode", description: "Custom form content. Defaults to the built-in form." },
   { name: "panel", type: "ReactNode", description: "Split layout only — custom content for the left decorative panel." },
   { name: "onSubmit", type: "(e: FormEvent) => void", description: "Form submit handler." },
-  { name: "onSso", type: "() => void", description: "Shows a SSO button when provided." },
-  { name: "signUpHref", type: "string", default: '"#"', description: "Link for the sign-up prompt." },
-  { name: "forgotPasswordHref", type: "string", default: '"#"', description: "Link for the forgot password prompt." },
+  { name: "onSso", type: "() => void", description: "Shows a SSO button when provided (signin only)." },
+  { name: "signUpHref", type: "string", default: '"#"', description: "Link for the sign-up prompt (signin)." },
+  { name: "signInHref", type: "string", default: '"#"', description: "Link back to sign-in (signup / forgot-password / reset-password / verify)." },
+  { name: "forgotPasswordHref", type: "string", default: '"#"', description: "Link for the forgot password prompt (signin)." },
+  { name: "onResend", type: "() => void", description: "Re-sends the one-time code (verify)." },
+  { name: "destination", type: "string", description: "Address the code was sent to (verify)." },
+  { name: "codeLength", type: "number", default: "6", description: "Number of digits in the code (verify)." },
   { name: "brand", type: "ReactNode", description: "Logo or brand mark shown above the form title." },
+  { name: "error", type: "string", description: "Error message shown below the form fields." },
+  { name: "success", type: "string", description: "Positive confirmation message shown below the form fields." },
   { name: "className", type: "string", description: "Class applied to the outer wrapper." },
 ]} />

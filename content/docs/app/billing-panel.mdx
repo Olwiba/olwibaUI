@@ -1,0 +1,38 @@
+---
+title: BillingPanel
+description: In-app billing summary — current plan, usage, payment method, and invoice history.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="billing-panel" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { BillingPanel } from "@olwiba/ui";
+
+<BillingPanel
+  planName="Pro"
+  planPrice="$29/mo"
+  renewalDate="March 12, 2026"
+  usage={[{ label: "Seats", used: 6, limit: 10 }]}
+  paymentMethod={{ brand: "Visa", last4: "4242", expiry: "08/27" }}
+  invoices={invoices}
+  onManagePlan={() => openPlanDialog()}
+/>
+```
+
+This is the account-side billing view — for marketing plan comparisons, use `PricingSection`/`UpgradePrompt` instead.
+
+## API Reference
+
+<APIReference name="BillingPanel" props={[]} />

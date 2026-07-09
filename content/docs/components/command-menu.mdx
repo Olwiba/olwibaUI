@@ -1,0 +1,41 @@
+---
+title: CommandMenu
+description: Global Cmd+K / Ctrl+K search palette.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="command-menu" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { CommandMenu } from "@olwiba/ui";
+import { LayoutDashboard, Settings } from "lucide-react";
+
+<CommandMenu
+  groups={[
+    {
+      heading: "Navigate",
+      items: [
+        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, onSelect: () => router.push("/dashboard") },
+        { id: "settings", label: "Settings", icon: Settings, onSelect: () => router.push("/settings") },
+      ],
+    },
+  ]}
+/>
+```
+
+Registers the Cmd+K (mac) / Ctrl+K (win) hotkey by default — pass `hotkey={false}` and your own `open`/`onOpenChange` if you'd rather trigger it from a button.
+
+## API Reference
+
+<APIReference name="CommandMenu" props={[]} />

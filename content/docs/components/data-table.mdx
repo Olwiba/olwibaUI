@@ -1,0 +1,40 @@
+---
+title: DataTable
+description: Sortable, paginated, optionally-selectable data table built on TanStack Table.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="data-table" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { DataTable, type DataTableColumn } from "@olwiba/ui";
+
+const columns: DataTableColumn<Project>[] = [
+  { accessorKey: "name", header: "Project" },
+  { accessorKey: "status", header: "Status" },
+];
+
+<DataTable
+  columns={columns}
+  data={projects}
+  searchKey="name"
+  toolbar={<Button size="sm">New project</Button>}
+/>
+```
+
+One component — toggle `searchKey`, `selectable`, and `pageSize` rather than reaching for a different table per use case. Columns are standard TanStack Table `ColumnDef`s, so sorting, custom cells, and accessors all work as usual.
+
+## API Reference
+
+<APIReference name="DataTable" props={[]} />

@@ -1,0 +1,40 @@
+---
+title: notify
+description: Rich toast notifications on top of sonner — one component, several variants.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="notify" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { notify } from "@olwiba/ui";
+import { Toaster } from "@olwiba/cn";
+
+// Mount once, e.g. in your root layout
+<Toaster />
+
+// Fire from anywhere
+notify({ variant: "success", title: "Deploy complete", description: "Your project is live." });
+notify({
+  variant: "message",
+  title: "New comment",
+  action: { label: "Reply", onClick: () => {} },
+});
+```
+
+`notify()` renders `NotificationToast` through sonner's `toast.custom` — swap the `variant` and pass `avatar`/`action`/`secondaryAction` rather than reaching for a different toast component per shape.
+
+## API Reference
+
+<APIReference name="NotifyOptions" props={[]} />

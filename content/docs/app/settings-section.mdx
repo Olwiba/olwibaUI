@@ -1,0 +1,37 @@
+---
+title: SettingsSection
+description: One title/description/content row for building a settings page.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="settings-section" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { SettingsSection } from "@olwiba/ui";
+
+<div className="divide-y divide-border">
+  <SettingsSection title="Profile" description="This appears on your public profile.">
+    <MyProfileForm />
+  </SettingsSection>
+  <SettingsSection title="Delete workspace" description="This cannot be undone." danger>
+    <Button variant="destructive">Delete workspace</Button>
+  </SettingsSection>
+</div>
+```
+
+Stack a few inside a `divide-y` wrapper to build a full settings page — one block reused per row, rather than a bespoke layout each time.
+
+## API Reference
+
+<APIReference name="SettingsSection" props={[]} />

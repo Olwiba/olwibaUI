@@ -2,7 +2,18 @@
 
 import * as React from 'react';
 import { Building2, ShieldCheck, Sparkles } from 'lucide-react';
-import { Badge, CardContent, CardDescription, CardHeader, CardTitle, Label, cn } from '@olwiba/cn';
+import {
+  Badge,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  Label,
+  cn,
+} from '@olwiba/cn';
 import { Button } from '../primitives/Button';
 import { Card } from '../primitives/Card';
 import { Input } from '../primitives/Input';
@@ -65,19 +76,34 @@ function SplitAuth({ children, panel }: { children: React.ReactNode; panel?: Rea
 // ─── Shared form slot ─────────────────────────────────────────────────────────
 
 export interface AuthFormProps {
-  /** Controls form title, fields, and footer text. @default 'signin' */
-  mode?: 'signin' | 'signup';
+  /**
+   * Controls form title, fields, and footer text.
+   * - `'signin'` / `'signup'` — email + password
+   * - `'forgot-password'` — email only, sends a reset link
+   * - `'reset-password'` — new password + confirmation
+   * - `'verify'` — one-time code entry (email verification or 2FA)
+   * @default 'signin'
+   */
+  mode?: 'signin' | 'signup' | 'forgot-password' | 'reset-password' | 'verify';
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   onSso?: () => void;
   /** (signin) Link to the sign-up page */
   signUpHref?: string;
-  /** (signup) Link back to the sign-in page */
+  /** (signup / forgot-password / reset-password / verify) Link back to the sign-in page */
   signInHref?: string;
   forgotPasswordHref?: string;
+  /** (verify) Re-sends the one-time code */
+  onResend?: () => void;
+  /** (verify) Address the code was sent to, shown in the description */
+  destination?: string;
+  /** (verify) Number of digits in the code. @default 6 */
+  codeLength?: number;
   /** Brand node — in centered layout renders above the card; in split layout renders inside the card */
   brand?: React.ReactNode;
   /** Error message displayed below the form fields */
   error?: string;
+  /** Positive confirmation message displayed below the form fields (e.g. "Reset link sent") */
+  success?: string;
   /** Disables the submit button and shows a loading label */
   loading?: boolean;
   /** Render prop for links — use to inject framework-native link components (e.g. TanStack Router Link) */
@@ -90,6 +116,14 @@ export interface AuthFormProps {
   defaultPassword?: string;
 }
 
+const authCopy = {
+  signin: { title: 'Sign in', description: 'Enter your email and password to continue.', submit: 'Sign in' },
+  signup: { title: 'Create an account', description: 'Enter your details to create your account.', submit: 'Create account' },
+  'forgot-password': { title: 'Reset your password', description: 'Enter the email on your account and we’ll send you a link to reset your password.', submit: 'Send reset link' },
+  'reset-password': { title: 'Choose a new password', description: 'Your new password must be different from previous passwords.', submit: 'Reset password' },
+  verify: { title: 'Enter your code', description: 'We sent a verification code to your email.', submit: 'Verify' },
+} as const;
+
 function DefaultForm({
   mode = 'signin',
   onSubmit,
@@ -97,8 +131,12 @@ function DefaultForm({
   signUpHref = '#',
   signInHref = '#',
   forgotPasswordHref = '#',
+  onResend,
+  destination,
+  codeLength = 6,
   brand,
   error,
+  success,
   loading,
   renderLink = defaultRenderLink,
   footer,
@@ -106,9 +144,14 @@ function DefaultForm({
   defaultPassword,
 }: AuthFormProps) {
   const isSignUp = mode === 'signup';
+  const isForgotPassword = mode === 'forgot-password';
+  const isResetPassword = mode === 'reset-password';
+  const isVerify = mode === 'verify';
+  const [code, setCode] = React.useState('');
   const hasPrefill = !!(defaultEmail || defaultPassword);
   const prefillStyle = (active: boolean): React.CSSProperties | undefined =>
     active ? { animation: 'auth-prefill 1.6s ease-out 0.35s 1 both' } : undefined;
+  const copy = authCopy[mode];
 
   return (
     <Card className="w-full">
@@ -118,11 +161,11 @@ function DefaultForm({
       )}
       <CardHeader>
         {brand && <div className="mb-2">{brand}</div>}
-        <CardTitle>{isSignUp ? 'Create an account' : 'Sign in'}</CardTitle>
+        <CardTitle>{copy.title}</CardTitle>
         <CardDescription>
-          {isSignUp
-            ? 'Enter your details to create your account.'
-            : 'Enter your email and password to continue.'}
+          {isVerify && destination ? (
+            <>We sent a verification code to <span className="font-medium text-foreground">{destination}</span>.</>
+          ) : copy.description}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -133,66 +176,124 @@ function DefaultForm({
               <Input id="auth-name" name="name" type="text" placeholder="Your name" autoComplete="name" />
             </div>
           )}
-          <div className="space-y-2">
-            <Label htmlFor="auth-email">Email address</Label>
-            <Input
-              id="auth-email"
-              name="email"
-              type="email"
-              placeholder="name@company.com"
-              autoComplete="email"
-              defaultValue={defaultEmail}
-              style={prefillStyle(!!defaultEmail)}
-            />
-          </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="auth-password">Password</Label>
-              {!isSignUp && forgotPasswordHref && renderLink({
-                href: forgotPasswordHref,
-                className: 'text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground',
-                children: 'Forgot password?',
-              })}
+
+          {(mode === 'signin' || mode === 'signup' || isForgotPassword) && (
+            <div className="space-y-2">
+              <Label htmlFor="auth-email">Email address</Label>
+              <Input
+                id="auth-email"
+                name="email"
+                type="email"
+                placeholder="name@company.com"
+                autoComplete="email"
+                defaultValue={defaultEmail}
+                style={prefillStyle(!!defaultEmail)}
+              />
             </div>
-            <Input
-              id="auth-password"
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              autoComplete={isSignUp ? 'new-password' : 'current-password'}
-              defaultValue={defaultPassword}
-              style={prefillStyle(!!defaultPassword)}
-            />
-          </div>
+          )}
+
+          {(mode === 'signin' || mode === 'signup') && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="auth-password">Password</Label>
+                {!isSignUp && forgotPasswordHref && renderLink({
+                  href: forgotPasswordHref,
+                  className: 'text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground',
+                  children: 'Forgot password?',
+                })}
+              </div>
+              <Input
+                id="auth-password"
+                name="password"
+                type="password"
+                placeholder="••••••••"
+                autoComplete={isSignUp ? 'new-password' : 'current-password'}
+                defaultValue={defaultPassword}
+                style={prefillStyle(!!defaultPassword)}
+              />
+            </div>
+          )}
+
+          {isResetPassword && (
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="auth-new-password">New password</Label>
+                <Input id="auth-new-password" name="password" type="password" placeholder="••••••••" autoComplete="new-password" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="auth-confirm-password">Confirm password</Label>
+                <Input id="auth-confirm-password" name="confirmPassword" type="password" placeholder="••••••••" autoComplete="new-password" />
+              </div>
+            </>
+          )}
+
+          {isVerify && (
+            <div className="space-y-2">
+              <input type="hidden" name="code" value={code} />
+              <div className="flex justify-center py-2">
+                <InputOTP maxLength={codeLength} value={code} onChange={setCode} containerClassName="justify-center">
+                  <InputOTPGroup>
+                    {Array.from({ length: codeLength }).map((_, i) => (
+                      <InputOTPSlot key={i} index={i} />
+                    ))}
+                  </InputOTPGroup>
+                </InputOTP>
+              </div>
+            </div>
+          )}
+
           {error && (
             <p className="text-sm font-medium text-destructive">{error}</p>
           )}
+          {success && (
+            <p className="text-sm font-medium text-primary">{success}</p>
+          )}
+
           <div className="flex flex-col gap-2">
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Please wait…' : isSignUp ? 'Create account' : 'Sign in'}
+            <Button type="submit" className="w-full" disabled={loading || (isVerify && code.length < codeLength)}>
+              {loading ? 'Please wait…' : copy.submit}
             </Button>
-            {onSso && (
+            {onSso && mode === 'signin' && (
               <Button type="button" variant="outline" className="w-full" onClick={onSso} disabled={loading}>
                 Use SSO
               </Button>
             )}
           </div>
         </form>
-        <p className="text-center text-xs text-muted-foreground">
-          {isSignUp ? (
-            <>
-              Already have an account?{' '}
-              {renderLink({ href: signInHref, className: 'text-foreground underline underline-offset-4', children: 'Sign in' })}
-            </>
-          ) : (
-            signUpHref && (
+
+        {isVerify && onResend && (
+          <p className="text-center text-xs text-muted-foreground">
+            Didn&rsquo;t get a code?{' '}
+            <button type="button" onClick={onResend} className="text-foreground underline underline-offset-4">
+              Resend
+            </button>
+          </p>
+        )}
+
+        {(mode === 'signin' || mode === 'signup') && (
+          <p className="text-center text-xs text-muted-foreground">
+            {isSignUp ? (
               <>
-                New here?{' '}
-                {renderLink({ href: signUpHref, className: 'text-foreground underline underline-offset-4', children: 'Create an account' })}
+                Already have an account?{' '}
+                {renderLink({ href: signInHref, className: 'text-foreground underline underline-offset-4', children: 'Sign in' })}
               </>
-            )
-          )}
-        </p>
+            ) : (
+              signUpHref && (
+                <>
+                  New here?{' '}
+                  {renderLink({ href: signUpHref, className: 'text-foreground underline underline-offset-4', children: 'Create an account' })}
+                </>
+              )
+            )}
+          </p>
+        )}
+
+        {(isForgotPassword || isResetPassword || isVerify) && (
+          <p className="text-center text-xs text-muted-foreground">
+            {renderLink({ href: signInHref, className: 'text-foreground underline underline-offset-4', children: 'Back to sign in' })}
+          </p>
+        )}
+
         {footer && <div>{footer}</div>}
       </CardContent>
     </Card>

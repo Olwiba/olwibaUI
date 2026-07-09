@@ -36,6 +36,31 @@ export {
 } from './app/AuthSection';
 
 export {
+  SettingsSection,
+  type SettingsSectionProps,
+} from './app/SettingsSection';
+
+export {
+  TeamMembersPanel,
+  type TeamMembersPanelProps,
+  type TeamMemberRecord,
+} from './app/TeamMembersPanel';
+
+export {
+  BillingPanel,
+  type BillingPanelProps,
+  type BillingUsageMetric,
+  type BillingInvoice,
+  type BillingPaymentMethod,
+} from './app/BillingPanel';
+
+export {
+  OnboardingWizard,
+  type OnboardingWizardProps,
+  type OnboardingStep,
+} from './app/OnboardingWizard';
+
+export {
   EmptyState,
   type EmptyStateProps,
 } from './app/EmptyState';
@@ -95,6 +120,14 @@ export { Spotlight, type SpotlightProps, type SpotlightGroup, type SpotlightItem
 export { Dock, type DockProps, type DockItem } from './components/Dock';
 export { ContextMenu, type ContextMenuProps, type ContextMenuDef } from './components/ContextMenu';
 export { ConfirmDialog, type ConfirmDialogProps } from './components/ConfirmDialog';
+export { CommandMenu, type CommandMenuProps, type CommandMenuGroup, type CommandMenuItem } from './components/CommandMenu';
+
+// ─── Components — data ───────────────────────────────────────────────────────
+export { DataTable, type DataTableProps, type DataTableColumn } from './components/DataTable';
+export { FileUpload, type FileUploadProps, type FileUploadEntry } from './components/FileUpload';
+
+// ─── Components — notifications ──────────────────────────────────────────────
+export { NotificationToast, type NotificationToastProps, notify, type NotifyOptions, type NotifyAction } from './components/Notify';
 
 // ─── Components — device mockups ────────────────────────────────────────────
 export { PhoneFrame, type PhoneFrameProps } from './components/PhoneFrame';

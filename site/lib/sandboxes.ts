@@ -1137,6 +1137,211 @@ export function PaginatedList() {
 }
 ` }],
   },
+
+  'data-table': {
+    id: 'data-table',
+    title: 'DataTable',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/data-table')),
+    files: [{ path: 'components/ProjectsTable.tsx', language: 'tsx', code: `import type { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "@olwiba/ui";
+import { Badge, Button } from "@olwiba/cn";
+
+interface Project {
+  id: string;
+  name: string;
+  status: "live" | "building" | "paused";
+  updatedAt: string;
+}
+
+const columns: ColumnDef<Project>[] = [
+  { accessorKey: "name", header: "Project" },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => <Badge className="capitalize">{row.original.status}</Badge>,
+  },
+  { accessorKey: "updatedAt", header: "Updated" },
+];
+
+export function ProjectsTable({ projects }: { projects: Project[] }) {
+  return (
+    <DataTable
+      columns={columns}
+      data={projects}
+      searchKey="name"
+      toolbar={<Button size="sm">New project</Button>}
+    />
+  );
+}
+` }],
+  },
+
+  'file-upload': {
+    id: 'file-upload',
+    title: 'FileUpload',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/file-upload')),
+    files: [{ path: 'components/AvatarUpload.tsx', language: 'tsx', code: `import { FileUpload } from "@olwiba/ui";
+
+export function AvatarUpload() {
+  return (
+    <FileUpload
+      multiple
+      accept="image/png,image/jpeg"
+      maxSizeMb={5}
+      maxFiles={4}
+      hint="PNG or JPG, up to 5MB each"
+      onFilesAdded={(files) => uploadFiles(files)}
+    />
+  );
+}
+` }],
+  },
+
+  'command-menu': {
+    id: 'command-menu',
+    title: 'CommandMenu',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/command-menu')),
+    files: [{ path: 'components/GlobalSearch.tsx', language: 'tsx', code: `import { CommandMenu } from "@olwiba/ui";
+import { LayoutDashboard, CreditCard, Settings } from "lucide-react";
+
+export function GlobalSearch() {
+  return (
+    <CommandMenu
+      groups={[
+        {
+          heading: "Navigate",
+          items: [
+            { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, onSelect: () => router.push("/dashboard") },
+            { id: "billing", label: "Billing", icon: CreditCard, onSelect: () => router.push("/billing") },
+            { id: "settings", label: "Settings", icon: Settings, onSelect: () => router.push("/settings") },
+          ],
+        },
+      ]}
+    />
+  );
+}
+` }],
+  },
+
+  notify: {
+    id: 'notify',
+    title: 'notify',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/notify')),
+    files: [{ path: 'components/DeployButton.tsx', language: 'tsx', code: `import { notify } from "@olwiba/ui";
+import { Toaster, Button } from "@olwiba/cn";
+
+export function DeployButton() {
+  return (
+    <>
+      <Button onClick={() => notify({
+        variant: "success",
+        title: "Deploy complete",
+        description: "Your project is live.",
+      })}>
+        Deploy
+      </Button>
+      <Toaster />
+    </>
+  );
+}
+` }],
+  },
+
+  'settings-section': {
+    id: 'settings-section',
+    title: 'SettingsSection',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/settings-section')),
+    files: [{ path: 'app/settings/page.tsx', language: 'tsx', code: `import { SettingsSection } from "@olwiba/ui";
+import { Button } from "@olwiba/cn";
+
+export default function SettingsPage() {
+  return (
+    <div className="divide-y divide-border">
+      <SettingsSection title="Profile" description="This appears on your public profile.">
+        <MyProfileForm />
+      </SettingsSection>
+      <SettingsSection title="Delete workspace" description="This cannot be undone." danger>
+        <Button variant="destructive">Delete workspace</Button>
+      </SettingsSection>
+    </div>
+  );
+}
+` }],
+  },
+
+  'team-members-panel': {
+    id: 'team-members-panel',
+    title: 'TeamMembersPanel',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/team-members-panel')),
+    files: [{ path: 'app/team/page.tsx', language: 'tsx', code: `import { TeamMembersPanel } from "@olwiba/ui";
+
+export default function TeamPage({ members }: { members: TeamMemberRecord[] }) {
+  return (
+    <TeamMembersPanel
+      members={members}
+      onInvite={(email, role) => inviteMember(email, role)}
+      onRoleChange={(id, role) => updateRole(id, role)}
+      onRemove={(id) => removeMember(id)}
+    />
+  );
+}
+` }],
+  },
+
+  'billing-panel': {
+    id: 'billing-panel',
+    title: 'BillingPanel',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/billing-panel')),
+    files: [{ path: 'app/billing/page.tsx', language: 'tsx', code: `import { BillingPanel } from "@olwiba/ui";
+
+export default function BillingPage() {
+  return (
+    <BillingPanel
+      planName="Pro"
+      planPrice="$29/mo"
+      renewalDate="March 12, 2026"
+      usage={[{ label: "Seats", used: 6, limit: 10 }]}
+      paymentMethod={{ brand: "Visa", last4: "4242", expiry: "08/27" }}
+      invoices={invoices}
+      onManagePlan={() => openPlanDialog()}
+    />
+  );
+}
+` }],
+  },
+
+  'onboarding-wizard': {
+    id: 'onboarding-wizard',
+    title: 'OnboardingWizard',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/onboarding-wizard')),
+    files: [{ path: 'app/onboarding/page.tsx', language: 'tsx', code: `import { OnboardingWizard } from "@olwiba/ui";
+
+export default function OnboardingPage() {
+  return (
+    <OnboardingWizard
+      onComplete={() => router.push("/dashboard")}
+      steps={[
+        { id: "welcome", title: "Welcome", content: <WelcomeStep /> },
+        {
+          id: "workspace",
+          title: "Name your workspace",
+          content: <WorkspaceNameStep />,
+          onNext: () => (name.trim() ? true : "Give your workspace a name to continue."),
+        },
+      ]}
+    />
+  );
+}
+` }],
+  },
 };
 
 registerSandboxes(uiSandboxes);
