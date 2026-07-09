@@ -2,7 +2,11 @@
 
 import * as React from 'react';
 import { ChevronDown, Mail, MessageSquare, Send, type LucideIcon } from 'lucide-react';
-import { Badge, Button, Input, Label, Textarea } from '@olwiba/cn';
+import { cn, Label, useUIVariant } from '@olwiba/cn';
+import { Badge } from '../primitives/Badge';
+import { Button } from '../primitives/Button';
+import { Input } from '../primitives/Input';
+import { Textarea } from '../primitives/Textarea';
 
 export type ContactInfoItem = {
   label: string;
@@ -53,6 +57,13 @@ export function ContactSection({
   onSubmit,
 }: ContactSectionProps = {}) {
   const [submitted, setSubmitted] = React.useState(false);
+  const mode = useUIVariant();
+  const sectionClasses = cn(
+    'overflow-hidden bg-card',
+    mode === 'smooth' && 'rounded-3xl border',
+    mode === 'playful' && 'rounded-2xl border-primary/25 border',
+    !mode && 'rounded-2xl border',
+  );
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -61,7 +72,7 @@ export function ContactSection({
   }
 
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
+    <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">
 
         {/* Header */}

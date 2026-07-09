@@ -1,7 +1,8 @@
 'use client';
 
 import { Github, Linkedin, Twitter } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage, Badge } from '@olwiba/cn';
+import { Avatar, AvatarFallback, AvatarImage, cn, useUIVariant } from '@olwiba/cn';
+import { Badge } from '../primitives/Badge';
 
 export interface TeamMember {
   name: string;
@@ -56,8 +57,15 @@ export function TeamSection({
   title = 'The people behind Olwiba',
   description = 'A small team with deep experience in design systems, open source, and developer tooling.',
 }: TeamSectionProps) {
+  const mode = useUIVariant();
+  const sectionClasses = cn(
+    'overflow-hidden bg-card',
+    mode === 'smooth' && 'rounded-3xl border',
+    mode === 'playful' && 'rounded-2xl border-primary/25 border',
+    !mode && 'rounded-2xl border',
+  );
   return (
-    <section className="overflow-hidden rounded-2xl border bg-card">
+    <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">
         <div className="mx-auto max-w-5xl">
           <div className="text-center">

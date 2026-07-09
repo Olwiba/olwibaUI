@@ -1,0 +1,34 @@
+---
+title: NotificationsPopover
+description: Bell button with unread badge and a persistent notification inbox.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="notifications-popover" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { NotificationsPopover } from "@olwiba/ui";
+
+<NotificationsPopover
+  notifications={notifications}
+  onMarkAllRead={() => markAllRead()}
+  onNotificationClick={(n) => { markRead(n.id); router.push(n.href); }}
+/>
+```
+
+Complements `notify()` toasts: a toast announces an event as it happens, this popover holds the history. Presentation-only — pass `notifications` from your own data layer and persist read state in the callbacks. Unread items get a dot, a subtle background, and count toward the bell badge.
+
+## API Reference
+
+<APIReference name="NotificationsPopover" props={[]} />

@@ -14,3 +14,18 @@ description: Call-to-action band for marketing pages.
 ```tsx
 import { CtaSection } from "@olwiba/ui";
 ```
+
+## Variants
+
+```tsx
+// Default — badge icon, radial glow, primary + secondary CTAs
+<CtaSection heading="Ready to ship?" description="Start free." primaryCta={{ label: "Get started", href: "/signup" }} />
+
+// Showcase — large watermark icon with a scroll reveal, single pill CTA
+<CtaSection
+  variant="showcase"
+  heading="Launch your next app"
+  primaryCta={{ label: "Start building", href: "/signup" }}
+  icon={<Rocket className="size-72" strokeWidth={0.75} />}
+/>
+```

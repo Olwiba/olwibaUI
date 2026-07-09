@@ -116,6 +116,7 @@ export { AnimatedPill, type AnimatedPillProps } from './motion/AnimatedPill';
 export { PageTransition, type PageTransitionProps } from './motion/PageTransition';
 
 // ─── Components — interactive ────────────────────────────────────────────────
+export { Carousel, type CarouselProps } from './components/Carousel';
 export { Spotlight, type SpotlightProps, type SpotlightGroup, type SpotlightItem } from './components/Spotlight';
 export { Dock, type DockProps, type DockItem } from './components/Dock';
 export { ContextMenu, type ContextMenuProps, type ContextMenuDef } from './components/ContextMenu';
@@ -128,6 +129,8 @@ export { FileUpload, type FileUploadProps, type FileUploadEntry } from './compon
 
 // ─── Components — notifications ──────────────────────────────────────────────
 export { NotificationToast, type NotificationToastProps, notify, type NotifyOptions, type NotifyAction } from './components/Notify';
+export { NotificationsPopover, type NotificationsPopoverProps, type NotificationItem } from './components/NotificationsPopover';
+export { ActivityFeed, type ActivityFeedProps, type ActivityFeedItem } from './components/ActivityFeed';
 
 // ─── Components — device mockups ────────────────────────────────────────────
 export { PhoneFrame, type PhoneFrameProps } from './components/PhoneFrame';

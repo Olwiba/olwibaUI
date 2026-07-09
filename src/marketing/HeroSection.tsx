@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from '@olwiba/cn';
+import { Avatar, AvatarFallback, AvatarImage, cn, useUIVariant } from '@olwiba/cn';
+import { Badge } from '../primitives/Badge';
+import { Button } from '../primitives/Button';
 import { FadeIn } from '../motion/FadeIn';
 import { PhoneFrame } from '../components/PhoneFrame';
 import type { AppShellRenderLink } from '../app/AppShell';
@@ -39,6 +41,7 @@ export function HeroSection({
   socialProofText,
   renderLink = defaultRenderLink,
 }: HeroSectionProps) {
+  const mode = useUIVariant();
   return (
     <section className="overflow-hidden">
       <div className={marketingSectionSpacing.hero}>
@@ -90,7 +93,7 @@ export function HeroSection({
                   </PhoneFrame>
                 </div>
               ) : (
-                <div className="overflow-hidden rounded-2xl">
+                <div className={cn('overflow-hidden', mode === 'smooth' ? 'rounded-3xl' : 'rounded-2xl')}>
                   {heroImage}
                 </div>
               )}

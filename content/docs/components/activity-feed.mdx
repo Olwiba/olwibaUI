@@ -1,0 +1,42 @@
+---
+title: ActivityFeed
+description: Vertical activity timeline with avatar or icon markers connected by a rail.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="activity-feed" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { ActivityFeed } from "@olwiba/ui";
+
+<ActivityFeed
+  items={[
+    {
+      id: "1",
+      title: <><b>Ana</b> deployed to production</>,
+      description: "v0.1.16 · 12 commits",
+      timestamp: "2h ago",
+      avatar: "/avatars/ana.png",
+      initials: "AS",
+    },
+    { id: "2", title: "Subscription renewed", timestamp: "Yesterday", icon: <CreditCard /> },
+  ]}
+/>
+```
+
+Presentation-only: pass pre-formatted timestamps and rich `title` nodes from your own data layer. Items with `avatar` render an avatar marker; otherwise `icon` (or a default) renders in a bordered circle.
+
+## API Reference
+
+<APIReference name="ActivityFeed" props={[]} />

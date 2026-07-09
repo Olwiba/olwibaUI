@@ -1,0 +1,42 @@
+---
+title: Carousel
+description: Scroll-snap carousel behavior — wrap any children in a horizontal track with prev/next controls.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="carousel" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { Carousel, FeatureCard } from "@olwiba/ui";
+
+<Carousel ariaLabel="Platform features">
+  {features.map((f) => (
+    <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description} />
+  ))}
+</Carousel>
+```
+
+Carousel is a mechanic, not a section — each child becomes one snap slide, so feed it cards, images, or whole blocks. Control slide width with `itemClassName`:
+
+```tsx
+<Carousel itemClassName="w-[220px]">
+  {screenshots.map((s) => <ImageCard key={s.id} src={s.src} alt={s.alt} />)}
+</Carousel>
+```
+
+For a ready-made feature carousel inside a marketing section, use `FeaturesSection` with `layout="carousel"` instead.
+
+## API Reference
+
+<APIReference name="Carousel" props={[]} />

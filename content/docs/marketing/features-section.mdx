@@ -13,4 +13,11 @@ description: Feature grid or list section for marketing pages.
 
 ```tsx
 import { FeaturesSection } from "@olwiba/ui";
+
+<FeaturesSection features={features} />
+
+// Horizontally scrolling cards instead of a grid
+<FeaturesSection features={features} layout="carousel" />
 ```
+
+`layout="carousel"` renders the same cards in a scroll-snap [Carousel](/docs/components/carousel) with prev/next controls. To carousel your own content outside a section, use the `Carousel` mechanic directly.

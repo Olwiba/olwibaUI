@@ -1342,6 +1342,69 @@ export default function OnboardingPage() {
 }
 ` }],
   },
+
+  carousel: {
+    id: 'carousel',
+    title: 'Carousel',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/carousel')),
+    files: [{ path: 'components/feature-carousel.tsx', language: 'tsx', code: `import { Carousel, FeatureCard } from "@olwiba/ui";
+
+export function FeatureCarousel({ features }) {
+  return (
+    <Carousel ariaLabel="Platform features">
+      {features.map((f) => (
+        <FeatureCard key={f.title} icon={f.icon} title={f.title} description={f.description} />
+      ))}
+    </Carousel>
+  );
+}
+` }],
+  },
+
+  'notifications-popover': {
+    id: 'notifications-popover',
+    title: 'NotificationsPopover',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/notifications-popover')),
+    files: [{ path: 'components/header-notifications.tsx', language: 'tsx', code: `import { NotificationsPopover } from "@olwiba/ui";
+
+export function HeaderNotifications({ notifications }) {
+  return (
+    <NotificationsPopover
+      notifications={notifications}
+      onMarkAllRead={() => markAllRead()}
+      onNotificationClick={(n) => markRead(n.id)}
+    />
+  );
+}
+` }],
+  },
+
+  'activity-feed': {
+    id: 'activity-feed',
+    title: 'ActivityFeed',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/activity-feed')),
+    files: [{ path: 'app/dashboard/activity.tsx', language: 'tsx', code: `import { ActivityFeed } from "@olwiba/ui";
+import { GitCommit } from "lucide-react";
+
+export function RecentActivity({ events }) {
+  return (
+    <ActivityFeed
+      items={events.map((e) => ({
+        id: e.id,
+        title: <><b>{e.actor}</b> {e.action}</>,
+        description: e.detail,
+        timestamp: e.when,
+        avatar: e.avatarUrl,
+        icon: <GitCommit />,
+      }))}
+    />
+  );
+}
+` }],
+  },
 };
 
 registerSandboxes(uiSandboxes);
