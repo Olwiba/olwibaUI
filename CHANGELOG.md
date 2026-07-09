@@ -10,6 +10,16 @@
 
 
 
+
+## 0.2.1
+
+### Added
+
+- `Chart` — theme-aware line, area, bar, and donut charts in one component; `type` switches the form. Colors come from the `--chart-1..5` theme tokens in fixed order (overridable per series), legends render automatically for multiple series, tooltips are always on
+- `Sortable` — new mechanic: wraps any children in drag-to-reorder behavior, controlled via `items`/`onReorder`. Supports `vertical`, `horizontal`, and `grid` directions, with keyboard reordering out of the box (space to lift, arrows to move, space to drop)
+
+Each new piece ships with a docs page, live demo, and sandbox.
+
 ## 0.2.0
 
 ### Breaking
