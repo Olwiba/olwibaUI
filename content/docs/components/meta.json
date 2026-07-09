@@ -8,6 +8,7 @@
     "confirm-dialog",
     "command-menu",
     "data-table",
+    "chart",
     "file-upload",
     "notify",
     "notifications-popover",

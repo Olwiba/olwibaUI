@@ -1,0 +1,47 @@
+---
+title: Chart
+description: Theme-aware line, area, bar, and donut charts — one component, type switches the form.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="chart" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { Chart } from "@olwiba/ui";
+
+<Chart
+  type="line"
+  data={revenue}
+  xKey="month"
+  series={[
+    { key: "mrr", label: "MRR" },
+    { key: "costs", label: "Costs" },
+  ]}
+  valueFormatter={(v) => `$${v.toLocaleString()}`}
+/>
+```
+
+Pick the form by the data's job: `line`/`area` for change over time, `bar` for magnitude comparison, `donut` for part-of-whole. Colors come from the `--chart-1..5` theme tokens in fixed order — series keep their color when others are filtered out. Override per series with `color`.
+
+Donut uses `xKey` for slice labels and `series[0].key` for values. More than 5 slices: fold the tail into an "Other" row in your data rather than adding hues.
+
+```tsx
+<Chart type="donut" data={plans} xKey="plan" series={[{ key: "users" }]} />
+```
+
+A legend renders automatically for multiple series (and donuts); a single named series doesn't need one. Tooltips are always on.
+
+## API Reference
+
+<APIReference name="Chart" props={[]} />

@@ -1,4 +1,4 @@
 {
   "title": "Mechanics",
-  "pages": ["index", "carousel"]
+  "pages": ["index", "carousel", "sortable"]
 }

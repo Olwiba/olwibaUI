@@ -115,6 +115,7 @@ export { PageTransition, type PageTransitionProps } from './motion/PageTransitio
 
 // ─── Mechanics — behavior wrappers that play any children ────────────────────
 export { Carousel, type CarouselProps } from './mechanics/Carousel';
+export { Sortable, type SortableProps } from './mechanics/Sortable';
 
 // ─── Components — interactive ────────────────────────────────────────────────
 export { Spotlight, type SpotlightProps, type SpotlightGroup, type SpotlightItem } from './components/Spotlight';
@@ -125,6 +126,7 @@ export { CommandMenu, type CommandMenuProps, type CommandMenuGroup, type Command
 
 // ─── Components — data ───────────────────────────────────────────────────────
 export { DataTable, type DataTableProps, type DataTableColumn } from './components/DataTable';
+export { Chart, type ChartProps, type ChartSeries } from './components/Chart';
 export { FileUpload, type FileUploadProps, type FileUploadEntry } from './components/FileUpload';
 
 // ─── Components — notifications ──────────────────────────────────────────────

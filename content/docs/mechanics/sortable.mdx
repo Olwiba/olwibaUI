@@ -1,0 +1,44 @@
+---
+title: Sortable
+description: Drag-to-reorder behavior — wrap any children and they become sortable by pointer or keyboard.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="sortable" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { Sortable } from "@olwiba/ui";
+
+const [order, setOrder] = React.useState(tasks.map((t) => t.id));
+
+<Sortable items={order} onReorder={setOrder}>
+  {order.map((id) => <TaskRow key={id} task={taskById[id]} />)}
+</Sortable>
+```
+
+Sortable is a mechanic: it has no opinion about what the items look like — rows, cards, or tiles all work. It's controlled — `items` is the id order, `onReorder` hands you the new order after a drag, and you re-render children in that order. Pairing is positional: the i-th child gets the i-th id.
+
+`direction="horizontal"` for rows of chips or columns, `direction="grid"` for tile boards (add your grid columns via `className`):
+
+```tsx
+<Sortable items={order} onReorder={setOrder} direction="grid" className="grid-cols-3">
+  {order.map((id) => <Tile key={id} id={id} />)}
+</Sortable>
+```
+
+Keyboard reordering works out of the box — focus an item, space to lift, arrows to move, space to drop.
+
+## API Reference
+
+<APIReference name="Sortable" props={[]} />

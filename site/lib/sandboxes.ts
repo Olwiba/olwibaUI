@@ -1405,6 +1405,50 @@ export function RecentActivity({ events }) {
 }
 ` }],
   },
+  chart: {
+    id: 'chart',
+    title: 'Chart',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/chart')),
+    files: [{ path: 'app/dashboard/revenue-chart.tsx', language: 'tsx', code: `import { Chart } from "@olwiba/ui";
+
+export function RevenueChart({ revenue }) {
+  return (
+    <Chart
+      type="line"
+      data={revenue}
+      xKey="month"
+      series={[
+        { key: "mrr", label: "MRR" },
+        { key: "costs", label: "Costs" },
+      ]}
+      valueFormatter={(v) => \`$\${v.toLocaleString()}\`}
+    />
+  );
+}
+` }],
+  },
+
+  sortable: {
+    id: 'sortable',
+    title: 'Sortable',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/sortable')),
+    files: [{ path: 'components/task-list.tsx', language: 'tsx', code: `import { Sortable } from "@olwiba/ui";
+
+export function TaskList({ tasks }) {
+  const [order, setOrder] = React.useState(tasks.map((t) => t.id));
+
+  return (
+    <Sortable items={order} onReorder={setOrder}>
+      {order.map((id) => (
+        <TaskRow key={id} task={tasks.find((t) => t.id === id)} />
+      ))}
+    </Sortable>
+  );
+}
+` }],
+  },
 };
 
 registerSandboxes(uiSandboxes);
