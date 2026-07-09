@@ -9,6 +9,40 @@
 
 
 
+
+## 0.2.0
+
+### Breaking
+
+- `CarouselSection` removed — use `FeaturesSection` with `layout="carousel"` instead
+- `CtaCardSection` removed — use `CtaSection` with `variant="showcase"` instead
+
+### Added
+
+- **Mechanics** — new component group for behavior wrappers: components you put other components inside to gain an interaction pattern, with its own docs section
+- `Carousel` — the first mechanic: wraps any children in a horizontal scroll-snap track with prev/next controls
+- `FeaturesSection` — new `layout` prop (`"grid"` | `"carousel"`), powered by `Carousel`
+- `CtaSection` — new `variant="showcase"`, a theme-token rebuild of the old `CtaCardSection` with a mode-aware shell
+- `NotificationsPopover` — bell with unread badge and a persistent inbox popover; complements `notify()` toasts (the toast announces, the popover holds history)
+- `ActivityFeed` — vertical timeline with avatar/icon markers and a connecting rail
+- `notify()` — new `error` and `warning` toast variants
+
+Each new piece ships with a docs page, live demo, and sandbox.
+
+### Changed
+
+- `ContactSection`, `NewsletterSection`, `TeamSection`, and `HeroSection` are now mode-aware and use mode-aware primitives (`Button`, `Input`, `Textarea`, `Badge`)
+
+### Fixed
+
+- `CommandMenu` — palette now opens when used with `onOpenChange` but no `open` prop
+- `BillingPanel` — usage progress clamps to 100 and guards against `limit=0`; over-limit metrics render destructive; invoice sorting disabled (display strings sorted incorrectly)
+- `OnboardingWizard` — a rejected `onNext` no longer leaves the wizard stuck in a pending state; the error message is surfaced instead; stepper `aria-current`, screen-reader step titles, loading spinner
+- `FileUpload` — single mode with `maxFiles=1` replaces the queued file instead of erroring; drag highlight no longer flickers over child elements; Space on the drop zone no longer scrolls
+- `TeamMembersPanel` — actions column and invite button hide when their handlers are omitted; invite dialog is a real form (Enter submits, native email validation, fields reset per open)
+- `DataTable` — selected-row count shows on single-page tables; `aria-sort` on sortable headers; `onRowClick` rows are keyboard-reachable
+- `AuthSection` — SSO button on signup, loading spinner, and error/success states announced via `role="alert"`/`role="status"`
+
 ## 0.1.15
 
 ### Added
