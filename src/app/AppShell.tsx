@@ -127,7 +127,7 @@ function NavUser({ user }: { user: AppShellUser }) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0"
             >
               <Avatar mode={avatarMode} size="sm" className="grayscale">
                 {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
@@ -218,20 +218,27 @@ function ShellSidebar({
 
   return (
     <Sidebar side={side} collapsible={collapsible} sidebarPosition={sidebarPosition}>
-      <SidebarHeader>
+      <SidebarHeader className="py-3">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip={typeof brand.name === 'string' ? brand.name : undefined} className="data-[slot=sidebar-menu-button]:!p-1.5">
+            <SidebarMenuButton
+              asChild
+              size="lg"
+              tooltip={typeof brand.name === 'string' ? brand.name : undefined}
+              className="group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0"
+            >
               {renderLink({
                 href: brand.href ?? '#',
                 children: (
                   <>
                     {brand.logo ? (
-                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                      // Neutral slot: the consumer's logo owns its own chrome
+                      // (background, radius). Sized to fill the collapsed icon rail.
+                      <span className="flex size-8 shrink-0 items-center justify-center [&>svg]:size-5">
                         {brand.logo}
                       </span>
                     ) : (
-                      <span className="flex size-4 shrink-0 items-center justify-center text-sm font-semibold">
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
                         {fallbackLogo}
                       </span>
                     )}
