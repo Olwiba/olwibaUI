@@ -11,6 +11,19 @@
 
 
 
+
+## 0.2.2
+
+### Fixed
+
+- `AppShell` — sidebar brand header no longer clips the logo: the padding override targeted a `data-slot` attribute the Sidebar primitives never emit, so it silently never applied. The brand row now uses the `lg` button size and collapses to a clean 32px square on the icon rail, with the brand text hidden
+- `AppShell` — the logo slot is now neutral: it centers your logo in a 32px box without painting its own primary background, so logos that bring their own chrome are no longer double-boxed. Name-only brands keep the primary-colored fallback tile
+- `AppShell` — footer user button gets the same collapsed-rail sizing, so the avatar no longer clips on the icon rail; the sidebar header gains vertical padding to separate the brand from the nav
+
+### Changed
+
+- Ecosystem package updates
+
 ## 0.2.1
 
 ### Added
