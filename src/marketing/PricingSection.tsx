@@ -35,6 +35,10 @@ export interface PricingSectionProps {
   footnote?: string;
   mode?: 'subscription' | 'one-time';
   foundingDeadline?: string;
+  /** Symbol prepended to the computed price. Ignored by plans with `priceDisplay`. */
+  currency?: string;
+  /** Badge label for `highlighted` plans with no active `foundingDeadline` countdown. Pass '' to show no badge. */
+  highlightedBadgeLabel?: string;
   /** Rendered below each plan's CTA button (e.g. a "Get notified" link). */
   renderPlanFooter?: (plan: PricingPlan) => React.ReactNode;
 }
@@ -54,6 +58,8 @@ export function PricingSection({
   footnote,
   mode = 'subscription',
   foundingDeadline,
+  currency = '$',
+  highlightedBadgeLabel = 'Founding member',
   renderPlanFooter,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
@@ -122,7 +128,7 @@ export function PricingSection({
           <StaggerChildren className="mt-10 grid gap-4 lg:grid-cols-3">
             {plans.map((plan) => {
               const rawPrice = isOneTime ? plan.monthly : (annual ? plan.annual : plan.monthly);
-              const price = plan.priceDisplay ?? `$${rawPrice}`;
+              const price = plan.priceDisplay ?? `${currency}${rawPrice}`;
               const period = plan.periodDisplay ?? (isOneTime ? 'one-time' : (rawPrice > 0 ? '/mo' : ''));
               const badge = plan.highlighted && foundingDeadline
                 ? (
@@ -130,8 +136,8 @@ export function PricingSection({
                     <CountdownTimer deadline={foundingDeadline} compact />
                   </span>
                 )
-                : plan.highlighted
-                  ? 'Founding member'
+                : plan.highlighted && highlightedBadgeLabel
+                  ? highlightedBadgeLabel
                   : undefined;
               return (
                 <PricingCard

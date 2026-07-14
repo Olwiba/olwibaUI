@@ -1,16 +1,11 @@
 # Changelog
 
+## 0.2.3
 
+### Fixed
 
-
-
-
-
-
-
-
-
-
+- `PricingSection` — price no longer hardcodes a `$` prefix; new `currency` prop (default `'$'`, unchanged for existing consumers) lets non-USD products set their own symbol.
+- `PricingSection` — a `highlighted` plan with no active `foundingDeadline` no longer unconditionally shows a "Founding member" badge. New `highlightedBadgeLabel` prop controls the fallback text (defaults to `'Founding member'` for backward compatibility — pass `''` to show no badge, same pattern as the existing `saveBadge` prop).
 
 ## 0.2.2
 
