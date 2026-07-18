@@ -1,0 +1,60 @@
+---
+title: StepsSection
+description: How-it-works steps — horizontal row by default, or a numbered vertical timeline with a fading accent line.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="steps-section" shellPreview />
+
+## Usage
+
+Default variant — horizontal on desktop, vertical on mobile:
+
+```tsx
+import { StepsSection } from "@olwiba/ui";
+
+<StepsSection
+  title="From zero to shipped"
+  steps={[
+    { emoji: "✍️", title: "Sign up", description: "Create an account in seconds." },
+    { emoji: "🚀", title: "Ship", description: "Go live with confidence." },
+  ]}
+/>
+```
+
+Timeline variant — numbered circles on a vertical accent line whose ends fade out. Groups chain with interstitial content (the line fades out after a group and fades back in before the next), and numbering continues across groups:
+
+```tsx
+<StepsSection
+  variant="timeline"
+  title="Up and running in minutes"
+  groups={[
+    {
+      steps: [
+        { title: "Create your account", description: "Sign up with your email." },
+        { title: "Add your first monitor", description: <>Send <code>!bot start</code> to activate.</> },
+      ],
+      after: <CtaCard />,
+    },
+    {
+      steps: [{ title: "Found what you needed?", description: "Cancel anytime." }],
+    },
+  ]}
+/>
+```
+
+Step descriptions are `ReactNode` — code chips, forms, and demo cards all work inline.
+
+## API Reference
+
+<APIReference name="StepsSection" props={[
+  { name: "steps", type: "StepItem[]", description: "Steps for the default variant (or a single timeline group)." },
+  { name: "variant", type: '"default" | "timeline"', default: '"default"', description: "Layout variant." },
+  { name: "groups", type: "StepGroup[]", description: "Timeline only — step groups with optional `after` content; overrides steps." },
+  { name: "badge", type: "string", default: '"How it works"', description: "Badge above the title." },
+  { name: "title", type: "string", default: '"From zero to shipped"', description: "Section heading." },
+  { name: "description", type: "string", description: "Copy under the heading." },
+]} />

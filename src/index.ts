@@ -82,7 +82,7 @@ export { marketingSectionSpacing, type MarketingSectionSpacing } from './marketi
 export { HeroSection, type HeroSectionProps } from './marketing/HeroSection';
 export { FeaturesSection, type FeaturesSectionProps } from './marketing/FeaturesSection';
 export { GroupedFeaturesSection, type GroupedFeaturesSectionProps, type GroupedFeatureGroup } from './marketing/GroupedFeaturesSection';
-export { StepsSection, type StepsSectionProps, type StepItem } from './marketing/StepsSection';
+export { StepsSection, type StepsSectionProps, type StepItem, type StepGroup } from './marketing/StepsSection';
 export { TechStackSection, type TechStackSectionProps, type TechStackItem } from './marketing/TechStackSection';
 export { FeatureMarqueeSection, type FeatureMarqueeSectionProps, type FeatureMarqueeRow, type FeatureMarqueeItem } from './marketing/FeatureMarqueeSection';
 export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.4
+
+### Added
+
+- `StepsSection` — new `variant="timeline"`: numbered circles on a vertical accent line whose ends fade via gradient; step groups chain through a new `groups` prop with interstitial `after` content (the line fades out after a group and fades back in before the next), numbering continues across groups. Harvested from the rmBot how-it-works page.
+- `StepItem.description` widened from `string` to `ReactNode` (non-breaking) — code chips, forms, and demo cards work inside steps.
+- New `StepGroup` type exported.
+
 ## 0.2.3
 
 ### Fixed

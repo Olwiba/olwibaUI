@@ -674,6 +674,40 @@ export default function Layout({ children }) {
       },
     ],
   },
+  'steps-section': {
+    id: 'steps-section',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/steps-section')),
+    files: [
+      {
+        path: 'app/page.tsx',
+        language: 'tsx',
+        code: `import { StepsSection } from "@olwiba/ui";
+
+export default function Page() {
+  return (
+    <StepsSection
+      variant="timeline"
+      title="Up and running in minutes"
+      groups={[
+        {
+          steps: [
+            { title: "Create your account", description: "Sign up with your email." },
+            { title: "Add your first monitor", description: "Paste a search URL." },
+          ],
+          after: <CtaCard />,
+        },
+        {
+          steps: [{ title: "Found what you needed?", description: "Cancel anytime." }],
+        },
+      ]}
+    />
+  );
+}
+`,
+      },
+    ],
+  },
   'contact-section': {
     id: 'contact-section',
     defaultViewport: 'desktop',
