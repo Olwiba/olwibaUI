@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.5
+
+### Added
+
+- `UpdateBanner` (app) — slide-in "new deploy shipped, refresh this tab" banner: polls an app-provided version endpoint, compares against the build-time version baked into the running bundle, one-click refresh with optional `onRefresh` hook. Harvested from rmBot. Distinct from the existing `VersionBanner` (release-announcement strip), which is unchanged.
+
 ## 0.2.4
 
 ### Added

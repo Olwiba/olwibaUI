@@ -76,6 +76,8 @@ export {
   type UpgradeComparisonRow,
 } from './app/UpgradePrompt';
 
+export { UpdateBanner, type UpdateBannerProps } from './app/UpdateBanner';
+
 // ─── Marketing — page sections ────────────────────────────────────────────────
 export { SectionTitle, type SectionTitleProps } from './marketing/SectionTitle';
 export { marketingSectionSpacing, type MarketingSectionSpacing } from './marketing/section-spacing';

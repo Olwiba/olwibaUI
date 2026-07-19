@@ -1,0 +1,43 @@
+---
+title: UpdateBanner
+description: Slide-in banner that tells users a new deploy shipped and their tab is stale — poll a version endpoint, offer one-click refresh.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="update-banner" />
+
+## Usage
+
+Bake a build version into the client bundle (e.g. vite `define` with the git SHA), expose the same value from a `/api/version` endpoint, and mount the banner once in the root layout:
+
+```tsx
+import { UpdateBanner } from "@olwiba/ui";
+
+declare const __BUILD_VERSION__: string;
+
+<UpdateBanner
+  currentVersion={__BUILD_VERSION__}
+  fetchVersion={async () => {
+    const res = await fetch("/api/version", { cache: "no-store" });
+    return res.json();
+  }}
+/>
+```
+
+When a new deploy goes live, open tabs still run the old bundle; the next poll sees a different server version and the banner slides in. Refresh defaults to a full reload — pass `onRefresh` to hook a celebration or custom flow first.
+
+## API Reference
+
+<APIReference name="UpdateBanner" props={[
+  { name: "currentVersion", type: "string", description: "Version baked into the running bundle at build time." },
+  { name: "fetchVersion", type: "() => Promise<{ version: string }>", description: "Fetch the deployed version — the host app wires its own endpoint." },
+  { name: "intervalMs", type: "number", default: "300000", description: "Poll interval in ms." },
+  { name: "forceShow", type: "boolean", default: "false", description: "Force the banner visible (demos/testing)." },
+  { name: "onRefresh", type: "() => void", description: "Refresh click handler; defaults to window.location.reload()." },
+  { name: "message", type: "ReactNode", description: "Banner copy." },
+  { name: "buttonLabel", type: "string", default: '"Refresh now"', description: "Refresh button label." },
+  { name: "className", type: "string", description: "Class applied to the banner card." },
+]} />

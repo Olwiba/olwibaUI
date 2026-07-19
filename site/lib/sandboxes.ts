@@ -1328,6 +1328,37 @@ export default function TeamPage({ members }: { members: TeamMemberRecord[] }) {
 ` }],
   },
 
+  'update-banner': {
+    id: 'update-banner',
+    title: 'UpdateBanner',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/update-banner')),
+    files: [
+      {
+        path: 'app/layout.tsx',
+        language: 'tsx',
+        code: `import { UpdateBanner } from "@olwiba/ui";
+
+declare const __BUILD_VERSION__: string;
+
+export function RootLayout({ children }) {
+  return (
+    <>
+      {children}
+      <UpdateBanner
+        currentVersion={__BUILD_VERSION__}
+        fetchVersion={async () => {
+          const res = await fetch("/api/version", { cache: "no-store" });
+          return res.json();
+        }}
+      />
+    </>
+  );
+}
+`,
+      },
+    ],
+  },
   'billing-panel': {
     id: 'billing-panel',
     title: 'BillingPanel',
