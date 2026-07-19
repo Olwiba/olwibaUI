@@ -64,7 +64,7 @@
   "devDependencies": {
     "@content-collections/mdx": "^0.2.2",
     "@olwiba/cn": "0.1.26",
-    "@olwiba/docs": "0.1.35",
+    "@olwiba/docs": "0.1.38",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "1.154.8",
     "@tanstack/react-router-devtools": "1.154.8",
