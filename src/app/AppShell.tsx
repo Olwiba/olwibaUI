@@ -110,6 +110,15 @@ export interface AppShellProps {
   sidebarPosition?: 'viewport' | 'contained';
   /** Which side the sidebar sits on. @default "left" */
   side?: 'left' | 'right';
+  /**
+   * Class applied to the content wrapper around `children`, between the
+   * header and the page content. Every consuming page otherwise has to
+   * remember its own padding — some do, some don't, and the ones that don't
+   * end up flush against the sidebar/header chrome. Override to `''` for a
+   * genuinely edge-to-edge page (a full-width table, a map/canvas).
+   * @default "p-6"
+   */
+  contentClassName?: string;
 }
 
 // ─── Internal sub-components ──────────────────────────────────────────────────
@@ -377,6 +386,7 @@ export function AppShell({
   collapsible = 'icon',
   sidebarPosition = 'viewport',
   side = 'left',
+  contentClassName = 'p-6',
   children,
 }: AppShellProps = {}) {
   const isContained = sidebarPosition === 'contained';
@@ -398,7 +408,7 @@ export function AppShell({
       />
       <SidebarInset className={isContained ? undefined : 'overflow-y-auto'}>
         <ShellHeader pageTitle={pageTitle} headerStart={headerStart} headerEnd={headerEnd} />
-        {children}
+        <div className={contentClassName}>{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

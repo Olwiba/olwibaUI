@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.6
+
+### Fixed
+
+- `AppShell` — content wrapper (`children`, between header and page) had no padding at all, so every consuming page had to remember its own `p-6` or content ran flush against the sidebar/header chrome. Some did, some didn't. Now defaults to `p-6` via new `contentClassName` prop; override to `''` for a genuinely edge-to-edge page.
+
 ## 0.2.5
 
 ### Added
