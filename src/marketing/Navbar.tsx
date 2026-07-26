@@ -31,6 +31,7 @@ export function Navbar({
   const [open, setOpen] = React.useState(false);
   const brandHref = brand.href ?? '/';
   const hasRightContent = controls?.length || cta?.primary || cta?.secondary;
+  const closeMobileMenu = React.useCallback(() => setOpen(false), []);
 
   return (
     <section className="overflow-hidden rounded-2xl border bg-card">
@@ -92,7 +93,7 @@ export function Navbar({
           <SheetContent side="left" className="w-72">
             {/* Brand row alone at the top — leaves the top-right corner to the built-in close */}
             <div className="flex items-center pb-4">
-              <span onClick={() => setOpen(false)} className="cursor-pointer">
+              <span onClickCapture={closeMobileMenu} className="cursor-pointer">
                 {renderLink({
                   href: brandHref,
                   children: (
@@ -114,7 +115,7 @@ export function Navbar({
             <Separator />
             <nav className="mt-4 flex flex-col gap-1">
               {navLinks.map((link) => (
-                <span key={link.label} onClick={() => setOpen(false)}>
+                <span key={link.label} onClickCapture={closeMobileMenu}>
                   {renderLink({
                     href: link.href,
                     className: 'block rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground',
@@ -124,16 +125,22 @@ export function Navbar({
               ))}
             </nav>
             <div className="mt-6 flex flex-col gap-2">
-              {cta?.secondary &&
-                renderLink({
-                  href: cta.secondary.href,
-                  children: <Button variant="outline" className="w-full">{cta.secondary.label}</Button>,
-                })}
-              {cta?.primary &&
-                renderLink({
-                  href: cta.primary.href,
-                  children: <Button className="w-full">{cta.primary.label}</Button>,
-                })}
+              {cta?.secondary && (
+                <span onClickCapture={closeMobileMenu}>
+                  {renderLink({
+                    href: cta.secondary.href,
+                    children: <Button variant="outline" className="w-full">{cta.secondary.label}</Button>,
+                  })}
+                </span>
+              )}
+              {cta?.primary && (
+                <span onClickCapture={closeMobileMenu}>
+                  {renderLink({
+                    href: cta.primary.href,
+                    children: <Button className="w-full">{cta.primary.label}</Button>,
+                  })}
+                </span>
+              )}
             </div>
           </SheetContent>
         </Sheet>
