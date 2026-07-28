@@ -128,6 +128,7 @@ export { CommandMenu, type CommandMenuProps, type CommandMenuGroup, type Command
 
 // ─── Components — data ───────────────────────────────────────────────────────
 export { DataTable, type DataTableProps, type DataTableColumn } from './components/DataTable';
+export { DataView, type DataViewProps } from './app/DataView';
 export { Chart, type ChartProps, type ChartSeries } from './components/Chart';
 export { FileUpload, type FileUploadProps, type FileUploadEntry } from './components/FileUpload';
 
@@ -147,6 +148,8 @@ export { StatCard, type StatCardProps } from './components/StatCard';
 export { TestimonialCard, type TestimonialCardProps } from './components/TestimonialCard';
 export { PricingCard, type PricingCardProps, type PricingFeature } from './components/PricingCard';
 export { ImageCard, type ImageCardProps } from './components/ImageCard';
+export { MediaCard, type MediaCardProps } from './components/MediaCard';
+export { ViewToggle, type ViewToggleProps } from './components/ViewToggle';
 
 // ─── Components — diagram ────────────────────────────────────────────────────
 export { FlowConnector, type FlowConnectorProps } from './components/FlowConnector';
@@ -183,5 +186,6 @@ export { useCopyToClipboard } from './hooks/use-copy-to-clipboard';
 export { useDebounce } from './hooks/use-debounce';
 export { useIntersectionObserver } from './hooks/use-intersection-observer';
 export { useLocalStorage } from './hooks/use-local-storage';
+export { useViewMode, type ViewMode, type UseViewModeReturn } from './hooks/use-view-mode';
 export { useMediaQuery } from './hooks/use-media-query';
 export { usePagination, type UsePaginationReturn } from './hooks/use-pagination';
