@@ -1,5 +1,24 @@
 # Changelog
 
+
+## 0.2.7
+
+### Added
+
+- `DataView` (app) — one collection rendered either as a grid of cards or as a table, from a single set of data: you supply a card renderer and table columns, it picks the view. Cards are for "what arrived recently", the table for comparing many rows; switching between them shouldn't mean two page implementations that drift apart. The `ready` gate is the reason this is a component and not a snippet — a persisted preference can't be read during SSR or the first client render, so rendering the default immediately either mismatches on hydration or flashes the wrong view at anyone who chose the other one.
+- `useViewMode` — remembered cards/list preference on top of `useLocalStorage`. Returns the fallback on the server and the first client render, then settles to the stored value, with `ready` telling callers when the real answer has arrived. The key (`'view-mode'`) is shared by default so the choice reads as one product-wide preference; pass a distinct key where a page wants its own.
+- `ViewToggle` — controlled two-state segmented control for cards vs. list, with `aria-pressed` and overridable labels. Pair with `useViewMode`.
+- `MediaCard` — a `Card` with an optional banner (`wide` 3:1, `video`, or `square`) and a bottom-pinned footer, so the primary action sits on a shared baseline across a row however unevenly the titles above it wrap. The banner is a `ReactNode` rather than a URL — that's the difference from `ImageCard`, which stays the right choice when you actually have a src. `h-full` is on the card itself, so a bare `<MediaCard>` fills its grid cell without every caller asking.
+- New `ViewMode`, `UseViewModeReturn`, `DataViewProps`, `MediaCardProps`, `ViewToggleProps`, and `AppGridColumns` types exported.
+
+### Changed
+
+- `AppGrid` — `columns` now accepts `5` and `6`, and `gap` accepts `none`. Existing breakpoint ramps were retuned: multi-column layouts now split at `sm` instead of `md`, and `columns={4}` gains an intermediate 3-column step at `lg` rather than jumping from 2 to 4. `AppGridCell` spans move with them (`span={1}`/`span={2}` are now `sm:`-prefixed, `span={3}` is `lg:`). Existing grids will break to multiple columns earlier than before; no API change is needed, but the layout shifts on small tablets.
+
+### Fixed
+
+- `Navbar` — mobile drawer now closes on every link, including the primary and secondary CTAs, which previously had no close handler at all and left the sheet open over the new page. Handlers moved to `onClickCapture` so they fire even when a custom `renderLink` stops propagation on its own anchor.
+
 ## 0.2.6
 
 ### Fixed
