@@ -131,6 +131,15 @@ export interface PricingSectionProps {
   cadences?: PricingCadence[];
   /** Which cadence opens selected. Defaults to the first in `cadences`. */
   defaultCadence?: string;
+  /**
+   * Called when a plan's CTA is pressed, with the cadence currently selected —
+   * which is the half the caller can't otherwise know, since the toggle's state
+   * lives in here. Without it the CTA is inert: `PricingCard` takes an
+   * `onSelect` and this section had never passed one.
+   */
+  onSelectPlan?: (plan: PricingPlan, cadence?: string) => void;
+  /** Marks one plan as busy (e.g. its checkout is being created). */
+  pendingPlanName?: string;
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
@@ -153,6 +162,8 @@ export function PricingSection({
   renderPlanFooter,
   cadences,
   defaultCadence,
+  onSelectPlan,
+  pendingPlanName,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
   const isOneTime = mode === 'one-time';
@@ -290,12 +301,19 @@ export function PricingSection({
                   period={period}
                   description={plan.description}
                   features={plan.features}
-                  cta={plan.cta}
+                  cta={pendingPlanName === plan.name ? 'Redirecting…' : plan.cta}
                   highlighted={plan.highlighted}
                   disabled={plan.disabled}
-                  ctaDisabled={plan.ctaDisabled}
+                  // A plan mid-checkout is disabled too, so a second click
+                  // can't open a second session.
+                  ctaDisabled={plan.ctaDisabled || pendingPlanName === plan.name}
                   badge={badge}
                   footer={renderPlanFooter?.(plan)}
+                  onSelect={
+                    onSelectPlan
+                      ? () => onSelectPlan(plan, useCadences ? activeCadence : undefined)
+                      : undefined
+                  }
                 />
               );
             })}
