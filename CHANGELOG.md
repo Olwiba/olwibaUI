@@ -1,6 +1,13 @@
 # Changelog
 
 
+
+## 0.2.8
+
+### Added
+
+- Arbitrary billing cadences and a count-aware grid
+
 ## 0.2.7
 
 ### Added
