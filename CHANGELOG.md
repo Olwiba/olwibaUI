@@ -2,6 +2,13 @@
 
 
 
+
+## 0.2.9
+
+### Added
+
+- Make the plan CTA actually do something
+
 ## 0.2.8
 
 ### Added
