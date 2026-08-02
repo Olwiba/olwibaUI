@@ -229,7 +229,12 @@ export function PricingSection({
                       >
                         {entry.label}
                         {saveBadges[entry.key] && (
-                          <Badge variant="secondary" className="text-xs">
+                          // `default` (primary), not `secondary`: the toggle is
+                          // `bg-muted` with a `bg-background` active tab, and a
+                          // secondary badge is the same grey as both — the
+                          // saving is the incentive, so it has to carry brand
+                          // colour to read at all.
+                          <Badge variant="default" className="text-xs">
                             {saveBadges[entry.key]}
                           </Badge>
                         )}
@@ -259,7 +264,7 @@ export function PricingSection({
                       >
                         Annual
                         {saveBadge && (
-                          <Badge variant="secondary" className="text-xs">{saveBadge}</Badge>
+                          <Badge variant="default" className="text-xs">{saveBadge}</Badge>
                         )}
                       </Button>
                     </>
