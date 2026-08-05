@@ -26,6 +26,7 @@ await generatePreviews({
     { name: 'context-menu', urlPath: '/docs/components/context-menu' },
     { name: 'confirm-dialog', urlPath: '/docs/components/confirm-dialog' },
     { name: 'count-up', urlPath: '/docs/motion/count-up' },
+    { name: 'animated-swap', urlPath: '/docs/motion/animated-swap' },
     { name: 'fade-in', urlPath: '/docs/motion/fade-in' },
     { name: 'stagger-children', urlPath: '/docs/motion/stagger-children' },
     { name: 'contact-section', urlPath: '/docs/marketing/contact-section' },

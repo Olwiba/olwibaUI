@@ -1,0 +1,75 @@
+---
+title: AnimatedSwap
+description: Animates the replacement of any content when its swap key changes — a rolling price, a crossfading chart, a sliding status pill.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="animated-swap" />
+
+## Usage
+
+`swapKey` is what triggers the animation. The component can't see inside `children`,
+so re-rendering with different content under the same key updates in place, silently.
+
+```tsx
+import { AnimatedSwap } from "@olwiba/ui";
+
+<AnimatedSwap swapKey={price} effect="roll" className="text-4xl font-bold">
+  {price}
+</AnimatedSwap>
+```
+
+Any content works, not just text:
+
+```tsx
+<AnimatedSwap swapKey={range} effect="fade">
+  <RevenueChart range={range} />
+</AnimatedSwap>
+```
+
+## Effects
+
+| Effect | Behaviour |
+|--------|-----------|
+| `roll` | Odometer. The old value is displaced upward as the new one rises into its place. No fade — the values stay solid, which is what makes it read as a mechanism. |
+| `fade` | Crossfade, no movement. Safe inside a layout that's also reflowing. |
+| `slide` | Short horizontal travel carried by opacity. Needs no clipping, so it won't crop a ring or shadow. |
+| `none` | Instant swap. |
+
+Omit `effect` and the current `OlwibaUIProvider` mode picks one:
+`default` → `fade`, `playful` → `roll`, `smooth` → `slide`. An explicit `effect`
+always wins. Under `prefers-reduced-motion: reduce` every effect degrades to an
+instant swap.
+
+## Custom effects
+
+`effect` also takes a spec object, so you aren't limited to the named set. A
+transition is just two layers with a start and an end style:
+
+```tsx
+<AnimatedSwap
+  swapKey={status}
+  effect={{
+    clip: false,
+    duration: 400,
+    easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+    enter: { from: { opacity: 0, transform: "scale(0.8)" }, to: { opacity: 1, transform: "scale(1)" } },
+    exit: { from: { opacity: 1, transform: "scale(1)" }, to: { opacity: 0, transform: "scale(1.2)" } },
+  }}
+>
+  <StatusPill status={status} />
+</AnimatedSwap>
+```
+
+## API Reference
+
+<APIReference name="AnimatedSwap" props={[
+  { name: "swapKey", type: "React.Key", description: "Changing this triggers the animation. Nothing else does." },
+  { name: "children", type: "ReactNode", description: "The content being swapped." },
+  { name: "effect", type: "\"roll\" | \"fade\" | \"slide\" | \"none\" | AnimatedSwapSpec", default: "from UI mode", description: "Named effect, or a spec of your own." },
+  { name: "duration", type: "number", description: "Overrides the effect's duration, in ms." },
+  { name: "className", type: "string", description: "Class applied to the wrapper. Both layers inherit its type styles." },
+]} />

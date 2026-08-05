@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Check, Minus } from 'lucide-react';
 import { Badge, Button, cn, Separator, useUIVariant } from '@olwiba/cn';
+import { AnimatedSwap } from '../motion/AnimatedSwap';
 
 export interface PricingFeature {
   label: string;
@@ -68,7 +69,12 @@ export function PricingCard({
       <div className="space-y-1">
         <div className="text-sm font-medium text-muted-foreground">{name}</div>
         <div className="flex items-end gap-1">
-          <span className="text-4xl font-bold tracking-tight">{price}</span>
+          {/* Animates when a billing-cadence toggle swaps the price out. The
+              price is its own swap key: a card whose price never changes never
+              animates. */}
+          <AnimatedSwap swapKey={price} className="text-4xl font-bold tracking-tight">
+            {price}
+          </AnimatedSwap>
           <span className="mb-1 text-sm text-muted-foreground">{period}</span>
         </div>
         <p className="text-sm text-muted-foreground">{description}</p>

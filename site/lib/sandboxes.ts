@@ -965,6 +965,31 @@ export default function Example() {
 
   // ─── Motion ──────────────────────────────────────────────────────────────────
 
+  'animated-swap': {
+    id: 'animated-swap',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/animated-swap')),
+    files: [{ path: 'components/AnimatedSwapDemo.tsx', language: 'tsx', code: `import { useState } from "react";
+import { AnimatedSwap } from "@olwiba/ui";
+
+const PRICES = ["$9", "$25", "$120"];
+
+export default function Example() {
+  const [step, setStep] = useState(0);
+  const price = PRICES[step % PRICES.length];
+
+  return (
+    <div className="flex items-end gap-1" onClick={() => setStep((s) => s + 1)}>
+      <AnimatedSwap swapKey={price} effect="roll" className="text-5xl font-bold tracking-tight">
+        {price}
+      </AnimatedSwap>
+      <span className="mb-1.5 text-sm text-muted-foreground">/month</span>
+    </div>
+  );
+}
+` }],
+  },
+
   'count-up': {
     id: 'count-up',
     defaultViewport: 'desktop',

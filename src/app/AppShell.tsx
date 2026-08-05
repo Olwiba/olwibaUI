@@ -13,6 +13,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  cn,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -123,6 +124,23 @@ export interface AppShellProps {
 
 // ─── Internal sub-components ──────────────────────────────────────────────────
 
+/**
+ * Shared by the two `size="lg"` buttons that bookend the sidebar (brand, user).
+ * Both hold a 32px square — a logo badge, an avatar — so in the collapsed rail
+ * they shrink to exactly that instead of the size's default 48px.
+ *
+ * `transition-[width,height]` drops `padding` from the transition while
+ * collapsed, and is load-bearing: the base variant animates padding, but
+ * `!max-w-8` clamps the button to 32px instantly (max-width isn't
+ * transitionable), so a padding still animating 16px→0 leaves a 0px-wide
+ * content box on the first frame and `overflow-hidden` clips the corner off
+ * the 32px badge for the whole 150ms. Snapping padding makes it fit from frame
+ * one. Expanding is deliberately left on the base transition — there width and
+ * padding animate together and the content box never drops below 32px.
+ */
+const RAIL_SQUARE =
+  'group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:transition-[width,height]';
+
 function NavUser({ user }: { user: AppShellUser }) {
   const { isMobile } = useSidebar();
   const uiMode = useUIMode();
@@ -136,7 +154,14 @@ function NavUser({ user }: { user: AppShellUser }) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0"
+              // Collapsed, this is a bare avatar with no affordance saying it
+              // opens anything — every other item in the rail has a tooltip,
+              // so its absence reads as "not a button".
+              tooltip={user.name ?? user.email}
+              className={cn(
+                'data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground',
+                RAIL_SQUARE,
+              )}
             >
               <Avatar mode={avatarMode} size="sm" className="grayscale">
                 {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
@@ -233,8 +258,11 @@ function ShellSidebar({
             <SidebarMenuButton
               asChild
               size="lg"
-              tooltip={typeof brand.name === 'string' ? brand.name : undefined}
-              className="group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0"
+              // No tooltip: unlike a nav item, the collapsed rail's logo is
+              // still the logo — a hover label repeating the app's own name
+              // is noise. Nav items keep theirs because a bare icon doesn't
+              // say where it goes.
+              className={RAIL_SQUARE}
             >
               {renderLink({
                 href: brand.href ?? '#',

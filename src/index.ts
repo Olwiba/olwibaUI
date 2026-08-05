@@ -111,6 +111,12 @@ export { Overlay, type OverlayProps, type OverlayVariant } from './overlays/Over
 export { FadeIn, type FadeInProps } from './motion/FadeIn';
 export { StaggerChildren, type StaggerChildrenProps } from './motion/StaggerChildren';
 export { CountUp, type CountUpProps } from './motion/CountUp';
+export {
+  AnimatedSwap,
+  type AnimatedSwapProps,
+  type AnimatedSwapEffect,
+  type AnimatedSwapSpec,
+} from './motion/AnimatedSwap';
 export { CountdownTimer, type CountdownTimerProps } from './motion/CountdownTimer';
 export { AnimatedPill, type AnimatedPillProps } from './motion/AnimatedPill';
 export { PageTransition, type PageTransitionProps } from './motion/PageTransition';

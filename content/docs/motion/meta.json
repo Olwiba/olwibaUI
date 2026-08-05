@@ -1,4 +1,4 @@
 {
   "title": "Motion",
-  "pages": ["index", "fade-in", "stagger-children", "count-up", "page-transition"]
+  "pages": ["index", "fade-in", "stagger-children", "count-up", "animated-swap", "page-transition"]
 }
