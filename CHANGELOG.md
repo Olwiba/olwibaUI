@@ -7,7 +7,13 @@
 
 ## 0.2.11
 
-No user-facing changes.
+### Added
+
+- `AnimatedSwap` — animates the replacement of any content when its swap key changes, with `roll`, `fade` and `slide` effects, a custom effect spec escape hatch, and a default chosen by the current UI mode
+
+### Fixed
+
+- The sidebar logo no longer clips its corner while the rail collapses
 
 ## 0.2.10
 
