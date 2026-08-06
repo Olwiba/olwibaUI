@@ -27,13 +27,28 @@ const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) =>
 
 function CenteredAuth({ children, brand, className }: { children: React.ReactNode; brand?: React.ReactNode; className?: string }) {
   return (
-    <section className={cn('flex min-h-screen flex-col justify-center bg-background py-12 px-4 sm:px-6 lg:px-8', className)}>
-      {brand && (
-        <div className="mx-auto w-full max-w-md text-center mb-8">
-          {brand}
-        </div>
-      )}
-      <div className="mx-auto w-full max-w-md">
+    // `min-h-dvh`, not `min-h-screen`: on mobile `100vh` is the viewport with
+    // the browser chrome *retracted*, so a screen-height box is always taller
+    // than what you can actually see, and it resizes under you as the URL bar
+    // hides and shows.
+    <section className={cn('flex min-h-dvh flex-col bg-background px-4 py-10 sm:px-6 sm:py-12 lg:px-8', className)}>
+      {/*
+        Auto margins rather than `justify-center`, and only from `sm` up.
+
+        A flex item centred with `justify-center` that's taller than its
+        container overflows in *both* directions, and the overflow above the
+        top edge is unreachable — no scrolling gets you back to it. That's the
+        sign-up form on a phone: name, email, password and social buttons
+        already run long, and focusing a field drops the keyboard over half
+        the viewport. The top of the card, title included, becomes
+        unscrollable.
+
+        Auto margins collapse to zero when there's no free space, so the card
+        stays reachable. Below `sm` there's no vertical centring at all — the
+        form flows from the top like the contact page.
+      */}
+      <div className="mx-auto w-full max-w-md sm:my-auto">
+        {brand && <div className="mb-8 text-center">{brand}</div>}
         {children}
       </div>
     </section>
