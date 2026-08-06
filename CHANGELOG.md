@@ -5,6 +5,13 @@
 
 
 
+
+## 0.2.12
+
+### Fixed
+
+- `AuthSection` — the centred layout no longer traps its own content on mobile. It used `min-h-screen` with `justify-center`: `100vh` is the viewport measured with the browser chrome retracted, so the box was taller than the visible area and resized underneath the content as the URL bar hid and showed; and a flex item centred with `justify-center` that outgrows its container overflows in *both* directions, with the overflow above the top edge unreachable by scrolling. On a sign-up form — name, email, password, social buttons, keyboard covering half the viewport — that put the card's own title out of reach. Now `min-h-dvh` with auto margins, which collapse when free space runs out, so the card stays reachable. Vertical centring starts at `sm`; below that the form flows from the top with padding, matching how `ContactSection` reads on mobile. The brand slot now sits inside the centred column rather than above it, so it scrolls with the card instead of pinning to the top.
+
 ## 0.2.11
 
 ### Added
