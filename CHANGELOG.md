@@ -9,7 +9,9 @@
 
 ## 0.2.13
 
-No user-facing changes.
+### Added
+
+- `PricingCard` / `PricingSection` — new `priceEffect` prop, choosing how the price transitions when a cadence toggle swaps it. Takes the same `AnimatedSwapEffect` names or a full spec. Omit it and nothing changes: the effect still comes from the current UI mode (`fade` in default, `roll` in playful, `slide` in smooth), which is what a product that has committed to a mode wants. Set it when the price alone should read as an odometer — it is the one number a visitor is asked to compare across cadences — without moving the whole app to playful.
 
 ## 0.2.12
 
