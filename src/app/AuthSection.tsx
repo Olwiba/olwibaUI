@@ -25,7 +25,27 @@ const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) =>
 
 // ─── Centered layout ──────────────────────────────────────────────────────────
 
-function CenteredAuth({ children, brand, className }: { children: React.ReactNode; brand?: React.ReactNode; className?: string }) {
+function CenteredAuth({ children, brand, framed, className }: { children: React.ReactNode; brand?: React.ReactNode; framed?: boolean; className?: string }) {
+  if (framed) {
+    return (
+      // Framed: a page frame is already supplying the background, the page
+      // padding, and — with a navbar and footer around it — the height. All
+      // three have to come off here or they are applied twice: padding inside
+      // padding, and a full-viewport section that pushes the footer below the
+      // fold on every auth screen.
+      //
+      // The card fills the content column on a phone, matching the contact
+      // form, and only takes its reading width once there is room for the
+      // page to centre it.
+      <section className={cn('flex flex-col py-6 sm:py-10', className)}>
+        <div className="mx-auto w-full max-w-none sm:my-auto sm:max-w-md">
+          {brand && <div className="mb-8 text-center">{brand}</div>}
+          {children}
+        </div>
+      </section>
+    );
+  }
+
   return (
     // `min-h-dvh`, not `min-h-screen`: on mobile `100vh` is the viewport with
     // the browser chrome *retracted*, so a screen-height box is always taller
@@ -325,6 +345,18 @@ export interface AuthSectionProps extends AuthFormProps {
   children?: React.ReactNode;
   /** (split layout only) Custom content for the left decorative panel */
   panel?: React.ReactNode;
+  /**
+   * Render inside an existing page frame — one already providing the
+   * background, the horizontal padding, and a navbar and footer.
+   *
+   * Standalone (the default) the section owns the whole viewport, which is
+   * right for an auth screen that is the only thing on the page. It is wrong
+   * the moment there is chrome around it: the padding lands on top of the
+   * frame's own, and `min-h-dvh` guarantees the footer starts below the fold.
+   *
+   * (centered layout only)
+   */
+  framed?: boolean;
   className?: string;
 }
 
@@ -332,6 +364,7 @@ export function AuthSection({
   layout = 'centered',
   children,
   panel,
+  framed,
   className,
   ...formProps
 }: AuthSectionProps) {
@@ -348,7 +381,7 @@ export function AuthSection({
   const { brand, ...restFormProps } = formProps;
   const form = children ?? <DefaultForm {...restFormProps} />;
   return (
-    <CenteredAuth brand={brand} className={className}>
+    <CenteredAuth brand={brand} framed={framed} className={className}>
       {form}
     </CenteredAuth>
   );
