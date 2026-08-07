@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Check, Minus } from 'lucide-react';
 import { Badge, Button, cn, Separator, useUIVariant } from '@olwiba/cn';
-import { AnimatedSwap } from '../motion/AnimatedSwap';
+import { AnimatedSwap, type AnimatedSwapEffect, type AnimatedSwapSpec } from '../motion/AnimatedSwap';
 
 export interface PricingFeature {
   label: string;
@@ -24,6 +24,15 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   badge?: React.ReactNode;
   /** Rendered directly below the CTA button (e.g. a "Get notified" link). */
   footer?: React.ReactNode;
+  /**
+   * How the price transitions when a cadence toggle swaps it. Omit and the
+   * current UI mode decides — `fade` in default, `roll` in playful, `slide` in
+   * smooth — which is the right answer for a product that has picked a mode
+   * and wants every swap on the page to agree with it. Set it when the price
+   * specifically should read as a mechanism (`'roll'`) without moving the
+   * whole app to playful.
+   */
+  priceEffect?: AnimatedSwapEffect | AnimatedSwapSpec;
   onSelect?: () => void;
 }
 
@@ -39,6 +48,7 @@ export function PricingCard({
   ctaDisabled = false,
   badge,
   footer,
+  priceEffect,
   onSelect,
   className,
   ...props
@@ -71,8 +81,13 @@ export function PricingCard({
         <div className="flex items-end gap-1">
           {/* Animates when a billing-cadence toggle swaps the price out. The
               price is its own swap key: a card whose price never changes never
-              animates. */}
-          <AnimatedSwap swapKey={price} className="text-4xl font-bold tracking-tight">
+              animates. `effect` undefined leaves AnimatedSwap on the mode
+              default. */}
+          <AnimatedSwap
+            swapKey={price}
+            effect={priceEffect}
+            className="text-4xl font-bold tracking-tight"
+          >
             {price}
           </AnimatedSwap>
           <span className="mb-1 text-sm text-muted-foreground">{period}</span>

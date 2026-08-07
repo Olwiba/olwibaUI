@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Badge, Button, cn, useUIVariant } from '@olwiba/cn';
-import { PricingCard, type PricingFeature } from '../components/PricingCard';
+import { PricingCard, type PricingCardProps, type PricingFeature } from '../components/PricingCard';
 import { StaggerChildren } from '../motion/StaggerChildren';
 import { CountdownTimer } from '../motion/CountdownTimer';
 import type { AppShellRenderLink } from '../app/AppShell';
@@ -140,6 +140,13 @@ export interface PricingSectionProps {
   onSelectPlan?: (plan: PricingPlan, cadence?: string) => void;
   /** Marks one plan as busy (e.g. its checkout is being created). */
   pendingPlanName?: string;
+  /**
+   * How each card's price transitions when the cadence toggle changes it.
+   * Omit and the current UI mode decides (see `PricingCard.priceEffect`) —
+   * pass `'roll'` for an odometer on a product that is otherwise in default
+   * mode.
+   */
+  priceEffect?: PricingCardProps['priceEffect'];
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
@@ -164,6 +171,7 @@ export function PricingSection({
   defaultCadence,
   onSelectPlan,
   pendingPlanName,
+  priceEffect,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
   const isOneTime = mode === 'one-time';
@@ -314,6 +322,7 @@ export function PricingSection({
                   ctaDisabled={plan.ctaDisabled || pendingPlanName === plan.name}
                   badge={badge}
                   footer={renderPlanFooter?.(plan)}
+                  priceEffect={priceEffect}
                   onSelect={
                     onSelectPlan
                       ? () => onSelectPlan(plan, useCadences ? activeCadence : undefined)
