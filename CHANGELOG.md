@@ -7,6 +7,13 @@
 
 
 
+
+## 0.2.14
+
+### Added
+
+- `AuthSection` — new `framed` prop for the centered layout, for an auth screen rendered inside a page that already has a navbar, a footer and its own background. Standalone, the section owns the viewport: it paints the background, applies its own horizontal padding and stretches to `min-h-dvh`. That is right when the sign-in card is the only thing on the page, and wrong as soon as there is chrome around it — the padding lands on top of the frame's, so the card sits in a double gutter, and a full-viewport section guarantees the footer starts below the fold on every auth route. `framed` drops all three. The card then fills the content column on a phone, the way `ContactSection` does, and only takes its `max-w-md` reading width from `sm` up, where there is room for the page to centre it. Default is unchanged, so existing standalone auth pages need no edit.
+
 ## 0.2.13
 
 ### Added
