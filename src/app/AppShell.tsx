@@ -1,7 +1,7 @@
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { useCallback, type ReactNode } from 'react';
 import {
   BellIcon,
   CreditCardIcon,
@@ -249,12 +249,16 @@ function ShellSidebar({
   sidebarPosition: 'viewport' | 'contained';
 }) {
   const fallbackLogo = typeof brand.name === 'string' ? brand.name.slice(0, 1).toUpperCase() : null;
+  const { isMobile, setOpenMobile } = useSidebar();
+  const closeMobileMenu = useCallback(() => {
+    if (isMobile) setOpenMobile(false);
+  }, [isMobile, setOpenMobile]);
 
   return (
     <Sidebar side={side} collapsible={collapsible} sidebarPosition={sidebarPosition}>
       <SidebarHeader className="py-3">
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem onClickCapture={closeMobileMenu}>
             <SidebarMenuButton
               asChild
               size="lg"
@@ -295,7 +299,7 @@ function ShellSidebar({
           <SidebarGroupContent className="flex flex-col gap-2">
             {action && (
               <SidebarMenu>
-                <SidebarMenuItem>
+                <SidebarMenuItem onClickCapture={closeMobileMenu}>
                   {action.href ? (
                     <SidebarMenuButton
                       asChild
@@ -328,7 +332,7 @@ function ShellSidebar({
 
             <SidebarMenu>
               {navItems.map((item) => (
-                <SidebarMenuItem key={item.label}>
+                <SidebarMenuItem key={item.label} onClickCapture={closeMobileMenu}>
                   <SidebarMenuButton asChild tooltip={item.label} isActive={item.isActive}>
                     {renderLink({
                       href: item.href,

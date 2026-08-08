@@ -82,14 +82,19 @@ export function Navbar({
           </div>
         )}
 
-        {/* Mobile drawer — trigger on the right, panel slides in from the left */}
+        {/* Mobile controls + drawer trigger — keep quick toggles visible, with menu last. */}
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="col-start-3 justify-self-end md:hidden">
-              <Menu className="size-5" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </SheetTrigger>
+          <div className="col-start-3 flex items-center justify-end gap-1 md:hidden">
+            {controls?.map((control, i) => (
+              <React.Fragment key={i}>{control}</React.Fragment>
+            ))}
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="size-5" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </SheetTrigger>
+          </div>
           <SheetContent side="left" className="w-72">
             {/* Brand row alone at the top — leaves the top-right corner to the built-in close */}
             <div className="flex items-center pb-4">
@@ -105,13 +110,6 @@ export function Navbar({
                 })}
               </span>
             </div>
-            {controls?.length ? (
-              <div className="mb-4 flex w-full items-center justify-between gap-1">
-                {controls.map((control, i) => (
-                  <React.Fragment key={i}>{control}</React.Fragment>
-                ))}
-              </div>
-            ) : null}
             <Separator />
             <nav className="mt-4 flex flex-col gap-1">
               {navLinks.map((link) => (

@@ -8,6 +8,11 @@
 
 
 
+
+## 0.2.15
+
+No user-facing changes.
+
 ## 0.2.14
 
 ### Added
