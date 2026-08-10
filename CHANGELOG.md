@@ -9,6 +9,13 @@
 
 
 
+
+## 0.2.16
+
+### Changed
+
+- Add reusable app page hero
+
 ## 0.2.15
 
 No user-facing changes.
