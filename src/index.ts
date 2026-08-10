@@ -29,6 +29,8 @@ export {
   type AppNavItem,
 } from './app/AppShell';
 
+export { AppPageHero, type AppPageHeroProps } from './app/AppPageHero';
+
 export {
   AuthSection,
   type AuthSectionProps,
