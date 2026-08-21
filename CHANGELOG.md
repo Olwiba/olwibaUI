@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.17
+
+### Fixed
+
+- `Navbar` and `Footer`: the brand name sat low against the logo beside it. `items-center` centres the text's *box*, and that box reserves room for ascenders and descenders a wordmark may not use — so an all-lowercase name (nestrrr) rendered with dead air above it. Now trimmed to the glyphs with `text-box-trim: trim-both` / `text-box-edge: ex alphabetic`. `ex` rather than `cap` because these wordmarks are lowercase; a capitalised name wants `cap`, or its capitals overflow the trimmed box and read high. `leading-none` is kept as the fallback for browsers without `text-box-trim` (no Firefox yet), where it degrades to the previous behaviour instead of breaking
+- Docs: the Navbar preview rendered nothing. Its demo was `<Navbar />` with no props, which threw on `brand.href` before painting — `brand` and `navLinks` are both required
+
+### Note
+
+- `AppShell`'s sidebar brand has the same low-sitting name but is deliberately untouched: that span carries `truncate`, and an `alphabetic` under-edge combined with `overflow: hidden` would shear the descenders off a name containing g, y or p
+
 
 
 
