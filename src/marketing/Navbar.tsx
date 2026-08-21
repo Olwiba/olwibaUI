@@ -42,7 +42,24 @@ export function Navbar({
           children: (
             <span className="flex items-center gap-2 font-semibold">
               {brand.logo}
-              <span>{brand.name}</span>
+              {/* `items-center` centres the text's *box*, not its glyphs, and
+                  the box reserves room for ascenders and descenders the name may
+                  not use — so a lowercase wordmark sits low with dead air above.
+                  `leading-none` only removes half-leading; the ascender space is
+                  still inside the box, which is why it wasn't enough on its own.
+
+                  text-box-trim/-edge trims the box to the glyphs themselves.
+                  `ex alphabetic` = x-height to baseline, chosen over `cap
+                  alphabetic` because these wordmarks are lowercase (nestrrr).
+                  A product with a capitalised name wants `cap` instead —
+                  otherwise its capitals overflow the trimmed box and read high.
+
+                  leading-none stays as the fallback: text-box-trim is not
+                  Baseline yet (no Firefox), and there it degrades to the old
+                  behaviour rather than breaking. */}
+              <span className="leading-none [text-box-edge:ex_alphabetic] [text-box-trim:trim-both]">
+                {brand.name}
+              </span>
             </span>
           ),
         })}
@@ -104,7 +121,10 @@ export function Navbar({
                   children: (
                     <span className="flex items-center gap-2 font-semibold">
                       {brand.logo}
-                      <span>{brand.name}</span>
+                      {/* Same fix as the desktop lockup above. */}
+                      <span className="leading-none [text-box-edge:ex_alphabetic] [text-box-trim:trim-both]">
+                        {brand.name}
+                      </span>
                     </span>
                   ),
                 })}

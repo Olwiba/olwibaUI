@@ -39,7 +39,11 @@ export function Footer({
             children: (
               <>
                 {brand.logo}
-                <span className="text-lg font-semibold text-foreground">{brand.name}</span>
+                {/* Same trim as Navbar's lockup, and more visible here: text-lg
+                    scales the unused ascender space up with the font size. */}
+                <span className="text-lg font-semibold leading-none text-foreground [text-box-edge:ex_alphabetic] [text-box-trim:trim-both]">
+                  {brand.name}
+                </span>
               </>
             ),
           })}
