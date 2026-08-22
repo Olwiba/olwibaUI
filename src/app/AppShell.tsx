@@ -1,7 +1,7 @@
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
-import { useCallback, type ReactNode } from 'react';
+import { useCallback, type CSSProperties, type ReactNode } from 'react';
 import {
   BellIcon,
   CreditCardIcon,
@@ -141,11 +141,52 @@ export interface AppShellProps {
 const RAIL_SQUARE =
   'group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:transition-[width,height]';
 
+/**
+ * Initials from a name, or from the local part of an email.
+ *
+ * "Ollie Bishop" gives OB; "ollie@nestrrr.com" gives OL rather than the OL@
+ * that slicing the raw string produced — and `hello@` no longer reads as HE
+ * for every address at a domain when a name is absent.
+ */
+function initialsOf(source: string): string {
+  const base = source.includes('@') ? (source.split('@')[0] ?? source) : source;
+  const words = base.split(/[\s._-]+/).filter(Boolean);
+  if (words.length >= 2) return (words[0]![0]! + words[1]![0]!).toUpperCase();
+  return (words[0] ?? base).slice(0, 2).toUpperCase();
+}
+
+/**
+ * A stable colour per person, instead of one grey square for everybody.
+ *
+ * The hue comes from a hash of the email, so an avatar is always the same
+ * colour for the same account — recognisable at a glance in a member list, and
+ * identical across devices without storing anything.
+ *
+ * Deliberately not random per render, and deliberately not the brand colour:
+ * every user wearing `--primary` would make the avatar read as a piece of app
+ * chrome rather than as a person. Saturation and lightness are fixed so the
+ * whole set sits at one weight and white text clears contrast on all of them;
+ * only the hue moves. A gradient across a small hue span gives it some depth
+ * without becoming a second brand.
+ */
+function identityGradient(seed: string): CSSProperties {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash = (hash * 31 + seed.charCodeAt(i)) | 0;
+  }
+  const hue = Math.abs(hash) % 360;
+  return {
+    backgroundImage: `linear-gradient(135deg, oklch(0.62 0.15 ${hue}), oklch(0.52 0.16 ${(hue + 28) % 360}))`,
+    color: 'oklch(0.98 0 0)',
+  };
+}
+
 function NavUser({ user }: { user: AppShellUser }) {
   const { isMobile } = useSidebar();
   const uiMode = useUIMode();
   const avatarMode = uiMode !== 'default' ? (uiMode as 'playful' | 'smooth') : undefined;
-  const initials = (user.name ?? user.email).slice(0, 2).toUpperCase();
+  const initials = initialsOf(user.name ?? user.email);
+  const identityTint = identityGradient(user.email);
 
   return (
     <SidebarMenu>
@@ -163,9 +204,11 @@ function NavUser({ user }: { user: AppShellUser }) {
                 RAIL_SQUARE,
               )}
             >
-              <Avatar mode={avatarMode} size="sm" className="grayscale">
+              <Avatar mode={avatarMode} size="sm">
                 {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                <AvatarFallback>{initials}</AvatarFallback>
+                <AvatarFallback className="font-medium" style={identityTint}>
+                  {initials}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name ?? user.email}</span>
@@ -186,7 +229,9 @@ function NavUser({ user }: { user: AppShellUser }) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar mode={avatarMode} size="sm">
                   {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                  <AvatarFallback>{initials}</AvatarFallback>
+                  <AvatarFallback className="font-medium" style={identityTint}>
+                    {initials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name ?? user.email}</span>
@@ -259,37 +304,54 @@ function ShellSidebar({
       <SidebarHeader className="py-3">
         <SidebarMenu>
           <SidebarMenuItem onClickCapture={closeMobileMenu}>
-            <SidebarMenuButton
-              asChild
-              size="lg"
-              // No tooltip: unlike a nav item, the collapsed rail's logo is
-              // still the logo — a hover label repeating the app's own name
-              // is noise. Nav items keep theirs because a bare icon doesn't
-              // say where it goes.
-              className={RAIL_SQUARE}
+            {/* Not a link, and not a button.
+
+                It used to navigate to `brand.href`, which duplicated the
+                Dashboard nav item sitting directly beneath it — and because it
+                was a SidebarMenuButton it also lit up on hover, advertising an
+                interaction whose only outcome was a destination already on
+                screen. A masthead identifies; the nav navigates.
+
+                `brand.href` is kept on the type and still used by Navbar and
+                Footer, where the lockup is genuinely the way home. */}
+            <div
+              className={cn(
+                'flex items-center gap-2 overflow-hidden rounded-md p-2 text-left',
+                RAIL_SQUARE,
+              )}
             >
-              {renderLink({
-                href: brand.href ?? '#',
-                children: (
-                  <>
-                    {brand.logo ? (
-                      // Neutral slot: the consumer's logo owns its own chrome
-                      // (background, radius). Sized to fill the collapsed icon rail.
-                      <span className="flex size-8 shrink-0 items-center justify-center [&>svg]:size-5">
-                        {brand.logo}
-                      </span>
-                    ) : (
-                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
-                        {fallbackLogo}
-                      </span>
-                    )}
-                    <span className="min-w-0 truncate text-base font-semibold group-data-[collapsible=icon]:hidden">
-                      {brand.name}
-                    </span>
-                  </>
-                ),
-              })}
-            </SidebarMenuButton>
+              {brand.logo ? (
+                // Neutral slot: the consumer's logo owns its own chrome
+                // (background, radius). Sized to fill the collapsed icon rail.
+                <span className="flex size-8 shrink-0 items-center justify-center [&>svg]:size-5">
+                  {brand.logo}
+                </span>
+              ) : (
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
+                  {fallbackLogo}
+                </span>
+              )}
+              {/* Exactly the trim Navbar's lockup uses — `ex alphabetic`, both
+                  edges — because anything else is not centred. An `ex text`
+                  under edge keeps the font's descender space below the baseline,
+                  so the ink sits in the top of the box and centring the box puts
+                  the name high.
+
+                  What that costs is descender clipping, since an alphabetic
+                  under edge puts the box bottom on the baseline and this span
+                  used to carry `truncate` (`overflow: hidden`). So the clipping
+                  moves off this element: the parent already has
+                  `overflow-hidden` and is 32px tall — sized by the badge — so a
+                  long name is cut there, where there is room to spare below the
+                  baseline, instead of here where there is none.
+
+                  The trade is the ellipsis. A name too long for the sidebar now
+                  ends at the edge rather than in "…". Worth it: every name is
+                  aligned, and only an overlong one loses the affordance. */}
+              <span className="min-w-0 whitespace-nowrap text-base font-semibold leading-none [text-box-edge:ex_alphabetic] [text-box-trim:trim-both] group-data-[collapsible=icon]:hidden">
+                {brand.name}
+              </span>
+            </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

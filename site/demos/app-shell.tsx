@@ -2,12 +2,17 @@
 
 import { AppShell } from '@olwiba/ui';
 import { LayoutDashboard, Users, FileText, Settings, Plus } from 'lucide-react';
+import { demoBrandLogo, demoBrandName } from '~/lib/demo-brand';
 
 export default function AppShellDemo() {
   return (
     <AppShell
       sidebarPosition="contained"
-      brand={{ name: 'Acme App', href: '#' }}
+      // Same lockup as the Navbar demo, from one definition — the point of
+      // showing it in both is that they agree. Lowercase on purpose: a name
+      // with no caps and no descenders is the least forgiving case for the
+      // brand text's vertical alignment against the badge beside it.
+      brand={{ name: demoBrandName, logo: demoBrandLogo, href: '#' }}
       navItems={[
         { icon: LayoutDashboard, label: 'Dashboard', href: '#', isActive: true },
         { icon: Users, label: 'Team', href: '#' },
@@ -16,8 +21,8 @@ export default function AppShellDemo() {
       ]}
       action={{ icon: Plus, label: 'New project', href: '#' }}
       user={{
-        name: 'Alex Johnson',
-        email: 'alex@acme.com',
+        name: 'Ollie Bannister',
+        email: 'ollie@nexus.dev',
         plan: 'pro',
         onSignOut: () => {},
         onBilling: () => {},
