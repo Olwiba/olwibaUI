@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.18
+
+### Changed
+
+- `AppShell`: the sidebar brand is no longer a link or a button. It navigated to `brand.href`, duplicating the Dashboard nav item directly beneath it, and as a `SidebarMenuButton` it lit up on hover — advertising an interaction whose only outcome was a destination already on screen. A masthead identifies; the nav navigates. `brand.href` stays on the type and is still used by `Navbar` and `Footer`, where the lockup genuinely is the way home
+- `AppShell`: avatar fallbacks get a colour derived from a hash of the user's email, replacing one grey square for everybody. Stable per account across devices and sessions with nothing stored, so a face is recognisable at a glance in a list. Lightness and chroma are fixed so the whole set sits at one weight and white text clears contrast on every hue; only the hue moves. Deliberately not the brand colour — every user wearing `--primary` reads as app chrome rather than as a person. The collapsed-rail avatar also had a literal `grayscale` class, now removed
+
+### Fixed
+
+- `AppShell`: the sidebar brand name sat low against the logo beside it, the same defect fixed in `Navbar` and `Footer` in 0.2.17, and now with the same `text-box-trim: trim-both` / `text-box-edge: ex alphabetic`. That span previously carried `truncate`, and an `alphabetic` under edge puts the box bottom on the baseline — which would shear the descenders off a name containing g, y or p. Clipping therefore moves to the parent, which already has `overflow-hidden` and is 32px tall, so a long name is cut where there is room below the baseline. The cost is the ellipsis: an overlong name now ends at the sidebar edge rather than in "…"
+- `AppShell`: initials are taken from a name's words, or from the local part of an email. `ollie@nestrrr.com` produced `OL@` from a raw two-character slice, and every address at a shared domain collided; `Ollie Bannister` now gives `OB`
+
+### Docs
+
+- The Navbar preview rendered nothing — its demo was `<Navbar />` with no props and threw on `brand.href`, since `brand` and `navLinks` are both required
+- Navbar and AppShell demos share one brand lockup (`site/lib/demo-brand.tsx`) rather than two copies, since the point of showing it in both places is that they agree
+
 ## 0.2.17
 
 ### Fixed
