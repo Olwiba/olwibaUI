@@ -1,2 +1,6 @@
 import { CtaSection } from '@olwiba/ui';
-export default function Demo() { return <CtaSection />; }
+import { demoCta } from '~/lib/marketing-demo-data';
+
+export default function Demo() {
+  return <CtaSection {...demoCta} />;
+}

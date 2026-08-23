@@ -1,2 +1,6 @@
 import { FeaturesSection } from '@olwiba/ui';
-export default function Demo() { return <FeaturesSection />; }
+import { demoFeatures } from '~/lib/marketing-demo-data';
+
+export default function Demo() {
+  return <FeaturesSection features={demoFeatures} />;
+}

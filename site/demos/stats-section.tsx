@@ -1,2 +1,6 @@
 import { StatsSection } from '@olwiba/ui';
-export default function Demo() { return <StatsSection />; }
+import { demoStats } from '~/lib/marketing-demo-data';
+
+export default function Demo() {
+  return <StatsSection stats={demoStats} />;
+}

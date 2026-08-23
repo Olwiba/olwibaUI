@@ -1,2 +1,6 @@
 import { HeroSection } from '@olwiba/ui';
-export default function Demo() { return <HeroSection />; }
+import { demoHero } from '~/lib/marketing-demo-data';
+
+export default function Demo() {
+  return <HeroSection {...demoHero} />;
+}

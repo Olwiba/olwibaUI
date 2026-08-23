@@ -1,2 +1,6 @@
 import { PricingSection } from '@olwiba/ui';
-export default function Demo() { return <PricingSection />; }
+import { demoPlans } from '~/lib/marketing-demo-data';
+
+export default function Demo() {
+  return <PricingSection plans={demoPlans} />;
+}
