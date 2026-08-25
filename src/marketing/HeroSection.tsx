@@ -14,8 +14,21 @@ export interface HeroSectionProps {
   heading: string;
   badge?: string;
   description: string;
-  primaryCta: { label: string; href: string };
+  /** Ignored when `primarySlot` is given. */
+  primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
+  /**
+   * Replaces the primary button with your own control — a search field, a
+   * short form, an email capture.
+   *
+   * A hero whose first action *is* the product converts better than one that
+   * links to a page where the product starts. `secondaryCta` still renders
+   * beside it, so "…or see pricing" survives.
+   *
+   * Rendered full-width above the secondary CTA on small screens, since a
+   * field sharing a row with a button gets squeezed to nothing on a phone.
+   */
+  primarySlot?: React.ReactNode;
   heroImage?: React.ReactNode;
   media?: 'image' | 'phone' | 'none';
   phoneSize?: 'sm' | 'md' | 'lg';
@@ -34,6 +47,7 @@ export function HeroSection({
   description,
   primaryCta,
   secondaryCta,
+  primarySlot,
   heroImage,
   media = 'image',
   phoneSize = 'lg',
@@ -60,16 +74,26 @@ export function HeroSection({
               <p className="max-w-lg text-pretty text-lg text-muted-foreground">
                 {description}
               </p>
-              <div className="flex flex-wrap items-center gap-3">
-                {renderLink({
-                  href: primaryCta.href,
-                  children: (
-                    <Button size="lg">
-                      {primaryCta.label}
-                      <ArrowRight className="ml-2 size-4" />
-                    </Button>
-                  ),
-                })}
+              <div
+                className={cn(
+                  'flex gap-3',
+                  primarySlot
+                    ? 'flex-col items-stretch sm:flex-row sm:items-center'
+                    : 'flex-wrap items-center',
+                )}
+              >
+                {primarySlot ?? (
+                  primaryCta &&
+                  renderLink({
+                    href: primaryCta.href,
+                    children: (
+                      <Button size="lg">
+                        {primaryCta.label}
+                        <ArrowRight className="ml-2 size-4" />
+                      </Button>
+                    ),
+                  })
+                )}
                 {secondaryCta &&
                   renderLink({
                     href: secondaryCta.href,
