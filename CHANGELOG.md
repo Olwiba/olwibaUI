@@ -1,5 +1,16 @@
 # Changelog
 
+
+## 0.2.19
+
+### Added
+
+- PrimarySlot, for a hero whose first action is the product
+
+### Fixed
+
+- Supply props for marketing demos
+
 ## 0.2.18
 
 ### Changed
