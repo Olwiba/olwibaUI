@@ -83,6 +83,12 @@ export { UpdateBanner, type UpdateBannerProps } from './app/UpdateBanner';
 // ─── Marketing — page sections ────────────────────────────────────────────────
 export { SectionTitle, type SectionTitleProps } from './marketing/SectionTitle';
 export { marketingSectionSpacing, type MarketingSectionSpacing } from './marketing/section-spacing';
+export {
+  MarketingSurfaceProvider,
+  useMarketingSurface,
+  useSectionSurface,
+  type MarketingSurface,
+} from './marketing/section-surface';
 export { HeroSection, type HeroSectionProps } from './marketing/HeroSection';
 export { FeaturesSection, type FeaturesSectionProps } from './marketing/FeaturesSection';
 export { GroupedFeaturesSection, type GroupedFeaturesSectionProps, type GroupedFeatureGroup } from './marketing/GroupedFeaturesSection';

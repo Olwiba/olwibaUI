@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { ChevronDown, Mail, MessageSquare, Send, type LucideIcon } from 'lucide-react';
-import { cn, Label, useUIVariant } from '@olwiba/cn';
+import { cn, Label } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { Badge } from '../primitives/Badge';
 import { Button } from '../primitives/Button';
 import { Input } from '../primitives/Input';
@@ -24,6 +25,8 @@ export interface ContactSectionProps {
   successDescription?: string;
   sendAnotherLabel?: string;
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 const PHONE_PREFIXES = [
@@ -55,15 +58,10 @@ export function ContactSection({
   successDescription = defaults.successDescription,
   sendAnotherLabel = defaults.sendAnotherLabel,
   onSubmit,
+  surface,
 }: ContactSectionProps = {}) {
   const [submitted, setSubmitted] = React.useState(false);
-  const mode = useUIVariant();
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

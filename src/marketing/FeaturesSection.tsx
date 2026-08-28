@@ -1,12 +1,13 @@
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
-import { cn, useUIVariant } from '@olwiba/cn';
+import { cn } from '@olwiba/cn';
 import { FeatureCard } from '../components/FeatureCard';
 import { Carousel } from '../mechanics/Carousel';
 import { SectionTitle } from './SectionTitle';
 import { StaggerChildren } from '../motion/StaggerChildren';
 import { FadeIn } from '../motion/FadeIn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 
 export interface FeaturesSectionProps {
   title?: string;
@@ -15,6 +16,8 @@ export interface FeaturesSectionProps {
   features: Array<{ icon: LucideIcon; title: string; description: string; href?: string }>;
   /** How the feature cards are arranged. @default 'grid' */
   layout?: 'grid' | 'carousel';
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 export function FeaturesSection({
@@ -23,14 +26,9 @@ export function FeaturesSection({
   badge = 'Features',
   features,
   layout = 'grid',
+  surface,
 }: FeaturesSectionProps) {
-  const mode = useUIVariant()
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  )
+  const sectionClasses = useSectionSurface(surface);
   const cards = features.map((feature) => (
     <FeatureCard
       key={feature.title}

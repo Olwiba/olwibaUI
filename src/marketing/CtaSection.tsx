@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { ArrowRight, Rocket, Sparkles } from 'lucide-react';
 import { cn, useUIVariant } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { Button } from '../primitives/Button';
 import { FadeIn } from '../motion/FadeIn';
 import { useIntersectionObserver } from '../hooks/use-intersection-observer';
@@ -24,6 +25,8 @@ export interface CtaSectionProps {
   /** (showcase) Watermark icon rendered behind the content. @default <Rocket /> */
   icon?: React.ReactNode;
   renderLink?: AppShellRenderLink;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
@@ -102,14 +105,11 @@ export function CtaSection(props: CtaSectionProps) {
     footnote,
     variant = 'default',
     renderLink = defaultRenderLink,
+    surface,
   } = props;
-  const mode = useUIVariant()
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  )
+  // Still read directly: `mode` also drives the badge icon's rounding below.
+  const mode = useUIVariant();
+  const sectionClasses = useSectionSurface(surface);
 
   if (variant === 'showcase') {
     return <ShowcaseCta {...props} sectionClasses={sectionClasses} />;

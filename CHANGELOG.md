@@ -1,6 +1,18 @@
 # Changelog
 
 
+## 0.2.20
+
+### Added
+
+- `surface` on every marketing section: `'card'` (the existing opaque island), `'soft'` (translucent and blurred, so an ambient page background shows through), or `'plain'` (no panel at all). Defaults to `'card'`, so a page that never sets it renders exactly as before. A page with an aura or gradient behind it previously had no way to stop its sections stacking up as a run of opaque slabs over the top of it
+- `MarketingSurfaceProvider` sets the default surface for a whole page. "This page has an ambient background, so its sections should not be opaque" is one decision, and making it once beats repeating it per section and having a newly added section silently default back to an island
+- `useSectionSurface(override?)` is exported for consumers rendering their own sections alongside the packaged ones, so a locally-built section can match the page's surface instead of hard-coding the island classes
+
+### Changed
+
+- The panel classes were copy-pasted inline into all 15 marketing sections. They now come from one place. `overflow-hidden` is kept on every surface including `'plain'` — the marquee and carousel sections clip their own content against it
+
 ## 0.2.19
 
 ### Added

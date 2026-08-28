@@ -1,7 +1,8 @@
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
-import { cn, useUIVariant } from '@olwiba/cn';
+import { cn } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { SectionTitle } from './SectionTitle';
 import { FadeIn } from '../motion/FadeIn';
 
@@ -22,6 +23,8 @@ export interface FeatureMarqueeSectionProps {
   rows: FeatureMarqueeRow[];
   speed?: 'slow' | 'normal' | 'fast';
   pauseOnHover?: boolean;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 const speedDuration = {
@@ -37,16 +40,10 @@ export function FeatureMarqueeSection({
   rows,
   speed = 'normal',
   pauseOnHover = true,
+  surface,
 }: FeatureMarqueeSectionProps) {
-  const mode = useUIVariant();
   const duration = speedDuration[speed];
-
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
 
   return (
     <section className={sectionClasses}>

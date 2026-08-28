@@ -1,9 +1,9 @@
 'use client';
 
-import { cn, useUIVariant } from '@olwiba/cn';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { SectionTitle } from './SectionTitle';
 import { StaggerChildren } from '../motion/StaggerChildren';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 
 export interface TestimonialsSectionProps {
   title?: string;
@@ -18,6 +18,8 @@ export interface TestimonialsSectionProps {
     initials?: string;
     rating?: number;
   }>;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 export function TestimonialsSection({
@@ -25,14 +27,9 @@ export function TestimonialsSection({
   description = "Here's what engineers and product teams say after using Olwiba in production.",
   badge = 'Testimonials',
   testimonials,
+  surface,
 }: TestimonialsSectionProps) {
-  const mode = useUIVariant()
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  )
+  const sectionClasses = useSectionSurface(surface);
   return (
     <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">

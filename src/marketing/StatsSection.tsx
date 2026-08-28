@@ -1,15 +1,18 @@
 'use client';
 
-import { Separator, cn, useUIVariant } from '@olwiba/cn';
+import { Separator } from '@olwiba/cn';
 import { SectionTitle } from './SectionTitle';
 import { StaggerChildren } from '../motion/StaggerChildren';
 import { CountUp } from '../motion/CountUp';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 
 export interface StatsSectionProps {
   title?: string;
   description?: string;
   badge?: string;
   stats: Array<{ value: string; label: string; description?: string }>;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 function parseStatValue(value: string) {
@@ -32,14 +35,9 @@ export function StatsSection({
   description,
   badge = 'By the numbers',
   stats,
+  surface,
 }: StatsSectionProps) {
-  const mode = useUIVariant()
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  )
+  const sectionClasses = useSectionSurface(surface);
   return (
     <section className={sectionClasses}>
       <div className="relative px-6 py-14 sm:px-10 sm:py-20">

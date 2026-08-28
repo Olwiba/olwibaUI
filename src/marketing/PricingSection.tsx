@@ -1,7 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Badge, Button, cn, useUIVariant } from '@olwiba/cn';
+import { Badge, Button, cn } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { PricingCard, type PricingCardProps, type PricingFeature } from '../components/PricingCard';
 import { StaggerChildren } from '../motion/StaggerChildren';
 import { CountdownTimer } from '../motion/CountdownTimer';
@@ -147,6 +148,14 @@ export interface PricingSectionProps {
    * mode.
    */
   priceEffect?: PricingCardProps['priceEffect'];
+  /**
+   * How the section sits on the page. @default 'card'
+   *
+   * Named `surface` rather than following the `mode` convention the other
+   * sections use, because `mode` on this component already means
+   * subscription-vs-one-time.
+   */
+  surface?: MarketingSurface;
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
@@ -172,6 +181,7 @@ export function PricingSection({
   onSelectPlan,
   pendingPlanName,
   priceEffect,
+  surface,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
   const isOneTime = mode === 'one-time';
@@ -190,13 +200,7 @@ export function PricingSection({
   );
   // A single cadence is just a label for the price — nothing to switch between.
   const showToggle = useCadences ? cadences!.length > 1 : !isOneTime;
-  const uiMode = useUIVariant();
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    uiMode === 'smooth' && 'rounded-3xl border',
-    uiMode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !uiMode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
 
   return (
     <section className={sectionClasses}>

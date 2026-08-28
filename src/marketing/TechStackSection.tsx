@@ -4,6 +4,7 @@ import type { LucideIcon } from 'lucide-react';
 import { cn, useUIVariant } from '@olwiba/cn';
 import { SectionTitle } from './SectionTitle';
 import { StaggerChildren } from '../motion/StaggerChildren';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 
 export interface TechStackItem {
   icon: LucideIcon;
@@ -17,6 +18,8 @@ export interface TechStackSectionProps {
   title?: string;
   description?: string;
   items: TechStackItem[];
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 export function TechStackSection({
@@ -24,14 +27,11 @@ export function TechStackSection({
   title = 'The stack',
   description,
   items,
+  surface,
 }: TechStackSectionProps) {
+  // Still read directly: `mode` also drives the per-item tile rounding below.
   const mode = useUIVariant();
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
 
   return (
     <section className={sectionClasses}>

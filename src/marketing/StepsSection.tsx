@@ -1,7 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { cn, useUIVariant } from '@olwiba/cn';
+import { cn } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { SectionTitle } from './SectionTitle';
 import { FadeIn } from '../motion/FadeIn';
 
@@ -26,6 +27,8 @@ export interface StepsSectionProps {
   variant?: 'default' | 'timeline';
   /** Timeline only — step groups with optional interstitial content; overrides `steps`. Numbering continues across groups. */
   groups?: StepGroup[];
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 function TimelineGroup({
@@ -88,14 +91,9 @@ export function StepsSection({
   steps,
   variant = 'default',
   groups,
+  surface,
 }: StepsSectionProps) {
-  const mode = useUIVariant();
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
 
   if (variant === 'timeline') {
     const resolvedGroups: StepGroup[] = groups ?? (steps ? [{ steps }] : []);

@@ -1,7 +1,8 @@
 'use client';
 
 import { Github, Linkedin, Twitter } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage, cn, useUIVariant } from '@olwiba/cn';
+import { Avatar, AvatarFallback, AvatarImage } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { Badge } from '../primitives/Badge';
 
 export interface TeamMember {
@@ -49,6 +50,8 @@ export interface TeamSectionProps {
   badge?: string;
   title?: string;
   description?: string;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 export function TeamSection({
@@ -56,14 +59,9 @@ export function TeamSection({
   badge = 'Team',
   title = 'The people behind Olwiba',
   description = 'A small team with deep experience in design systems, open source, and developer tooling.',
+  surface,
 }: TeamSectionProps) {
-  const mode = useUIVariant();
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
   return (
     <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">

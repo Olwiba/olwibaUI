@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { ArrowRight, Mail } from 'lucide-react';
-import { cn, useUIVariant } from '@olwiba/cn';
+import { cn } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { Badge } from '../primitives/Badge';
 import { Button } from '../primitives/Button';
 import { Input } from '../primitives/Input';
@@ -18,6 +19,8 @@ export interface NewsletterSectionProps {
   successTitle?: string;
   successDescription?: string;
   onSubscribe?: (email: string) => void | Promise<void>;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 const defaults = {
@@ -44,16 +47,11 @@ export function NewsletterSection({
   successTitle = defaults.successTitle,
   successDescription = defaults.successDescription,
   onSubscribe,
+  surface,
 }: NewsletterSectionProps = {}) {
   const [email, setEmail] = React.useState('');
   const [submitted, setSubmitted] = React.useState(false);
-  const mode = useUIVariant();
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

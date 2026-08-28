@@ -1,9 +1,10 @@
 'use client';
 
 import { Check, X } from 'lucide-react';
-import { cn, useUIVariant } from '@olwiba/cn';
+import { cn } from '@olwiba/cn';
 import { SectionTitle } from './SectionTitle';
 import { FadeIn } from '../motion/FadeIn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 
 export interface QualificationItem {
   text: string;
@@ -20,6 +21,8 @@ export interface QualificationSectionProps {
   title?: string;
   description?: string;
   columns: [QualificationColumn, QualificationColumn];
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 export function QualificationSection({
@@ -27,14 +30,9 @@ export function QualificationSection({
   title = 'Is this for you?',
   description,
   columns,
+  surface,
 }: QualificationSectionProps) {
-  const mode = useUIVariant();
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  );
+  const sectionClasses = useSectionSurface(surface);
 
   return (
     <section className={sectionClasses}>

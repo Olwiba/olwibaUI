@@ -1,6 +1,7 @@
 'use client';
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, cn, useUIVariant } from '@olwiba/cn';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@olwiba/cn';
+import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { SectionTitle } from './SectionTitle';
 import { FadeIn } from '../motion/FadeIn';
 
@@ -9,6 +10,8 @@ export interface FaqSectionProps {
   description?: string;
   badge?: string;
   items: Array<{ question: string; answer: string }>;
+  /** How the section sits on the page. @default 'card' */
+  surface?: MarketingSurface;
 }
 
 export function FaqSection({
@@ -16,14 +19,9 @@ export function FaqSection({
   description = 'Everything you need to know before getting started.',
   badge = 'FAQ',
   items,
+  surface,
 }: FaqSectionProps) {
-  const mode = useUIVariant()
-  const sectionClasses = cn(
-    'overflow-hidden bg-card',
-    mode === 'smooth' && 'rounded-3xl border',
-    mode === 'playful' && 'rounded-2xl border-primary/25 border',
-    !mode && 'rounded-2xl border',
-  )
+  const sectionClasses = useSectionSurface(surface);
   return (
     <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">
