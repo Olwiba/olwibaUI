@@ -500,7 +500,7 @@ export function AppShell({
         side={side}
         sidebarPosition={sidebarPosition}
       />
-      <SidebarInset className={isContained ? undefined : 'overflow-y-auto'}>
+      <SidebarInset className="overflow-y-auto">
         <ShellHeader pageTitle={pageTitle} headerStart={headerStart} headerEnd={headerEnd} />
         <div className={contentClassName}>{children}</div>
       </SidebarInset>
