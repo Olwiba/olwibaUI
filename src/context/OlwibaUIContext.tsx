@@ -35,10 +35,11 @@ export interface OlwibaUIProviderProps {
   mode?: UIMode;
 }
 
-export function OlwibaUIProvider({ children, isMobile: isMobileProp, mode: initialMode = 'default' }: OlwibaUIProviderProps) {
+export function OlwibaUIProvider({ children, isMobile: isMobileProp, mode: modeProp }: OlwibaUIProviderProps) {
   const detectedMobile = useIsMobile();
   const isMobile = isMobileProp ?? detectedMobile;
-  const [mode, setMode] = React.useState<UIMode>(initialMode);
+  const [uncontrolledMode, setMode] = React.useState<UIMode>('default');
+  const mode = modeProp ?? uncontrolledMode;
 
   const variant = mode !== 'default' ? (mode as UIVariant) : undefined;
 

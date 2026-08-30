@@ -4,10 +4,12 @@ import type { LucideIcon } from 'lucide-react';
 import { useCallback, type CSSProperties, type ReactNode } from 'react';
 import {
   BellIcon,
+  BirdIcon,
   CreditCardIcon,
   LogOutIcon,
   MoreVerticalIcon,
   PlusCircleIcon,
+  SettingsIcon,
 } from 'lucide-react';
 import {
   Avatar,
@@ -63,6 +65,7 @@ export interface AppShellUser {
   onSignOut?: () => void;
   onBilling?: () => void;
   onNotifications?: () => void;
+  onSettings?: () => void;
 }
 
 export interface AppShellBrand {
@@ -142,41 +145,35 @@ const RAIL_SQUARE =
   'group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:transition-[width,height]';
 
 /**
- * Initials from a name, or from the local part of an email.
+ * A stable miniature identity artwork, instead of one grey square or a pair
+ * of initials for everybody.
  *
- * "Ollie Bishop" gives OB; "ollie@nestrrr.com" gives OL rather than the OL@
- * that slicing the raw string produced — and `hello@` no longer reads as HE
- * for every address at a domain when a name is absent.
- */
-function initialsOf(source: string): string {
-  const base = source.includes('@') ? (source.split('@')[0] ?? source) : source;
-  const words = base.split(/[\s._-]+/).filter(Boolean);
-  if (words.length >= 2) return (words[0]![0]! + words[1]![0]!).toUpperCase();
-  return (words[0] ?? base).slice(0, 2).toUpperCase();
-}
-
-/**
- * A stable colour per person, instead of one grey square for everybody.
+ * FNV-1a gives the same unsigned hash for the same name/email on every device.
+ * Different byte ranges choose three hues and the gradient angle, so nearby
+ * names do not merely receive nearby shades of the same two-colour gradient.
  *
- * The hue comes from a hash of the email, so an avatar is always the same
- * colour for the same account — recognisable at a glance in a member list, and
- * identical across devices without storing anything.
- *
- * Deliberately not random per render, and deliberately not the brand colour:
- * every user wearing `--primary` would make the avatar read as a piece of app
- * chrome rather than as a person. Saturation and lightness are fixed so the
- * whole set sits at one weight and white text clears contrast on all of them;
- * only the hue moves. A gradient across a small hue span gives it some depth
- * without becoming a second brand.
+ * Lightness stays in a bounded range so the white bird remains legible. The
+ * radial highlight supplies depth without adding a fourth random colour.
  */
 function identityGradient(seed: string): CSSProperties {
-  let hash = 0;
+  let hash = 2166136261;
   for (let i = 0; i < seed.length; i += 1) {
-    hash = (hash * 31 + seed.charCodeAt(i)) | 0;
+    hash ^= seed.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
   }
-  const hue = Math.abs(hash) % 360;
+  hash >>>= 0;
+
+  const firstHue = hash % 360;
+  const secondHue = (firstHue + 55 + ((hash >>> 8) % 70)) % 360;
+  const thirdHue = (firstHue + 190 + ((hash >>> 16) % 110)) % 360;
+  const angleHash = Math.imul(hash ^ (hash >>> 15), 2246822519) >>> 0;
+  const angle = angleHash % 360;
+
   return {
-    backgroundImage: `linear-gradient(135deg, oklch(0.62 0.15 ${hue}), oklch(0.52 0.16 ${(hue + 28) % 360}))`,
+    backgroundImage: [
+      `radial-gradient(circle at 28% 18%, oklch(0.94 0.06 ${thirdHue} / 0.78), transparent 34%)`,
+      `linear-gradient(${angle}deg, oklch(0.68 0.18 ${firstHue}), oklch(0.55 0.2 ${secondHue}) 52%, oklch(0.62 0.18 ${thirdHue}))`,
+    ].join(', '),
     color: 'oklch(0.98 0 0)',
   };
 }
@@ -185,8 +182,8 @@ function NavUser({ user }: { user: AppShellUser }) {
   const { isMobile } = useSidebar();
   const uiMode = useUIMode();
   const avatarMode = uiMode !== 'default' ? (uiMode as 'playful' | 'smooth') : undefined;
-  const initials = initialsOf(user.name ?? user.email);
-  const identityTint = identityGradient(user.email);
+  const identitySeed = `${user.name?.trim().toLocaleLowerCase() ?? ''}|${user.email.toLocaleLowerCase()}`;
+  const identityTint = identityGradient(identitySeed);
 
   return (
     <SidebarMenu>
@@ -206,8 +203,11 @@ function NavUser({ user }: { user: AppShellUser }) {
             >
               <Avatar mode={avatarMode} size="sm">
                 {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                <AvatarFallback className="font-medium" style={identityTint}>
-                  {initials}
+                <AvatarFallback className="text-white" style={identityTint}>
+                  <BirdIcon
+                    aria-hidden
+                    className="size-4 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
+                  />
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -229,8 +229,11 @@ function NavUser({ user }: { user: AppShellUser }) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar mode={avatarMode} size="sm">
                   {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                  <AvatarFallback className="font-medium" style={identityTint}>
-                    {initials}
+                  <AvatarFallback className="text-white" style={identityTint}>
+                    <BirdIcon
+                      aria-hidden
+                      className="size-4 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
+                    />
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -239,7 +242,7 @@ function NavUser({ user }: { user: AppShellUser }) {
                 </div>
               </div>
             </DropdownMenuLabel>
-            {(user.onBilling || user.onNotifications) && (
+            {(user.onBilling || user.onNotifications || user.onSettings) && (
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
@@ -253,6 +256,12 @@ function NavUser({ user }: { user: AppShellUser }) {
                     <DropdownMenuItem onClick={user.onNotifications}>
                       <BellIcon />
                       Notifications
+                    </DropdownMenuItem>
+                  )}
+                  {user.onSettings && (
+                    <DropdownMenuItem onClick={user.onSettings}>
+                      <SettingsIcon />
+                      Settings
                     </DropdownMenuItem>
                   )}
                 </DropdownMenuGroup>

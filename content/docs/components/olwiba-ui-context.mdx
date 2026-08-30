@@ -29,6 +29,16 @@ Wrap your app root — `isMobile` is auto-detected via `useIsMobile()` from `@ol
 </OlwibaUIProvider>
 ```
 
+Pass `mode` when an external store owns the current mode. The provider treats it as a controlled value and reacts when it changes:
+
+```tsx
+<OlwibaUIProvider mode={mode}>
+  <App />
+</OlwibaUIProvider>
+```
+
+When `mode` is omitted, the provider starts at `default` and descendants may change it through `setMode` from `useOlwibaUI()`.
+
 Override with a server-detected value to avoid hydration flicker:
 
 ```tsx
@@ -51,6 +61,7 @@ function Sidebar() {
 <APIReference name="OlwibaUIProvider" props={[
   { name: "children", type: "ReactNode", default: "-" },
   { name: "isMobile", type: "boolean", default: "auto-detected" },
+  { name: "mode", type: "'default' | 'playful' | 'smooth'", default: "internally managed from 'default'" },
 ]} />
 
 <APIReference name="useOlwibaUI" props={[

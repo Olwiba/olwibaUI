@@ -35,8 +35,14 @@ export function AppPageHero({
     <section
       className={cn(
         'relative overflow-hidden rounded-3xl border bg-card/80 p-5 shadow-sm sm:p-6',
-        'before:absolute before:-right-16 before:-top-16 before:size-44 before:rounded-full before:bg-primary/15 before:blur-3xl',
-        'after:absolute after:-bottom-20 after:left-10 after:size-52 after:rounded-full after:bg-primary/10 after:blur-3xl',
+        // The glow blobs are decoration, and `::after` is the section's last
+        // child — so with everything on `z-index: auto` it paints above the
+        // header content and swallows clicks on whatever sits under it. At
+        // narrow widths the action row stacks below the copy, right into the
+        // bottom-left blob, which is how a visible button stops responding.
+        // pointer-events-none keeps them purely visual.
+        'before:pointer-events-none before:absolute before:-right-16 before:-top-16 before:size-44 before:rounded-full before:bg-primary/15 before:blur-3xl',
+        'after:pointer-events-none after:absolute after:-bottom-20 after:left-10 after:size-52 after:rounded-full after:bg-primary/10 after:blur-3xl',
         className,
       )}
     >

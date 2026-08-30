@@ -1,6 +1,28 @@
 # Changelog
 
 
+
+## 0.2.21
+
+### Added
+
+- `AppShellUser.onSettings` puts a Settings item in the user dropdown, beside Billing and Notifications. The group still only renders when at least one of the three handlers is supplied, so a shell that passes none is unchanged
+
+### Changed
+
+- `OlwibaUIProvider`: `mode` is now a controlled value rather than a seed. It was read once as `useState`'s initial argument, so an app whose mode lives in an external store — a settings screen, a URL param, a persisted preference — set the prop, watched it change, and saw nothing happen after first render. `mode` now wins whenever it is supplied. Omit it and the provider still starts at `default` and still lets descendants drive it through `setMode` from `useOlwibaUI()`, so nothing changes for the uncontrolled case
+- `AppShell`: the avatar fallback is a bird on a generated gradient, replacing the initials introduced in 0.2.18. Initials carry a person's name twice over — it is already spelled out next to the avatar in the sidebar and again in the dropdown — while reducing everyone to two letters. The artwork is a stable miniature identity instead: an FNV-1a hash picks three hues and the gradient angle, so two accounts at the same domain are told apart by shape and colour rather than by a shared prefix. Lightness is bounded so the white bird stays legible on every result, and the radial highlight adds depth without a fourth random colour. `initialsOf` is gone
+- `AppShell`: the identity seed is now the lowercased name and email together, not the email alone, so the artwork derives from the whole identity and does not shift with a change of case in what an app happens to pass
+
+### Fixed
+
+- `AppPageHero`: the decorative glow blobs swallowed clicks. `::after` is the section's last child and everything sits at `z-index: auto`, so the bottom-left blob paints over the header content beneath it. At narrow widths the action row stacks below the copy and lands squarely in that blob — which is how a visible, correctly wired button stops responding. Both pseudo-elements are now `pointer-events-none`, which is all they ever needed to be
+- `AppShell`: `SidebarInset` scrolls in contained mode too. The `overflow-y-auto` was skipped when `contained` was set, on the assumption that the host page owned the scroll — but a contained shell is bounded by its own container, so the overflow had nowhere to go and long content was cut off instead of scrolling
+
+### Docs
+
+- The `OlwibaUIProvider` page documents `mode`: what passing it means, what omitting it means, and the prop on the API table alongside `isMobile`
+
 ## 0.2.20
 
 ### Added
