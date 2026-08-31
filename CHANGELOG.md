@@ -3,6 +3,32 @@
 
 
 
+
+## 0.2.23
+
+### Added
+
+- `AppShell.breadcrumbs`: where the current route sits in the app, rendered as a muted trail in the header bar. A crumb is either a bare string or `{ label, href }`; give it an `href` and it renders through `renderLink`, so the trail navigates with the consumer's router rather than a hardcoded `<a>`. The final crumb is where you already are, so it stays inert and carries `aria-current="page"` even when handed an href. `AppShellBreadcrumb` is exported
+- `AppFooter`, plus an `AppShell.footer` slot that renders it after the page outlet. Signed-in chrome had no footer, and every product that wanted one would have built its own. It belongs to the shell rather than to a page pattern: in a page pattern every route re-declares it, and a height-filling route ends up fighting it for the remaining space. `AppFooter` owns geometry only — a quiet utility row with `start` and `end` slots — so live status, version strings and links stay with the product. Public marketing pages still use the full `Footer`
+- `AppPageHero.surface`: `'card'` (default, unchanged) or `'plain'`, which draws the address as type alone with no panel, border or glow. On a page already made of surfaces — a composer, a feed island, a row of quick actions — a carded header competes with the regions it is meant to introduce and pushes the one that acts further down the page
+
+### Changed
+
+- `AppShell`: the header bar states location, not identity. It rendered `pageTitle` as an `<h1>`, so every page that also renders its own heading — which every packaged page pattern does — shipped two `h1` elements and printed the same words twice on the route. The header is now a `<nav aria-label="Breadcrumb">`. `pageTitle` still works and renders as a single-crumb trail, so existing consumers keep working while they migrate to `breadcrumbs`
+- `AppShell`: `pageTitle` no longer defaults to `'Dashboard'`. A default page title is a guess about someone else's app, and it printed "Dashboard" over every route that never set the prop. With neither `pageTitle` nor `breadcrumbs` supplied the header now renders no trail and no separator
+- `AppPageHero`: `compact` is the page-pattern header, so it is now genuinely compact — tighter padding, a smaller icon tile and eyebrow, the title down a step, a softer glow. It introduces a route without eating the fold above dense content. The full-size hero is untouched
+- `AppPageHero`: the title top-aligns with the icon tile beside it. The tile starts at the top inset while the title carried default half-leading — roughly 4px above the cap — so it read as sitting low. `items-start` and `leading-tight` put the cap height on the same top line
+- Ecosystem packages: `@olwiba/dx` 0.0.20 → 0.0.23, `@olwiba/cn` 0.1.26 → 0.1.35, `@olwiba/docs` 0.1.38 → 0.1.40
+
+### Fixed
+
+- `AppShell`: a page taller than the shell spilled its content over the footer. `SidebarInset` is a scrolling flex column, so its children shrink to fit by default — the content box was compressed below its intrinsic height while its children kept rendering at full height, painting over whatever sat beneath. On the dashboard demo a 1054px page rendered into a 544px box and overflowed 500px, and the footer then tracked the scroll. The shell now owns the height chain outright (`flex min-h-0 grow shrink-0 flex-col`) because a consumer cannot express it correctly: a route passing `flex-1` through `contentClassName` gets a basis of 0 and sizes to the available space, ignoring its own content. Short pages grow and settle the footer at the bottom, long pages keep their intrinsic height and scroll. Verified across all seven page patterns — content height now equals content `scrollHeight` in every case
+- `AppPageHero`: `description` rendered inside a `<p>`. It takes a `ReactNode` and callers pass multiple paragraphs, so this nested `<p>` in `<p>` — invalid HTML that the parser silently unnests, producing a client tree that does not match the server's and breaking hydration. It is a `<div>` now
+
+### Note
+
+- Routes that passed flex plumbing through `AppShell`'s `contentClassName` should stop; the shell supplies it. A route that wants to fill the leftover height puts `flex-1` on its own root instead
+
 ## 0.2.22
 
 No user-facing changes.
