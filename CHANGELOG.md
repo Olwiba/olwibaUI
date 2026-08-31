@@ -2,6 +2,11 @@
 
 
 
+
+## 0.2.22
+
+No user-facing changes.
+
 ## 0.2.21
 
 ### Added

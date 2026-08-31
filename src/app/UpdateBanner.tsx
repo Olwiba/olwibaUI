@@ -105,20 +105,20 @@ export function UpdateBanner({
       >
         <Card
           className={cn(
-            'max-w-3xl border-amber-300/60 bg-amber-50 dark:border-amber-700/60 dark:bg-amber-950',
+            'max-w-3xl border-border bg-card text-card-foreground shadow-lg',
             className,
           )}
         >
           <div className="flex items-center justify-between gap-6 p-4">
             <div className="flex items-center gap-3">
-              <Sparkles className="size-5 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden="true" />
-              <p className="text-sm text-amber-800 dark:text-amber-200">{message}</p>
+              <Sparkles className="size-5 shrink-0 text-primary" aria-hidden="true" />
+              <p className="text-sm text-card-foreground">{message}</p>
             </div>
             <Button
               onClick={handleRefresh}
               disabled={refreshing}
               size="sm"
-              className="shrink-0 bg-amber-600 text-white hover:bg-amber-700 dark:bg-amber-600 dark:hover:bg-amber-700"
+              className="shrink-0"
             >
               {refreshing ? <RefreshCw className="size-4 animate-spin" /> : buttonLabel}
             </Button>

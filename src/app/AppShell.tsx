@@ -206,7 +206,7 @@ function NavUser({ user }: { user: AppShellUser }) {
                 <AvatarFallback className="text-white" style={identityTint}>
                   <BirdIcon
                     aria-hidden
-                    className="size-4 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
+                    className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
                   />
                 </AvatarFallback>
               </Avatar>
@@ -232,7 +232,7 @@ function NavUser({ user }: { user: AppShellUser }) {
                   <AvatarFallback className="text-white" style={identityTint}>
                     <BirdIcon
                       aria-hidden
-                      className="size-4 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
+                      className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
                     />
                   </AvatarFallback>
                 </Avatar>
