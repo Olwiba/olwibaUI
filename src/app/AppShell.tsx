@@ -90,8 +90,17 @@ export interface AppShellProps {
   /** Primary CTA rendered above nav (e.g. "New project", "Quick create") */
   action?: AppShellAction;
   user?: AppShellUser;
-  /** Text shown in the top header bar */
+  /**
+   * Location context shown in the top header bar. This is app chrome, not the
+   * page address — the page (or its page pattern) owns the `<h1>`. Repeating
+   * the page title here prints the same words twice on every route.
+   */
   pageTitle?: string;
+  /**
+   * Where the current route sits in the app, e.g. `["Admin", "Users"]`.
+   * Rendered as a muted trail and preferred over `pageTitle` when supplied.
+   */
+  breadcrumbs?: string[];
   /** Slot rendered at the start of the top header bar, after the sidebar trigger. */
   headerStart?: ReactNode;
   /** Slot rendered at the end of the top header bar. */
@@ -431,13 +440,20 @@ function ShellSidebar({
 
 function ShellHeader({
   pageTitle,
+  breadcrumbs,
   headerStart,
   headerEnd,
 }: {
-  pageTitle: string;
+  pageTitle?: string;
+  breadcrumbs?: string[];
   headerStart?: ReactNode;
   headerEnd?: ReactNode;
 }) {
+  // App chrome states location, the page states its own name. This used to be
+  // an <h1>, which meant every page rendering its own heading shipped two of
+  // them and printed the same words twice.
+  const trail = breadcrumbs?.length ? breadcrumbs : pageTitle ? [pageTitle] : [];
+
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -447,8 +463,33 @@ function ShellHeader({
             {headerStart}
           </div>
         )}
-        <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
-        <h1 className="text-base font-medium">{pageTitle}</h1>
+        {trail.length > 0 && (
+          <>
+            <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
+            <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1.5 text-sm">
+              {trail.map((crumb, index) => (
+                <span className="flex min-w-0 items-center gap-1.5" key={`${crumb}-${index}`}>
+                  {index > 0 && (
+                    <span aria-hidden="true" className="text-muted-foreground/60">
+                      /
+                    </span>
+                  )}
+                  <span
+                    aria-current={index === trail.length - 1 ? 'page' : undefined}
+                    className={cn(
+                      'truncate',
+                      index === trail.length - 1
+                        ? 'font-medium text-foreground'
+                        : 'text-muted-foreground',
+                    )}
+                  >
+                    {crumb}
+                  </span>
+                </span>
+              ))}
+            </nav>
+          </>
+        )}
         {headerEnd && (
           <div className="ml-auto flex items-center gap-1">
             {headerEnd}
@@ -482,7 +523,8 @@ export function AppShell({
   navItems = [],
   action,
   user = defaultUser,
-  pageTitle = 'Dashboard',
+  pageTitle,
+  breadcrumbs,
   headerStart,
   headerEnd,
   renderLink = defaultRenderLink,
@@ -510,7 +552,12 @@ export function AppShell({
         sidebarPosition={sidebarPosition}
       />
       <SidebarInset className="overflow-y-auto">
-        <ShellHeader pageTitle={pageTitle} headerStart={headerStart} headerEnd={headerEnd} />
+        <ShellHeader
+          pageTitle={pageTitle}
+          breadcrumbs={breadcrumbs}
+          headerStart={headerStart}
+          headerEnd={headerEnd}
+        />
         <div className={contentClassName}>{children}</div>
       </SidebarInset>
     </SidebarProvider>
