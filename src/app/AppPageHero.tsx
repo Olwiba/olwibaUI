@@ -109,14 +109,17 @@ export function AppPageHero({
               {title}
             </h1>
             {description && (
-              <p
+              // A div, not a p: `description` is a ReactNode, and callers pass
+              // multiple paragraphs. Nesting <p> inside <p> is invalid HTML and
+              // the parser silently unnests it, which breaks hydration.
+              <div
                 className={cn(
                   'max-w-2xl text-muted-foreground',
                   compact ? 'text-sm leading-5' : 'text-sm leading-6',
                 )}
               >
                 {description}
-              </p>
+              </div>
             )}
           </div>
         </div>

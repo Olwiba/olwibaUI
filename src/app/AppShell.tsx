@@ -600,13 +600,19 @@ export function AppShell({
           headerEnd={headerEnd}
           renderLink={renderLink}
         />
-        {/* shrink-0: SidebarInset is a scrolling flex column, so its children
-            shrink to fit by default. A long page then gets a content box
-            shorter than its own content, which spills over anything below it —
-            the footer. Fill-height routes still grow, because they pass
-            `flex-1` (basis 0, nothing to shrink). */}
-        <div className={cn('shrink-0', contentClassName)}>{children}</div>
-        {footer && <div className="mt-auto shrink-0">{footer}</div>}
+        {/* The shell owns the height chain so routes never have to reconstruct
+            it. `grow` fills the shell on a short page, which settles the footer
+            at the bottom; `shrink-0` with an auto basis means a long page keeps
+            its intrinsic height and scrolls instead of spilling over the
+            footer. `flex flex-col` + `min-h-0` is what lets a route opt into
+            filling the leftover height with `flex-1` on its own root.
+
+            This cannot be left to the consumer: a route passing `flex-1` here
+            gets basis 0, which ignores content height entirely. */}
+        <div className={cn('flex min-h-0 grow shrink-0 flex-col', contentClassName)}>
+          {children}
+        </div>
+        {footer && <div className="shrink-0">{footer}</div>}
       </SidebarInset>
     </SidebarProvider>
   );
