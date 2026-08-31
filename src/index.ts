@@ -26,6 +26,7 @@ export {
   type AppShellUser,
   type AppShellAction,
   type AppShellRenderLink,
+  type AppShellBreadcrumb,
   type AppNavItem,
 } from './app/AppShell';
 

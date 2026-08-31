@@ -84,6 +84,13 @@ export type AppShellRenderLink = (props: {
   className?: string;
 }) => ReactNode;
 
+/**
+ * One step in the header location trail. A bare string is a plain label; give
+ * it an `href` to make it walkable. The final crumb is the current route and is
+ * never rendered as a link.
+ */
+export type AppShellBreadcrumb = string | { label: string; href?: string };
+
 export interface AppShellProps {
   brand?: AppShellBrand;
   navItems?: AppNavItem[];
@@ -97,10 +104,11 @@ export interface AppShellProps {
    */
   pageTitle?: string;
   /**
-   * Where the current route sits in the app, e.g. `["Admin", "Users"]`.
-   * Rendered as a muted trail and preferred over `pageTitle` when supplied.
+   * Where the current route sits in the app, e.g.
+   * `[{ label: "Admin", href: "/admin" }, "Users"]`. Rendered as a muted trail
+   * and preferred over `pageTitle` when supplied.
    */
-  breadcrumbs?: string[];
+  breadcrumbs?: AppShellBreadcrumb[];
   /** Slot rendered at the start of the top header bar, after the sidebar trigger. */
   headerStart?: ReactNode;
   /** Slot rendered at the end of the top header bar. */
@@ -443,16 +451,25 @@ function ShellHeader({
   breadcrumbs,
   headerStart,
   headerEnd,
+  renderLink,
 }: {
   pageTitle?: string;
-  breadcrumbs?: string[];
+  breadcrumbs?: AppShellBreadcrumb[];
   headerStart?: ReactNode;
   headerEnd?: ReactNode;
+  renderLink: AppShellRenderLink;
 }) {
   // App chrome states location, the page states its own name. This used to be
   // an <h1>, which meant every page rendering its own heading shipped two of
   // them and printed the same words twice.
-  const trail = breadcrumbs?.length ? breadcrumbs : pageTitle ? [pageTitle] : [];
+  const source: AppShellBreadcrumb[] = breadcrumbs?.length
+    ? breadcrumbs
+    : pageTitle
+      ? [pageTitle]
+      : [];
+  const trail = source.map((crumb) =>
+    typeof crumb === 'string' ? { label: crumb, href: undefined } : crumb,
+  );
 
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -467,26 +484,43 @@ function ShellHeader({
           <>
             <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
             <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1.5 text-sm">
-              {trail.map((crumb, index) => (
-                <span className="flex min-w-0 items-center gap-1.5" key={`${crumb}-${index}`}>
-                  {index > 0 && (
-                    <span aria-hidden="true" className="text-muted-foreground/60">
-                      /
-                    </span>
-                  )}
+              {trail.map((crumb, index) => {
+                const isCurrent = index === trail.length - 1;
+                // The last crumb is where you already are, so it stays inert
+                // even when the consumer hands it an href.
+                const isLink = !isCurrent && Boolean(crumb.href);
+
+                return (
                   <span
-                    aria-current={index === trail.length - 1 ? 'page' : undefined}
-                    className={cn(
-                      'truncate',
-                      index === trail.length - 1
-                        ? 'font-medium text-foreground'
-                        : 'text-muted-foreground',
-                    )}
+                    className="flex min-w-0 items-center gap-1.5"
+                    key={`${crumb.label}-${index}`}
                   >
-                    {crumb}
+                    {index > 0 && (
+                      <span aria-hidden="true" className="text-muted-foreground/60">
+                        /
+                      </span>
+                    )}
+                    {isLink ? (
+                      renderLink({
+                        href: crumb.href as string,
+                        className:
+                          'truncate rounded-sm text-muted-foreground transition-colors hover:text-foreground hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                        children: crumb.label,
+                      })
+                    ) : (
+                      <span
+                        aria-current={isCurrent ? 'page' : undefined}
+                        className={cn(
+                          'truncate',
+                          isCurrent ? 'font-medium text-foreground' : 'text-muted-foreground',
+                        )}
+                      >
+                        {crumb.label}
+                      </span>
+                    )}
                   </span>
-                </span>
-              ))}
+                );
+              })}
             </nav>
           </>
         )}
@@ -557,6 +591,7 @@ export function AppShell({
           breadcrumbs={breadcrumbs}
           headerStart={headerStart}
           headerEnd={headerEnd}
+          renderLink={renderLink}
         />
         <div className={contentClassName}>{children}</div>
       </SidebarInset>
