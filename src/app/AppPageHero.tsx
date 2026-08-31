@@ -58,7 +58,7 @@ export function AppPageHero({
           compact ? 'gap-3' : 'gap-5',
         )}
       >
-        <div className={cn('flex min-w-0', compact ? 'gap-3' : 'gap-4')}>
+        <div className={cn('flex min-w-0 items-start', compact ? 'gap-3' : 'gap-4')}>
           {Icon && (
             <div
               className={cn(
@@ -84,7 +84,9 @@ export function AppPageHero({
             )}
             <h1
               className={cn(
-                'font-semibold tracking-tight',
+                // Default leading puts ~4px of half-leading above the cap, so
+                // the title reads as sitting low against a top-aligned icon.
+                'font-semibold leading-tight tracking-tight',
                 compact ? 'text-xl sm:text-2xl' : 'text-3xl sm:text-4xl',
               )}
             >
