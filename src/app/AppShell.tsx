@@ -600,8 +600,13 @@ export function AppShell({
           headerEnd={headerEnd}
           renderLink={renderLink}
         />
-        <div className={contentClassName}>{children}</div>
-        {footer}
+        {/* shrink-0: SidebarInset is a scrolling flex column, so its children
+            shrink to fit by default. A long page then gets a content box
+            shorter than its own content, which spills over anything below it —
+            the footer. Fill-height routes still grow, because they pass
+            `flex-1` (basis 0, nothing to shrink). */}
+        <div className={cn('shrink-0', contentClassName)}>{children}</div>
+        {footer && <div className="mt-auto shrink-0">{footer}</div>}
       </SidebarInset>
     </SidebarProvider>
   );
