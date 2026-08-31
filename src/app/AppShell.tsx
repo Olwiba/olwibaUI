@@ -113,6 +113,12 @@ export interface AppShellProps {
   headerStart?: ReactNode;
   /** Slot rendered at the end of the top header bar. */
   headerEnd?: ReactNode;
+  /**
+   * App chrome rendered after the page outlet — normally an `AppFooter`. This
+   * belongs to the shell, not to a page pattern: otherwise every route
+   * re-declares it and height-filling pages fight it for the remaining space.
+   */
+  footer?: ReactNode;
   /** Override link rendering for SPA navigation. Defaults to a native <a>. */
   renderLink?: AppShellRenderLink;
   children?: ReactNode;
@@ -559,6 +565,7 @@ export function AppShell({
   user = defaultUser,
   pageTitle,
   breadcrumbs,
+  footer,
   headerStart,
   headerEnd,
   renderLink = defaultRenderLink,
@@ -594,6 +601,7 @@ export function AppShell({
           renderLink={renderLink}
         />
         <div className={contentClassName}>{children}</div>
+        {footer}
       </SidebarInset>
     </SidebarProvider>
   );

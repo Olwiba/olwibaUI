@@ -32,6 +32,8 @@ export {
 
 export { AppPageHero, type AppPageHeroProps } from './app/AppPageHero';
 
+export { AppFooter, type AppFooterProps } from './app/AppFooter';
+
 export {
   AuthSection,
   type AuthSectionProps,
