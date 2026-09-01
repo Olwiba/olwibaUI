@@ -36,4 +36,21 @@ describe('AppShell scrolling', () => {
     expect(contentInset(markup)).toContain('overflow-y-auto');
     expect(markup).toContain('h-svh overflow-hidden');
   });
+
+  test('products can replace the default user avatar artwork', () => {
+    const markup = renderToStaticMarkup(
+      React.createElement(AppShell, {
+        user: {
+          email: 'user@example.com',
+          avatarFallback: React.createElement(
+            'span',
+            { 'data-avatar-fallback': 'profile' },
+            'Profile',
+          ),
+        },
+      }),
+    );
+
+    expect(markup).toContain('data-avatar-fallback="profile"');
+  });
 });

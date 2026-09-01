@@ -60,6 +60,8 @@ export interface AppShellUser {
   email: string;
   name?: string;
   avatar?: string;
+  /** Product-owned artwork shown when no avatar image exists. Defaults to the Olwiba bird. */
+  avatarFallback?: ReactNode;
   /** Displayed as a sub-label (e.g. plan tier). */
   plan?: string;
   onSignOut?: () => void;
@@ -227,10 +229,12 @@ function NavUser({ user }: { user: AppShellUser }) {
               <Avatar mode={avatarMode} size="sm">
                 {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
                 <AvatarFallback className="text-white" style={identityTint}>
-                  <BirdIcon
-                    aria-hidden
-                    className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
-                  />
+                  {user.avatarFallback ?? (
+                    <BirdIcon
+                      aria-hidden
+                      className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
+                    />
+                  )}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -253,10 +257,12 @@ function NavUser({ user }: { user: AppShellUser }) {
                 <Avatar mode={avatarMode} size="sm">
                   {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
                   <AvatarFallback className="text-white" style={identityTint}>
-                    <BirdIcon
-                      aria-hidden
-                      className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
-                    />
+                    {user.avatarFallback ?? (
+                      <BirdIcon
+                        aria-hidden
+                        className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
+                      />
+                    )}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

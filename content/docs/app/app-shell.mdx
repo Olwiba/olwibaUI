@@ -19,7 +19,7 @@ bun add @olwiba/ui
 
 ```tsx
 import { AppShell } from "@olwiba/ui";
-import { LayoutDashboard, Plus } from "lucide-react";
+import { LayoutDashboard, Plus, UserRound } from "lucide-react";
 import { Link } from "your-router"; // TanStack, Next.js, etc.
 
 export function AppLayout({ children }) {
@@ -33,6 +33,7 @@ export function AppLayout({ children }) {
       user={{
         email: "user@example.com",
         plan: "free",
+        avatarFallback: <UserRound aria-hidden className="size-5" />,
         onSignOut: () => signOut(),
       }}
       pageTitle="Dashboard"
