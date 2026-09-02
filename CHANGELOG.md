@@ -4,6 +4,14 @@
 
 
 
+
+## 0.2.24
+
+### Added
+
+- Improve composition defaults
+- Allow avatar fallback
+
 ## 0.2.23
 
 ### Added

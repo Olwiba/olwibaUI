@@ -17,15 +17,16 @@ export interface AppFooterProps extends HTMLAttributes<HTMLElement> {
  * the page outlet rather than inside a page pattern. Public marketing pages use
  * the full `Footer` instead — this exists so long app pages do not end abruptly.
  *
- * The row owns geometry only. What the slots contain — live status, version,
- * links, product copy — stays with the product.
+ * The row owns its solid chrome surface and geometry so page ambience cannot
+ * bleed through it. What the slots contain — live status, version, links,
+ * product copy — stays with the product.
  */
 export function AppFooter({ start, end, children, className, ...props }: AppFooterProps) {
   return (
     <footer
       {...props}
       className={cn(
-        'border-t px-4 py-3 text-xs text-muted-foreground sm:px-6',
+        'border-t bg-background px-4 py-3 text-xs text-muted-foreground sm:px-6',
         className,
       )}
     >
