@@ -1,0 +1,34 @@
+---
+title: LoadMore
+description: Cursor-pagination footer with guarded infinite scroll and a manual fallback.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+## Usage
+
+```tsx
+import { LoadMore } from "@olwiba/ui";
+
+<LoadMore
+  hasNextPage={query.hasNextPage}
+  isFetchingNextPage={query.isFetchingNextPage}
+  fetchNextPage={query.fetchNextPage}
+  label="projects"
+/>
+```
+
+Use `auto={false}` when the content above has its own client-side pager. An always-visible sentinel below a paginated table would otherwise fetch every cursor page into memory immediately.
+
+## API Reference
+
+<APIReference name="LoadMore" props={[
+  { name: "hasNextPage", type: "boolean", description: "Removes the footer when the cursor is exhausted." },
+  { name: "isFetchingNextPage", type: "boolean", description: "Guards duplicate requests and controls loading feedback." },
+  { name: "fetchNextPage", type: "() => void | Promise<unknown>", description: "Loads the next cursor page." },
+  { name: "auto", type: "boolean", default: "true", description: "Use infinite scroll when true, or a manual button when false." },
+  { name: "label", type: "string", default: '"more"', description: "Plural noun used in the manual button label." },
+  { name: "rootMargin", type: "string", default: '"400px"', description: "IntersectionObserver prefetch margin." },
+]} />

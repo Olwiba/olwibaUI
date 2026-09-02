@@ -25,7 +25,9 @@ import { FolderOpen } from "lucide-react";
   icon={FolderOpen}
   title="No projects yet"
   description="Create your first project to get started."
-  action={{ label: "New project", onClick: () => router.push("/new") }}
+  variant="card"
+  action={<Button>New project</Button>}
+  secondaryAction={<Button variant="ghost">Learn more</Button>}
 />
 ```
 
@@ -34,7 +36,12 @@ import { FolderOpen } from "lucide-react";
 <APIReference name="EmptyState" props={[
   { name: "icon", type: "LucideIcon", description: "Icon rendered above the heading." },
   { name: "title", type: "string", description: "Primary heading." },
-  { name: "description", type: "string", description: "Supporting copy below the heading." },
-  { name: "action", type: "{ label: string; onClick: () => void }", description: "Optional CTA button." },
+  { name: "description", type: "ReactNode", description: "Supporting content below the heading." },
+  { name: "eyebrow", type: "ReactNode", description: "Optional compact label above the heading." },
+  { name: "action", type: "ReactNode", description: "Primary action." },
+  { name: "secondaryAction", type: "ReactNode", description: "Secondary action rendered alongside the primary action." },
+  { name: "variant", type: '"plain" | "card"', default: '"plain"', description: "Use card for route-level product empty states." },
+  { name: "compact", type: "boolean", default: "false", description: "Reduces the card presentation's height and padding." },
+  { name: "fill", type: "boolean", default: "false", description: "Fills a flex-sized parent." },
   { name: "className", type: "string", description: "Class applied to the root element." },
 ]} />

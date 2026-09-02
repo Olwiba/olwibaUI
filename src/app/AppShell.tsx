@@ -8,7 +8,6 @@ import {
   CreditCardIcon,
   LogOutIcon,
   MoreVerticalIcon,
-  PlusCircleIcon,
   SettingsIcon,
 } from 'lucide-react';
 import {
@@ -93,6 +92,13 @@ export type AppShellRenderLink = (props: {
  */
 export type AppShellBreadcrumb = string | { label: string; href?: string };
 
+export interface AppShellHeaderControls {
+  /** Expands the desktop sidebar or opens its native mobile presentation. */
+  expandSidebar: () => void;
+}
+
+export type AppShellHeaderStart = ReactNode | ((controls: AppShellHeaderControls) => ReactNode);
+
 export interface AppShellProps {
   brand?: AppShellBrand;
   navItems?: AppNavItem[];
@@ -111,10 +117,16 @@ export interface AppShellProps {
    * and preferred over `pageTitle` when supplied.
    */
   breadcrumbs?: AppShellBreadcrumb[];
-  /** Slot rendered at the start of the top header bar, after the sidebar trigger. */
-  headerStart?: ReactNode;
+  /**
+   * Slot rendered at the start of the top header bar, after the sidebar trigger.
+   * Use the render form when a custom control needs to expand the shell's own
+   * sidebar without importing its private provider context.
+   */
+  headerStart?: AppShellHeaderStart;
   /** Slot rendered at the end of the top header bar. */
   headerEnd?: ReactNode;
+  /** Product chrome rendered above the user menu in the sidebar footer. */
+  sidebarFooterStart?: ReactNode;
   /**
    * App chrome rendered after the page outlet — normally an `AppFooter`. This
    * belongs to the shell, not to a page pattern: otherwise every route
@@ -137,6 +149,10 @@ export interface AppShellProps {
    * - `"contained"` — fills its parent container; use in docs sandboxes, modals, or embedded previews.
    */
   sidebarPosition?: 'viewport' | 'contained';
+  /** Remount key for an animated sidebar identity or navigation-mode change. */
+  sidebarContentKey?: string;
+  /** Classes applied to the sidebar header, content, and footer. */
+  sidebarContentClassName?: string;
   /** Which side the sidebar sits on. @default "left" */
   side?: 'left' | 'right';
   /**
@@ -321,6 +337,9 @@ function ShellSidebar({
   collapsible,
   side,
   sidebarPosition,
+  sidebarContentKey,
+  sidebarContentClassName,
+  sidebarFooterStart,
 }: {
   brand: AppShellBrand;
   navItems: AppNavItem[];
@@ -330,6 +349,9 @@ function ShellSidebar({
   collapsible: 'icon' | 'offcanvas' | 'none';
   side: 'left' | 'right';
   sidebarPosition: 'viewport' | 'contained';
+  sidebarContentKey?: string;
+  sidebarContentClassName?: string;
+  sidebarFooterStart?: ReactNode;
 }) {
   const fallbackLogo = typeof brand.name === 'string' ? brand.name.slice(0, 1).toUpperCase() : null;
   const { isMobile, setOpenMobile } = useSidebar();
@@ -339,7 +361,10 @@ function ShellSidebar({
 
   return (
     <Sidebar side={side} collapsible={collapsible} sidebarPosition={sidebarPosition}>
-      <SidebarHeader className="py-3">
+      <SidebarHeader
+        key={`${sidebarContentKey ?? 'default'}-header`}
+        className={cn('py-3', sidebarContentClassName)}
+      >
         <SidebarMenu>
           <SidebarMenuItem onClickCapture={closeMobileMenu}>
             {/* Not a link, and not a button.
@@ -394,7 +419,10 @@ function ShellSidebar({
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent
+        key={`${sidebarContentKey ?? 'default'}-content`}
+        className={sidebarContentClassName}
+      >
         <SidebarGroup>
           <SidebarGroupContent className="flex flex-col gap-2">
             {action && (
@@ -451,7 +479,11 @@ function ShellSidebar({
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+      <SidebarFooter
+        key={`${sidebarContentKey ?? 'default'}-footer`}
+        className={sidebarContentClassName}
+      >
+        {sidebarFooterStart}
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
@@ -467,10 +499,18 @@ function ShellHeader({
 }: {
   pageTitle?: string;
   breadcrumbs?: AppShellBreadcrumb[];
-  headerStart?: ReactNode;
+  headerStart?: AppShellHeaderStart;
   headerEnd?: ReactNode;
   renderLink: AppShellRenderLink;
 }) {
+  const { isMobile, setOpen, setOpenMobile } = useSidebar();
+  const expandSidebar = useCallback(() => {
+    if (isMobile) setOpenMobile(true);
+    else setOpen(true);
+  }, [isMobile, setOpen, setOpenMobile]);
+  const headerStartContent =
+    typeof headerStart === 'function' ? headerStart({ expandSidebar }) : headerStart;
+
   // App chrome states location, the page states its own name. This used to be
   // an <h1>, which meant every page rendering its own heading shipped two of
   // them and printed the same words twice.
@@ -487,11 +527,7 @@ function ShellHeader({
     <header className="flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
-        {headerStart && (
-          <div className="flex items-center gap-1">
-            {headerStart}
-          </div>
-        )}
+        {headerStartContent && <div className="flex items-center gap-1">{headerStartContent}</div>}
         {trail.length > 0 && (
           <>
             <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
@@ -536,11 +572,7 @@ function ShellHeader({
             </nav>
           </>
         )}
-        {headerEnd && (
-          <div className="ml-auto flex items-center gap-1">
-            {headerEnd}
-          </div>
-        )}
+        {headerEnd && <div className="ml-auto flex items-center gap-1">{headerEnd}</div>}
       </div>
     </header>
   );
@@ -559,7 +591,9 @@ const defaultUser: AppShellUser = {
 };
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
-  <a href={href} className={className}>{children}</a>
+  <a href={href} className={className}>
+    {children}
+  </a>
 );
 
 // ─── Main export ──────────────────────────────────────────────────────────────
@@ -577,6 +611,9 @@ export function AppShell({
   renderLink = defaultRenderLink,
   collapsible = 'icon',
   sidebarPosition = 'viewport',
+  sidebarContentKey,
+  sidebarContentClassName,
+  sidebarFooterStart,
   side = 'left',
   contentClassName = 'p-6',
   children,
@@ -597,6 +634,9 @@ export function AppShell({
         collapsible={collapsible}
         side={side}
         sidebarPosition={sidebarPosition}
+        sidebarContentKey={sidebarContentKey}
+        sidebarContentClassName={sidebarContentClassName}
+        sidebarFooterStart={sidebarFooterStart}
       />
       <SidebarInset className="overflow-y-auto">
         <ShellHeader

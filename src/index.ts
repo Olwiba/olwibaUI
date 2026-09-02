@@ -27,6 +27,8 @@ export {
   type AppShellAction,
   type AppShellRenderLink,
   type AppShellBreadcrumb,
+  type AppShellHeaderControls,
+  type AppShellHeaderStart,
   type AppNavItem,
 } from './app/AppShell';
 
@@ -145,6 +147,7 @@ export { CommandMenu, type CommandMenuProps, type CommandMenuGroup, type Command
 
 // ─── Components — data ───────────────────────────────────────────────────────
 export { DataTable, type DataTableProps, type DataTableColumn } from './components/DataTable';
+export { LoadMore, type LoadMoreProps } from './components/LoadMore';
 export { DataView, type DataViewProps } from './app/DataView';
 export { Chart, type ChartProps, type ChartSeries } from './components/Chart';
 export { FileUpload, type FileUploadProps, type FileUploadEntry } from './components/FileUpload';

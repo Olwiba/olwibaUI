@@ -1,0 +1,32 @@
+---
+title: PostList
+description: Responsive blog-post grid with balanced defaults for short collections.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="post-list" shellPreview />
+
+## Usage
+
+```tsx
+import { PostList } from "@olwiba/ui";
+
+<PostList posts={posts} />
+```
+
+`PostList` uses three columns for larger collections. One- and two-post collections are narrower and centered automatically, so a short list does not look like a partially empty grid.
+
+Pass `columns={2}` or `columns={3}` when the surrounding page needs an explicit grid contract. An explicit `columns` value disables the automatic short-list width treatment; `className` remains available for page-specific sizing.
+
+## API Reference
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `posts` | `PostCardProps[]` | — | Posts rendered as `PostCard` items. |
+| `renderLink` | `AppShellRenderLink` | — | Optional router-aware link renderer. |
+| `emptyMessage` | `string` | `"No posts published yet."` | Message shown for an empty collection. |
+| `columns` | `2 \| 3` | Automatic | Explicit maximum column count. |
+| `className` | `string` | — | Additional classes for the grid container. |
