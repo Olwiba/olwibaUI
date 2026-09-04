@@ -42,6 +42,27 @@ export interface ChartProps {
   grid?: boolean;
   /** Legend. @default true for multiple series or donut, false for one series */
   legend?: boolean;
+  /**
+   * Stack series instead of overlaying them. Area and bar only — a stacked
+   * line is a shape people misread as absolute values.
+   *
+   * Off by default: stacking answers "what does the total split into", and
+   * silently switching a two-series comparison to it would change what an
+   * existing chart claims.
+   */
+  stacked?: boolean;
+  /**
+   * Formats x-axis ticks. Separate from `valueFormatter`, which formats the
+   * measured value — an axis of ISO dates wants shortening without changing
+   * what the tooltip reports.
+   */
+  xTickFormatter?: (value: string) => string;
+  /**
+   * Fixes the y-axis range. Without it recharts scales to the data, which for
+   * a percentage series makes a 98-100%% band fill the plot and read as
+   * volatility.
+   */
+  yDomain?: [number, number];
   /** Formats values in tooltips and the y-axis, e.g. `(v) => \`$${v}\``. */
   valueFormatter?: (value: number) => string;
   className?: string;
@@ -121,6 +142,9 @@ export function Chart({
   height = 300,
   grid = true,
   legend,
+  stacked = false,
+  xTickFormatter,
+  yDomain,
   valueFormatter = (v) => String(v),
   className,
 }: ChartProps) {
@@ -170,11 +194,12 @@ export function Chart({
       chart = (
         <BarChart data={data} barCategoryGap="25%">
           {gridEl}
-          <XAxis dataKey={xKey} {...axisProps} />
-          <YAxis {...axisProps} width={48} tickFormatter={valueFormatter} />
+          <XAxis dataKey={xKey} {...axisProps} tickFormatter={xTickFormatter} />
+          <YAxis {...axisProps} width={48} domain={yDomain} tickFormatter={valueFormatter} />
           {tooltip}
           {series.map((s, i) => (
             <Bar
+              stackId={stacked ? 'stack' : undefined}
               key={s.key}
               dataKey={s.key}
               name={s.label ?? s.key}
@@ -189,8 +214,8 @@ export function Chart({
       chart = (
         <AreaChart data={data}>
           {gridEl}
-          <XAxis dataKey={xKey} {...axisProps} />
-          <YAxis {...axisProps} width={48} tickFormatter={valueFormatter} />
+          <XAxis dataKey={xKey} {...axisProps} tickFormatter={xTickFormatter} />
+          <YAxis {...axisProps} width={48} domain={yDomain} tickFormatter={valueFormatter} />
           {tooltip}
           {series.map((s, i) => (
             <Area
@@ -198,10 +223,16 @@ export function Chart({
               type="monotone"
               dataKey={s.key}
               name={s.label ?? s.key}
+              // One shared id is what makes recharts stack rather than
+              // overlay; undefined leaves the existing behaviour untouched.
+              stackId={stacked ? 'stack' : undefined}
               stroke={seriesColor(s, i)}
               strokeWidth={2}
               fill={seriesColor(s, i)}
-              fillOpacity={0.12}
+              // Overlaid areas must stay translucent so the ones behind show
+              // through. Stacked bands never overlap, and at 0.12 they are too
+              // faint to tell apart.
+              fillOpacity={stacked ? 0.35 : 0.12}
               dot={false}
               activeDot={{ r: 4 }}
             />
@@ -212,8 +243,8 @@ export function Chart({
       chart = (
         <LineChart data={data}>
           {gridEl}
-          <XAxis dataKey={xKey} {...axisProps} />
-          <YAxis {...axisProps} width={48} tickFormatter={valueFormatter} />
+          <XAxis dataKey={xKey} {...axisProps} tickFormatter={xTickFormatter} />
+          <YAxis {...axisProps} width={48} domain={yDomain} tickFormatter={valueFormatter} />
           {tooltip}
           {series.map((s, i) => (
             <Line
