@@ -26,6 +26,23 @@ export interface DataTableProps<TData> {
   onSelectionChange?: (rows: TData[]) => void;
   /** Rows per page. Set to `0` to disable pagination entirely. @default 10 */
   pageSize?: number;
+  /**
+   * Hands pagination to the caller, for data the client does not hold all of.
+   *
+   * With this set, `data` is treated as the current page rather than the whole
+   * set: the table stops slicing, and the footer reports and drives the
+   * caller's page instead of its own. Without it nothing changes — a table
+   * given every row keeps paginating locally, which is right for the common
+   * case and avoids making every consumer implement paging to get a table.
+   */
+  pagination?: {
+    pageIndex: number;
+    /** Total pages. Omit when unknown — the footer then relies on `hasNext`. */
+    pageCount?: number;
+    hasNext?: boolean;
+    hasPrevious?: boolean;
+    onPageChange: (pageIndex: number) => void;
+  };
   /** Slot rendered top-right of the toolbar — e.g. an "Add" button. */
   toolbar?: React.ReactNode;
   onRowClick?: (row: TData) => void;
@@ -66,6 +83,7 @@ export function DataTable<TData>({
   selectable = false,
   onSelectionChange,
   pageSize = 10,
+  pagination,
   toolbar,
   onRowClick,
   emptyMessage = 'No results.',
@@ -94,8 +112,13 @@ export function DataTable<TData>({
     },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    ...(pageSize > 0 ? { getPaginationRowModel: getPaginationRowModel() } : {}),
-    initialState: pageSize > 0 ? { pagination: { pageSize } } : undefined,
+    // Server-paginated tables must not slice: `data` is already the page, and
+    // running the client model over it would paginate a single page again.
+    ...(pageSize > 0 && !pagination
+      ? { getPaginationRowModel: getPaginationRowModel() }
+      : {}),
+    ...(pagination ? { manualPagination: true } : {}),
+    initialState: pageSize > 0 && !pagination ? { pagination: { pageSize } } : undefined,
     enableRowSelection: selectable,
   });
 
@@ -106,6 +129,31 @@ export function DataTable<TData>({
   }, [rowSelection]);
 
   const rows = table.getRowModel().rows;
+
+  // One set of derivations so the footer does not branch on `pagination`
+  // three separate times and drift between them.
+  const canPrevious = pagination
+    ? (pagination.hasPrevious ?? pagination.pageIndex > 0)
+    : table.getCanPreviousPage();
+  const canNext = pagination
+    ? (pagination.hasNext ??
+      (pagination.pageCount !== undefined && pagination.pageIndex < pagination.pageCount - 1))
+    : table.getCanNextPage();
+  const goPrevious = () =>
+    pagination ? pagination.onPageChange(pagination.pageIndex - 1) : table.previousPage();
+  const goNext = () =>
+    pagination ? pagination.onPageChange(pagination.pageIndex + 1) : table.nextPage();
+  // A server-paginated table shows its pager whenever paging is possible.
+  // Total pages are often unknown, so "more than one page" is not a question
+  // it can answer up front the way the local model can.
+  const showPager = pagination
+    ? canPrevious || canNext
+    : pageSize > 0 && table.getPageCount() > 1;
+  const pageLabel = pagination
+    ? pagination.pageCount !== undefined
+      ? `Page ${pagination.pageIndex + 1} of ${pagination.pageCount}`
+      : `Page ${pagination.pageIndex + 1}`
+    : `Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`;
 
   return (
     <div className={cn('space-y-4', className)}>
@@ -186,19 +234,19 @@ export function DataTable<TData>({
         </Table>
       </div>
 
-      {(selectable || (pageSize > 0 && table.getPageCount() > 1)) && (
+      {(selectable || showPager) && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
             {selectable && `${table.getFilteredSelectedRowModel().rows.length} of ${table.getFilteredRowModel().rows.length} selected`}
-            {selectable && pageSize > 0 && table.getPageCount() > 1 && ' · '}
-            {pageSize > 0 && table.getPageCount() > 1 && `Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount()}`}
+            {selectable && showPager && ' · '}
+            {showPager && pageLabel}
           </p>
-          {pageSize > 0 && table.getPageCount() > 1 && (
+          {showPager && (
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+              <Button variant="outline" size="sm" onClick={goPrevious} disabled={!canPrevious}>
                 <ChevronLeft className="size-4" /> Previous
               </Button>
-              <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+              <Button variant="outline" size="sm" onClick={goNext} disabled={!canNext}>
                 Next <ChevronRight className="size-4" />
               </Button>
             </div>
