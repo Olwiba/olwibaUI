@@ -46,6 +46,19 @@ export function IsometricPlane({
     [images, rows, cols],
   );
 
+  // The plane is decorative, but it was effectively invisible on a phone: the
+  // desktop transform pushes it 180px right and scales it 1.6x, so on a 375px
+  // viewport almost all of it sat outside the screen. Pulled back and scaled
+  // down instead of hidden — the point of the thing is that it is seen.
+  const [isoNarrow, setIsoNarrow] = React.useState(false);
+  React.useEffect(() => {
+    const query = window.matchMedia('(max-width: 640px)');
+    const sync = () => setIsoNarrow(query.matches);
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
+
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
   if (!mounted || images.length === 0) return null;
@@ -65,7 +78,9 @@ export function IsometricPlane({
         <div
           className="transform-gpu"
           style={{
-            transform: 'translateX(180px) scale(1.6) rotateX(55deg) rotateZ(-45deg)',
+            transform: isoNarrow
+              ? 'translateX(0px) scale(1.05) rotateX(55deg) rotateZ(-45deg)'
+              : 'translateX(180px) scale(1.6) rotateX(55deg) rotateZ(-45deg)',
             transformOrigin: 'center center',
             transformStyle: 'preserve-3d',
           }}
