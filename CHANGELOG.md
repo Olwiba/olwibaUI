@@ -5,6 +5,29 @@
 
 
 
+
+## 0.2.25
+
+### Added
+
+- `DataTable.pagination`: hands paging to the caller, for a table whose rows the client does not hold all of. With it set, `data` is treated as the current page rather than the whole set — the client row model is switched off, because running it over a single page would paginate that page again — and the footer reports and drives the caller's `pageIndex` through `onPageChange`. `pageCount` is optional: a cursor-paginated source often cannot say how many pages exist, so the footer falls back to `hasNext`/`hasPrevious` and shows the page number without a total. Omitting `pagination` changes nothing, so a table handed every row keeps paginating locally — the common case, which should not require implementing paging first
+- `Chart.stacked`: stacks series instead of overlaying them, for `area` and `bar` only — a stacked line is a shape people misread as absolute values. Off by default, because stacking answers a different question, what the total splits into, and flipping an existing comparison to it would change what that chart claims. Stacked areas also raise their fill opacity from `0.12` to `0.35`: overlaid areas must stay translucent so the ones behind show through, but stacked bands never overlap and at `0.12` they are too faint to tell apart
+- `Chart.xTickFormatter`: formats x-axis ticks. Separate from `valueFormatter`, which formats the measured value — an axis of ISO dates wants shortening without changing what the tooltip reports
+- `Chart.yDomain`: fixes the y-axis range. Recharts scales to the data by default, which for a percentage series makes a 98–100% band fill the plot and read as volatility
+
+### Changed
+
+- `notify()`: duration follows the variant when the caller has not given one. Errors get 10s and warnings 8s, because a failure has to be read — it is often the only account of what went wrong, and a message that vanishes first is barely better than none. Any toast carrying an `action` or `secondaryAction` gets 8s whatever its variant: it has to be read and then decided on, and a button that disappears mid-reach is worse than no button, because the reader knows they missed something. An explicit `duration` still wins, and a plain confirmation resolves to `undefined` rather than a number, so a product that set its own `Toaster` default keeps it instead of being silently overridden
+- `Footer`: `status.label` is a `ReactNode`, not a `string`. A real status pill often carries per-service detail in a tooltip, and the string type forced the consumer that needed it through an `as unknown as string` cast — the type was wrong, not the caller. A plain string still works and remains the common case
+
+### Fixed
+
+- `@olwiba/dx` moved from `dependencies` to `devDependencies`. It is used here only by `tsup.config.ts`, `vite.config.ts` and `scripts/`, none of which ships, so declaring it at runtime installed a dev-only package into the tree of every product that depends on `@olwiba/ui` and never references it. It also took the choice of dx version away from those consumers, who inherited it through this package rather than declaring it. No `src` imports changed, because there were none to change
+
+### Docs
+
+- The home page's isometric plane is visible on a phone. Nothing was hiding it: the desktop transform pushes it 180px right at 1.6x scale, so on a 375px viewport almost all of it sat off-screen, and the page's 256px edge gradients covered what was left. Below 640px it pulls back to centre at 1.05x, and the gradients narrow with the viewport instead of swallowing it
+
 ## 0.2.24
 
 ### Added
