@@ -86,11 +86,42 @@ export function NotificationToast({
 }
 
 export interface NotifyOptions extends Omit<NotificationToastProps, 'onDismiss'> {
+  /**
+   * Overrides the per-variant default below. Explicit always wins — a caller
+   * that has thought about the timing knows more than this heuristic does.
+   */
   duration?: number;
+}
+
+/**
+ * How long a toast stays, when the caller has not said.
+ *
+ * The Toaster's own default suits a confirmation: long enough to read "Saved",
+ * short enough not to linger. Two cases need longer, and both were previously
+ * left to whoever remembered to pass a number.
+ *
+ * A failure has to be *read* — often it is the only account of what went
+ * wrong, and a message that vanishes before it is understood is barely better
+ * than none. A toast carrying an action has to be read *and* decided on, and a
+ * button that disappears mid-reach is worse than no button, because the reader
+ * knows they missed something.
+ *
+ * Returning undefined defers to the Toaster, so a product that has set its own
+ * default keeps it rather than being silently overridden here.
+ */
+function defaultDuration(variant: NotificationToastProps['variant'], hasAction: boolean) {
+  if (variant === 'error') return 10_000;
+  if (variant === 'warning') return 8_000;
+  if (hasAction) return 8_000;
+  return undefined;
 }
 
 /** Fires a `NotificationToast` through sonner. Requires `<Toaster />` from `@olwiba/cn` mounted once in your app. */
 export function notify(options: NotifyOptions) {
   const { duration, ...toastProps } = options;
-  return toast.custom((id) => <NotificationToast {...toastProps} onDismiss={() => toast.dismiss(id)} />, { duration });
+  const resolved =
+    duration ?? defaultDuration(toastProps.variant, Boolean(toastProps.action || toastProps.secondaryAction));
+  return toast.custom((id) => <NotificationToast {...toastProps} onDismiss={() => toast.dismiss(id)} />, {
+    duration: resolved,
+  });
 }
