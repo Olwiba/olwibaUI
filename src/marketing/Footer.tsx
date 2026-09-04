@@ -9,7 +9,13 @@ export interface FooterProps {
   navLinks?: Array<{ label: string; href: string }>;
   socialLinks?: Array<{ label: string; href: string; icon: ReactNode }>;
   legal?: string;
-  status?: { label: string; operational?: boolean };
+  /**
+   * Live status pill. `label` is a ReactNode, not a string: a real status
+   * pill often carries per-service detail in a tooltip, and typing it as
+   * string forced consumers to smuggle that through `as unknown as string`.
+   * A plain string still works and is the common case.
+   */
+  status?: { label: ReactNode; operational?: boolean };
   renderLink?: AppShellRenderLink;
 }
 
