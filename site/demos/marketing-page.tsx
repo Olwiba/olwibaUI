@@ -9,7 +9,7 @@ import {
   StatsSection,
   TestimonialsSection,
 } from '@olwiba/ui';
-import { demoBrandLogo, demoBrandName } from '~/lib/demo-brand';
+import { demoBrandLogo, demoBrandName } from './demo-brand';
 import {
   demoCta,
   demoFaqItems,
@@ -18,7 +18,7 @@ import {
   demoPlans,
   demoStats,
   demoTestimonials,
-} from '~/lib/marketing-demo-data';
+} from './marketing-demo-data';
 
 export default function Demo() {
   return (

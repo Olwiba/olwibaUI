@@ -2,7 +2,7 @@
 
 import { AppShell } from '@olwiba/ui';
 import { LayoutDashboard, Users, FileText, Settings, Plus } from 'lucide-react';
-import { demoBrandLogo, demoBrandName } from '~/lib/demo-brand';
+import { demoBrandLogo, demoBrandName } from './demo-brand';
 
 export default function AppShellDemo() {
   return (

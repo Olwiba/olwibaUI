@@ -19,11 +19,17 @@
     "./mdx": {
       "import": "./dist/mdx/index.js",
       "types": "./dist/mdx/index.d.ts"
-    }
+    },
+    "./content/*": "./content/*",
+    "./demos/*": "./site/demos/*.tsx",
+    "./docs-manifest.json": "./docs-manifest.json"
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "content",
+    "site/demos",
+    "docs-manifest.json"
   ],
   "scripts": {
     "build": "tsup",

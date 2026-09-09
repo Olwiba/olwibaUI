@@ -1,5 +1,5 @@
 import { Navbar } from '@olwiba/ui';
-import { demoBrandLogo, demoBrandName } from '~/lib/demo-brand';
+import { demoBrandLogo, demoBrandName } from './demo-brand';
 
 /**
  * Every prop is supplied deliberately. `brand` and `navLinks` are required, and

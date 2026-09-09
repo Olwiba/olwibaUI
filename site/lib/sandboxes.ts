@@ -1433,6 +1433,29 @@ export default function OnboardingPage() {
 ` }],
   },
 
+  'post-list': {
+    id: 'post-list',
+    title: 'Post list',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/post-list')),
+    files: [{ path: 'components/blog-index.tsx', language: 'tsx', code: `import { PostList } from "@olwiba/ui";
+
+const posts = [
+  {
+    title: "A calmer path from idea to release",
+    description: "How a small set of product conventions helps teams ship without redesigning every page.",
+    date: "2026-08-24",
+    slug: "calmer-path-to-release",
+    tags: ["Product"],
+  },
+];
+
+export function BlogIndex() {
+  return <PostList posts={posts} />;
+}
+` }],
+  },
+
   carousel: {
     id: 'carousel',
     title: 'Carousel',

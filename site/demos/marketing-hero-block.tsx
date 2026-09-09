@@ -1,5 +1,5 @@
 import { HeroSection } from '@olwiba/ui';
-import { demoHero } from '~/lib/marketing-demo-data';
+import { demoHero } from './marketing-demo-data';
 
 export default function MarketingHeroBlockDemo() {
   return (
