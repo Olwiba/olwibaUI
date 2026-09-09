@@ -6,6 +6,27 @@
 
 
 
+
+## 0.2.26
+
+### Added
+
+- `EmailLinkFallback` is exported from `@olwiba/ui/email`. It already rendered inside every `ActionEmail`, but only there — a product that built its own message out of `EmailLayout` and put its own button in it had to reimplement the copyable URL or ship a button-only email. Some clients strip buttons, rewrite them, or flatten them to text, and when the button was the only way to act, the message becomes useless. `ActionEmail` still includes it by default; `showLinkFallback={false}` suppresses it
+- Documentation pages for the four email blocks — `ActionEmail`, `NoticeEmail`, `EmailLayout` and `EmailLinkFallback` — each with a preview of the message it produces. Emails cannot be previewed the way other blocks are: `EmailLayout` renders `<html>`, `<head>` and `<body>`, so mounting one into the sandbox's root nests a document inside a `div`, which the server tolerates and hydration does not. The pages render the examples to HTML instead and display that in a sandboxed iframe with `allow-scripts` withheld, which is also the more honest preview — what you see is the markup a mail client receives, not a React tree approximating it
+- `bun run email:generate` (`scripts/generate-email-previews.ts`) renders those examples in Node at build time and writes `site/demos/email-previews.generated.ts`; `web:dev` and `web:build` run it first. Rendering server-side is a size decision: `@react-email/render` statically imports `prettier/standalone` and its HTML plugin, so rendering in the browser would pull several hundred kilobytes of formatter into a documentation page to draw a static email. Here prettier runs once and never ships
+- The package publishes its own documentation. `content/`, `site/demos/` and `docs-manifest.json` are in `files`, and `./content/*`, `./demos/*` and `./docs-manifest.json` are exported subpaths, so another site can render these docs from the installed package instead of vendoring a copy that drifts. The manifest lists every page, demo and sandbox id, so a consumer can enumerate what it received without walking the tarball
+- `bun scripts/check-docs-exports.ts` checks that what ships is usable once installed, and writes the manifest as it goes. Publishing docs is not publishing a library: the MDX and demos were written for this repository's own site, where `~/` resolves and every helper is a file away, and none of that holds elsewhere. The failure is quiet — a demo importing a path the consumer does not have simply never renders inside its lazy boundary. It fails the build when `files` or `exports` omits a docs path, when a demo imports through `~/`, when a relative import escapes `site/demos` or resolves to nothing, or when MDX references a sandbox id the registry does not define
+
+### Changed
+
+- `demo-brand.tsx` and `marketing-demo-data.tsx` moved from `site/lib/` into `site/demos/`, and the demos that use them import them as siblings rather than through `~/lib/`. The alias is this repository's, so every demo that used one was a file that could not run in the package that now ships it
+- Ecosystem packages: `@olwiba/cn` 0.1.35 → 0.1.39, `@olwiba/docs` 0.1.40 → 0.1.45
+- CI moved off actions running on the deprecated Node 20 runtime: `actions/checkout` v4 → v7, `actions/setup-node` v4 → v5
+
+### Fixed
+
+- `EmailLinkFallback` ignored `brandColor`. It passed the prop straight to CN's `EmailLink`, which does not accept one at the version this package pins, so the fallback URL rendered in the default link colour while the button above it carried the brand — the one part of the message a client is most likely to fall back to was the one part that did not look like the sender. The colour is applied through `style` now, which is what CN does with that prop anyway and what wins over its default, so the result is identical without tying this file to a CN release
+
 ## 0.2.25
 
 ### Added
