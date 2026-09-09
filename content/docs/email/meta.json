@@ -1,4 +1,10 @@
 {
   "title": "Email",
-  "pages": ["index", "action-email", "notice-email"]
+  "pages": [
+    "index",
+    "action-email",
+    "notice-email",
+    "email-layout",
+    "email-link-fallback"
+  ]
 }

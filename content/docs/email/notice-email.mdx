@@ -1,0 +1,51 @@
+---
+title: NoticeEmail
+description: Transactional email that tells the recipient something, with no action to take.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="notice-email" />
+
+`NoticeEmail` is for messages that inform rather than ask: an export finished, a plan changed,
+a job failed. It has no button, which is the point — an email with a call to action the
+recipient cannot complete is worse than one that never offered it.
+
+Reach for [`ActionEmail`](/docs/email/action-email) when there is exactly one thing to do.
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { NoticeEmail } from "@olwiba/ui/email";
+import { render } from "@react-email/render";
+
+const html = await render(
+  <NoticeEmail
+    appName="Nexus Inc"
+    preview="Your export is ready"
+    heading="Your export is ready"
+    body="The workspace export you requested has finished. It stays available for seven days."
+  />
+);
+```
+
+## API Reference
+
+<APIReference
+  name="NoticeEmail"
+  props={[
+    { name: "appName", type: "string", default: "-" },
+    { name: "preview", type: "string", default: "-" },
+    { name: "heading", type: "string", default: "-" },
+    { name: "body", type: "string", default: "-" },
+    { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
+  ]}
+/>

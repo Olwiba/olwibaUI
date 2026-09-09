@@ -1433,6 +1433,86 @@ export default function OnboardingPage() {
 ` }],
   },
 
+  'action-email': {
+    id: 'action-email',
+    title: 'Action email',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/action-email')),
+    files: [{ path: 'emails/sign-in.tsx', language: 'tsx', code: `import { ActionEmail } from "@olwiba/ui/email";
+import { render } from "@react-email/render";
+
+export async function signInEmail(url: string) {
+  return render(
+    <ActionEmail
+      appName="Nexus Inc"
+      preview="Sign in to Nexus Inc"
+      heading="Sign in with one click"
+      description="This link expires in 15 minutes and can only be used once."
+      actionLabel="Sign in"
+      actionUrl={url}
+    />,
+  );
+}
+` }],
+  },
+
+  'notice-email': {
+    id: 'notice-email',
+    title: 'Notice email',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/notice-email')),
+    files: [{ path: 'emails/export-ready.tsx', language: 'tsx', code: `import { NoticeEmail } from "@olwiba/ui/email";
+import { render } from "@react-email/render";
+
+export function exportReadyEmail() {
+  return render(
+    <NoticeEmail
+      appName="Nexus Inc"
+      preview="Your export is ready"
+      heading="Your export is ready"
+      body="The workspace export you requested has finished."
+    />,
+  );
+}
+` }],
+  },
+
+  'email-layout': {
+    id: 'email-layout',
+    title: 'Email layout',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/email-layout')),
+    files: [{ path: 'emails/custom.tsx', language: 'tsx', code: `import { EmailLayout } from "@olwiba/ui/email";
+import { EmailText } from "@olwiba/cn/email";
+
+export function CustomEmail() {
+  return (
+    <EmailLayout appName="Nexus Inc" preview="A message from Nexus Inc">
+      <EmailText>Anything here sits inside the branded shell.</EmailText>
+    </EmailLayout>
+  );
+}
+` }],
+  },
+
+  'email-link-fallback': {
+    id: 'email-link-fallback',
+    title: 'Email link fallback',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/email-link-fallback')),
+    files: [{ path: 'emails/with-fallback.tsx', language: 'tsx', code: `import { EmailLayout, EmailLinkFallback } from "@olwiba/ui/email";
+
+export function WithFallback({ url }: { url: string }) {
+  return (
+    <EmailLayout appName="Nexus Inc" preview="Sign in to Nexus Inc">
+      {/* your own heading and button */}
+      <EmailLinkFallback actionUrl={url} />
+    </EmailLayout>
+  );
+}
+` }],
+  },
+
   'post-list': {
     id: 'post-list',
     title: 'Post list',

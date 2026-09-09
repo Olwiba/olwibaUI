@@ -36,11 +36,12 @@
     "dev": "tsup --watch",
     "dev:link:ecosystem": "pwsh -NoProfile -Command '& { $ErrorActionPreference = \"Stop\"; function Invoke-Link([string]$RepoPath,[string[]]$CommandArgs){ Write-Host (\"[link-ecosystem] bun \" + ($CommandArgs -join \" \") + \" (\" + $RepoPath + \")\"); Push-Location $RepoPath; try { & bun @CommandArgs } finally { Pop-Location } }; Invoke-Link \"..\\\\olwibaCN\" @(\"link\"); Invoke-Link \"..\\\\olwibaDOCS\" @(\"link\"); Invoke-Link \".\" @(\"link\"); Invoke-Link \"..\\\\genesis-render\" @(\"link\"); Invoke-Link \"..\\\\olwibaDOCS\" @(\"link\",\"@olwiba/cn\"); Invoke-Link \".\" @(\"link\",\"@olwiba/cn\"); Invoke-Link \".\" @(\"link\",\"@olwiba/docs\"); Invoke-Link \"..\\\\genesis-render\" @(\"link\",\"@olwiba/cn\"); Invoke-Link \"..\\\\genesis-render\" @(\"link\",\"@olwiba/docs\"); Invoke-Link \"..\\\\genesis-render\" @(\"link\",\"@olwiba/ui\"); Write-Host \"[link-ecosystem] Local Bun links are in place. CI and build servers will still use published package versions.\" }'",
     "dev:link:ecosystem:check": "pwsh -NoProfile -Command '& { $ErrorActionPreference = \"Stop\"; function Show-Link([string]$RepoPath,[string[]]$CommandArgs){ Write-Host (\"[link-ecosystem] bun \" + ($CommandArgs -join \" \") + \" (\" + $RepoPath + \")\") }; Show-Link \"..\\\\olwibaCN\" @(\"link\"); Show-Link \"..\\\\olwibaDOCS\" @(\"link\"); Show-Link \".\" @(\"link\"); Show-Link \"..\\\\genesis-render\" @(\"link\"); Show-Link \"..\\\\olwibaDOCS\" @(\"link\",\"@olwiba/cn\"); Show-Link \".\" @(\"link\",\"@olwiba/cn\"); Show-Link \".\" @(\"link\",\"@olwiba/docs\"); Show-Link \"..\\\\genesis-render\" @(\"link\",\"@olwiba/cn\"); Show-Link \"..\\\\genesis-render\" @(\"link\",\"@olwiba/docs\"); Show-Link \"..\\\\genesis-render\" @(\"link\",\"@olwiba/ui\"); Write-Host \"[link-ecosystem] Skipped directories without package.json: genesis, genesis-start, genesis-sync\"; Write-Host \"[link-ecosystem] Dry run complete. No links were changed.\" }'",
-    "web:build": "fumadocs-mdx && vite build",
-    "web:dev": "fumadocs-mdx && vite dev",
+    "web:build": "bun run email:generate && fumadocs-mdx && vite build",
+    "web:dev": "bun run email:generate && fumadocs-mdx && vite dev",
     "start": "bun run server.ts",
     "types:check": "fumadocs-mdx && tsc --noEmit",
-    "iso:generate": "bun scripts/generate-iso-previews.ts"
+    "iso:generate": "bun scripts/generate-iso-previews.ts",
+    "email:generate": "bun scripts/generate-email-previews.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -71,6 +72,7 @@
     "@olwiba/cn": "0.1.35",
     "@olwiba/docs": "0.1.40",
     "@olwiba/dx": "0.0.23",
+    "@react-email/render": "^2.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "1.154.8",
     "@tanstack/react-router-devtools": "1.154.8",

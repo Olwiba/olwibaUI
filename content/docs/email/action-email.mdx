@@ -1,0 +1,62 @@
+---
+title: ActionEmail
+description: Transactional email built around a single call to action — sign-in links, verification, password resets.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="action-email" />
+
+`ActionEmail` is the template for a message whose entire purpose is one button. It composes
+[`EmailLayout`](/docs/email/email-layout) with a heading, a line of explanation, the action
+itself, and — unless you turn it off — a
+[`EmailLinkFallback`](/docs/email/email-link-fallback) for clients that strip buttons.
+
+The preview above renders in a browser. A real mail client is less forgiving, so treat it as a
+check on copy and structure rather than a rendering guarantee.
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { ActionEmail } from "@olwiba/ui/email";
+import { render } from "@react-email/render";
+
+const html = await render(
+  <ActionEmail
+    appName="Nexus Inc"
+    preview="Sign in to Nexus Inc"
+    heading="Sign in with one click"
+    description="This link expires in 15 minutes and can only be used once."
+    actionLabel="Sign in"
+    actionUrl={url}
+  />
+);
+```
+
+`preview` is the line mail clients show beside the subject in an inbox list. It is not rendered
+in the message body, and leaving it vague wastes the only copy a recipient reads before
+deciding whether to open.
+
+## API Reference
+
+<APIReference
+  name="ActionEmail"
+  props={[
+    { name: "appName", type: "string", default: "-" },
+    { name: "preview", type: "string", default: "-" },
+    { name: "heading", type: "string", default: "-" },
+    { name: "description", type: "string", default: "-" },
+    { name: "actionLabel", type: "string", default: "-" },
+    { name: "actionUrl", type: "string", default: "-" },
+    { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
+    { name: "showLinkFallback", type: "boolean", default: "true" },
+  ]}
+/>

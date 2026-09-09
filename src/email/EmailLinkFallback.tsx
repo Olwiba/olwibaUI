@@ -17,7 +17,13 @@ export function EmailLinkFallback({
         {label}
       </EmailText>
       <EmailText style={{ margin: 0 }}>
-        <EmailLink href={actionUrl} brandColor={brandColor}>
+        {/*
+          Set through `style` rather than CN's `brandColor` prop, which this
+          package's pinned @olwiba/cn does not have yet. CN applies that prop as
+          `color` anyway, and `style` wins over its default, so the result is
+          identical without coupling this file to a release.
+        */}
+        <EmailLink href={actionUrl} style={brandColor ? { color: brandColor } : undefined}>
           {actionUrl}
         </EmailLink>
       </EmailText>

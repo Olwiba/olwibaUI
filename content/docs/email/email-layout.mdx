@@ -1,0 +1,58 @@
+---
+title: EmailLayout
+description: The branded shell every email block is composed into — document, head, preview line, container and footer.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="email-layout" />
+
+`EmailLayout` is the shell the other blocks are built on. It owns the parts of a message that
+should never vary between one email and the next: the document itself, the preview line, the
+container width, the brand mark and the footer.
+
+Use it directly when you are writing a message that neither
+[`ActionEmail`](/docs/email/action-email) nor [`NoticeEmail`](/docs/email/notice-email) fits.
+Both of those are this layout with a body already arranged, so reaching for one of them first
+is usually the shorter path.
+
+<Callout>
+  `EmailLayout` renders `<html>`, `<head>` and `<body>`. It is a whole document, so it cannot be
+  mounted inside a page — the preview above is a real rendered email in an iframe, not a React
+  tree. Render it with `@react-email/render` and send the string.
+</Callout>
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { EmailLayout } from "@olwiba/ui/email";
+import { EmailText } from "@olwiba/cn/email";
+import { render } from "@react-email/render";
+
+const html = await render(
+  <EmailLayout appName="Nexus Inc" preview="A message from Nexus Inc">
+    <EmailText>Anything you put here sits inside the branded shell.</EmailText>
+  </EmailLayout>
+);
+```
+
+## API Reference
+
+<APIReference
+  name="EmailLayout"
+  props={[
+    { name: "appName", type: "string", default: "-" },
+    { name: "children", type: "ReactNode", default: "-" },
+    { name: "preview", type: "string", default: "-" },
+    { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
+    { name: "footer", type: "ReactNode", default: "-" },
+  ]}
+/>

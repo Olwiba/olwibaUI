@@ -1,0 +1,46 @@
+---
+title: EmailLinkFallback
+description: The copyable URL shown beneath an email button, for clients that strip them.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="email-link-fallback" />
+
+Some mail clients remove buttons, rewrite them, or render them as bare text. When the button was
+the only way to act on the message, the email becomes useless. `EmailLinkFallback` prints the
+destination as plain, selectable text underneath it.
+
+[`ActionEmail`](/docs/email/action-email) includes this already — set `showLinkFallback={false}`
+to suppress it. Use it directly when you have built a message from
+[`EmailLayout`](/docs/email/email-layout) and put your own button in it.
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { EmailLayout, EmailLinkFallback } from "@olwiba/ui/email";
+
+<EmailLayout appName="Nexus Inc" preview="Sign in to Nexus Inc">
+  {/* your own heading and button */}
+  <EmailLinkFallback actionUrl={url} />
+</EmailLayout>
+```
+
+## API Reference
+
+<APIReference
+  name="EmailLinkFallback"
+  props={[
+    { name: "actionUrl", type: "string", default: "-" },
+    { name: "label", type: "string", default: '"Or copy and paste this link into your browser:"' },
+    { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
+  ]}
+/>
