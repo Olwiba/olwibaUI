@@ -10,6 +10,24 @@
 
 
 
+
+## 0.2.30
+
+### Docs
+
+- Every marketing page has a props table. Thirteen of them — `ContactSection`, `CtaSection`, `FaqSection`, `FeaturesSection`, `Footer`, `HeroSection`, `Navbar`, `NewsletterSection`, `PostList`, `PricingSection`, `StatsSection`, `TeamSection` and `TestimonialsSection` — showed a preview and then stopped, which tells a reader what the component looks like and nothing about how to change it, so the only way to find a prop was to read the demo and hope it used the one you needed. The props were read from each component's source rather than inferred from its demo, so the defaults written down are the real ones
+- `ErrorPage`'s page said in prose that it takes no props. It takes seven, and one of them matters more than the omission: the default `backAction` is `{ label: 'Go back' }` carrying neither an `href` nor an `onClick`, so a bare `<ErrorPage />` renders a button that does nothing — the page a visitor reaches when they are already lost, offering them a control that goes nowhere. That is documented now, alongside the `statusCode`, `title` and `description` props that make the same screen serve a 403 or a 500
+- `PostList`'s props are an `<APIReference>` rather than a hand-rolled markdown table. The same information in the form the rest of the docs use, and one a checker can read rather than only a human
+
+### Added
+
+- `bun run env:check` (`dx env-check`) compares this repository's `.env` against `.env.example`, so a renamed or stale key is reported rather than silently falling back to a default. Repository tooling, not shipped API
+- `bun run docs:check` (`dx docs-check`), which runs dx's documentation check over this repository's docs. Also repository tooling
+
+### Changed
+
+- Ecosystem packages: `@olwiba/cn` 0.1.39 → 0.1.40, `@olwiba/docs` 0.1.45 → 0.1.46, `@olwiba/dx` 0.0.24 → 0.0.28 — the dx bump is what supplies `env-check` and `docs-check`. All three are `devDependencies` here, so nothing in this range reaches a consumer's install
+
 ## 0.2.29
 
 ### Fixed
