@@ -39,10 +39,28 @@ async function collect(dir: string, ext: string, base = dir): Promise<string[]> 
 
 const pkg = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
 
+/**
+ * Every path a consumer reads out of the installed package.
+ *
+ * This list is the contract, and it is easy to get wrong in a way nothing
+ * catches: in this workspace `node_modules/@olwiba/ui` is a symlink to the
+ * whole repository, so a path missing from `files` still resolves locally and
+ * only fails once something installs the published tarball. That is exactly
+ * how `site/lib/sandboxes.ts` reached production and broke the docs build.
+ */
+const shippedPaths = ['content', 'site/demos', 'site/lib/sandboxes.ts'];
+
 // 1. The files have to actually ship.
-for (const required of ['content', 'site/demos']) {
+for (const required of shippedPaths) {
   if (!pkg.files?.includes(required)) {
     fail(`package.json "files" is missing ${JSON.stringify(required)}; the published tarball would omit it.`);
+  }
+}
+
+// 2. And they have to exist, or `files` promises something that is not there.
+for (const required of shippedPaths) {
+  if (!existsSync(join(ROOT, ...required.split('/')))) {
+    fail(`package.json "files" lists ${JSON.stringify(required)}, which does not exist.`);
   }
 }
 for (const required of ['./content/*', './demos/*']) {

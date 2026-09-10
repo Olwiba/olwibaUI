@@ -1,6 +1,6 @@
 {
   "package": "@olwiba/ui",
-  "version": "0.2.25",
+  "version": "0.2.26",
   "generatedBy": "scripts/check-docs-exports.ts",
   "contentRoot": "content/docs",
   "demosRoot": "site/demos",

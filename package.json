@@ -29,6 +29,7 @@
     "src",
     "content",
     "site/demos",
+    "site/lib/sandboxes.ts",
     "docs-manifest.json"
   ],
   "scripts": {
