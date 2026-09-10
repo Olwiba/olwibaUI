@@ -42,7 +42,8 @@
     "start": "bun run server.ts",
     "types:check": "fumadocs-mdx && tsc --noEmit",
     "iso:generate": "bun scripts/generate-iso-previews.ts",
-    "email:generate": "bun scripts/generate-email-previews.ts"
+    "email:generate": "bun scripts/generate-email-previews.ts",
+    "env:check": "dx env-check"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
