@@ -14,3 +14,18 @@ description: Site footer with links and branding.
 ```tsx
 import { Footer } from "@olwiba/ui";
 ```
+
+## API Reference
+
+`brand` is the only required prop. `status.label` is a `ReactNode` rather than a string on
+purpose: a real status pill usually carries per-service detail in a tooltip, and typing it as a
+string forced callers to smuggle that through a cast.
+
+<APIReference name="Footer" props={[
+  { name: "brand", type: "{ name: string; logo?: ReactNode; href?: string }", description: "Wordmark, optional mark, and where it links. Required." },
+  { name: "navLinks", type: "Array<{ label: string; href: string }>", description: "The link row." },
+  { name: "socialLinks", type: "Array<{ label: string; href: string; icon: ReactNode }>", description: "Icon links. `label` is the accessible name." },
+  { name: "legal", type: "string", description: "Copyright line." },
+  { name: "status", type: "{ label: ReactNode; operational?: boolean }", description: "Live status pill. `operational` picks the dot colour." },
+  { name: "renderLink", type: "AppShellRenderLink", default: "anchor", description: "Render links through your router instead of a plain anchor." },
+]} />

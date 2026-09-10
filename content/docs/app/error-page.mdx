@@ -28,4 +28,16 @@ export const Route = createFileRoute("/404")({
 
 ## API Reference
 
-`ErrorPage` takes no props — it renders a self-contained 404 screen with a Go back and Take me home action.
+Every part of the screen has a default, so `<ErrorPage />` on its own is a complete 404. Pass
+`statusCode`, `title` and `description` to reuse it for 403 or 500, and `links` when you can
+guess where the visitor was actually heading.
+
+<APIReference name="ErrorPage" props={[
+  { name: "statusCode", type: "string", default: '"404"', description: "The numerals shown above the title." },
+  { name: "title", type: "string", default: '"Page not found"', description: "Heading." },
+  { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
+  { name: "action", type: "{ label: string; href: string }", default: '{ label: "Take me home", href: "/" }', description: "Primary action." },
+  { name: "backAction", type: "{ label: string; href?: string; onClick?: () => void }", default: '{ label: "Go back" }', description: "Secondary action. Give it an href or an onClick — the default carries neither, so the button renders but does nothing until you do." },
+  { name: "links", type: "ErrorPageLink[]", description: "\"Maybe you were looking for\" links below the actions." },
+  { name: "renderLink", type: "AppShellRenderLink", default: "anchor", description: "Render links through your router instead of a plain anchor." },
+]} />

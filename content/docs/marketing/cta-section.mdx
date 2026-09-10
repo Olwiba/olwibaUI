@@ -29,3 +29,20 @@ import { CtaSection } from "@olwiba/ui";
   icon={<Rocket className="size-72" strokeWidth={0.75} />}
 />
 ```
+
+## API Reference
+
+`icon` and the single pill CTA only apply to `variant="showcase"`; `secondaryCta` is dropped
+there, so put the one action that matters in `primaryCta`.
+
+<APIReference name="CtaSection" props={[
+  { name: "heading", type: "string", description: "The headline. Required." },
+  { name: "primaryCta", type: "{ label: string; href: string }", description: "Primary action. Required." },
+  { name: "description", type: "string", description: "Copy under the headline." },
+  { name: "secondaryCta", type: "{ label: string; href: string }", description: "Secondary action. Default variant only." },
+  { name: "footnote", type: "string", description: "Small print under the buttons." },
+  { name: "variant", type: '"default" | "showcase"', default: '"default"', description: "Badge icon and radial glow, or a large watermark icon with a scroll reveal." },
+  { name: "icon", type: "React.ReactNode", default: "<Rocket />", description: "Watermark icon behind the content. Showcase only." },
+  { name: "renderLink", type: "AppShellRenderLink", default: "anchor", description: "Render CTAs through your router instead of a plain anchor." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

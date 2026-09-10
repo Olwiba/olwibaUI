@@ -14,3 +14,17 @@ description: Responsive top navigation bar for marketing sites.
 ```tsx
 import { Navbar } from "@olwiba/ui";
 ```
+
+## API Reference
+
+`controls` sits between the nav and the CTAs and is meant for icon buttons —
+`ModeSwitchMinimal`, `ThemeSwitchMinimal` and the like. Anything with a label belongs in
+`navLinks` or `cta` instead.
+
+<APIReference name="Navbar" props={[
+  { name: "brand", type: "{ name: string; logo?: React.ReactNode; href?: string }", description: "Wordmark, optional mark, and where it links. Required." },
+  { name: "navLinks", type: "Array<{ label: string; href: string }>", description: "The links. Required." },
+  { name: "cta", type: "{ primary?: { label: string; href: string }; secondary?: { label: string; href: string } }", description: "Buttons at the right end." },
+  { name: "controls", type: "React.ReactNode[]", description: "Icon buttons rendered right of the nav and left of the CTAs." },
+  { name: "renderLink", type: "AppShellRenderLink", default: "anchor", description: "Render links through your router instead of a plain anchor." },
+]} />

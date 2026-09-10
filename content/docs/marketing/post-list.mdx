@@ -23,10 +23,10 @@ Pass `columns={2}` or `columns={3}` when the surrounding page needs an explicit 
 
 ## API Reference
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `posts` | `PostCardProps[]` | — | Posts rendered as `PostCard` items. |
-| `renderLink` | `AppShellRenderLink` | — | Optional router-aware link renderer. |
-| `emptyMessage` | `string` | `"No posts published yet."` | Message shown for an empty collection. |
-| `columns` | `2 \| 3` | Automatic | Explicit maximum column count. |
-| `className` | `string` | — | Additional classes for the grid container. |
+<APIReference name="PostList" props={[
+  { name: "posts", type: "PostCardProps[]", description: "Posts rendered as PostCard items. Required." },
+  { name: "renderLink", type: "AppShellRenderLink", description: "Render links through your router instead of a plain anchor." },
+  { name: "emptyMessage", type: "string", default: '"No posts published yet."', description: "Shown instead of the grid when `posts` is empty." },
+  { name: "columns", type: "2 | 3", default: "automatic", description: "Maximum columns at the widest breakpoint. Setting it disables the automatic short-list balancing." },
+  { name: "className", type: "string", description: "Additional classes on the grid container." },
+]} />

@@ -21,3 +21,17 @@ import { FeaturesSection } from "@olwiba/ui";
 ```
 
 `layout="carousel"` renders the same cards in a scroll-snap [Carousel](/docs/mechanics/carousel) with prev/next controls. To carousel your own content outside a section, use the `Carousel` mechanic directly.
+
+## API Reference
+
+`icon` on each feature is a Lucide component, passed uninstantiated — `{ icon: Zap }`, not
+`{ icon: <Zap /> }`.
+
+<APIReference name="FeaturesSection" props={[
+  { name: "features", type: "Array<{ icon: LucideIcon; title: string; description: string; href?: string }>", description: "The cards. A feature with an `href` becomes a link. Required." },
+  { name: "title", type: "string", default: '"Everything you need to ship fast"', description: "Section heading." },
+  { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
+  { name: "badge", type: "string", default: '"Features"', description: "Badge above the title." },
+  { name: "layout", type: '"grid" | "carousel"', default: '"grid"', description: "How the cards are arranged." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

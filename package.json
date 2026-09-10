@@ -43,7 +43,8 @@
     "types:check": "fumadocs-mdx && tsc --noEmit",
     "iso:generate": "bun scripts/generate-iso-previews.ts",
     "email:generate": "bun scripts/generate-email-previews.ts",
-    "env:check": "dx env-check"
+    "env:check": "dx env-check",
+    "docs:check": "dx docs-check"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

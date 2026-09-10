@@ -14,3 +14,22 @@ description: Email capture form section for marketing pages.
 ```tsx
 import { NewsletterSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+`privacyHref` defaults to `"#"`, which is a link that goes nowhere. Point it at your real policy
+before this section ships.
+
+<APIReference name="NewsletterSection" props={[
+  { name: "onSubscribe", type: "(email: string) => void | Promise<void>", description: "Awaited before the success panel appears. The section never posts anywhere on its own." },
+  { name: "badge", type: "string", default: '"Newsletter"', description: "Badge above the title." },
+  { name: "title", type: "string", default: '"Stay in the loop"', description: "Section heading." },
+  { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
+  { name: "placeholder", type: "string", default: '"you@company.com"', description: "Email field placeholder." },
+  { name: "submitLabel", type: "string", default: '"Subscribe"', description: "Submit button label." },
+  { name: "privacyHref", type: "string", default: '"#"', description: "Target of the privacy link under the field." },
+  { name: "privacyLabel", type: "string", default: '"Privacy Policy"', description: "Text of that link." },
+  { name: "successTitle", type: "string", default: '"You\'re on the list."', description: "Heading of the panel that replaces the form." },
+  { name: "successDescription", type: "string", default: '"We\'ll be in touch soon."', description: "Copy in the success panel." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

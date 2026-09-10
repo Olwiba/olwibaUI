@@ -14,3 +14,30 @@ description: Pricing cards with plan details and feature comparison.
 ```tsx
 import { PricingSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+The cadence toggle's state lives inside the section, so `onSelectPlan` is how you find out which
+billing period was selected when a CTA is pressed. Without it the CTAs are inert.
+
+<APIReference name="PricingSection" props={[
+  { name: "plans", type: "PricingPlan[]", description: "The tiers. Required." },
+  { name: "onSelectPlan", type: "(plan: PricingPlan, cadence?: string) => void", description: "Called when a plan's CTA is pressed, with the cadence currently selected." },
+  { name: "title", type: "string", default: '"Simple, transparent pricing"', description: "Section heading." },
+  { name: "description", type: "string", default: '"Start for free. Scale as you grow. No hidden fees."', description: "Copy under the heading." },
+  { name: "badge", type: "React.ReactNode", default: '"Pricing"', description: "Badge above the title." },
+  { name: "mode", type: '"subscription" | "one-time"', default: '"subscription"', description: "Whether prices are recurring. Not the surface treatment — see `surface`." },
+  { name: "cadences", type: "PricingCadence[]", default: "Monthly / Annual", description: "Billing periods sold. One entry renders no toggle; two or more render a tab each." },
+  { name: "defaultCadence", type: "string", default: "first cadence", description: "Which cadence opens selected." },
+  { name: "currency", type: "string", default: '"$"', description: "Symbol prepended to computed prices. Ignored by plans with `priceDisplay`." },
+  { name: "saveBadge", type: "string", default: '"Save 34%"', description: "Fallback savings badge when no `periodsPerYear` is given." },
+  { name: "highlightedBadgeLabel", type: "string", default: '"Founding member"', description: "Badge on highlighted plans with no active countdown. Pass an empty string for none." },
+  { name: "foundingDeadline", type: "string", description: "Runs a countdown on the highlighted plan until this date." },
+  { name: "footnote", type: "string", description: "Small print below the cards." },
+  { name: "isAuthenticated", type: "boolean", description: "Lets plan CTAs read as upgrade rather than sign-up." },
+  { name: "pendingPlanName", type: "string", description: "Marks one plan busy while its checkout is created." },
+  { name: "renderPlanFooter", type: "(plan: PricingPlan) => React.ReactNode", description: "Rendered below each plan's CTA." },
+  { name: "priceEffect", type: 'PricingCardProps["priceEffect"]', default: "UI mode decides", description: 'How a price transitions when the cadence changes. Pass "roll" for an odometer.' },
+  { name: "renderLink", type: "AppShellRenderLink", default: "anchor", description: "Render CTAs through your router instead of a plain anchor." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

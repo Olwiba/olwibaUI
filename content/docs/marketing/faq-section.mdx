@@ -14,3 +14,17 @@ description: Accordion FAQ section for marketing pages.
 ```tsx
 import { FaqSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+`items` is the only prop without a default. Answers are rendered as plain text inside a
+single-open [Accordion](/docs/components/accordion), so keep them to a paragraph and link out
+for anything longer.
+
+<APIReference name="FaqSection" props={[
+  { name: "items", type: "Array<{ question: string; answer: string }>", description: "The questions. Required." },
+  { name: "title", type: "string", default: '"Frequently asked questions"', description: "Section heading." },
+  { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
+  { name: "badge", type: "string", default: '"FAQ"', description: "Badge above the title." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

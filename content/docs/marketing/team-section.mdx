@@ -14,3 +14,16 @@ description: Team member grid for about and marketing pages.
 ```tsx
 import { TeamSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+`members` has a placeholder default so the section renders before you have the copy. Replace it
+before shipping — the built-in people are not yours.
+
+<APIReference name="TeamSection" props={[
+  { name: "members", type: "TeamMember[]", default: "placeholder team", description: "Each takes `name`, `role`, `bio`, `initials`, an optional `avatar` URL and optional `social` handles." },
+  { name: "badge", type: "string", default: '"Team"', description: "Badge above the title." },
+  { name: "title", type: "string", default: '"The people behind Olwiba"', description: "Section heading." },
+  { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

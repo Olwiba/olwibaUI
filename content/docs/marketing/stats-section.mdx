@@ -14,3 +14,16 @@ description: Key metrics display section for marketing pages.
 ```tsx
 import { StatsSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+`value` is a string rather than a number so the section never has to guess at formatting —
+`"99.9%"`, `"12k"` and `"<50ms"` all render as written.
+
+<APIReference name="StatsSection" props={[
+  { name: "stats", type: "Array<{ value: string; label: string; description?: string }>", description: "The figures. Required." },
+  { name: "title", type: "string", default: '"Built for scale, used in production"', description: "Section heading." },
+  { name: "description", type: "string", description: "Copy under the heading. No default — omit it and nothing renders there." },
+  { name: "badge", type: "string", default: '"By the numbers"', description: "Badge above the title." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

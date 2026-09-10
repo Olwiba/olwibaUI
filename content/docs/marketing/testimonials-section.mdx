@@ -14,3 +14,16 @@ description: Customer quote grid for marketing pages.
 ```tsx
 import { TestimonialsSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+Give each testimonial either an `avatar` or `initials` — with neither, the card falls back to an
+empty circle.
+
+<APIReference name="TestimonialsSection" props={[
+  { name: "testimonials", type: "Array<{ quote: string; name: string; role: string; company?: string; avatar?: string; initials?: string; rating?: number }>", description: "The quotes. Required." },
+  { name: "title", type: "string", default: '"Trusted by teams shipping real products"', description: "Section heading." },
+  { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
+  { name: "badge", type: "string", default: '"Testimonials"', description: "Badge above the title." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

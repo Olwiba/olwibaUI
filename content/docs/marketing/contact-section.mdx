@@ -14,3 +14,22 @@ description: Contact form section for marketing pages.
 ```tsx
 import { ContactSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+Every prop has a default, so `<ContactSection />` renders a complete section. The form manages
+its own submitted state — `onSubmit` runs first, and the success panel replaces the form whether
+or not it resolves, so surface delivery failures yourself.
+
+<APIReference name="ContactSection" props={[
+  { name: "badge", type: "string", default: '"Contact"', description: "Badge above the title." },
+  { name: "title", type: "string", default: '"Let\'s talk"', description: "Section heading." },
+  { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
+  { name: "contactInfo", type: "ContactInfoItem[]", description: "Address, phone and similar, shown as a row above the form. Each item takes a `label`, a `value` and an optional Lucide `icon`." },
+  { name: "privacyHref", type: "string", description: "Links the privacy note under the submit button. Omit it and no note is shown." },
+  { name: "successTitle", type: "string", default: '"Message sent"', description: "Heading of the panel that replaces the form." },
+  { name: "successDescription", type: "string", default: "See source", description: "Copy in the success panel." },
+  { name: "sendAnotherLabel", type: "string", default: '"Send another"', description: "Label of the button that restores the form." },
+  { name: "onSubmit", type: "(event: React.FormEvent<HTMLFormElement>) => void | Promise<void>", description: "Awaited before the success panel appears. The section never posts anywhere on its own." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "How the section sits on the page. Falls back to MarketingSurfaceProvider." },
+]} />

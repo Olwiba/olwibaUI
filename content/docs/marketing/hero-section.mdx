@@ -14,3 +14,24 @@ description: Above-the-fold hero section with headline, supporting copy, and CTA
 ```tsx
 import { HeroSection } from "@olwiba/ui";
 ```
+
+## API Reference
+
+`heading` and `description` are required; everything else is opt-in. `primarySlot` replaces the
+primary button entirely — reach for it when the product itself can start in the hero rather than
+one page later.
+
+<APIReference name="HeroSection" props={[
+  { name: "heading", type: "string", description: "The headline. Required." },
+  { name: "description", type: "string", description: "Supporting copy under the headline. Required." },
+  { name: "badge", type: "string", description: "Small badge above the headline." },
+  { name: "primaryCta", type: "{ label: string; href: string }", description: "Primary button. Ignored when `primarySlot` is given." },
+  { name: "secondaryCta", type: "{ label: string; href: string }", description: "Secondary button, and it survives `primarySlot`." },
+  { name: "primarySlot", type: "React.ReactNode", description: "Your own control in place of the primary button — a search field, an email capture. Full-width above the secondary CTA on small screens." },
+  { name: "heroImage", type: "React.ReactNode", description: "What fills the media column." },
+  { name: "media", type: '"image" | "phone" | "none"', default: '"image"', description: "How the media column is framed, or whether there is one." },
+  { name: "phoneSize", type: '"sm" | "md" | "lg"', default: '"lg"', description: 'Phone frame size when media is "phone".' },
+  { name: "avatarUrls", type: "string[]", description: "Stacked avatars beside the social proof line." },
+  { name: "socialProofText", type: "string", description: "The line beside the avatars." },
+  { name: "renderLink", type: "AppShellRenderLink", default: "anchor", description: "Render CTAs through your router instead of a plain anchor." },
+]} />
