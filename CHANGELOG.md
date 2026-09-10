@@ -9,6 +9,13 @@
 
 
 
+
+## 0.2.29
+
+### Fixed
+
+- `AuthSection`: `forgotPasswordHref` no longer defaults to `'#'`, so omitting it omits the "Forgot password" link rather than rendering one that goes nowhere. This is the same flaw 0.2.28 fixed in `signUpHref`, and the worse half of it: a sign-in form that advertises password recovery to a product that never wired a reset flow sends the one user who cannot get in to the page they are already on. A consumer that never set the prop loses a dead control; one that sets it sees no change
+
 ## 0.2.28
 
 ### Fixed
