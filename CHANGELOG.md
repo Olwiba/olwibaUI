@@ -8,6 +8,19 @@
 
 
 
+
+## 0.2.28
+
+### Fixed
+
+- `AuthSection`: `signUpHref` no longer defaults to `'#'`, so omitting it omits the "Create an account" link rather than rendering one that goes nowhere. Passing `undefined` could not remove it either — a default parameter reapplies on `undefined`, so the only way to not have the link was to have it point somewhere — which left a product whose accounts are granted rather than self-served advertising a sign-up page it does not run. A consumer that never set the prop loses a dead control on its sign-in form; one that sets it sees no change
+
+### Docs
+
+- Sandbox entries removed for `auth-split-block`, `dashboard-overview-block`, `dashboard-shell-block`, `marketing-hero-block` and `application-sidebar-block`. Each shipped copyable example code importing a component with no source that this package does not export, so the snippet a reader copied could not compile anywhere. No page referenced them, so they rendered nowhere and existed only to advertise an API that was never built. They were registered twice — in `site/lib/sandboxes.ts` and again in `ComponentPreview`'s own lazy-import map — and both registrations are gone. Their demos composed real primitives, `AuthSection`, `AppShell` and `HeroSection`, so nothing is lost; if the blocks are built, the entries come back with example code that works
+- The `overlay` and `underlay` demos take `DemoControls` and `useUsageCode` from `@olwiba/docs` instead of `~/components/ComponentPreview`. The alias is this repository's, so those two demos were the last docs files that could not resolve their imports once installed elsewhere — they were waiting on the docs release that extracted the generic helpers. `ComponentPreview` now re-exports them from `@olwiba/docs` for demos that still import through it, and its local copies go, along with the duplicate `site/lib/usage-code-store.ts`
+- `bun scripts/check-docs-exports.ts` passes. It was added in 0.2.26 and has failed on these two problems since; the docs this package publishes are now verified usable from an installed copy rather than only asserted to be
+
 ## 0.2.27
 
 ### Fixed
