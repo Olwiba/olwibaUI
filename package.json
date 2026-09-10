@@ -73,7 +73,7 @@
     "@content-collections/mdx": "^0.2.2",
     "@olwiba/cn": "0.1.39",
     "@olwiba/docs": "0.1.45",
-    "@olwiba/dx": "0.0.24",
+    "@olwiba/dx": "0.0.28",
     "@react-email/render": "^2.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "1.154.8",
