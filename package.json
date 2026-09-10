@@ -1,6 +1,6 @@
 {
   "name": "@olwiba/ui",
-  "version": "0.2.26",
+  "version": "0.2.27",
   "private": false,
   "type": "module",
   "sideEffects": false,
@@ -72,7 +72,7 @@
     "@content-collections/mdx": "^0.2.2",
     "@olwiba/cn": "0.1.39",
     "@olwiba/docs": "0.1.45",
-    "@olwiba/dx": "0.0.23",
+    "@olwiba/dx": "0.0.24",
     "@react-email/render": "^2.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "1.154.8",

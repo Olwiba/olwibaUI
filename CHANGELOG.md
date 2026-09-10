@@ -7,6 +7,18 @@
 
 
 
+
+## 0.2.27
+
+### Fixed
+
+- `site/lib/sandboxes.ts` ships. It was missing from `files`, so the published tarball omitted the sandbox registry — the file that says which demo each `<Sandbox id>` in the MDX resolves to — and a consumer's docs build died on ENOENT inside its container the first time it ran against an installed copy. Nothing caught it here because `node_modules/@olwiba/ui` is a symlink to this whole repository in the workspace: the path resolves locally whether or not it was ever published, so every check that could have failed ran against a link rather than a tarball. 0.2.26 published the docs; this is the one path it published them without
+
+### Changed
+
+- `bun scripts/check-docs-exports.ts` asserts that every shipped path is both listed in `files` and present on disk, from a single `shippedPaths` list — `content`, `site/demos`, `site/lib/sandboxes.ts` — written down as the contract it is rather than inlined in the loop that happened to need it. The existence half is new: `files` can name a path that does not exist and npm packs that without complaint, which turns a rename here into an ENOENT in someone else's build. The script already checked that the docs' own imports survive installation; it now also checks that what they import gets sent
+- Ecosystem packages: `@olwiba/dx` 0.0.23 → 0.0.24, which raises its optional `puppeteer-core` peer to `>=25.9.0` and `sharp` to `>=0.35.0`. Dev-only here — dx is a `devDependency` used by `tsup.config.ts`, `vite.config.ts` and `scripts/`, so nothing in this range reaches a consumer's install
+
 ## 0.2.26
 
 ### Added
