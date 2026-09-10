@@ -123,6 +123,14 @@ export interface AuthFormProps {
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   onSso?: () => void;
   /** (signin) Link to the sign-up page */
+  /**
+   * Where "Create an account" points. Omit it to leave the link out.
+   *
+   * Previously defaulted to '#', so a consumer that never set it rendered a
+   * dead control, and passing undefined could not remove it — a default
+   * parameter reapplies on undefined. Sites where accounts are granted rather
+   * than self-served had no way to say so.
+   */
   signUpHref?: string;
   /** (signup / forgot-password / reset-password / verify) Link back to the sign-in page */
   signInHref?: string;
@@ -163,7 +171,7 @@ function DefaultForm({
   mode = 'signin',
   onSubmit,
   onSso,
-  signUpHref = '#',
+  signUpHref,
   signInHref = '#',
   forgotPasswordHref = '#',
   onResend,
