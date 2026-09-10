@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Underlay, type UnderlayVariant } from '@olwiba/ui';
-import { DemoControls, useUsageCode } from '~/components/ComponentPreview';
+import { DemoControls, useUsageCode } from '@olwiba/docs';
 import { Button, Badge } from '@olwiba/cn';
 
 const variants: UnderlayVariant[] = ['dots', 'lines', 'cross', 'glow'];

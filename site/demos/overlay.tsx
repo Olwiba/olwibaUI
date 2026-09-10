@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Overlay, type OverlayVariant } from '@olwiba/ui';
-import { DemoControls, useUsageCode } from '~/components/ComponentPreview';
+import { DemoControls, useUsageCode } from '@olwiba/docs';
 import { Button, Badge } from '@olwiba/cn';
 
 const variants: OverlayVariant[] = ['dim', 'scrim', 'loading'];
