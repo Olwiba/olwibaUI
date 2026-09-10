@@ -134,6 +134,12 @@ export interface AuthFormProps {
   signUpHref?: string;
   /** (signup / forgot-password / reset-password / verify) Link back to the sign-in page */
   signInHref?: string;
+  /**
+   * Where "Forgot password" points. Omit it to leave the link out.
+   *
+   * Previously defaulted to '#', so a consumer that never wired a reset flow
+   * still rendered the link — it looked available and did nothing when clicked.
+   */
   forgotPasswordHref?: string;
   /** (verify) Re-sends the one-time code */
   onResend?: () => void;
@@ -173,7 +179,7 @@ function DefaultForm({
   onSso,
   signUpHref,
   signInHref = '#',
-  forgotPasswordHref = '#',
+  forgotPasswordHref,
   onResend,
   destination,
   codeLength = 6,
