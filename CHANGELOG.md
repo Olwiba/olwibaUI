@@ -11,6 +11,15 @@
 
 
 
+
+## 0.2.31
+
+### Changed
+
+- The documentation site's footer states which version it documents. It carried a link reading `changelog.md` — a filename, which tells a reader where the file lives and nothing about which release the page in front of them describes, so the only way to know whether a prop on screen exists in the copy you installed was to open the changelog and work backwards. It is now a pill carrying the package's own `version`, pointing at the same changelog. The version arrives as a named import from `package.json` so the bundler takes that one key rather than inlining the whole manifest into the page
+- `SiteFooter` passes `DocsFooter` a `versions` array instead of `changelogUrl`. Both live in `site/`, which is this repository's own documentation site and not published API — no component, type or export in `@olwiba/ui` changes in this release
+- Ecosystem packages: `@olwiba/cn` 0.1.40 → 0.1.41, `@olwiba/docs` 0.1.46 → 0.1.47. Both are `devDependencies` here, so nothing in this range reaches a consumer's install
+
 ## 0.2.30
 
 ### Docs
