@@ -12,6 +12,14 @@
 
 
 
+
+## 0.2.32
+
+### Changed
+
+- Show the version pill beside the credit line
+- Document VITE_GA_MEASUREMENT_ID
+
 ## 0.2.31
 
 ### Changed
