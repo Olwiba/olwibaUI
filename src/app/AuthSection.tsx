@@ -1,7 +1,14 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Building2, Loader2, ShieldCheck, Sparkles } from 'lucide-react';
+import * as React from "react";
+import {
+  Building2,
+  Eye,
+  EyeOff,
+  Loader2,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import {
   Badge,
   CardContent,
@@ -13,19 +20,35 @@ import {
   InputOTPSlot,
   Label,
   cn,
-} from '@olwiba/cn';
-import { Button } from '../primitives/Button';
-import { Card } from '../primitives/Card';
-import { Input } from '../primitives/Input';
-import type { AppShellRenderLink } from './AppShell';
+} from "@olwiba/cn";
+import { Button } from "../primitives/Button";
+import { Card } from "../primitives/Card";
+import { Input } from "../primitives/Input";
+import type { AppShellRenderLink } from "./AppShell";
 
-const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
-  <a href={href} className={className}>{children}</a>
+const defaultRenderLink: AppShellRenderLink = ({
+  href,
+  children,
+  className,
+}) => (
+  <a href={href} className={className}>
+    {children}
+  </a>
 );
 
 // ─── Centered layout ──────────────────────────────────────────────────────────
 
-function CenteredAuth({ children, brand, framed, className }: { children: React.ReactNode; brand?: React.ReactNode; framed?: boolean; className?: string }) {
+function CenteredAuth({
+  children,
+  brand,
+  framed,
+  className,
+}: {
+  children: React.ReactNode;
+  brand?: React.ReactNode;
+  framed?: boolean;
+  className?: string;
+}) {
   if (framed) {
     return (
       // Framed: a page frame is already supplying the background, the page
@@ -37,7 +60,7 @@ function CenteredAuth({ children, brand, framed, className }: { children: React.
       // The card fills the content column on a phone, matching the contact
       // form, and only takes its reading width once there is room for the
       // page to centre it.
-      <section className={cn('flex flex-col py-6 sm:py-10', className)}>
+      <section className={cn("flex flex-col py-6 sm:py-10", className)}>
         <div className="mx-auto w-full max-w-none sm:my-auto sm:max-w-md">
           {brand && <div className="mb-8 text-center">{brand}</div>}
           {children}
@@ -51,7 +74,12 @@ function CenteredAuth({ children, brand, framed, className }: { children: React.
     // the browser chrome *retracted*, so a screen-height box is always taller
     // than what you can actually see, and it resizes under you as the URL bar
     // hides and shows.
-    <section className={cn('flex min-h-dvh flex-col bg-background px-4 py-10 sm:px-6 sm:py-12 lg:px-8', className)}>
+    <section
+      className={cn(
+        "flex min-h-dvh flex-col bg-background px-4 py-10 sm:px-6 sm:py-12 lg:px-8",
+        className,
+      )}
+    >
       {/*
         Auto margins rather than `justify-center`, and only from `sm` up.
 
@@ -77,20 +105,36 @@ function CenteredAuth({ children, brand, framed, className }: { children: React.
 
 // ─── Split layout ─────────────────────────────────────────────────────────────
 
-function SplitAuth({ children, panel }: { children: React.ReactNode; panel?: React.ReactNode }) {
+function SplitAuth({
+  children,
+  panel,
+}: {
+  children: React.ReactNode;
+  panel?: React.ReactNode;
+}) {
   const defaultPanel = (
     <div className="flex flex-col gap-6">
-      <Badge variant="secondary" className="w-fit">Welcome</Badge>
+      <Badge variant="secondary" className="w-fit">
+        Welcome
+      </Badge>
       <div className="space-y-3">
-        <h2 className="text-3xl font-semibold tracking-tight">Build better, ship faster</h2>
+        <h2 className="text-3xl font-semibold tracking-tight">
+          Build better, ship faster
+        </h2>
         <p className="max-w-md text-muted-foreground">
           Sign in to continue building with ready-made components and layouts.
         </p>
       </div>
       <div className="space-y-3 text-sm text-muted-foreground">
-        <div className="flex items-center gap-2"><ShieldCheck className="size-4" /> Type-safe components</div>
-        <div className="flex items-center gap-2"><Sparkles className="size-4" /> Polished defaults</div>
-        <div className="flex items-center gap-2"><Building2 className="size-4" /> Plug-and-play shells</div>
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="size-4" /> Type-safe components
+        </div>
+        <div className="flex items-center gap-2">
+          <Sparkles className="size-4" /> Polished defaults
+        </div>
+        <div className="flex items-center gap-2">
+          <Building2 className="size-4" /> Plug-and-play shells
+        </div>
       </div>
     </div>
   );
@@ -119,7 +163,7 @@ export interface AuthFormProps {
    * - `'verify'` — one-time code entry (email verification or 2FA)
    * @default 'signin'
    */
-  mode?: 'signin' | 'signup' | 'forgot-password' | 'reset-password' | 'verify';
+  mode?: "signin" | "signup" | "forgot-password" | "reset-password" | "verify";
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   onSso?: () => void;
   /** (signin) Link to the sign-up page */
@@ -166,19 +210,65 @@ export interface AuthFormProps {
 }
 
 const authCopy = {
-  signin: { title: 'Sign in', description: 'Enter your email and password to continue.', submit: 'Sign in' },
-  signup: { title: 'Create an account', description: 'Enter your details to create your account.', submit: 'Create account' },
-  'forgot-password': { title: 'Reset your password', description: 'Enter the email on your account and we’ll send you a link to reset your password.', submit: 'Send reset link' },
-  'reset-password': { title: 'Choose a new password', description: 'Your new password must be different from previous passwords.', submit: 'Reset password' },
-  verify: { title: 'Enter your code', description: 'We sent a verification code to your email.', submit: 'Verify' },
+  signin: {
+    title: "Sign in",
+    description: "Enter your email and password to continue.",
+    submit: "Sign in",
+  },
+  signup: {
+    title: "Create an account",
+    description: "Enter your details to create your account.",
+    submit: "Create account",
+  },
+  "forgot-password": {
+    title: "Reset your password",
+    description:
+      "Enter the email on your account and we’ll send you a link to reset your password.",
+    submit: "Send reset link",
+  },
+  "reset-password": {
+    title: "Choose a new password",
+    description: "Your new password must be different from previous passwords.",
+    submit: "Reset password",
+  },
+  verify: {
+    title: "Enter your code",
+    description: "We sent a verification code to your email.",
+    submit: "Verify",
+  },
 } as const;
 
+function PasswordInput(
+  props: Omit<React.ComponentProps<typeof Input>, "type">,
+) {
+  const [visible, setVisible] = React.useState(false);
+
+  return (
+    <div className="relative">
+      <Input
+        {...props}
+        type={visible ? "text" : "password"}
+        className={cn("pr-10", props.className)}
+      />
+      <button
+        type="button"
+        className="absolute inset-y-0 right-0 flex w-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        aria-label={visible ? "Hide password" : "Show password"}
+        aria-pressed={visible}
+        onClick={() => setVisible((current) => !current)}
+      >
+        {visible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+      </button>
+    </div>
+  );
+}
+
 function DefaultForm({
-  mode = 'signin',
+  mode = "signin",
   onSubmit,
   onSso,
   signUpHref,
-  signInHref = '#',
+  signInHref = "#",
   forgotPasswordHref,
   onResend,
   destination,
@@ -192,14 +282,16 @@ function DefaultForm({
   defaultEmail,
   defaultPassword,
 }: AuthFormProps) {
-  const isSignUp = mode === 'signup';
-  const isForgotPassword = mode === 'forgot-password';
-  const isResetPassword = mode === 'reset-password';
-  const isVerify = mode === 'verify';
-  const [code, setCode] = React.useState('');
+  const isSignUp = mode === "signup";
+  const isForgotPassword = mode === "forgot-password";
+  const isResetPassword = mode === "reset-password";
+  const isVerify = mode === "verify";
+  const [code, setCode] = React.useState("");
   const hasPrefill = !!(defaultEmail || defaultPassword);
   const prefillStyle = (active: boolean): React.CSSProperties | undefined =>
-    active ? { animation: 'auth-prefill 1.6s ease-out 0.35s 1 both' } : undefined;
+    active
+      ? { animation: "auth-prefill 1.6s ease-out 0.35s 1 both" }
+      : undefined;
   const copy = authCopy[mode];
 
   return (
@@ -213,8 +305,14 @@ function DefaultForm({
         <CardTitle>{copy.title}</CardTitle>
         <CardDescription>
           {isVerify && destination ? (
-            <>We sent a verification code to <span className="font-medium text-foreground">{destination}</span>.</>
-          ) : copy.description}
+            <>
+              We sent a verification code to{" "}
+              <span className="font-medium text-foreground">{destination}</span>
+              .
+            </>
+          ) : (
+            copy.description
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -222,11 +320,17 @@ function DefaultForm({
           {isSignUp && (
             <div className="space-y-2">
               <Label htmlFor="auth-name">Name</Label>
-              <Input id="auth-name" name="name" type="text" placeholder="Your name" autoComplete="name" />
+              <Input
+                id="auth-name"
+                name="name"
+                type="text"
+                placeholder="Your name"
+                autoComplete="name"
+              />
             </div>
           )}
 
-          {(mode === 'signin' || mode === 'signup' || isForgotPassword) && (
+          {(mode === "signin" || mode === "signup" || isForgotPassword) && (
             <div className="space-y-2">
               <Label htmlFor="auth-email">Email address</Label>
               <Input
@@ -241,25 +345,27 @@ function DefaultForm({
             </div>
           )}
 
-          {(mode === 'signin' || mode === 'signup') && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="auth-password">Password</Label>
-                {!isSignUp && forgotPasswordHref && renderLink({
-                  href: forgotPasswordHref,
-                  className: 'text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground',
-                  children: 'Forgot password?',
-                })}
-              </div>
-              <Input
+          {(mode === "signin" || mode === "signup") && (
+            <div className="relative space-y-2">
+              <Label htmlFor="auth-password">Password</Label>
+              <PasswordInput
                 id="auth-password"
                 name="password"
-                type="password"
                 placeholder="••••••••"
-                autoComplete={isSignUp ? 'new-password' : 'current-password'}
+                autoComplete={isSignUp ? "new-password" : "current-password"}
                 defaultValue={defaultPassword}
                 style={prefillStyle(!!defaultPassword)}
               />
+              {!isSignUp && forgotPasswordHref && (
+                <div className="absolute right-0 top-0">
+                  {renderLink({
+                    href: forgotPasswordHref,
+                    className:
+                      "text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground",
+                    children: "Forgot password?",
+                  })}
+                </div>
+              )}
             </div>
           )}
 
@@ -267,11 +373,21 @@ function DefaultForm({
             <>
               <div className="space-y-2">
                 <Label htmlFor="auth-new-password">New password</Label>
-                <Input id="auth-new-password" name="password" type="password" placeholder="••••••••" autoComplete="new-password" />
+                <PasswordInput
+                  id="auth-new-password"
+                  name="password"
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="auth-confirm-password">Confirm password</Label>
-                <Input id="auth-confirm-password" name="confirmPassword" type="password" placeholder="••••••••" autoComplete="new-password" />
+                <PasswordInput
+                  id="auth-confirm-password"
+                  name="confirmPassword"
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                />
               </div>
             </>
           )}
@@ -280,7 +396,12 @@ function DefaultForm({
             <div className="space-y-2">
               <input type="hidden" name="code" value={code} />
               <div className="flex justify-center py-2">
-                <InputOTP maxLength={codeLength} value={code} onChange={setCode} containerClassName="justify-center">
+                <InputOTP
+                  maxLength={codeLength}
+                  value={code}
+                  onChange={setCode}
+                  containerClassName="justify-center"
+                >
                   <InputOTPGroup>
                     {Array.from({ length: codeLength }).map((_, i) => (
                       <InputOTPSlot key={i} index={i} />
@@ -292,19 +413,33 @@ function DefaultForm({
           )}
 
           {error && (
-            <p role="alert" className="text-sm font-medium text-destructive">{error}</p>
+            <p role="alert" className="text-sm font-medium text-destructive">
+              {error}
+            </p>
           )}
           {success && (
-            <p role="status" className="text-sm font-medium text-primary">{success}</p>
+            <p role="status" className="text-sm font-medium text-primary">
+              {success}
+            </p>
           )}
 
           <div className="flex flex-col gap-2">
-            <Button type="submit" className="w-full" disabled={loading || (isVerify && code.length < codeLength)}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading || (isVerify && code.length < codeLength)}
+            >
               {loading && <Loader2 className="size-4 animate-spin" />}
-              {loading ? 'Please wait…' : copy.submit}
+              {loading ? "Please wait…" : copy.submit}
             </Button>
-            {onSso && (mode === 'signin' || mode === 'signup') && (
-              <Button type="button" variant="outline" className="w-full" onClick={onSso} disabled={loading}>
+            {onSso && (mode === "signin" || mode === "signup") && (
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={onSso}
+                disabled={loading}
+              >
                 Use SSO
               </Button>
             )}
@@ -313,25 +448,37 @@ function DefaultForm({
 
         {isVerify && onResend && (
           <p className="text-center text-xs text-muted-foreground">
-            Didn&rsquo;t get a code?{' '}
-            <button type="button" onClick={onResend} className="text-foreground underline underline-offset-4">
+            Didn&rsquo;t get a code?{" "}
+            <button
+              type="button"
+              onClick={onResend}
+              className="text-foreground underline underline-offset-4"
+            >
               Resend
             </button>
           </p>
         )}
 
-        {(mode === 'signin' || mode === 'signup') && (
+        {(mode === "signin" || mode === "signup") && (
           <p className="text-center text-xs text-muted-foreground">
             {isSignUp ? (
               <>
-                Already have an account?{' '}
-                {renderLink({ href: signInHref, className: 'text-foreground underline underline-offset-4', children: 'Sign in' })}
+                Already have an account?{" "}
+                {renderLink({
+                  href: signInHref,
+                  className: "text-foreground underline underline-offset-4",
+                  children: "Sign in",
+                })}
               </>
             ) : (
               signUpHref && (
                 <>
-                  New here?{' '}
-                  {renderLink({ href: signUpHref, className: 'text-foreground underline underline-offset-4', children: 'Create an account' })}
+                  New here?{" "}
+                  {renderLink({
+                    href: signUpHref,
+                    className: "text-foreground underline underline-offset-4",
+                    children: "Create an account",
+                  })}
                 </>
               )
             )}
@@ -340,7 +487,11 @@ function DefaultForm({
 
         {(isForgotPassword || isResetPassword || isVerify) && (
           <p className="text-center text-xs text-muted-foreground">
-            {renderLink({ href: signInHref, className: 'text-foreground underline underline-offset-4', children: 'Back to sign in' })}
+            {renderLink({
+              href: signInHref,
+              className: "text-foreground underline underline-offset-4",
+              children: "Back to sign in",
+            })}
           </p>
         )}
 
@@ -354,7 +505,7 @@ function DefaultForm({
 
 export interface AuthSectionProps extends AuthFormProps {
   /** Visual layout of the auth screen. @default 'centered' */
-  layout?: 'centered' | 'split';
+  layout?: "centered" | "split";
   /** Custom form/card content. Defaults to the built-in form. */
   children?: React.ReactNode;
   /** (split layout only) Custom content for the left decorative panel */
@@ -375,17 +526,17 @@ export interface AuthSectionProps extends AuthFormProps {
 }
 
 export function AuthSection({
-  layout = 'centered',
+  layout = "centered",
   children,
   panel,
   framed,
   className,
   ...formProps
 }: AuthSectionProps) {
-  if (layout === 'split') {
+  if (layout === "split") {
     const form = children ?? <DefaultForm {...formProps} />;
     return (
-      <div className={cn('h-full', className)}>
+      <div className={cn("h-full", className)}>
         <SplitAuth panel={panel}>{form}</SplitAuth>
       </div>
     );

@@ -14,6 +14,11 @@
 
 
 
+
+## 0.2.34
+
+No user-facing changes.
+
 ## 0.2.33
 
 No user-facing changes.
