@@ -40,6 +40,8 @@ export {
   AuthSection,
   type AuthSectionProps,
   type AuthFormProps,
+  parseAuthFieldErrors,
+  type AuthFieldErrors,
 } from './app/AuthSection';
 
 export {

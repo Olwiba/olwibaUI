@@ -154,6 +154,9 @@ function SplitAuth({
 
 // ─── Shared form slot ─────────────────────────────────────────────────────────
 
+/** Per-field validation messages, keyed by the input's `name`. */
+export type AuthFieldErrors = Partial<Record<"name" | "email" | "password", string>>;
+
 export interface AuthFormProps {
   /**
    * Controls form title, fields, and footer text.
@@ -195,6 +198,20 @@ export interface AuthFormProps {
   brand?: React.ReactNode;
   /** Error message displayed below the form fields */
   error?: string;
+  /**
+   * Per-field validation messages, rendered under the field they belong to.
+   *
+   * Keyed by the input's `name`. Anything the form does not render is ignored,
+   * so a caller can hand over everything the server complained about without
+   * first working out which fields this mode shows.
+   *
+   * Use with `parseAuthFieldErrors`, which turns a server's combined validation
+   * string into this shape. A message that belongs to one field is far more use
+   * beneath it than concatenated into the summary line: the summary says
+   * something is wrong, the field says which, and only the field can say it
+   * where the person is about to type.
+   */
+  fieldErrors?: AuthFieldErrors;
   /** Positive confirmation message displayed below the form fields (e.g. "Reset link sent") */
   success?: string;
   /** Disables the submit button and shows a loading label */
@@ -238,6 +255,80 @@ const authCopy = {
   },
 } as const;
 
+/**
+ * Splits a server's combined validation message into per-field messages.
+ *
+ * better-auth surfaces zod failures as one string listing every field at once:
+ *
+ *   [body.email] Invalid email address; [body.password] Too small: expected
+ *   string to have >=1 characters
+ *
+ * Rendered as-is that is what a visitor sees, in red, under the whole form. It
+ * names internal request paths, states the constraint in schema terms rather
+ * than in anything they did, and puts both problems in one place while leaving
+ * both fields looking fine.
+ *
+ * Returns the fields it recognised plus whatever text did not parse, so a caller
+ * can show the remainder as the summary and never silently drop a message it
+ * did not expect.
+ */
+export function parseAuthFieldErrors(message: string): {
+  fieldErrors: AuthFieldErrors;
+  rest?: string;
+} {
+  const fieldErrors: AuthFieldErrors = {};
+  const unmatched: string[] = [];
+
+  for (const part of message.split(";")) {
+    const segment = part.trim();
+    if (!segment) continue;
+
+    // `body.` is optional: the prefix has appeared as both `[body.email]` and
+    // `[email]` depending on where in better-auth the failure was raised.
+    const match = /^\[(?:body\.)?(name|email|password)\]\s*(.+)$/i.exec(segment);
+    if (!match) {
+      unmatched.push(segment);
+      continue;
+    }
+
+    const field = match[1]!.toLowerCase() as "name" | "email" | "password";
+    const text = match[2]!.trim();
+    // First one wins: a field can appear twice, and the earlier message is the
+    // more specific in practice (the type failure before the length failure).
+    fieldErrors[field] ??= humaniseFieldMessage(field, text);
+  }
+
+  return {
+    fieldErrors,
+    rest: unmatched.length > 0 ? unmatched.join("; ") : undefined,
+  };
+}
+
+/**
+ * Rewrites the schema-speak zod emits into something addressed to a person.
+ *
+ * Only the messages that actually reach a sign-in or sign-up form are special
+ * cased; anything else passes through, so an unfamiliar message is still shown
+ * rather than swallowed by a translation table that did not know about it.
+ */
+function humaniseFieldMessage(field: string, text: string): string {
+  if (/^too small|to have >=1|at least 1 character/i.test(text)) {
+    return field === "password" ? "Enter your password." : "This field is required.";
+  }
+  if (/invalid email/i.test(text)) return "Enter a valid email address.";
+  if (/^too small.*>=(\d+)/i.test(text)) return text;
+  return text;
+}
+
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p id={id} className="text-xs font-medium text-destructive">
+      {message}
+    </p>
+  );
+}
+
 function PasswordInput(
   props: Omit<React.ComponentProps<typeof Input>, "type">,
 ) {
@@ -270,6 +361,7 @@ function DefaultForm({
   signUpHref,
   signInHref = "#",
   forgotPasswordHref,
+  fieldErrors,
   onResend,
   destination,
   codeLength = 6,
@@ -326,7 +418,10 @@ function DefaultForm({
                 type="text"
                 placeholder="Your name"
                 autoComplete="name"
+                aria-invalid={!!fieldErrors?.name}
+                aria-describedby={fieldErrors?.name ? "auth-name-error" : undefined}
               />
+              <FieldError id="auth-name-error" message={fieldErrors?.name} />
             </div>
           )}
 
@@ -341,7 +436,10 @@ function DefaultForm({
                 autoComplete="email"
                 defaultValue={defaultEmail}
                 style={prefillStyle(!!defaultEmail)}
+                aria-invalid={!!fieldErrors?.email}
+                aria-describedby={fieldErrors?.email ? "auth-email-error" : undefined}
               />
+              <FieldError id="auth-email-error" message={fieldErrors?.email} />
             </div>
           )}
 
@@ -355,6 +453,8 @@ function DefaultForm({
                 autoComplete={isSignUp ? "new-password" : "current-password"}
                 defaultValue={defaultPassword}
                 style={prefillStyle(!!defaultPassword)}
+                aria-invalid={!!fieldErrors?.password}
+                aria-describedby={fieldErrors?.password ? "auth-password-error" : undefined}
               />
               {!isSignUp && forgotPasswordHref && (
                 <div className="absolute right-0 top-0">
