@@ -360,8 +360,14 @@ function DefaultForm({
                 <div className="absolute right-0 top-0">
                   {renderLink({
                     href: forgotPasswordHref,
+                    // No underline. It sits on the same line as the Password
+                    // label, inside the field's own header row, so it reads as
+                    // part of the form's furniture rather than as prose with a
+                    // link in it. The hover colour change is the affordance;
+                    // an underline here just adds a second horizontal rule a
+                    // few pixels above the input's border.
                     className:
-                      "text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground",
+                      "text-xs text-muted-foreground transition-colors hover:text-foreground",
                     children: "Forgot password?",
                   })}
                 </div>
