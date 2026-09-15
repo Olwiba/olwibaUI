@@ -15,6 +15,17 @@
 
 
 
+
+## 0.2.35
+
+### Fixed
+
+- `AuthSection`: the "Forgot password?" link no longer carries an underline. It is positioned in the password field's own header row, on the same line as the `Password` label and right-aligned above the input, so the underline landed a few pixels above the input's top border and read as a second horizontal rule rather than as emphasis. An underline earns its place in prose, where a link has to be told apart from the sentence around it; in a row of form furniture there is nothing to tell it apart from. The hover colour change carries the affordance instead, and it now transitions rather than snapping. Consumers passing `renderLink` supply their own markup and are unaffected — only the default `className` changed
+
+### Changed
+
+- Ecosystem packages: `@olwiba/cn` 0.1.49 → 0.1.51, `@olwiba/docs` 0.1.51 → 0.1.52, `@olwiba/dx` 0.0.33 → 0.0.34. All three are `devDependencies` here, so nothing in this range reaches a consumer's install
+
 ## 0.2.34
 
 No user-facing changes.
