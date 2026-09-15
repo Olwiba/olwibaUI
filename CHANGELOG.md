@@ -16,6 +16,19 @@
 
 
 
+
+## 0.2.36
+
+### Added
+
+- `AuthSection`: a `fieldErrors` prop, keyed by the input's `name`, rendered beneath the field it belongs to instead of in the single summary line under the form. The form had one error slot and servers do not report validation that way — better-auth returns zod failures as one combined string naming every field at once, so submitting an empty sign-up form put `[body.email] Invalid email address; [body.password] Too small: expected string to have >=1 characters` on screen, in red, under the whole form. That leaks internal request paths, states the constraint in schema terms rather than in anything the person did, and describes two problems in one sentence while leaving both inputs looking untouched. Each message now sets `aria-invalid` on its input and is referenced by `aria-describedby`, so the pairing is available to a screen reader and not only to someone who can see which paragraph sits under which box. Keys for fields the current mode does not render are ignored, so a caller can hand over everything the server complained about without first working out which fields are on screen. `error` is unchanged and the two can be set together — the summary says something is wrong, the field says which
+- `parseAuthFieldErrors`, exported, which splits that combined string into `{ fieldErrors, rest }`. The format belongs to better-auth rather than to any one application, so every consumer would otherwise write the same regex. It accepts both prefixes the server has been seen to emit (`[body.email]` and `[email]`), keeps the first message when a field appears twice — in practice the more specific of the two, the type failure ahead of the length failure — and rewrites the few zod phrasings that actually reach a sign-in form into an instruction addressed to a person. Text it does not recognise comes back in `rest` rather than being discarded, so an unfamiliar message still reaches the reader instead of being swallowed by a parser that had no case for it; pass `rest` to `error` and the summary carries what the fields cannot
+- `AuthFieldErrors`, the type of that prop, exported alongside it
+
+### Changed
+
+- Ecosystem packages: `@olwiba/cn` 0.1.51 → 0.1.52. It is a `devDependency` here, so nothing in this range reaches a consumer's install
+
 ## 0.2.35
 
 ### Fixed
