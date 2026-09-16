@@ -174,7 +174,14 @@ export function DataTable<TData>({
         </div>
       )}
 
-      <div className="overflow-hidden rounded-lg border">
+      {/* `bg-card`, not transparent. A bordered box with no background of its
+          own inherits whatever is behind it, which is fine on a plain page and
+          wrong the moment there is an ambient backdrop: on an app shell the
+          aura showed straight through the rows, so the table read as floating
+          over the page rather than sitting on it. Every other surface at this
+          level is opaque, and this one was only transparent because nothing
+          had said otherwise. */}
+      <div className="overflow-hidden rounded-lg border bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
