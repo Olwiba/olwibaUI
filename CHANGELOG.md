@@ -17,6 +17,18 @@
 
 
 
+
+## 0.2.37
+
+### Fixed
+
+- `DataTable`: the bordered box around the table now carries `bg-card` rather than no background at all. A box with no background of its own inherits whatever is behind it, which looks correct on a plain page and stops being correct the moment there is an ambient backdrop — on an app shell the aura showed straight through the rows, and the table read as floating over the page instead of sitting on it. Reported on an admin users screen. Every other surface at this level is already opaque; this one was transparent only because nothing had said otherwise, not because anything wanted it to be. Consumers who were relying on the transparency can override it through `className` on the wrapper as before
+
+### Changed
+
+- The docs site's light theme is off pure white. It was `oklch(1 0 0)`, the same polarising white the products moved away from after an accessibility pass — that work went into `@olwiba/cn`'s preset, so anything importing the preset picked up the off-white for free, but this site predates it and carries its own hand-rolled neutral block, so it never received any of it. Products that read well sat beside docs that glared. The neutrals now match the preset exactly: an off-white page, raised surfaces a step above it, and the muted and line steps re-tuned to sit against the new base rather than against white. The brand tint comes with them, gated on relative colour syntax so an older browser keeps the plain off-white. The override is scoped `:root:not(.dark)` and not `:root`, because `.dark` is a class and `:root` a pseudo-class and the two carry the same specificity — a plain `:root` block imported later wins on source order and repaints dark mode with the light values, which presents as the override being ignored in light and applied in dark. Values are copied rather than imported: importing the preset alongside the fumadocs presets these sites already pull in is the better answer and needs a build to verify, so it is a separate change. This is the documentation site only and nothing here ships in the package
+- Ecosystem packages: `@olwiba/cn` 0.1.52 → 0.1.54, `@olwiba/docs` 0.1.52 → 0.1.53, `@olwiba/dx` 0.0.34 → 0.0.35. All three are `devDependencies` here, so nothing in this range reaches a consumer's install
+
 ## 0.2.36
 
 ### Added
