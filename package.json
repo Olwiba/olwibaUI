@@ -72,9 +72,9 @@
   },
   "devDependencies": {
     "@content-collections/mdx": "^0.2.2",
-    "@olwiba/cn": "0.1.54",
+    "@olwiba/cn": "0.1.55",
     "@olwiba/docs": "0.1.53",
-    "@olwiba/dx": "0.0.36",
+    "@olwiba/dx": "0.0.37",
     "@react-email/render": "^2.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "1.154.8",
