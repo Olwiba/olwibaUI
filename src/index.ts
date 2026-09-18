@@ -155,7 +155,9 @@ export { Chart, type ChartProps, type ChartSeries } from './components/Chart';
 export { FileUpload, type FileUploadProps, type FileUploadEntry } from './components/FileUpload';
 
 // ─── Components — notifications ──────────────────────────────────────────────
-export { NotificationToast, type NotificationToastProps, notify, type NotifyOptions, type NotifyAction } from './components/Notify';
+// Re-exported from @olwiba/cn, which owns the toast system end to end — see
+// the note in ./components/Notify.
+export { notify, dismissNotification, type NotifyOptions, type NotifyAction, type NotifyVariant } from './components/Notify';
 export { NotificationsPopover, type NotificationsPopoverProps, type NotificationItem } from './components/NotificationsPopover';
 export { ActivityFeed, type ActivityFeedProps, type ActivityFeedItem } from './components/ActivityFeed';
 
