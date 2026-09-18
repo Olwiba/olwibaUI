@@ -100,11 +100,18 @@ function getInitialColorName(): string {
 }
 
 export function BrandColorSwitchMinimal() {
-  const [active, setActive] = React.useState<string>(getInitialColorName);
+  // Constant seed, corrected on mount — the same reason ThemeSwitchMinimal
+  // does it. A state initialiser runs during the render React hydrates
+  // against, so reading localStorage there renders a swatch the server could
+  // not have known about. Latent only because this switch is off in every
+  // product today; it would have hydration-failed for anyone who had ever
+  // picked a colour.
+  const [active, setActive] = React.useState<string>('emerald');
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY) ?? 'emerald';
+    const saved = getInitialColorName();
+    setActive(saved);
     const color = BRAND_COLORS.find((c) => c.name === saved);
     if (color) applyColor(color);
   }, []);
