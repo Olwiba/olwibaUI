@@ -18,6 +18,15 @@
 
 
 
+
+## 0.2.38
+
+### Changed
+
+- Pin @olwiba/cn 0.1.56 for the shared toast system
+- Delegate to the toast system in @olwiba/cn
+- Gate dev and build on dx dep-check
+
 ## 0.2.37
 
 ### Fixed
