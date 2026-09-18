@@ -19,6 +19,13 @@
 
 
 
+
+## 0.2.39
+
+### Fixed
+
+- Seed from a constant so hydration matches in light mode
+
 ## 0.2.38
 
 ### Changed
