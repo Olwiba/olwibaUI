@@ -54,15 +54,24 @@ export interface PricingPlan {
 
 /**
  * Cheapest-per-year wins: annualise every cadence across all plans and return
- * a `Save N%` label for each one that costs less than the default.
+ * a `Save N%` label for each one that costs less than the dearest.
  *
  * Computed rather than configured because a hand-written "Save 34%" silently
  * stops being true the first time a price changes.
+ *
+ * Measured against the dearest cadence rather than the default one. When the
+ * default was the baseline, a product that led with its *cheapest* option got
+ * no badge anywhere: the cheap cadence was skipped for being the default, and
+ * every other cadence cost more, so nothing qualified. Which tab happens to
+ * lead is a presentation choice and should not decide whether a real saving is
+ * stated.
+ *
+ * Unchanged for a product leading with its dearest cadence — there the default
+ * *is* the dearest, so the baseline is the same number it always was.
  */
 function computeSaveBadges(
   plans: PricingPlan[],
   cadences: PricingCadence[],
-  defaultKey: string,
 ): Record<string, string> {
   const annualised = (key: string) => {
     const cadence = cadences.find((c) => c.key === key);
@@ -75,16 +84,20 @@ function computeSaveBadges(
     return totals.length > 0 ? totals.reduce((sum, n) => sum + n, 0) : null;
   };
 
-  const baseline = annualised(defaultKey);
-  if (!baseline) return {};
+  const totals = new Map<string, number>();
+  for (const cadence of cadences) {
+    const total = annualised(cadence.key);
+    if (total) totals.set(cadence.key, total);
+  }
+  if (totals.size < 2) return {};
+
+  const baseline = Math.max(...totals.values());
 
   const badges: Record<string, string> = {};
-  for (const cadence of cadences) {
-    if (cadence.key === defaultKey) continue;
-    const total = annualised(cadence.key);
-    if (!total || total >= baseline) continue;
+  for (const [key, total] of totals) {
+    if (total >= baseline) continue;
     const percent = Math.round(((baseline - total) / baseline) * 100);
-    if (percent > 0) badges[cadence.key] = `Save ${percent}%`;
+    if (percent > 0) badges[key] = `Save ${percent}%`;
   }
   return badges;
 }
@@ -195,8 +208,8 @@ export function PricingSection({
   const [activeCadence, setActiveCadence] = React.useState(initialCadence);
   const cadence = cadences?.find((c) => c.key === activeCadence);
   const saveBadges = React.useMemo(
-    () => (useCadences ? computeSaveBadges(plans, cadences!, initialCadence) : {}),
-    [useCadences, plans, cadences, initialCadence],
+    () => (useCadences ? computeSaveBadges(plans, cadences!) : {}),
+    [useCadences, plans, cadences],
   );
   // A single cadence is just a label for the price — nothing to switch between.
   const showToggle = useCadences ? cadences!.length > 1 : !isOneTime;
