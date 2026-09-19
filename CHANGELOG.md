@@ -21,6 +21,13 @@
 
 
 
+
+## 0.2.41
+
+### Fixed
+
+- Measure savings against the dearest cadence, not the default
+
 ## 0.2.40
 
 ### Added
