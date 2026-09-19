@@ -20,6 +20,13 @@
 
 
 
+
+## 0.2.40
+
+### Added
+
+- Drop the outer card, put the accordion in the panel
+
 ## 0.2.39
 
 ### Fixed
