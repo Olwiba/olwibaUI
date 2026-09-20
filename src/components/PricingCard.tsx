@@ -22,6 +22,9 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Disables only the CTA button, leaving the rest of the card interactive. */
   ctaDisabled?: boolean;
   badge?: React.ReactNode;
+  badgePlacement?: 'top-center' | 'top-right';
+  /** Replaces the standard animated price row for richer price treatments. */
+  priceContent?: React.ReactNode;
   /** Rendered directly below the CTA button (e.g. a "Get notified" link). */
   footer?: React.ReactNode;
   /**
@@ -47,6 +50,8 @@ export function PricingCard({
   disabled = false,
   ctaDisabled = false,
   badge,
+  badgePlacement = 'top-center',
+  priceContent,
   footer,
   priceEffect,
   onSelect,
@@ -71,14 +76,20 @@ export function PricingCard({
       {...(mode !== 'playful' ? props : {})}
     >
       {badge && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+        <div
+          className={cn(
+            'absolute -top-3 z-10',
+            badgePlacement === 'top-right' ? 'right-4' : 'left-1/2 -translate-x-1/2',
+          )}
+        >
           {typeof badge === 'string' ? <Badge>{badge}</Badge> : badge}
         </div>
       )}
 
       <div className="space-y-1">
         <div className="text-sm font-medium text-muted-foreground">{name}</div>
-        <div className="flex items-end gap-1">
+        {priceContent ?? (
+          <div className="flex items-end gap-1">
           {/* Animates when a billing-cadence toggle swaps the price out. The
               price is its own swap key: a card whose price never changes never
               animates. `effect` undefined leaves AnimatedSwap on the mode
@@ -91,7 +102,8 @@ export function PricingCard({
             {price}
           </AnimatedSwap>
           <span className="mb-1 text-sm text-muted-foreground">{period}</span>
-        </div>
+          </div>
+        )}
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
 

@@ -104,6 +104,12 @@ export { TechStackSection, type TechStackSectionProps, type TechStackItem } from
 export { FeatureMarqueeSection, type FeatureMarqueeSectionProps, type FeatureMarqueeRow, type FeatureMarqueeItem } from './marketing/FeatureMarqueeSection';
 export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
 export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
+export {
+  PricingOfferBanner,
+  PricingOfferPrice,
+  applyPricingDiscount,
+  type PricingOffer,
+} from './marketing/PricingOffer';
 export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/TestimonialsSection';
 export { TeamSection, type TeamMember, type TeamSectionProps } from './marketing/TeamSection';
 export { FaqSection, type FaqSectionProps } from './marketing/FaqSection';

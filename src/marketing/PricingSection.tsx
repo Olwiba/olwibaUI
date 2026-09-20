@@ -7,6 +7,11 @@ import { PricingCard, type PricingCardProps, type PricingFeature } from '../comp
 import { StaggerChildren } from '../motion/StaggerChildren';
 import { CountdownTimer } from '../motion/CountdownTimer';
 import type { AppShellRenderLink } from '../app/AppShell';
+import {
+  PricingOfferBanner,
+  PricingOfferPrice,
+  type PricingOffer,
+} from './PricingOffer';
 
 /**
  * One billing period a plan can be bought at.
@@ -161,6 +166,8 @@ export interface PricingSectionProps {
    * mode.
    */
   priceEffect?: PricingCardProps['priceEffect'];
+  /** Temporary percentage offer applied to every numeric plan price. */
+  offer?: PricingOffer;
   /**
    * How the section sits on the page. @default 'card'
    *
@@ -194,6 +201,7 @@ export function PricingSection({
   onSelectPlan,
   pendingPlanName,
   priceEffect,
+  offer,
   surface,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
@@ -234,6 +242,7 @@ export function PricingSection({
                 {description}
               </p>
             )}
+            {offer && <PricingOfferBanner offer={offer} />}
 
             {/* Billing toggle: one tab per cadence, or the legacy Monthly/Annual pair */}
             {showToggle && (
@@ -314,15 +323,18 @@ export function PricingSection({
               const period = useCadences
                 ? (cadence?.suffix ?? plan.periodDisplay ?? '')
                 : (plan.periodDisplay ?? (isOneTime ? 'one-time' : rawPrice > 0 ? '/mo' : ''));
-              const badge = plan.highlighted && foundingDeadline
-                ? (
-                  <span className="inline-flex items-center rounded-full border bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
-                    <CountdownTimer deadline={foundingDeadline} compact />
-                  </span>
-                )
-                : plan.highlighted && highlightedBadgeLabel
-                  ? highlightedBadgeLabel
-                  : undefined;
+              const hasOffer = !!offer && plan.priceDisplay === undefined;
+              const badge = hasOffer
+                ? (offer.cardBadgeLabel ?? `Extra ${offer.discountPercent}% off`)
+                : plan.highlighted && foundingDeadline
+                  ? (
+                    <span className="inline-flex items-center rounded-full border bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
+                      <CountdownTimer deadline={foundingDeadline} compact />
+                    </span>
+                  )
+                  : plan.highlighted && highlightedBadgeLabel
+                    ? highlightedBadgeLabel
+                    : undefined;
               return (
                 <PricingCard
                   key={plan.name}
@@ -338,6 +350,18 @@ export function PricingSection({
                   // can't open a second session.
                   ctaDisabled={plan.ctaDisabled || pendingPlanName === plan.name}
                   badge={badge}
+                  badgePlacement={hasOffer ? 'top-right' : 'top-center'}
+                  priceContent={
+                    hasOffer ? (
+                      <PricingOfferPrice
+                        price={rawPrice}
+                        period={period}
+                        offer={offer}
+                        currency={currency}
+                        effect={priceEffect}
+                      />
+                    ) : undefined
+                  }
                   footer={renderPlanFooter?.(plan)}
                   priceEffect={priceEffect}
                   onSelect={
