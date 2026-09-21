@@ -30,9 +30,14 @@ export function ConfirmDialog({ isOpen, options, handleConfirm, handleCancel, de
           <AlertDialogCancel onClick={handleCancel}>
             {options.cancelLabel ?? 'Cancel'}
           </AlertDialogCancel>
+          {/* The button's own variant, not hand-written colours. This used to
+              set `text-destructive-foreground`, a token the theme does not
+              define — so the background went red and the label stayed black.
+              Going through the variant means it cannot drift from the real
+              destructive button again. */}
           <AlertDialogAction
             onClick={handleConfirm}
-            className={destructive ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90' : undefined}
+            variant={destructive ? 'destructive' : undefined}
           >
             {options.confirmLabel ?? 'Confirm'}
           </AlertDialogAction>
