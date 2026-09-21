@@ -22,6 +22,21 @@
 
 
 
+
+## 0.2.42
+
+### Added
+
+- Support timed percentage offers
+
+### Changed
+
+- @olwiba/cn 0.1.61 for the alert-dialog variant prop
+
+### Fixed
+
+- Red confirm button had black text
+
 ## 0.2.41
 
 ### Fixed
