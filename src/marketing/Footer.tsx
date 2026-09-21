@@ -15,8 +15,32 @@ export interface FooterProps {
    * string forced consumers to smuggle that through `as unknown as string`.
    * A plain string still works and is the common case.
    */
-  status?: { label: ReactNode; operational?: boolean };
+  status?: {
+    label: ReactNode;
+    /**
+     * Three states, because one service being unavailable is not the same
+     * event as everything being unavailable. `operational` alone could only
+     * say "fine" or "not fine", so a partial outage painted the same red as
+     * a total one — and a pill that shouts at the same volume for both is
+     * one people learn to stop reading.
+     */
+    severity?: 'operational' | 'degraded' | 'down';
+    /** @deprecated Pass `severity`. Kept so existing callers keep working. */
+    operational?: boolean;
+  };
   renderLink?: AppShellRenderLink;
+}
+
+const SEVERITY_DOT = {
+  operational: 'text-emerald-500',
+  degraded: 'text-amber-500',
+  down: 'text-destructive',
+} as const;
+
+/** Falls back to the old boolean so callers that predate `severity` are unchanged. */
+function footerSeverity(status: { severity?: 'operational' | 'degraded' | 'down'; operational?: boolean }) {
+  if (status.severity) return status.severity;
+  return status.operational !== false ? 'operational' : 'down';
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
@@ -96,8 +120,8 @@ export function Footer({
           <div className="mt-4 flex justify-center">
             <div className="inline-flex items-center rounded-full border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
               <StatusIndicator
-                pulse={status.operational !== false}
-                dotClassName={status.operational !== false ? 'text-emerald-500' : 'text-destructive'}
+                pulse={footerSeverity(status) === 'operational'}
+                dotClassName={SEVERITY_DOT[footerSeverity(status)]}
                 size="sm"
               >
                 {status.label}
