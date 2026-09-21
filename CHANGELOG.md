@@ -23,6 +23,13 @@
 
 
 
+
+## 0.2.43
+
+### Fixed
+
+- Amber for a partial outage, red only for a total one
+
 ## 0.2.42
 
 ### Added
