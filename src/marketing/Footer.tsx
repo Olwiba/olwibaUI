@@ -60,7 +60,7 @@ export function Footer({
 
   return (
     <footer className="overflow-hidden rounded-2xl border bg-card text-foreground">
-      <div className="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-12 sm:py-20 lg:px-8 lg:py-24">
         {/* Brand */}
         <div className="flex justify-center">
           {renderLink({
@@ -80,8 +80,16 @@ export function Footer({
         </div>
 
         {/* Nav links */}
+        {/* Two columns on a phone, the centred row from sm up.
+            Wrapping a ten-link row at gap-x-12 produced five ragged rows of
+            mostly whitespace, and the footer ended up taller than the viewport
+            on a phone. A grid gives the same link count half the rows, aligned,
+            and keeps the wide gap where there is room for it. */}
         {navLinks && navLinks.length > 0 && (
-          <nav className="mt-10 flex flex-wrap justify-center gap-x-12 gap-y-3" aria-label="Footer">
+          <nav
+            className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3 text-center sm:mt-10 sm:flex sm:flex-wrap sm:justify-center sm:gap-x-12"
+            aria-label="Footer"
+          >
             {navLinks.map(({ label, href }) => (
               <div key={label}>
                 {renderLink({
@@ -96,7 +104,7 @@ export function Footer({
 
         {/* Social icons */}
         {socialLinks && socialLinks.length > 0 && (
-          <div className="mt-10 flex justify-center gap-x-10">
+          <div className="mt-8 flex justify-center gap-x-10 sm:mt-10">
             {socialLinks.map(({ label, href, icon }) => (
               <a
                 key={label}
@@ -111,7 +119,7 @@ export function Footer({
         )}
 
         {/* Copyright */}
-        <p className="mt-10 text-center text-sm/6 text-muted-foreground/70">
+        <p className="mt-8 text-center text-sm/6 text-muted-foreground/70 sm:mt-10">
           {copyrightText}
         </p>
 
