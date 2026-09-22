@@ -543,10 +543,12 @@ function ShellHeader({
   return (
     <header
       className={cn(
-        'flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12',
-        // bg matters only once it is sticky: transparent chrome over scrolling
-        // content is unreadable the moment anything passes beneath it.
-        sticky && 'sticky top-0 z-20 bg-background transition-transform duration-200 motion-reduce:transition-none',
+        // bg-app-chrome always, not only when sticky: the header is part of the
+        // frame around the page, and a frame the colour of the page it frames
+        // leaves the border doing all the separating. The token maps back to
+        // --background in dark mode, where that already reads.
+        'flex h-12 shrink-0 items-center gap-2 border-b bg-app-chrome transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12',
+        sticky && 'sticky top-0 z-20 transition-transform duration-200 motion-reduce:transition-none',
         sticky && hidden && '-translate-y-full',
       )}
     >

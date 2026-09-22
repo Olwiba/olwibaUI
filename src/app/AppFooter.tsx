@@ -26,7 +26,7 @@ export function AppFooter({ start, end, children, className, ...props }: AppFoot
     <footer
       {...props}
       className={cn(
-        'border-t bg-background px-4 py-3 text-xs text-muted-foreground sm:px-6',
+        'border-t bg-app-chrome px-4 py-3 text-xs text-muted-foreground sm:px-6',
         className,
       )}
     >
