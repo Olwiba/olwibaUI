@@ -25,6 +25,13 @@
 
 
 
+
+## 0.2.45
+
+### Fixed
+
+- Halve its height on a phone
+
 ## 0.2.44
 
 ### Added
