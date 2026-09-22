@@ -1,7 +1,7 @@
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
-import { useCallback, type CSSProperties, type ReactNode } from 'react';
+import { useCallback, useRef, type CSSProperties, type ReactNode } from 'react';
 import {
   BellIcon,
   BirdIcon,
@@ -38,6 +38,7 @@ import {
   useSidebar,
 } from '@olwiba/cn';
 import { useUIMode } from '../context/OlwibaUIContext';
+import { useAutoHideOnScroll } from '../hooks/use-auto-hide-on-scroll';
 
 // ─── Public types ─────────────────────────────────────────────────────────────
 
@@ -125,6 +126,18 @@ export interface AppShellProps {
   headerStart?: AppShellHeaderStart;
   /** Slot rendered at the end of the top header bar. */
   headerEnd?: ReactNode;
+  /**
+   * How the top header behaves as the content scrolls.
+   *
+   * `static` scrolls it away with the page, which is the historical
+   * behaviour. `sticky-auto-hide` pins it, hides it while scrolling down and
+   * returns it on any upward gesture — so navigation is one flick away at any
+   * depth rather than a scroll back to the top.
+   *
+   * Opt-in rather than the default only because flipping it would silently
+   * change the layout of every existing consumer.
+   */
+  headerBehavior?: 'static' | 'sticky-auto-hide';
   /** Product chrome rendered above the user menu in the sidebar footer. */
   sidebarFooterStart?: ReactNode;
   /**
@@ -496,7 +509,11 @@ function ShellHeader({
   headerStart,
   headerEnd,
   renderLink,
+  sticky = false,
+  hidden = false,
 }: {
+  sticky?: boolean;
+  hidden?: boolean;
   pageTitle?: string;
   breadcrumbs?: AppShellBreadcrumb[];
   headerStart?: AppShellHeaderStart;
@@ -524,7 +541,15 @@ function ShellHeader({
   );
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+    <header
+      className={cn(
+        'flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12',
+        // bg matters only once it is sticky: transparent chrome over scrolling
+        // content is unreadable the moment anything passes beneath it.
+        sticky && 'sticky top-0 z-20 bg-background transition-transform duration-200 motion-reduce:transition-none',
+        sticky && hidden && '-translate-y-full',
+      )}
+    >
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
         {headerStartContent && <div className="flex items-center gap-1">{headerStartContent}</div>}
@@ -608,6 +633,7 @@ export function AppShell({
   footer,
   headerStart,
   headerEnd,
+  headerBehavior = 'static',
   renderLink = defaultRenderLink,
   collapsible = 'icon',
   sidebarPosition = 'viewport',
@@ -619,6 +645,12 @@ export function AppShell({
   children,
 }: AppShellProps = {}) {
   const isContained = sidebarPosition === 'contained';
+
+  // The inset pane scrolls, not the window, so the listener has to be attached
+  // to it — window scroll events never fire in this layout.
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const stickyHeader = headerBehavior === 'sticky-auto-hide';
+  const headerHidden = useAutoHideOnScroll(scrollRef, { enabled: stickyHeader });
 
   const inner = (
     <SidebarProvider
@@ -638,13 +670,15 @@ export function AppShell({
         sidebarContentClassName={sidebarContentClassName}
         sidebarFooterStart={sidebarFooterStart}
       />
-      <SidebarInset className="overflow-y-auto">
+      <SidebarInset ref={scrollRef} className="overflow-y-auto">
         <ShellHeader
           pageTitle={pageTitle}
           breadcrumbs={breadcrumbs}
           headerStart={headerStart}
           headerEnd={headerEnd}
           renderLink={renderLink}
+          sticky={stickyHeader}
+          hidden={headerHidden}
         />
         {/* The shell owns the height chain so routes never have to reconstruct
             it. `grow` fills the shell on a short page, which settles the footer

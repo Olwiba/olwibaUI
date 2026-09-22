@@ -212,6 +212,10 @@ export { useMounted } from './hooks/use-mounted';
 export { useConfirm, type ConfirmOptions, type UseConfirmReturn } from './hooks/use-confirm';
 export { useControlledOpen, type UseControlledOpenReturn } from './hooks/use-controlled-open';
 export { useScrolledPast } from './hooks/use-scrolled-past';
+export {
+  useAutoHideOnScroll,
+  type AutoHideOnScrollOptions,
+} from './hooks/use-auto-hide-on-scroll';
 export { useCopyToClipboard } from './hooks/use-copy-to-clipboard';
 export { useDebounce } from './hooks/use-debounce';
 export { useIntersectionObserver } from './hooks/use-intersection-observer';
