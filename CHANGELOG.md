@@ -26,6 +26,13 @@
 
 
 
+
+## 0.2.46
+
+### Added
+
+- Paint header and app footer with bg-app-chrome
+
 ## 0.2.45
 
 ### Fixed
