@@ -24,6 +24,13 @@
 
 
 
+
+## 0.2.44
+
+### Added
+
+- Optional sticky header that hides on scroll down
+
 ## 0.2.43
 
 ### Fixed
