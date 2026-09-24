@@ -18,6 +18,11 @@ export type ContactInfoItem = {
 export interface ContactSectionProps {
   badge?: string;
   title?: string;
+  /**
+   * Heading element for the title. Pass `'h1'` when this section opens the
+   * page, so the page has exactly one top-level heading. @default 'h2'
+   */
+  titleAs?: 'h1' | 'h2';
   description?: string;
   contactInfo?: ContactInfoItem[];
   privacyHref?: string;
@@ -51,6 +56,7 @@ const defaults = {
 export function ContactSection({
   badge = defaults.badge,
   title = defaults.title,
+  titleAs: Title = 'h2',
   description = defaults.description,
   contactInfo,
   privacyHref,
@@ -80,9 +86,9 @@ export function ContactSection({
               <Badge variant="secondary">{badge}</Badge>
             </div>
           )}
-          <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+          <Title className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
             {title}
-          </h2>
+          </Title>
           <p className="mt-4 text-lg text-muted-foreground">{description}</p>
 
           {contactInfo && contactInfo.length > 0 && (

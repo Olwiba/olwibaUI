@@ -127,6 +127,11 @@ function gridClassesFor(count: number): string {
 
 export interface PricingSectionProps {
   title?: string;
+  /**
+   * Heading element for the title. Pass `'h1'` when this section opens the
+   * page, so the page has exactly one top-level heading. @default 'h2'
+   */
+  titleAs?: 'h1' | 'h2';
   description?: string;
   badge?: React.ReactNode;
   plans: PricingPlan[];
@@ -184,6 +189,7 @@ const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) =>
 
 export function PricingSection({
   title = 'Simple, transparent pricing',
+  titleAs: Title = 'h2',
   description = 'Start for free. Scale as you grow. No hidden fees.',
   badge = 'Pricing',
   plans,
@@ -234,9 +240,9 @@ export function PricingSection({
                 ? <Badge variant="secondary" className="mb-4">{badge}</Badge>
                 : <div className="mb-4">{badge}</div>
             )}
-            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            <Title className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
               {title}
-            </h2>
+            </Title>
             {description && (
               <p className="mx-auto mt-4 max-w-xl text-pretty text-muted-foreground">
                 {description}
