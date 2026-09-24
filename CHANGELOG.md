@@ -27,6 +27,13 @@
 
 
 
+
+## 0.2.47
+
+### Added
+
+- Add check-email, email-verified and cookie consent blocks
+
 ## 0.2.46
 
 ### Added
