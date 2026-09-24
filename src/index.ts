@@ -45,6 +45,26 @@ export {
 } from './app/AuthSection';
 
 export {
+  AuthCheckEmail,
+  type AuthCheckEmailProps,
+  AuthEmailVerified,
+  type AuthEmailVerifiedProps,
+} from './app/AuthStatusCards';
+
+export { inboxLinkFor, type InboxLink } from './lib/inbox-link';
+
+export {
+  CookieConsentProvider,
+  type CookieConsentProviderProps,
+  useCookieConsent,
+  CookieConsentBanner,
+  type CookieConsentBannerProps,
+  readCookieConsent,
+  COOKIE_CONSENT_COOKIE,
+  type CookieConsentValue,
+} from './app/CookieConsent';
+
+export {
   SettingsSection,
   type SettingsSectionProps,
 } from './app/SettingsSection';

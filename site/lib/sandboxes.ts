@@ -1132,6 +1132,53 @@ export default function TeamPage({ members }: { members: TeamMemberRecord[] }) {
 ` }],
   },
 
+  'auth-status-cards': {
+    id: 'auth-status-cards',
+    title: 'AuthCheckEmail & AuthEmailVerified',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/auth-status-cards')),
+    files: [
+      {
+        path: 'app/check-email.tsx',
+        language: 'tsx',
+        code: `import { AuthSection, AuthCheckEmail } from "@olwiba/ui";
+
+export function CheckEmail({ email }: { email: string }) {
+  return (
+    <AuthSection layout="centered">
+      <AuthCheckEmail email={email} onResend={() => resendVerification(email)} signInHref="/sign-in" />
+    </AuthSection>
+  );
+}
+`,
+      },
+    ],
+  },
+
+  'cookie-consent': {
+    id: 'cookie-consent',
+    title: 'CookieConsent',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/cookie-consent')),
+    files: [
+      {
+        path: 'app/layout.tsx',
+        language: 'tsx',
+        code: `import { CookieConsentBanner, CookieConsentProvider } from "@olwiba/ui";
+
+export function RootLayout({ children, initialConsent }) {
+  return (
+    <CookieConsentProvider required initialConsent={initialConsent}>
+      {children}
+      <CookieConsentBanner policyHref="/privacy" />
+    </CookieConsentProvider>
+  );
+}
+`,
+      },
+    ],
+  },
+
   'update-banner': {
     id: 'update-banner',
     title: 'UpdateBanner',

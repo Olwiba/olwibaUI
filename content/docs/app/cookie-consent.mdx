@@ -1,0 +1,58 @@
+---
+title: CookieConsent
+description: Consent provider, hook and banner for non-essential cookies, stored in a first-party cookie the server can read.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="cookie-consent" />
+
+## Usage
+
+Wrap the app once, tell it whether anything needs consent, and gate trackers on `allowed`:
+
+```tsx
+import {
+  CookieConsentBanner,
+  CookieConsentProvider,
+  readCookieConsent,
+  useCookieConsent,
+} from "@olwiba/ui";
+
+// Server: read the choice so the first render already knows it.
+const initialConsent = readCookieConsent(request.headers.get("cookie"));
+
+<CookieConsentProvider required={analyticsConfigured} initialConsent={initialConsent}>
+  <App />
+  <CookieConsentBanner policyHref="/privacy" />
+</CookieConsentProvider>;
+
+function Analytics() {
+  const { allowed } = useCookieConsent();
+  return allowed ? <Tracker /> : null;
+}
+```
+
+With `required={false}` the banner never renders and `allowed` is true. The choice is stored as `cookie_consent=<version>.<granted|denied>` for a year; bump `version` to ask again. Accept and reject have equal weight. Call `openSettings()` from a footer link to let people change their mind, and use `onChange` to unload trackers when consent is withdrawn.
+
+## API Reference
+
+<APIReference name="CookieConsentProvider" props={[
+  { name: "required", type: "boolean", description: "Whether any cookie needing consent is set. False = no banner, tracking allowed." },
+  { name: "initialConsent", type: "'granted' | 'denied' | null", description: "Choice read server-side. Undefined = read document.cookie after mount." },
+  { name: "cookieName", type: "string", default: '"cookie_consent"', description: "Cookie the choice is stored in." },
+  { name: "version", type: "number", default: "1", description: "Bump to invalidate stored choices." },
+  { name: "maxAgeDays", type: "number", default: "365", description: "How long a choice is remembered." },
+  { name: "onChange", type: "(consent, previous) => void", description: "Called after the choice changes." },
+]} />
+
+<APIReference name="CookieConsentBanner" props={[
+  { name: "policyHref", type: "string", description: "Privacy or cookie policy link. Omit to hide it." },
+  { name: "renderLink", type: "AppShellRenderLink", description: "Framework-native link renderer." },
+  { name: "title", type: "ReactNode", default: '"Cookies"', description: "Banner heading." },
+  { name: "description", type: "ReactNode", description: "Banner copy." },
+  { name: "acceptLabel", type: "string", default: '"Accept"', description: "Accept button label." },
+  { name: "rejectLabel", type: "string", default: '"Reject"', description: "Reject button label." },
+]} />

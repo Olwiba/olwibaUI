@@ -1,0 +1,52 @@
+---
+title: AuthCheckEmail & AuthEmailVerified
+description: The two screens either side of an email confirmation link — "check your inbox" with a provider link and a resend cooldown, and "verified, now sign in".
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="auth-status-cards" />
+
+## Usage
+
+Both render as the child of `AuthSection`, so they share its frame and layout.
+
+```tsx
+import { AuthSection, AuthCheckEmail, AuthEmailVerified } from "@olwiba/ui";
+
+// After sign-up, while the address is unconfirmed
+<AuthSection layout="centered">
+  <AuthCheckEmail email={email} onResend={() => resendVerification(email)} signInHref="/sign-in" />
+</AuthSection>
+
+// Where the verification link lands
+<AuthSection layout="centered">
+  <AuthEmailVerified signInHref="/sign-in" />
+</AuthSection>
+```
+
+`AuthCheckEmail` leads with an **Open Gmail** (or Outlook, Yahoo Mail, iCloud Mail, Proton Mail) button chosen from the address's domain via `inboxLinkFor`. `mailto:` is not used: it opens a new message, not the inbox. An unrecognised domain shows no button. Resending is a quiet link on a cooldown that starts on mount and restarts after each successful resend; throw from `onResend` to report a failure without restarting it.
+
+`AuthEmailVerified` deliberately points at sign-in rather than signing the person in. Verification links usually open inside an email app's own browser, and a session created there leaves the person's real browser signed out.
+
+## API Reference
+
+<APIReference name="AuthCheckEmail" props={[
+  { name: "email", type: "string", description: "Address the confirmation was sent to." },
+  { name: "onResend", type: "() => Promise<void> | void", description: "Sends the email again. Throw to report failure." },
+  { name: "resendCooldownSeconds", type: "number", default: "60", description: "Seconds before resend is enabled, from mount and after each resend." },
+  { name: "signInHref", type: "string", description: "Where \"Back to sign in\" points. Omit to hide it." },
+  { name: "renderLink", type: "AppShellRenderLink", description: "Framework-native link renderer." },
+  { name: "title", type: "ReactNode", default: '"Check your email"', description: "Card title." },
+  { name: "children", type: "ReactNode", description: "Replaces the default explanation." },
+]} />
+
+<APIReference name="AuthEmailVerified" props={[
+  { name: "signInHref", type: "string", description: "Where the sign-in button points, including any return path." },
+  { name: "renderLink", type: "AppShellRenderLink", description: "Framework-native link renderer." },
+  { name: "title", type: "ReactNode", default: '"Email verified"', description: "Card title." },
+  { name: "description", type: "ReactNode", description: "Card description." },
+  { name: "ctaLabel", type: "string", default: '"Sign in"', description: "Button label." },
+]} />
