@@ -28,6 +28,13 @@
 
 
 
+
+## 0.2.48
+
+### Added
+
+- Let section titles render as h1
+
 ## 0.2.47
 
 ### Added
