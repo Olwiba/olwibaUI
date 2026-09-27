@@ -254,41 +254,49 @@ export function PricingSection({
             {showToggle && (
               <div className="mt-6 inline-flex items-center gap-3 rounded-full border bg-muted p-1">
                 {useCadences
-                  ? cadences!.map((entry) => (
-                      <Button
-                        key={entry.key}
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setActiveCadence(entry.key)}
-                        className={cn(
-                          'flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
-                          entry.key === activeCadence
-                            ? 'bg-background text-foreground shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground',
-                        )}
-                      >
-                        {entry.label}
-                        {saveBadges[entry.key] && (
-                          // `default` (primary), not `secondary`: the toggle is
-                          // `bg-muted` with a `bg-background` active tab, and a
-                          // secondary badge is the same grey as both — the
-                          // saving is the incentive, so it has to carry brand
-                          // colour to read at all.
-                          <Badge variant="default" className="text-xs">
-                            {saveBadges[entry.key]}
-                          </Badge>
-                        )}
-                      </Button>
-                    ))
+                  ? cadences!.map((entry) => {
+                      const isActive = entry.key === activeCadence;
+                      return (
+                        <Button
+                          key={entry.key}
+                          variant="ghost"
+                          size="sm"
+                          aria-pressed={isActive}
+                          onClick={isActive ? undefined : () => setActiveCadence(entry.key)}
+                          className={cn(
+                            'flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
+                            isActive
+                              ? 'cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground'
+                              : 'text-muted-foreground hover:text-foreground',
+                          )}
+                        >
+                          {entry.label}
+                          {saveBadges[entry.key] && (
+                            // `default` (primary), not `secondary`: the toggle is
+                            // `bg-muted` with a `bg-background` active tab, and a
+                            // secondary badge is the same grey as both — the
+                            // saving is the incentive, so it has to carry brand
+                            // colour to read at all. The badge itself is a label,
+                            // so keep its colour stable while its parent tab hovers.
+                            <Badge variant="default" className="text-xs hover:bg-primary">
+                              {saveBadges[entry.key]}
+                            </Badge>
+                          )}
+                        </Button>
+                      );
+                    })
                   : (
                     <>
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => setAnnual(false)}
+                        aria-pressed={!annual}
+                        onClick={annual ? () => setAnnual(false) : undefined}
                         className={cn(
                           'rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
-                          !annual ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
+                          !annual
+                            ? 'cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground'
+                            : 'text-muted-foreground hover:text-foreground',
                         )}
                       >
                         Monthly
@@ -296,15 +304,18 @@ export function PricingSection({
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => setAnnual(true)}
+                        aria-pressed={annual}
+                        onClick={annual ? undefined : () => setAnnual(true)}
                         className={cn(
                           'flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
-                          annual ? 'bg-background text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground',
+                          annual
+                            ? 'cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground'
+                            : 'text-muted-foreground hover:text-foreground',
                         )}
                       >
                         Annual
                         {saveBadge && (
-                          <Badge variant="default" className="text-xs">{saveBadge}</Badge>
+                          <Badge variant="default" className="text-xs hover:bg-primary">{saveBadge}</Badge>
                         )}
                       </Button>
                     </>
