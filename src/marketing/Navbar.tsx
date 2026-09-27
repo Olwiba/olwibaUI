@@ -39,6 +39,7 @@ export function Navbar({
         {/* Brand — left column */}
         {renderLink({
           href: brandHref,
+          className: 'justify-self-start rounded-md',
           children: (
             <span className="flex items-center gap-2 font-semibold">
               {brand.logo}
@@ -86,16 +87,22 @@ export function Navbar({
             {(cta?.secondary || cta?.primary) && controls?.length ? (
               <div className="mx-1 h-4 w-px bg-border" />
             ) : null}
-            {cta?.secondary &&
-              renderLink({
-                href: cta.secondary.href,
-                children: <Button variant="ghost" size="sm">{cta.secondary.label}</Button>,
-              })}
-            {cta?.primary &&
-              renderLink({
-                href: cta.primary.href,
-                children: <Button size="sm">{cta.primary.label}</Button>,
-              })}
+            {cta?.secondary && (
+              <Button asChild variant="ghost" size="sm">
+                {renderLink({
+                  href: cta.secondary.href,
+                  children: cta.secondary.label,
+                })}
+              </Button>
+            )}
+            {cta?.primary && (
+              <Button asChild size="sm">
+                {renderLink({
+                  href: cta.primary.href,
+                  children: cta.primary.label,
+                })}
+              </Button>
+            )}
           </div>
         )}
 
@@ -145,18 +152,22 @@ export function Navbar({
             <div className="mt-6 flex flex-col gap-2">
               {cta?.secondary && (
                 <span onClickCapture={closeMobileMenu}>
-                  {renderLink({
-                    href: cta.secondary.href,
-                    children: <Button variant="outline" className="w-full">{cta.secondary.label}</Button>,
-                  })}
+                  <Button asChild variant="outline" className="w-full">
+                    {renderLink({
+                      href: cta.secondary.href,
+                      children: cta.secondary.label,
+                    })}
+                  </Button>
                 </span>
               )}
               {cta?.primary && (
                 <span onClickCapture={closeMobileMenu}>
-                  {renderLink({
-                    href: cta.primary.href,
-                    children: <Button className="w-full">{cta.primary.label}</Button>,
-                  })}
+                  <Button asChild className="w-full">
+                    {renderLink({
+                      href: cta.primary.href,
+                      children: cta.primary.label,
+                    })}
+                  </Button>
                 </span>
               )}
             </div>

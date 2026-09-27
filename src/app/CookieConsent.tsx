@@ -220,11 +220,11 @@ export function CookieConsentBanner({
           </div>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <Button variant="outline" onClick={deny}>
-            {rejectLabel}
-          </Button>
           <Button variant="outline" onClick={grant}>
             {acceptLabel}
+          </Button>
+          <Button variant="outline" onClick={deny}>
+            {rejectLabel}
           </Button>
         </div>
       </div>
