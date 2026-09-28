@@ -174,6 +174,11 @@ export interface PricingSectionProps {
   /** Temporary percentage offer applied to every numeric plan price. */
   offer?: PricingOffer;
   /**
+   * Card composition. `featured` joins a two-plan comparison and gives the
+   * single highlighted plan more visual weight. @default 'standard'
+   */
+  layout?: 'standard' | 'featured';
+  /**
    * How the section sits on the page. @default 'card'
    *
    * Named `surface` rather than following the `mode` convention the other
@@ -208,6 +213,7 @@ export function PricingSection({
   pendingPlanName,
   priceEffect,
   offer,
+  layout = 'standard',
   surface,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
@@ -228,10 +234,19 @@ export function PricingSection({
   // A single cadence is just a label for the price — nothing to switch between.
   const showToggle = useCadences ? cadences!.length > 1 : !isOneTime;
   const sectionClasses = useSectionSurface(surface);
+  const featuredPair =
+    layout === 'featured' &&
+    plans.length === 2 &&
+    plans.filter((plan) => plan.highlighted).length === 1;
 
   return (
     <section className={sectionClasses}>
-      <div className="px-6 py-14 sm:px-10 sm:py-20">
+      <div
+        className={cn(
+          'px-6',
+          featuredPair ? 'py-24 sm:py-32 lg:px-8' : 'py-14 sm:px-10 sm:py-20',
+        )}
+      >
         <div className="mx-auto max-w-5xl">
           {/* Header */}
           <div className="text-center">
@@ -240,11 +255,23 @@ export function PricingSection({
                 ? <Badge variant="secondary" className="mb-4">{badge}</Badge>
                 : <div className="mb-4">{badge}</div>
             )}
-            <Title className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+            <Title
+              className={cn(
+                'text-balance font-semibold tracking-tight',
+                featuredPair ? 'text-5xl sm:text-6xl' : 'text-3xl sm:text-4xl',
+              )}
+            >
               {title}
             </Title>
             {description && (
-              <p className="mx-auto mt-4 max-w-xl text-pretty text-muted-foreground">
+              <p
+                className={cn(
+                  'mx-auto text-pretty text-muted-foreground',
+                  featuredPair
+                    ? 'mt-6 max-w-2xl text-lg font-medium sm:text-xl/8'
+                    : 'mt-4 max-w-xl',
+                )}
+              >
                 {description}
               </p>
             )}
@@ -325,8 +352,15 @@ export function PricingSection({
           </div>
 
           {/* Plan cards */}
-          <StaggerChildren className={cn('mt-10 grid gap-4', gridClassesFor(plans.length))}>
-            {plans.map((plan) => {
+          <StaggerChildren
+            className={cn(
+              'grid',
+              featuredPair
+                ? 'mx-auto mt-16 max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2'
+                : cn('mt-10 gap-4', gridClassesFor(plans.length)),
+            )}
+          >
+            {plans.map((plan, planIndex) => {
               const rawPrice = useCadences
                 ? (plan.prices?.[activeCadence] ?? plan.monthly)
                 : isOneTime
@@ -379,8 +413,21 @@ export function PricingSection({
                       />
                     ) : undefined
                   }
+                  priceClassName={featuredPair ? 'text-5xl' : undefined}
                   footer={renderPlanFooter?.(plan)}
                   priceEffect={priceEffect}
+                  className={cn(
+                    featuredPair && 'sm:p-8 lg:p-10',
+                    featuredPair && plan.highlighted && 'relative z-10 lg:py-16',
+                    featuredPair &&
+                      !plan.highlighted &&
+                      planIndex === 0 &&
+                      'sm:mx-8 sm:rounded-b-none lg:mx-0 lg:my-6 lg:rounded-bl-2xl lg:rounded-r-none lg:border-r-0',
+                    featuredPair &&
+                      !plan.highlighted &&
+                      planIndex === 1 &&
+                      'sm:mx-8 sm:rounded-t-none lg:mx-0 lg:my-6 lg:rounded-tr-2xl lg:rounded-l-none lg:border-l-0',
+                  )}
                   onSelect={
                     onSelectPlan
                       ? () => onSelectPlan(plan, useCadences ? activeCadence : undefined)

@@ -25,6 +25,8 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   badgePlacement?: 'top-center' | 'top-right';
   /** Replaces the standard animated price row for richer price treatments. */
   priceContent?: React.ReactNode;
+  /** Optional typography override for the standard animated price. */
+  priceClassName?: string;
   /** Rendered directly below the CTA button (e.g. a "Get notified" link). */
   footer?: React.ReactNode;
   /**
@@ -52,6 +54,7 @@ export function PricingCard({
   badge,
   badgePlacement = 'top-center',
   priceContent,
+  priceClassName,
   footer,
   priceEffect,
   onSelect,
@@ -97,7 +100,7 @@ export function PricingCard({
           <AnimatedSwap
             swapKey={price}
             effect={priceEffect}
-            className="text-4xl font-bold tracking-tight"
+            className={cn('text-4xl font-bold tracking-tight', priceClassName)}
           >
             {price}
           </AnimatedSwap>
