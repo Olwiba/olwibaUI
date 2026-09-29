@@ -413,13 +413,15 @@ export function PricingSection({
                       />
                     ) : undefined
                   }
-                  nameClassName={featuredPair ? 'text-base/7 font-semibold text-primary' : undefined}
+                  nameClassName={featuredPair ? 'text-lg/7 font-semibold text-primary' : undefined}
                   priceClassName={featuredPair ? 'text-5xl' : undefined}
                   footer={renderPlanFooter?.(plan)}
                   priceEffect={priceEffect}
                   className={cn(
                     featuredPair && 'sm:p-8 lg:p-10',
-                    featuredPair && plan.highlighted && 'relative z-10 lg:py-16',
+                    featuredPair &&
+                      plan.highlighted &&
+                      "relative z-10 lg:after:basis-12 lg:after:shrink-0 lg:after:content-['']",
                     featuredPair &&
                       !plan.highlighted &&
                       planIndex === 0 &&
