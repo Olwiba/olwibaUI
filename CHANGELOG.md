@@ -29,6 +29,23 @@
 
 
 
+
+## 0.2.49
+
+### Changed
+
+- Style(pricing): remove featured card spacer
+- Style(design): FINDING-004 — raise featured plan content
+- Style(design): FINDING-003 — style pricing tier labels
+- Revert "style(design): FINDING-003 — style pricing tier labels"
+- Style(design): FINDING-003 — style pricing tier labels
+- Style(design): FINDING-002 — add featured pricing layout
+
+### Fixed
+
+- Remove false hover affordances
+- Correct focus targets and consent actions
+
 ## 0.2.48
 
 ### Added

@@ -32,6 +32,8 @@ export interface ContactSectionProps {
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
   /** How the section sits on the page. @default 'card' */
   surface?: MarketingSurface;
+  /** Give only the form a contained card surface while leaving the section header open. */
+  formSurface?: 'plain' | 'card';
 }
 
 const PHONE_PREFIXES = [
@@ -65,6 +67,7 @@ export function ContactSection({
   sendAnotherLabel = defaults.sendAnotherLabel,
   onSubmit,
   surface,
+  formSurface = 'plain',
 }: ContactSectionProps = {}) {
   const [submitted, setSubmitted] = React.useState(false);
   const sectionClasses = useSectionSurface(surface);
@@ -116,7 +119,14 @@ export function ContactSection({
             </Button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="mx-auto mt-16 max-w-xl sm:mt-20">
+          <form
+            onSubmit={handleSubmit}
+            className={cn(
+              'mx-auto mt-16 max-w-xl sm:mt-20',
+              formSurface === 'card' &&
+                'rounded-3xl border border-foreground/10 bg-card p-6 shadow-xl shadow-foreground/5 sm:p-10',
+            )}
+          >
             {/* Honeypot */}
             <input
               type="text"
