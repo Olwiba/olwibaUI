@@ -413,6 +413,7 @@ export function PricingSection({
                       />
                     ) : undefined
                   }
+                  nameClassName={featuredPair ? 'text-base/7 font-semibold text-primary' : undefined}
                   priceClassName={featuredPair ? 'text-5xl' : undefined}
                   footer={renderPlanFooter?.(plan)}
                   priceEffect={priceEffect}

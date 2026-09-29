@@ -27,6 +27,8 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   priceContent?: React.ReactNode;
   /** Optional typography override for the standard animated price. */
   priceClassName?: string;
+  /** Optional typography and colour override for the plan name. */
+  nameClassName?: string;
   /** Rendered directly below the CTA button (e.g. a "Get notified" link). */
   footer?: React.ReactNode;
   /**
@@ -55,6 +57,7 @@ export function PricingCard({
   badgePlacement = 'top-center',
   priceContent,
   priceClassName,
+  nameClassName,
   footer,
   priceEffect,
   onSelect,
@@ -90,7 +93,7 @@ export function PricingCard({
       )}
 
       <div className="space-y-1">
-        <div className="text-sm font-medium text-muted-foreground">{name}</div>
+        <h3 className={cn('text-sm font-medium text-muted-foreground', nameClassName)}>{name}</h3>
         {priceContent ?? (
           <div className="flex items-end gap-1">
           {/* Animates when a billing-cadence toggle swaps the price out. The
