@@ -1,17 +1,13 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Badge, Button, cn } from '@olwiba/cn';
-import { useSectionSurface, type MarketingSurface } from './section-surface';
-import { PricingCard, type PricingCardProps, type PricingFeature } from '../components/PricingCard';
-import { StaggerChildren } from '../motion/StaggerChildren';
-import { CountdownTimer } from '../motion/CountdownTimer';
-import type { AppShellRenderLink } from '../app/AppShell';
-import {
-  PricingOfferBanner,
-  PricingOfferPrice,
-  type PricingOffer,
-} from './PricingOffer';
+import * as React from "react";
+import { Badge, Button, cn } from "@olwiba/cn";
+import { useSectionSurface, type MarketingSurface } from "./section-surface";
+import { PricingCard, type PricingCardProps, type PricingFeature } from "../components/PricingCard";
+import { StaggerChildren } from "../motion/StaggerChildren";
+import { CountdownTimer } from "../motion/CountdownTimer";
+import type { AppShellRenderLink } from "../app/AppShell";
+import { PricingOfferBanner, PricingOfferPrice, type PricingOffer } from "./PricingOffer";
 
 /**
  * One billing period a plan can be bought at.
@@ -116,13 +112,13 @@ function computeSaveBadges(
  * instead of stretching to fill.
  */
 function gridClassesFor(count: number): string {
-  if (count <= 1) return 'mx-auto max-w-sm';
-  if (count === 2) return 'mx-auto max-w-3xl sm:grid-cols-2';
-  if (count === 3) return 'mx-auto max-w-5xl lg:grid-cols-3';
-  if (count === 4) return 'mx-auto max-w-6xl sm:grid-cols-2 lg:grid-cols-4';
+  if (count <= 1) return "mx-auto max-w-sm";
+  if (count === 2) return "mx-auto max-w-3xl sm:grid-cols-2";
+  if (count === 3) return "mx-auto max-w-5xl lg:grid-cols-3";
+  if (count === 4) return "mx-auto max-w-6xl sm:grid-cols-2 lg:grid-cols-4";
   // Beyond four, wrapping at three keeps each card readable. A carousel is the
   // answer if a catalogue ever genuinely needs it.
-  return 'mx-auto max-w-5xl sm:grid-cols-2 lg:grid-cols-3';
+  return "mx-auto max-w-5xl sm:grid-cols-2 lg:grid-cols-3";
 }
 
 export interface PricingSectionProps {
@@ -131,7 +127,7 @@ export interface PricingSectionProps {
    * Heading element for the title. Pass `'h1'` when this section opens the
    * page, so the page has exactly one top-level heading. @default 'h2'
    */
-  titleAs?: 'h1' | 'h2';
+  titleAs?: "h1" | "h2";
   description?: string;
   badge?: React.ReactNode;
   plans: PricingPlan[];
@@ -139,7 +135,7 @@ export interface PricingSectionProps {
   isAuthenticated?: boolean;
   renderLink?: AppShellRenderLink;
   footnote?: string;
-  mode?: 'subscription' | 'one-time';
+  mode?: "subscription" | "one-time";
   foundingDeadline?: string;
   /** Symbol prepended to the computed price. Ignored by plans with `priceDisplay`. */
   currency?: string;
@@ -170,14 +166,14 @@ export interface PricingSectionProps {
    * pass `'roll'` for an odometer on a product that is otherwise in default
    * mode.
    */
-  priceEffect?: PricingCardProps['priceEffect'];
+  priceEffect?: PricingCardProps["priceEffect"];
   /** Temporary percentage offer applied to every numeric plan price. */
   offer?: PricingOffer;
   /**
    * Card composition. `featured` joins a two-plan comparison and gives the
    * single highlighted plan more visual weight. @default 'standard'
    */
-  layout?: 'standard' | 'featured';
+  layout?: "standard" | "featured";
   /**
    * How the section sits on the page. @default 'card'
    *
@@ -189,23 +185,25 @@ export interface PricingSectionProps {
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
-  <a href={href} className={className}>{children}</a>
+  <a href={href} className={className}>
+    {children}
+  </a>
 );
 
 export function PricingSection({
-  title = 'Simple, transparent pricing',
-  titleAs: Title = 'h2',
-  description = 'Start for free. Scale as you grow. No hidden fees.',
-  badge = 'Pricing',
+  title = "Simple, transparent pricing",
+  titleAs: Title = "h2",
+  description = "Start for free. Scale as you grow. No hidden fees.",
+  badge = "Pricing",
   plans,
-  saveBadge = 'Save 34%',
+  saveBadge = "Save 34%",
   isAuthenticated,
   renderLink = defaultRenderLink,
   footnote,
-  mode = 'subscription',
+  mode = "subscription",
   foundingDeadline,
-  currency = '$',
-  highlightedBadgeLabel = 'Founding member',
+  currency = "$",
+  highlightedBadgeLabel = "Founding member",
   renderPlanFooter,
   cadences,
   defaultCadence,
@@ -213,18 +211,18 @@ export function PricingSection({
   pendingPlanName,
   priceEffect,
   offer,
-  layout = 'standard',
+  layout = "standard",
   surface,
 }: PricingSectionProps) {
   const [annual, setAnnual] = React.useState(false);
-  const isOneTime = mode === 'one-time';
+  const isOneTime = mode === "one-time";
 
   // Explicit cadences replace the built-in Monthly/Annual pair entirely.
   const useCadences = !!cadences?.length;
   const initialCadence =
     (defaultCadence && cadences?.some((c) => c.key === defaultCadence) ? defaultCadence : null) ??
     cadences?.[0]?.key ??
-    '';
+    "";
   const [activeCadence, setActiveCadence] = React.useState(initialCadence);
   const cadence = cadences?.find((c) => c.key === activeCadence);
   const saveBadges = React.useMemo(
@@ -235,30 +233,30 @@ export function PricingSection({
   const showToggle = useCadences ? cadences!.length > 1 : !isOneTime;
   const sectionClasses = useSectionSurface(surface);
   const featuredPair =
-    layout === 'featured' &&
+    layout === "featured" &&
     plans.length === 2 &&
     plans.filter((plan) => plan.highlighted).length === 1;
 
   return (
     <section className={sectionClasses}>
       <div
-        className={cn(
-          'px-6',
-          featuredPair ? 'py-24 sm:py-32 lg:px-8' : 'py-14 sm:px-10 sm:py-20',
-        )}
+        className={cn("px-6", featuredPair ? "py-24 sm:py-32 lg:px-8" : "py-14 sm:px-10 sm:py-20")}
       >
         <div className="mx-auto max-w-5xl">
           {/* Header */}
           <div className="text-center">
-            {badge && (
-              typeof badge === 'string'
-                ? <Badge variant="secondary" className="mb-4">{badge}</Badge>
-                : <div className="mb-4">{badge}</div>
-            )}
+            {badge &&
+              (typeof badge === "string" ? (
+                <Badge variant="secondary" className="mb-4">
+                  {badge}
+                </Badge>
+              ) : (
+                <div className="mb-4">{badge}</div>
+              ))}
             <Title
               className={cn(
-                'text-balance font-semibold tracking-tight',
-                featuredPair ? 'text-5xl sm:text-6xl' : 'text-3xl sm:text-4xl',
+                "text-balance font-semibold tracking-tight",
+                featuredPair ? "text-5xl sm:text-6xl" : "text-3xl sm:text-4xl",
               )}
             >
               {title}
@@ -266,10 +264,10 @@ export function PricingSection({
             {description && (
               <p
                 className={cn(
-                  'mx-auto text-pretty text-muted-foreground',
+                  "mx-auto text-pretty text-muted-foreground",
                   featuredPair
-                    ? 'mt-6 max-w-2xl text-lg font-medium sm:text-xl/8'
-                    : 'mt-4 max-w-xl',
+                    ? "mt-6 max-w-2xl text-lg font-medium sm:text-xl/8"
+                    : "mt-4 max-w-xl",
                 )}
               >
                 {description}
@@ -280,73 +278,75 @@ export function PricingSection({
             {/* Billing toggle: one tab per cadence, or the legacy Monthly/Annual pair */}
             {showToggle && (
               <div className="mt-6 inline-flex items-center gap-3 rounded-full border bg-muted p-1">
-                {useCadences
-                  ? cadences!.map((entry) => {
-                      const isActive = entry.key === activeCadence;
-                      return (
-                        <Button
-                          key={entry.key}
-                          variant="ghost"
-                          size="sm"
-                          aria-pressed={isActive}
-                          onClick={isActive ? undefined : () => setActiveCadence(entry.key)}
-                          className={cn(
-                            'flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
-                            isActive
-                              ? 'cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground'
-                              : 'text-muted-foreground hover:text-foreground',
-                          )}
-                        >
-                          {entry.label}
-                          {saveBadges[entry.key] && (
-                            // `default` (primary), not `secondary`: the toggle is
-                            // `bg-muted` with a `bg-background` active tab, and a
-                            // secondary badge is the same grey as both — the
-                            // saving is the incentive, so it has to carry brand
-                            // colour to read at all. The badge itself is a label,
-                            // so keep its colour stable while its parent tab hovers.
-                            <Badge variant="default" className="text-xs hover:bg-primary">
-                              {saveBadges[entry.key]}
-                            </Badge>
-                          )}
-                        </Button>
-                      );
-                    })
-                  : (
-                    <>
+                {useCadences ? (
+                  cadences!.map((entry) => {
+                    const isActive = entry.key === activeCadence;
+                    return (
                       <Button
+                        key={entry.key}
                         variant="ghost"
                         size="sm"
-                        aria-pressed={!annual}
-                        onClick={annual ? () => setAnnual(false) : undefined}
+                        aria-pressed={isActive}
+                        onClick={isActive ? undefined : () => setActiveCadence(entry.key)}
                         className={cn(
-                          'rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
-                          !annual
-                            ? 'cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground'
-                            : 'text-muted-foreground hover:text-foreground',
+                          "flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                          isActive
+                            ? "cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground"
+                            : "text-muted-foreground hover:text-foreground",
                         )}
                       >
-                        Monthly
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        aria-pressed={annual}
-                        onClick={annual ? undefined : () => setAnnual(true)}
-                        className={cn(
-                          'flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
-                          annual
-                            ? 'cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground'
-                            : 'text-muted-foreground hover:text-foreground',
-                        )}
-                      >
-                        Annual
-                        {saveBadge && (
-                          <Badge variant="default" className="text-xs hover:bg-primary">{saveBadge}</Badge>
+                        {entry.label}
+                        {saveBadges[entry.key] && (
+                          // `default` (primary), not `secondary`: the toggle is
+                          // `bg-muted` with a `bg-background` active tab, and a
+                          // secondary badge is the same grey as both — the
+                          // saving is the incentive, so it has to carry brand
+                          // colour to read at all. The badge itself is a label,
+                          // so keep its colour stable while its parent tab hovers.
+                          <Badge variant="default" className="text-xs hover:bg-primary">
+                            {saveBadges[entry.key]}
+                          </Badge>
                         )}
                       </Button>
-                    </>
-                  )}
+                    );
+                  })
+                ) : (
+                  <>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      aria-pressed={!annual}
+                      onClick={annual ? () => setAnnual(false) : undefined}
+                      className={cn(
+                        "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                        !annual
+                          ? "cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      Monthly
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      aria-pressed={annual}
+                      onClick={annual ? undefined : () => setAnnual(true)}
+                      className={cn(
+                        "flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                        annual
+                          ? "cursor-default bg-background text-foreground shadow-sm hover:bg-background hover:text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      Annual
+                      {saveBadge && (
+                        <Badge variant="default" className="text-xs hover:bg-primary">
+                          {saveBadge}
+                        </Badge>
+                      )}
+                    </Button>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -354,10 +354,10 @@ export function PricingSection({
           {/* Plan cards */}
           <StaggerChildren
             className={cn(
-              'grid',
+              "grid",
               featuredPair
-                ? 'mx-auto mt-16 max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2'
-                : cn('mt-10 gap-4', gridClassesFor(plans.length)),
+                ? "mx-auto mt-16 max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2"
+                : cn("mt-10 gap-4", gridClassesFor(plans.length)),
             )}
           >
             {plans.map((plan, planIndex) => {
@@ -372,20 +372,18 @@ export function PricingSection({
               // With cadences the suffix follows the selected tab, so a plan's
               // own periodDisplay would pin it to whichever it was written for.
               const period = useCadences
-                ? (cadence?.suffix ?? plan.periodDisplay ?? '')
-                : (plan.periodDisplay ?? (isOneTime ? 'one-time' : rawPrice > 0 ? '/mo' : ''));
+                ? (cadence?.suffix ?? plan.periodDisplay ?? "")
+                : (plan.periodDisplay ?? (isOneTime ? "one-time" : rawPrice > 0 ? "/mo" : ""));
               const hasOffer = !!offer && plan.priceDisplay === undefined;
-              const badge = hasOffer
-                ? (offer.cardBadgeLabel ?? `Extra ${offer.discountPercent}% off`)
-                : plan.highlighted && foundingDeadline
-                  ? (
-                    <span className="inline-flex items-center rounded-full border bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
-                      <CountdownTimer deadline={foundingDeadline} compact />
-                    </span>
-                  )
-                  : plan.highlighted && highlightedBadgeLabel
-                    ? highlightedBadgeLabel
-                    : undefined;
+              const badge = hasOffer ? (
+                (offer.cardBadgeLabel ?? `Extra ${offer.discountPercent}% off`)
+              ) : plan.highlighted && foundingDeadline ? (
+                <span className="inline-flex items-center rounded-full border bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
+                  <CountdownTimer deadline={foundingDeadline} compact />
+                </span>
+              ) : plan.highlighted && highlightedBadgeLabel ? (
+                highlightedBadgeLabel
+              ) : undefined;
               return (
                 <PricingCard
                   key={plan.name}
@@ -394,14 +392,14 @@ export function PricingSection({
                   period={period}
                   description={plan.description}
                   features={plan.features}
-                  cta={pendingPlanName === plan.name ? 'Redirecting…' : plan.cta}
+                  cta={pendingPlanName === plan.name ? "Redirecting…" : plan.cta}
                   highlighted={plan.highlighted}
                   disabled={plan.disabled}
                   // A plan mid-checkout is disabled too, so a second click
                   // can't open a second session.
                   ctaDisabled={plan.ctaDisabled || pendingPlanName === plan.name}
                   badge={badge}
-                  badgePlacement={hasOffer ? 'top-right' : 'top-center'}
+                  badgePlacement={hasOffer ? "top-right" : "top-center"}
                   priceContent={
                     hasOffer ? (
                       <PricingOfferPrice
@@ -413,20 +411,23 @@ export function PricingSection({
                       />
                     ) : undefined
                   }
-                  priceClassName={featuredPair ? 'text-5xl' : undefined}
+                  nameClassName={
+                    featuredPair ? "text-base/7 font-semibold text-primary" : undefined
+                  }
+                  priceClassName={featuredPair ? "text-5xl" : undefined}
                   footer={renderPlanFooter?.(plan)}
                   priceEffect={priceEffect}
                   className={cn(
-                    featuredPair && 'sm:p-8 lg:p-10',
-                    featuredPair && plan.highlighted && 'relative z-10 lg:py-16',
+                    featuredPair && "sm:p-8 lg:p-10",
+                    featuredPair && plan.highlighted && "relative z-10 lg:py-16",
                     featuredPair &&
                       !plan.highlighted &&
                       planIndex === 0 &&
-                      'sm:mx-8 sm:rounded-b-none lg:mx-0 lg:my-6 lg:rounded-bl-2xl lg:rounded-r-none lg:border-r-0',
+                      "sm:mx-8 sm:rounded-b-none lg:mx-0 lg:my-6 lg:rounded-bl-2xl lg:rounded-r-none lg:border-r-0",
                     featuredPair &&
                       !plan.highlighted &&
                       planIndex === 1 &&
-                      'sm:mx-8 sm:rounded-t-none lg:mx-0 lg:my-6 lg:rounded-tr-2xl lg:rounded-l-none lg:border-l-0',
+                      "sm:mx-8 sm:rounded-t-none lg:mx-0 lg:my-6 lg:rounded-tr-2xl lg:rounded-l-none lg:border-l-0",
                   )}
                   onSelect={
                     onSelectPlan
@@ -439,11 +440,7 @@ export function PricingSection({
           </StaggerChildren>
 
           {/* Footnote */}
-          {footnote && (
-            <p className="mt-8 text-center text-sm text-muted-foreground">
-              {footnote}
-            </p>
-          )}
+          {footnote && <p className="mt-8 text-center text-sm text-muted-foreground">{footnote}</p>}
         </div>
       </div>
     </section>

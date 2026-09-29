@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Check, Minus } from 'lucide-react';
-import { Badge, Button, cn, Separator, useUIVariant } from '@olwiba/cn';
-import { AnimatedSwap, type AnimatedSwapEffect, type AnimatedSwapSpec } from '../motion/AnimatedSwap';
+import * as React from "react";
+import { Check, Minus } from "lucide-react";
+import { Badge, Button, cn, Separator, useUIVariant } from "@olwiba/cn";
+import {
+  AnimatedSwap,
+  type AnimatedSwapEffect,
+  type AnimatedSwapSpec,
+} from "../motion/AnimatedSwap";
 
 export interface PricingFeature {
   label: string;
@@ -22,11 +26,13 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Disables only the CTA button, leaving the rest of the card interactive. */
   ctaDisabled?: boolean;
   badge?: React.ReactNode;
-  badgePlacement?: 'top-center' | 'top-right';
+  badgePlacement?: "top-center" | "top-right";
   /** Replaces the standard animated price row for richer price treatments. */
   priceContent?: React.ReactNode;
   /** Optional typography override for the standard animated price. */
   priceClassName?: string;
+  /** Optional typography and colour override for the plan name. */
+  nameClassName?: string;
   /** Rendered directly below the CTA button (e.g. a "Get notified" link). */
   footer?: React.ReactNode;
   /**
@@ -44,7 +50,7 @@ export interface PricingCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function PricingCard({
   name,
   price,
-  period = '/mo',
+  period = "/mo",
   description,
   features,
   cta,
@@ -52,9 +58,10 @@ export function PricingCard({
   disabled = false,
   ctaDisabled = false,
   badge,
-  badgePlacement = 'top-center',
+  badgePlacement = "top-center",
   priceContent,
   priceClassName,
+  nameClassName,
   footer,
   priceEffect,
   onSelect,
@@ -66,52 +73,52 @@ export function PricingCard({
   const cardInner = (
     <div
       className={cn(
-        'relative flex flex-col border p-6 transition-opacity',
-        mode === 'playful'
-          ? 'rounded-2xl rotate-[0.3deg]'
-          : mode === 'smooth'
-            ? 'rounded-3xl'
-            : 'rounded-2xl',
-        highlighted ? 'border-primary bg-primary/5 shadow-sm' : 'bg-card',
-        disabled && 'pointer-events-none opacity-40 select-none',
-        mode !== 'playful' && className,
+        "relative flex flex-col border p-6 transition-opacity",
+        mode === "playful"
+          ? "rounded-2xl rotate-[0.3deg]"
+          : mode === "smooth"
+            ? "rounded-3xl"
+            : "rounded-2xl",
+        highlighted ? "border-primary bg-primary/5 shadow-sm" : "bg-card",
+        disabled && "pointer-events-none opacity-40 select-none",
+        mode !== "playful" && className,
       )}
-      {...(mode !== 'playful' ? props : {})}
+      {...(mode !== "playful" ? props : {})}
     >
       {badge && (
         <div
           className={cn(
-            'absolute -top-3 z-10',
-            badgePlacement === 'top-right' ? 'right-4' : 'left-1/2 -translate-x-1/2',
+            "absolute -top-3 z-10",
+            badgePlacement === "top-right" ? "right-4" : "left-1/2 -translate-x-1/2",
           )}
         >
-          {typeof badge === 'string' ? <Badge>{badge}</Badge> : badge}
+          {typeof badge === "string" ? <Badge>{badge}</Badge> : badge}
         </div>
       )}
 
       <div className="space-y-1">
-        <div className="text-sm font-medium text-muted-foreground">{name}</div>
+        <h3 className={cn("text-sm font-medium text-muted-foreground", nameClassName)}>{name}</h3>
         {priceContent ?? (
           <div className="flex items-end gap-1">
-          {/* Animates when a billing-cadence toggle swaps the price out. The
+            {/* Animates when a billing-cadence toggle swaps the price out. The
               price is its own swap key: a card whose price never changes never
               animates. `effect` undefined leaves AnimatedSwap on the mode
               default. */}
-          <AnimatedSwap
-            swapKey={price}
-            effect={priceEffect}
-            className={cn('text-4xl font-bold tracking-tight', priceClassName)}
-          >
-            {price}
-          </AnimatedSwap>
-          <span className="mb-1 text-sm text-muted-foreground">{period}</span>
+            <AnimatedSwap
+              swapKey={price}
+              effect={priceEffect}
+              className={cn("text-4xl font-bold tracking-tight", priceClassName)}
+            >
+              {price}
+            </AnimatedSwap>
+            <span className="mb-1 text-sm text-muted-foreground">{period}</span>
           </div>
         )}
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
 
       <Button
-        variant={highlighted ? 'default' : 'outline'}
+        variant={highlighted ? "default" : "outline"}
         className="mt-6 w-full"
         onClick={onSelect}
         disabled={disabled || ctaDisabled}
@@ -143,14 +150,14 @@ export function PricingCard({
     </div>
   );
 
-  if (mode === 'playful') {
+  if (mode === "playful") {
     return (
-      <div className={cn('group/playful relative', className)} {...props}>
+      <div className={cn("group/playful relative", className)} {...props}>
         <div
           aria-hidden="true"
           className={cn(
-            'absolute inset-0 rounded-2xl transition-transform duration-200 translate-x-[5px] translate-y-[5px] -rotate-[0.5deg] group-hover/playful:-rotate-[1.5deg] group-hover/playful:translate-x-[6px] group-hover/playful:translate-y-[6px]',
-            highlighted ? 'bg-primary/20' : 'bg-border',
+            "absolute inset-0 rounded-2xl transition-transform duration-200 translate-x-[5px] translate-y-[5px] -rotate-[0.5deg] group-hover/playful:-rotate-[1.5deg] group-hover/playful:translate-x-[6px] group-hover/playful:translate-y-[6px]",
+            highlighted ? "bg-primary/20" : "bg-border",
           )}
         />
         {cardInner}
