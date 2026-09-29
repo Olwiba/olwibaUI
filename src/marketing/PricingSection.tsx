@@ -419,9 +419,7 @@ export function PricingSection({
                   priceEffect={priceEffect}
                   className={cn(
                     featuredPair && 'sm:p-8 lg:p-10',
-                    featuredPair &&
-                      plan.highlighted &&
-                      "relative z-10 lg:after:basis-12 lg:after:shrink-0 lg:after:content-['']",
+                    featuredPair && plan.highlighted && 'relative z-10',
                     featuredPair &&
                       !plan.highlighted &&
                       planIndex === 0 &&
