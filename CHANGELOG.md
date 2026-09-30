@@ -30,6 +30,11 @@
 
 
 
+
+## 0.2.50
+
+No user-facing changes.
+
 ## 0.2.49
 
 ### Changed

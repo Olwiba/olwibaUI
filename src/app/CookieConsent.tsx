@@ -195,7 +195,7 @@ export function CookieConsentBanner({
       role="region"
       aria-label="Cookie consent"
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 p-4 sm:bottom-4 sm:left-4 sm:right-auto sm:max-w-sm sm:p-0",
+        "fixed inset-x-0 bottom-0 z-50 p-4 sm:bottom-4 sm:left-auto sm:right-4 sm:max-w-sm sm:p-0",
         className,
       )}
     >
