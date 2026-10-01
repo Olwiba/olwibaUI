@@ -180,7 +180,14 @@ export { Spotlight, type SpotlightProps, type SpotlightGroup, type SpotlightItem
 export { Dock, type DockProps, type DockItem } from './components/Dock';
 export { ContextMenu, type ContextMenuProps, type ContextMenuDef } from './components/ContextMenu';
 export { ConfirmDialog, type ConfirmDialogProps } from './components/ConfirmDialog';
-export { CommandMenu, type CommandMenuProps, type CommandMenuGroup, type CommandMenuItem } from './components/CommandMenu';
+export {
+  CommandMenu,
+  matchesCommandQuery,
+  type CommandMenuProps,
+  type CommandMenuGroup,
+  type CommandMenuItem,
+  type CommandMenuScope,
+} from './components/CommandMenu';
 
 // ─── Components — data ───────────────────────────────────────────────────────
 export { DataTable, type DataTableProps, type DataTableColumn } from './components/DataTable';
