@@ -132,6 +132,12 @@ export { StepsSection, type StepsSectionProps, type StepItem, type StepGroup } f
 export { TechStackSection, type TechStackSectionProps, type TechStackItem } from './marketing/TechStackSection';
 export { FeatureMarqueeSection, type FeatureMarqueeSectionProps, type FeatureMarqueeRow, type FeatureMarqueeItem } from './marketing/FeatureMarqueeSection';
 export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
+export {
+  DownloadSection,
+  type DownloadSectionProps,
+  type DownloadGroup,
+  type DownloadItem,
+} from './marketing/DownloadSection';
 export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
 export {
   PricingOfferBanner,
@@ -215,6 +221,8 @@ export { TestimonialCard, type TestimonialCardProps } from './components/Testimo
 export { PricingCard, type PricingCardProps, type PricingFeature } from './components/PricingCard';
 export { ImageCard, type ImageCardProps } from './components/ImageCard';
 export { MediaCard, type MediaCardProps } from './components/MediaCard';
+export { ProductDemoMedia, type ProductDemoMediaProps } from './components/ProductDemoMedia';
+export { InspectableMedia, type InspectableMediaProps } from './components/InspectableMedia';
 export { ViewToggle, type ViewToggleProps } from './components/ViewToggle';
 
 // ─── Components — diagram ────────────────────────────────────────────────────
