@@ -84,7 +84,16 @@ export type AppShellRenderLink = (props: {
   href: string;
   children: ReactNode;
   className?: string;
+  target?: string;
+  rel?: string;
+  download?: boolean | string;
+  'aria-label'?: string;
 }) => ReactNode;
+
+/** Stable selector registered with routers that reset nested scroll roots. */
+export const APP_SHELL_SCROLL_SELECTOR = '[data-olwiba-scroll-root="app-shell"]';
+/** Stable restoration key used by routers that preserve history positions. */
+export const APP_SHELL_SCROLL_RESTORATION_ID = 'olwiba-app-shell';
 
 /**
  * One step in the header location trail. A bare string is a plain label; give
@@ -672,7 +681,12 @@ export function AppShell({
         sidebarContentClassName={sidebarContentClassName}
         sidebarFooterStart={sidebarFooterStart}
       />
-      <SidebarInset ref={scrollRef} className="overflow-y-auto">
+      <SidebarInset
+        ref={scrollRef}
+        className="overflow-y-auto"
+        data-olwiba-scroll-root={isContained ? undefined : 'app-shell'}
+        data-scroll-restoration-id={isContained ? undefined : APP_SHELL_SCROLL_RESTORATION_ID}
+      >
         <ShellHeader
           pageTitle={pageTitle}
           breadcrumbs={breadcrumbs}

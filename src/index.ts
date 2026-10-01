@@ -30,7 +30,16 @@ export {
   type AppShellHeaderControls,
   type AppShellHeaderStart,
   type AppNavItem,
+  APP_SHELL_SCROLL_SELECTOR,
+  APP_SHELL_SCROLL_RESTORATION_ID,
 } from './app/AppShell';
+
+export {
+  classifyLink,
+  externalLinkLabel,
+  type ClassifiedLink,
+  type LinkIntent,
+} from './lib/link-intent';
 
 export { AppPageHero, type AppPageHeroProps } from './app/AppPageHero';
 
