@@ -38,7 +38,9 @@ export interface HeroSectionProps {
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
-  <a href={href} className={className}>{children}</a>
+  <a href={href} className={className}>
+    {children}
+  </a>
 );
 
 export function HeroSection({
@@ -61,7 +63,7 @@ export function HeroSection({
       <div className={marketingSectionSpacing.hero}>
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left - text content */}
-          <FadeIn direction="left">
+          <FadeIn direction="left" eager>
             <div className="flex flex-col gap-6">
               {badge && (
                 <div>
@@ -71,9 +73,7 @@ export function HeroSection({
               <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
                 {heading}
               </h1>
-              <p className="max-w-lg text-pretty text-lg text-muted-foreground">
-                {description}
-              </p>
+              <p className="max-w-lg text-pretty text-lg text-muted-foreground">{description}</p>
               <div
                 className={cn(
                   'flex gap-3',
@@ -82,18 +82,17 @@ export function HeroSection({
                     : 'flex-wrap items-center',
                 )}
               >
-                {primarySlot ?? (
-                  primaryCta &&
-                  renderLink({
-                    href: primaryCta.href,
-                    children: (
-                      <Button size="lg">
-                        {primaryCta.label}
-                        <ArrowRight className="ml-2 size-4" />
-                      </Button>
-                    ),
-                  })
-                )}
+                {primarySlot ??
+                  (primaryCta &&
+                    renderLink({
+                      href: primaryCta.href,
+                      children: (
+                        <Button size="lg">
+                          {primaryCta.label}
+                          <ArrowRight className="ml-2 size-4" />
+                        </Button>
+                      ),
+                    }))}
                 {secondaryCta &&
                   renderLink({
                     href: secondaryCta.href,
@@ -109,15 +108,18 @@ export function HeroSection({
 
           {/* Right - media */}
           {media !== 'none' && (
-            <FadeIn direction="right" delay={200}>
+            <FadeIn direction="right" delay={200} eager>
               {media === 'phone' ? (
                 <div className="flex justify-center">
-                  <PhoneFrame size={phoneSize}>
-                    {heroImage}
-                  </PhoneFrame>
+                  <PhoneFrame size={phoneSize}>{heroImage}</PhoneFrame>
                 </div>
               ) : (
-                <div className={cn('overflow-hidden', mode === 'smooth' ? 'rounded-3xl' : 'rounded-2xl')}>
+                <div
+                  className={cn(
+                    'overflow-hidden',
+                    mode === 'smooth' ? 'rounded-3xl' : 'rounded-2xl',
+                  )}
+                >
                   {heroImage}
                 </div>
               )}
@@ -127,7 +129,7 @@ export function HeroSection({
 
         {/* Avatar social proof row */}
         {(avatarUrls?.length || socialProofText) && (
-          <FadeIn direction="up" delay={400}>
+          <FadeIn direction="up" delay={400} eager>
             <div className="mx-auto mt-12 flex max-w-6xl items-center gap-4">
               {avatarUrls && avatarUrls.length > 0 && (
                 <div className="flex -space-x-3">
@@ -142,9 +144,7 @@ export function HeroSection({
                 </div>
               )}
               {socialProofText && (
-                <p className="text-sm font-medium text-muted-foreground">
-                  {socialProofText}
-                </p>
+                <p className="text-sm font-medium text-muted-foreground">{socialProofText}</p>
               )}
             </div>
           </FadeIn>

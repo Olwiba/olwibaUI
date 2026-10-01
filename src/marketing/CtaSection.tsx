@@ -6,7 +6,7 @@ import { cn, useUIVariant } from '@olwiba/cn';
 import { useSectionSurface, type MarketingSurface } from './section-surface';
 import { Button } from '../primitives/Button';
 import { FadeIn } from '../motion/FadeIn';
-import { useIntersectionObserver } from '../hooks/use-intersection-observer';
+import { useProgressiveReveal } from '../motion/use-progressive-reveal';
 import type { AppShellRenderLink } from '../app/AppShell';
 
 export interface CtaSectionProps {
@@ -30,7 +30,9 @@ export interface CtaSectionProps {
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
-  <a href={href} className={className}>{children}</a>
+  <a href={href} className={className}>
+    {children}
+  </a>
 );
 
 function ShowcaseCta({
@@ -42,16 +44,12 @@ function ShowcaseCta({
   renderLink = defaultRenderLink,
   sectionClasses,
 }: CtaSectionProps & { sectionClasses: string }) {
-  const [ref, intersecting] = useIntersectionObserver({ threshold: 0.15 });
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    if (intersecting) setVisible(true);
-  }, [intersecting]);
+  const [ref, revealState] = useProgressiveReveal<HTMLElement>({ threshold: 0.15 });
+  const visible = revealState !== 'hidden';
 
   return (
     <section
-      ref={ref as React.RefObject<HTMLElement>}
+      ref={ref}
       className={cn(
         sectionClasses,
         'relative transition-[opacity,transform] duration-700 ease-out',
@@ -88,9 +86,7 @@ function ShowcaseCta({
             ),
           })}
         </div>
-        {footnote && (
-          <p className="mt-5 text-sm text-muted-foreground">{footnote}</p>
-        )}
+        {footnote && <p className="mt-5 text-sm text-muted-foreground">{footnote}</p>}
       </div>
     </section>
   );
@@ -121,7 +117,12 @@ export function CtaSection(props: CtaSectionProps) {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.15),transparent_70%)]" />
         <FadeIn direction="up">
           <div className="relative mx-auto max-w-2xl text-center">
-            <div className={cn('mb-4 inline-flex h-10 w-10 items-center justify-center bg-primary/10 text-primary', mode === 'smooth' ? 'rounded-3xl' : 'rounded-2xl')}>
+            <div
+              className={cn(
+                'mb-4 inline-flex h-10 w-10 items-center justify-center bg-primary/10 text-primary',
+                mode === 'smooth' ? 'rounded-3xl' : 'rounded-2xl',
+              )}
+            >
               <Sparkles className="size-5" />
             </div>
             <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -152,11 +153,7 @@ export function CtaSection(props: CtaSectionProps) {
                   ),
                 })}
             </div>
-            {footnote && (
-              <p className="mt-4 text-sm text-muted-foreground">
-                {footnote}
-              </p>
-            )}
+            {footnote && <p className="mt-4 text-sm text-muted-foreground">{footnote}</p>}
           </div>
         </FadeIn>
       </div>

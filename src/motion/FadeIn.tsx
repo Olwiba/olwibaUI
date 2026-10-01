@@ -2,12 +2,15 @@
 
 import * as React from 'react';
 import { cn } from '@olwiba/cn';
+import { useProgressiveReveal } from './use-progressive-reveal';
 
 export interface FadeInProps extends React.HTMLAttributes<HTMLDivElement> {
   delay?: number;
   duration?: number;
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
   once?: boolean;
+  /** Animate immediately with CSS instead of waiting for a scroll reveal. */
+  eager?: boolean;
   children: React.ReactNode;
 }
 
@@ -19,48 +22,47 @@ const translateMap = {
   none: '',
 };
 
+const enterMap = {
+  up: 'motion-safe:slide-in-from-bottom-6',
+  down: 'motion-safe:slide-in-from-top-6',
+  left: 'motion-safe:slide-in-from-right-6',
+  right: 'motion-safe:slide-in-from-left-6',
+  none: '',
+};
+
 export function FadeIn({
   delay = 0,
   duration = 600,
   direction = 'up',
   once = true,
+  eager = false,
   children,
   className,
   style,
   ...props
 }: FadeInProps) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          if (once) observer.disconnect();
-        } else if (!once) {
-          setVisible(false);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [once]);
+  const [ref, revealState] = useProgressiveReveal<HTMLDivElement>({ enabled: !eager, once });
+  const hidden = revealState === 'hidden';
 
   return (
     <div
       ref={ref}
       className={cn(
-        'transition-all',
-        visible ? 'opacity-100 translate-x-0 translate-y-0' : `opacity-0 ${translateMap[direction]}`,
+        eager
+          ? cn(
+              'motion-safe:animate-in motion-safe:fade-in motion-reduce:animate-none',
+              enterMap[direction],
+            )
+          : 'motion-safe:transition-[opacity,transform]',
+        hidden ? `opacity-0 ${translateMap[direction]}` : 'opacity-100 translate-x-0 translate-y-0',
+        'motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
         className,
       )}
-      style={{ transitionDuration: `${duration}ms`, transitionDelay: `${delay}ms`, ...style }}
+      style={
+        eager
+          ? { animationDuration: `${duration}ms`, animationDelay: `${delay}ms`, ...style }
+          : { transitionDuration: `${duration}ms`, transitionDelay: `${delay}ms`, ...style }
+      }
       {...props}
     >
       {children}

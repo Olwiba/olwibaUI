@@ -17,28 +17,22 @@ export function PageTransition({
   style,
   ...props
 }: PageTransitionProps) {
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    const id = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
-
-  const initial: React.CSSProperties =
+  const variantClass =
     variant === 'slide-up'
-      ? { opacity: 0, transform: 'translateY(16px)' }
+      ? 'motion-safe:slide-in-from-bottom-4'
       : variant === 'slide-down'
-        ? { opacity: 0, transform: 'translateY(-16px)' }
-        : { opacity: 0 };
-
-  const entered: React.CSSProperties = { opacity: 1, transform: 'translateY(0)' };
+        ? 'motion-safe:slide-in-from-top-4'
+        : undefined;
 
   return (
     <div
-      className={cn(className)}
+      className={cn(
+        'motion-safe:animate-in motion-safe:fade-in motion-reduce:animate-none',
+        variantClass,
+        className,
+      )}
       style={{
-        transition: `opacity ${duration}ms ease, transform ${duration}ms ease`,
-        ...(mounted ? entered : initial),
+        animationDuration: `${duration}ms`,
         ...style,
       }}
       {...props}

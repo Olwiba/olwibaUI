@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@olwiba/cn';
+import { useProgressiveReveal } from './use-progressive-reveal';
 
 export interface CountUpProps extends React.HTMLAttributes<HTMLSpanElement> {
   from?: number;
@@ -24,41 +25,40 @@ export function CountUp({
   className,
   ...props
 }: CountUpProps) {
-  const ref = React.useRef<HTMLSpanElement>(null);
-  const [value, setValue] = React.useState(from);
-  const hasStarted = React.useRef(false);
+  const [ref, revealState] = useProgressiveReveal<HTMLSpanElement>({ once, threshold: 0.5 });
+  // The useful value is the server fallback; animation may enhance it later.
+  const [value, setValue] = React.useState(to);
 
   React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    if (revealState === 'static') {
+      setValue(to);
+      return;
+    }
+    if (revealState === 'hidden') {
+      setValue(from);
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && (!once || !hasStarted.current)) {
-          hasStarted.current = true;
-          const start = performance.now();
+    let frame = 0;
+    const start = performance.now();
 
-          const tick = (now: number) => {
-            const elapsed = now - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setValue(from + (to - from) * eased);
-            if (progress < 1) requestAnimationFrame(tick);
-          };
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(from + (to - from) * eased);
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
 
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.5 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [from, to, duration, once]);
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [from, to, duration, revealState]);
 
   return (
     <span ref={ref} className={cn(className)} {...props}>
-      {prefix}{value.toFixed(decimals)}{suffix}
+      {prefix}
+      {value.toFixed(decimals)}
+      {suffix}
     </span>
   );
 }

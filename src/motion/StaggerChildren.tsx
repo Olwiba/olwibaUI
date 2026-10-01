@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@olwiba/cn';
+import { useProgressiveReveal } from './use-progressive-reveal';
 
 export interface StaggerChildrenProps extends React.HTMLAttributes<HTMLDivElement> {
   stagger?: number;
@@ -30,28 +31,8 @@ export function StaggerChildren({
   className,
   ...props
 }: StaggerChildrenProps) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          if (once) observer.disconnect();
-        } else if (!once) {
-          setVisible(false);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [once]);
+  const [ref, revealState] = useProgressiveReveal<HTMLDivElement>({ once });
+  const hidden = revealState === 'hidden';
 
   const [tx, ty] = translateMap[direction];
 
@@ -63,8 +44,8 @@ export function StaggerChildren({
           style={{
             transition: `opacity ${duration}ms ease, transform ${duration}ms ease`,
             transitionDelay: `${delay + i * stagger}ms`,
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translate(0,0)' : `translate(${tx}px,${ty}px)`,
+            opacity: hidden ? 0 : 1,
+            transform: hidden ? `translate(${tx}px,${ty}px)` : 'translate(0,0)',
           }}
         >
           {child}
