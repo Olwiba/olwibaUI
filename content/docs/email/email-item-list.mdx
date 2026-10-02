@@ -1,0 +1,50 @@
+---
+title: EmailItemList
+description: A short list of linked rows for a digest email, plain enough to render the same in every client.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="email-item-list" />
+
+`EmailItemList` is the list inside a digest: a title that links to the thing, one line of detail
+under it, and a hairline between rows. Past `max` rows it stops and says how many more there are,
+because a digest that needs to show everything wants a link to the product instead.
+
+It is deliberately plain. No images, no columns: those are what break first in mail clients and on
+phones, and a few lines of text with links render the same everywhere.
+[`ActionEmail`](/docs/email/action-email) uses it when given `items`.
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+```tsx
+import { EmailItemList, EmailLayout } from "@olwiba/ui/email";
+
+<EmailLayout appName="Nexus Inc" preview="Your week in Nexus Inc">
+  <EmailItemList
+    max={3}
+    items={reports.map((r) => ({ title: r.name, href: r.url, meta: r.team }))}
+    moreLabel={(n) => `And ${n} more in Reports`}
+  />
+</EmailLayout>
+```
+
+## API Reference
+
+<APIReference
+  name="EmailItemList"
+  props={[
+    { name: "items", type: "{ title: string; href?: string; meta?: string }[]", default: "-" },
+    { name: "max", type: "number", default: "5" },
+    { name: "moreLabel", type: "(remaining: number) => string", default: "And {n} more" },
+    { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
+  ]}
+/>

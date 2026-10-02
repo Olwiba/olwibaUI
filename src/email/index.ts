@@ -4,3 +4,5 @@ export { EmailLayout, type EmailLayoutProps } from './EmailLayout';
 // Used internally by ActionEmail and useful on its own: any email with a button
 // wants a copyable link for the clients that strip them.
 export { EmailLinkFallback, type EmailLinkFallbackProps } from './EmailLinkFallback';
+export { EmailItemList, type EmailItem, type EmailItemListProps } from './EmailItemList';
+export { EmailParagraphs, type EmailParagraphsProps } from './EmailParagraphs';

@@ -1321,6 +1321,49 @@ export function CustomEmail() {
 ` }],
   },
 
+  'action-email-digest': {
+    id: 'action-email-digest',
+    title: 'Action email with a digest',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/action-email-digest')),
+    files: [{ path: 'emails/reports-ready.tsx', language: 'tsx', code: `import { ActionEmail } from "@olwiba/ui/email";
+
+export function ReportsReady({ reports }: { reports: { name: string; url: string; team: string }[] }) {
+  return (
+    <ActionEmail
+      appName="Nexus Inc"
+      logoUrl="https://nexus.example/email-logo.png"
+      preview={\`\${reports.length} new reports are ready\`}
+      heading={\`\${reports.length} new reports are ready\`}
+      description="These finished overnight. Open one to read it, or see them all in Reports."
+      items={reports.map((r) => ({ title: r.name, href: r.url, meta: r.team }))}
+      actionLabel="Open Reports"
+      actionUrl="https://nexus.example/reports"
+      showLinkFallback={false}
+      footnote="You're receiving this because you have a Nexus Inc account."
+    />
+  );
+}
+` }],
+  },
+
+  'email-item-list': {
+    id: 'email-item-list',
+    title: 'Email item list',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/email-item-list')),
+    files: [{ path: 'emails/weekly.tsx', language: 'tsx', code: `import { EmailItemList, EmailLayout } from "@olwiba/ui/email";
+
+export function Weekly({ items }: { items: { title: string; href: string; meta: string }[] }) {
+  return (
+    <EmailLayout appName="Nexus Inc" preview="Your week in Nexus Inc">
+      <EmailItemList items={items} max={3} />
+    </EmailLayout>
+  );
+}
+` }],
+  },
+
   'email-link-fallback': {
     id: 'email-link-fallback',
     title: 'Email link fallback',

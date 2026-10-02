@@ -5,6 +5,7 @@
     "action-email",
     "notice-email",
     "email-layout",
+    "email-item-list",
     "email-link-fallback"
   ]
 }

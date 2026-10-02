@@ -47,5 +47,10 @@ const html = await render(
     { name: "heading", type: "string", default: "-" },
     { name: "body", type: "string", default: "-" },
     { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
+    { name: "logoUrl", type: "string", default: "-" },
+    { name: "logoDarkUrl", type: "string", default: "-" },
+    { name: "logoAlign", type: "'left' | 'center'", default: "'left'" },
+    { name: "footnote", type: "ReactNode", default: "-" },
+    { name: "colorScheme", type: "'light dark' | 'light'", default: "'light dark'" },
   ]}
 />

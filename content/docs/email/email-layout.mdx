@@ -54,5 +54,42 @@ const html = await render(
     { name: "preview", type: "string", default: "-" },
     { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
     { name: "footer", type: "ReactNode", default: "-" },
+    { name: "logoUrl", type: "string", default: "-" },
+    { name: "logoDarkUrl", type: "string", default: "-" },
+    { name: "logoSize", type: "number", default: "28" },
+    { name: "logoAlign", type: "'left' | 'center'", default: "'left'" },
+    { name: "footnote", type: "ReactNode", default: "-" },
+    { name: "colorScheme", type: "'light dark' | 'light'", default: "'light dark'" },
   ]}
 />
+
+## Light and dark
+
+The layout follows the reader's mail client rather than picking a theme. Colours are inlined light,
+so clients that ignore stylesheets (Gmail, Outlook on Windows) show the light version, and a
+stylesheet in the head switches to the dark palette in clients that report a dark preference:
+Apple Mail, iOS Mail, Outlook on the web and macOS, Hey and Thunderbird. Outlook's own forced dark
+mode is overridden with the same palette, so it does not guess at the colours.
+
+The preview follows the site theme, and the sun and moon button in the preview toolbar switches
+it on its own, so both are a click away. The brand colour follows the picker in the site header.
+
+Brand colours stay the same in both. If the logo only works on white, pass `logoDarkUrl` as well
+and clients in dark mode swap it in. `colorScheme="light"` pins a message to light everywhere.
+
+## Logo
+
+`logoUrl` puts a square logo beside the app name in the header. The name stays as real text
+beside it, so an email whose images are blocked (Outlook and many corporate clients block them
+until the reader allows it) still arrives branded rather than with an empty box at the top.
+
+The URL must be absolute and https, and the file a PNG, JPEG or GIF. SVG is not rendered by Gmail
+or Outlook, and a data URI is stripped by most clients. Host it with the app's other public
+assets, at twice the displayed size for sharp screens: a 56px file for the default `logoSize` of 28.
+
+## Footnote
+
+`footnote` is microtext under the card, in the grey margin: the line a recipient expects at the
+foot of an email, such as why they received it. It also gives anything a delivery provider appends
+below the message a footer to sit in. Plunk's free tier adds a "Send emails with Plunk" badge
+there, which reads as part of the design with a footnote above it and as an advert without one.

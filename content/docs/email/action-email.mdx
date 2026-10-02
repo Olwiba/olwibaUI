@@ -58,5 +58,22 @@ deciding whether to open.
     { name: "actionUrl", type: "string", default: "-" },
     { name: "brandColor", type: "string", default: "emailTheme.defaultBrandColor" },
     { name: "showLinkFallback", type: "boolean", default: "true" },
+    { name: "items", type: "EmailItem[]", default: "-" },
+    { name: "logoUrl", type: "string", default: "-" },
+    { name: "logoDarkUrl", type: "string", default: "-" },
+    { name: "logoAlign", type: "'left' | 'center'", default: "'left'" },
+    { name: "footnote", type: "ReactNode", default: "-" },
+    { name: "colorScheme", type: "'light dark' | 'light'", default: "'light dark'" },
   ]}
 />
+
+`description` is plain text: a blank line starts a new paragraph and a single newline is a line
+break. Both survive every client, including Outlook, which ignores `white-space: pre-wrap`.
+
+## With a digest
+
+Pass `items` when the email is about a handful of things: new listings, finished reports, recent
+activity. They render as linked rows between the description and the button, through
+[`EmailItemList`](/docs/email/email-item-list), five at most with the rest summarised.
+
+<Sandbox id="action-email-digest" />

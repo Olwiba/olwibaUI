@@ -19,16 +19,17 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { render } from '@react-email/render';
 import { emailExamples } from '../site/demos/email-examples';
+import { defaultEmailOptions } from '../site/demos/email-options';
 
 const ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)), '..');
 const OUTPUT = join(ROOT, 'site', 'demos', 'email-previews.generated.ts');
 
 const entries: Array<[string, string]> = [];
 
-for (const [id, element] of Object.entries(emailExamples)) {
+for (const [id, example] of Object.entries(emailExamples)) {
   // `pretty` keeps the markup readable for anyone who opens the iframe, and
   // costs nothing at runtime because this is the only place it runs.
-  const html = await render(element, { pretty: true });
+  const html = await render(example(defaultEmailOptions), { pretty: true });
   entries.push([id, html]);
 }
 
