@@ -22,8 +22,10 @@ export const sidebarSections: SidebarSection[] = [
   { name: 'Marketing', href: '/docs/marketing' },
   { name: 'Layering', href: '/docs/overlays' },
   { name: 'Motion', href: '/docs/motion' },
+  { name: 'Mechanics', href: '/docs/mechanics' },
   { name: 'Components', href: '/docs/components' },
   { name: 'Hooks', href: '/docs/hooks' },
+  { name: 'Email', href: '/docs/email' },
 ];
 
 export function getDocsSlugsFromPath(pathname: string) {

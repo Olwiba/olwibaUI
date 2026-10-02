@@ -17,8 +17,13 @@ export default defineConfig({
     alias: {
       '@olwiba/ui': resolve('./src/index.ts'),
     },
-    /** Linked `@olwiba/cn` resolves Radix from `olwibaCN/node_modules`; that pulls a second `react` and breaks SSR hooks. */
-    dedupe: ['react', 'react-dom'],
+    /**
+     * Linked `@olwiba/cn` resolves Radix from `olwibaCN/node_modules`; that pulls a second `react` and breaks SSR hooks.
+     * `@olwiba/cn` itself too: linked `@olwiba/docs` resolves it through olwibaDOCS's own pin, which lags the
+     * workspace. Vite prebundles that copy under the bare id and serves it to every importer, so the site got an
+     * old CN without newer exports (`notify`), threw before hydration, and the nav went dead.
+     */
+    dedupe: ['react', 'react-dom', '@olwiba/cn'],
   },
   optimizeDeps: {
     include: ['react-resizable-panels'],
