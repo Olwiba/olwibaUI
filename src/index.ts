@@ -233,9 +233,10 @@ export { FlowBracket, type FlowBracketProps } from './components/FlowBracket';
 export { FullPageSpinner } from './components/Spinner';
 export { PageHeader, type PageHeaderProps, type PageHeaderBreadcrumb, type PageHeaderBackButton } from './components/PageHeader';
 export { Suspensed } from './components/Suspensed';
-export { ThemeSwitchMinimal } from './components/ThemeSwitchMinimal';
+// The theme and brand switches moved to @olwiba/cn so the docs header can
+// share them with the products; re-exported so imports from here keep working.
+export { ThemeSwitchMinimal, BrandColorSwitchMinimal } from '@olwiba/cn';
 export { ModeSwitchMinimal } from './components/ModeSwitchMinimal';
-export { BrandColorSwitchMinimal } from './components/BrandColorSwitchMinimal';
 export { ThemeColorUpdater } from './components/ThemeColorUpdater';
 export { VersionBanner } from './components/VersionBanner';
 export { DevBanner, type DevBannerProps } from './components/DevBanner';
