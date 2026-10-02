@@ -32,6 +32,13 @@
 
 
 
+
+## 0.2.52
+
+### Fixed
+
+- Accept unknown router failures
+
 ## 0.2.51
 
 ### Added
