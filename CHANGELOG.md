@@ -31,6 +31,19 @@
 
 
 
+
+## 0.2.51
+
+### Added
+
+- Add resilient demos and download layouts
+- Add facets and rich results
+- Standardize scroll roots and link intent
+
+### Fixed
+
+- Preserve content before hydration
+
 ## 0.2.50
 
 No user-facing changes.
