@@ -33,6 +33,22 @@
 
 
 
+
+## 0.2.53
+
+### Added
+
+- Logo, footnote, digest list and light/dark templates
+
+### Changed
+
+- Use CN's header switches
+
+### Fixed
+
+- Require @olwiba/cn 0.1.65
+- Docs nav, brand default and a shadowed CN
+
 ## 0.2.52
 
 ### Fixed
