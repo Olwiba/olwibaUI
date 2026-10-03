@@ -23,6 +23,10 @@ export interface DataViewProps<TData> {
   ready?: boolean;
   /** Grid density at the widest breakpoint. Default 3. */
   gridColumns?: AppGridColumns;
+  /** Fluid grid: the narrowest a card may be. See AppGrid's `minItemWidth`. */
+  gridMinItemWidth?: number | string;
+  /** With `gridMinItemWidth`, the most columns at any width. */
+  gridMaxColumns?: number;
   gap?: 'none' | 'sm' | 'md' | 'lg';
   /** Rendered instead of either view when there is nothing to show. */
   empty?: React.ReactNode;
@@ -61,6 +65,8 @@ export function DataView<TData>({
   view,
   ready = true,
   gridColumns = 3,
+  gridMinItemWidth,
+  gridMaxColumns,
   gap = 'sm',
   empty,
   placeholder = null,
@@ -90,7 +96,13 @@ export function DataView<TData>({
   }
 
   return (
-    <AppGrid columns={gridColumns} gap={gap} className={cn(className)}>
+    <AppGrid
+      columns={gridColumns}
+      minItemWidth={gridMinItemWidth}
+      maxColumns={gridMaxColumns}
+      gap={gap}
+      className={cn(className)}
+    >
       {items.map((item) => (
         <React.Fragment key={getRowId(item)}>{renderCard(item)}</React.Fragment>
       ))}

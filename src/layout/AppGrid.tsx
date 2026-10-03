@@ -26,6 +26,14 @@ const gapMap = {
   lg: 'gap-6',
 }
 
+/** The same gaps as lengths, for the fluid track arithmetic. */
+const gapValues = {
+  none: '0px',
+  sm: '0.75rem',
+  md: '1rem',
+  lg: '1.5rem',
+}
+
 const spanMap = {
   1: 'sm:col-span-1',
   2: 'sm:col-span-2',
@@ -44,11 +52,55 @@ export interface AppGridProps extends React.HTMLAttributes<HTMLDivElement> {
    */
   columns?: AppGridColumns
   gap?: keyof typeof gapMap
+  /**
+   * Switches to a fluid grid: as many columns as fit at this width, each
+   * stretching to fill the row, so a wide screen gets more cards rather than
+   * wider ones. A number is pixels. Overrides `columns`.
+   */
+  minItemWidth?: number | string
+  /**
+   * With `minItemWidth`, the most columns the grid will make however wide it
+   * gets. Past it the cards widen instead.
+   */
+  maxColumns?: number
 }
 
-export function AppGrid({ columns = 3, gap = 'md', className, children, ...props }: AppGridProps) {
+/**
+ * The fluid track: `auto-fill` makes as many columns as the minimum allows and
+ * `1fr` stretches them to fill the row exactly. Raising the minimum to a
+ * fraction of the row (net of gaps) is what caps the count; the 0.1px stops
+ * rounding from losing the last column. `min(100%, …)` keeps a single card
+ * from overflowing a container narrower than the minimum.
+ */
+function fluidColumns(minItemWidth: number | string, maxColumns: number | undefined, gap: string) {
+  const min = typeof minItemWidth === 'number' ? `${minItemWidth}px` : minItemWidth
+  const track = maxColumns
+    ? `max(${min}, calc((100% - ${maxColumns - 1} * ${gap}) / ${maxColumns} - 0.1px))`
+    : min
+  return `repeat(auto-fill, minmax(min(100%, ${track}), 1fr))`
+}
+
+export function AppGrid({
+  columns = 3,
+  gap = 'md',
+  minItemWidth,
+  maxColumns,
+  className,
+  style,
+  children,
+  ...props
+}: AppGridProps) {
+  const fluid = minItemWidth !== undefined
   return (
-    <div className={cn('grid', columnsMap[columns], gapMap[gap], className)} {...props}>
+    <div
+      className={cn('grid', !fluid && columnsMap[columns], gapMap[gap], className)}
+      style={
+        fluid
+          ? { gridTemplateColumns: fluidColumns(minItemWidth, maxColumns, gapValues[gap]), ...style }
+          : style
+      }
+      {...props}
+    >
       {children}
     </div>
   )
