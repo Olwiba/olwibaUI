@@ -35,6 +35,13 @@
 
 
 
+
+## 0.2.55
+
+### Fixed
+
+- Reveal on the first pixel, then settle into a plain block
+
 ## 0.2.54
 
 ### Added
