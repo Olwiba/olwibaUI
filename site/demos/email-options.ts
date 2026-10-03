@@ -31,6 +31,7 @@ const emailBrandByTheme: Record<string, string> = {
   rose: '#ff2056',
   orange: '#ff6900',
   slate: '#45556c',
+  lime: '#5ea500',
 };
 
 /** Unknown themes fall back to emerald, as `@olwiba/docs` does for their styles. */

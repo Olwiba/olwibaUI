@@ -20,9 +20,9 @@ export const projectConfig = {
     darkOklch: "oklch(0.841 0.238 132.900)",
   },
   theme: {
-    // Must name a theme @olwiba/docs knows. "lime" did not, so the site fell
-    // back to emerald while the header picker showed nothing selected.
-    initialDocsTheme: "emerald",
+    // Must name a theme @olwiba/docs knows; an unknown name silently falls
+    // back to emerald. Lime is one of its themes from @olwiba/docs 0.1.56.
+    initialDocsTheme: "lime",
   },
 } as const satisfies ProjectThemeConfig
 
