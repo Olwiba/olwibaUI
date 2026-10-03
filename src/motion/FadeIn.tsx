@@ -41,27 +41,41 @@ export function FadeIn({
   style,
   ...props
 }: FadeInProps) {
-  const [ref, revealState] = useProgressiveReveal<HTMLDivElement>({ enabled: !eager, once });
-  const hidden = revealState === 'hidden';
+  const [ref, revealState] = useProgressiveReveal<HTMLDivElement>({
+    enabled: !eager,
+    once,
+    settleAfter: delay + duration,
+  });
+  // Transition and transform exist only while a reveal is pending or running.
+  // Before and after, this is a plain block: no layer for the browser to keep
+  // composited, and no `translate` quietly making it the containing block for
+  // fixed-position descendants.
+  const moving = revealState !== 'static';
 
   return (
     <div
       ref={ref}
       className={cn(
-        eager
-          ? cn(
-              'motion-safe:animate-in motion-safe:fade-in motion-reduce:animate-none',
-              enterMap[direction],
-            )
-          : 'motion-safe:transition-[opacity,transform]',
-        hidden ? `opacity-0 ${translateMap[direction]}` : 'opacity-100 translate-x-0 translate-y-0',
-        'motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
+        eager &&
+          cn(
+            'motion-safe:animate-in motion-safe:fade-in motion-reduce:animate-none',
+            enterMap[direction],
+          ),
+        !eager && moving && 'motion-safe:transition-[opacity,transform]',
+        revealState === 'hidden'
+          ? `opacity-0 ${translateMap[direction]}`
+          : moving
+            ? 'opacity-100 translate-x-0 translate-y-0'
+            : 'opacity-100',
+        moving && 'motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
         className,
       )}
       style={
         eager
           ? { animationDuration: `${duration}ms`, animationDelay: `${delay}ms`, ...style }
-          : { transitionDuration: `${duration}ms`, transitionDelay: `${delay}ms`, ...style }
+          : moving
+            ? { transitionDuration: `${duration}ms`, transitionDelay: `${delay}ms`, ...style }
+            : style
       }
       {...props}
     >

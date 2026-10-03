@@ -27,6 +27,27 @@ describe('progressive motion server fallbacks', () => {
     expect(html).not.toContain('opacity:0');
   });
 
+  // The static rendering is also what a reveal settles back to once it has
+  // run, so it must carry nothing that keeps a composited layer alive.
+  test('static FadeIn is a plain block, with no transition or transform', () => {
+    const html = renderToStaticMarkup(<FadeIn>Useful content</FadeIn>);
+
+    expect(html).not.toContain('transition');
+    expect(html).not.toContain('translate');
+  });
+
+  test('static staggered children carry no transition or transform', () => {
+    const html = renderToStaticMarkup(
+      <StaggerChildren>
+        <p>First</p>
+        <p>Second</p>
+      </StaggerChildren>,
+    );
+
+    expect(html).not.toContain('transition');
+    expect(html).not.toContain('transform');
+  });
+
   test('CountUp renders its useful final value without JavaScript', () => {
     expect(renderToStaticMarkup(<CountUp to={42} suffix="%" />)).toContain('42%');
   });

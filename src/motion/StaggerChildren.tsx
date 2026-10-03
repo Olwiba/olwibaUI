@@ -31,7 +31,11 @@ export function StaggerChildren({
   className,
   ...props
 }: StaggerChildrenProps) {
-  const [ref, revealState] = useProgressiveReveal<HTMLDivElement>({ once });
+  const count = React.Children.count(children);
+  const [ref, revealState] = useProgressiveReveal<HTMLDivElement>({
+    once,
+    settleAfter: delay + Math.max(count - 1, 0) * stagger + duration,
+  });
   const hidden = revealState === 'hidden';
 
   const [tx, ty] = translateMap[direction];
@@ -41,12 +45,18 @@ export function StaggerChildren({
       {React.Children.map(children, (child, i) => (
         <div
           className="h-full"
-          style={{
-            transition: `opacity ${duration}ms ease, transform ${duration}ms ease`,
-            transitionDelay: `${delay + i * stagger}ms`,
-            opacity: hidden ? 0 : 1,
-            transform: hidden ? `translate(${tx}px,${ty}px)` : 'translate(0,0)',
-          }}
+          // Transition and transform only while the reveal is pending or
+          // running; settled children are plain blocks (see FadeIn).
+          style={
+            revealState === 'static'
+              ? { opacity: 1 }
+              : {
+                  transition: `opacity ${duration}ms ease, transform ${duration}ms ease`,
+                  transitionDelay: `${delay + i * stagger}ms`,
+                  opacity: hidden ? 0 : 1,
+                  transform: hidden ? `translate(${tx}px,${ty}px)` : 'translate(0,0)',
+                }
+          }
         >
           {child}
         </div>

@@ -44,26 +44,35 @@ function ShowcaseCta({
   renderLink = defaultRenderLink,
   sectionClasses,
 }: CtaSectionProps & { sectionClasses: string }) {
-  const [ref, revealState] = useProgressiveReveal<HTMLElement>({ threshold: 0.15 });
+  // 900ms: the watermark's 700ms transition after its 200ms delay.
+  const [ref, revealState] = useProgressiveReveal<HTMLElement>({ settleAfter: 900 });
   const visible = revealState !== 'hidden';
+  // Transitions and transforms only while the reveal is pending or running;
+  // settled, the section is a plain block (see FadeIn).
+  const moving = revealState !== 'static';
 
   return (
     <section
       ref={ref}
       className={cn(
         sectionClasses,
-        'relative transition-[opacity,transform] duration-700 ease-out',
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6',
+        'relative',
+        moving && 'transition-[opacity,transform] duration-700 ease-out',
+        visible ? (moving ? 'opacity-100 translate-y-0' : 'opacity-100') : 'opacity-0 translate-y-6',
       )}
     >
       {/* Decorative watermark icon */}
       <div
         className="pointer-events-none absolute inset-0 flex items-center justify-center"
-        style={{
-          opacity: visible ? 0.1 : 0,
-          transform: visible ? 'scale(1) rotate(0deg)' : 'scale(0.9) rotate(-5deg)',
-          transition: 'opacity 700ms ease 200ms, transform 700ms ease 200ms',
-        }}
+        style={
+          moving
+            ? {
+                opacity: visible ? 0.1 : 0,
+                transform: visible ? 'scale(1) rotate(0deg)' : 'scale(0.9) rotate(-5deg)',
+                transition: 'opacity 700ms ease 200ms, transform 700ms ease 200ms',
+              }
+            : { opacity: 0.1 }
+        }
       >
         {icon ?? <Rocket className="size-72 text-foreground" strokeWidth={0.75} />}
       </div>
