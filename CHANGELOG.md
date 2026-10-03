@@ -34,6 +34,14 @@
 
 
 
+
+## 0.2.54
+
+### Added
+
+- Fluid AppGrid columns with a minimum card width
+- Default the docs to lime
+
 ## 0.2.53
 
 ### Added
