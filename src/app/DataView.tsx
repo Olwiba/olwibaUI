@@ -28,6 +28,14 @@ export interface DataViewProps<TData> {
   /** With `gridMinItemWidth`, the most columns at any width. */
   gridMaxColumns?: number;
   gap?: 'none' | 'sm' | 'md' | 'lg';
+  /**
+   * One extra card after the items in the grid view, shown only while the
+   * last row has room for it: a prompt to add more, a note that more is on
+   * the way. Fills the white space a short list leaves beside its cards
+   * without ever starting a row of its own. Give it `h-full` to match the
+   * row's height.
+   */
+  gridFiller?: React.ReactNode;
   /** Rendered instead of either view when there is nothing to show. */
   empty?: React.ReactNode;
   /** Shown while `ready` is false. Defaults to nothing. */
@@ -68,6 +76,7 @@ export function DataView<TData>({
   gridMinItemWidth,
   gridMaxColumns,
   gap = 'sm',
+  gridFiller,
   empty,
   placeholder = null,
   searchKey,
@@ -106,6 +115,39 @@ export function DataView<TData>({
       {items.map((item) => (
         <React.Fragment key={getRowId(item)}>{renderCard(item)}</React.Fragment>
       ))}
+      {gridFiller && items.length > 0 && <GridFiller count={items.length}>{gridFiller}</GridFiller>}
     </AppGrid>
+  );
+}
+
+/**
+ * The filler cell, shown only when the last row of `count` items has a gap.
+ *
+ * A fluid grid's column count is decided by the browser from its width, so
+ * the cell reads it back from the grid's computed tracks rather than being
+ * told: `grid-template-columns` resolves to one length per track, filled or
+ * not. Hidden until measured, so it never flashes in on a full row first.
+ */
+function GridFiller({ count, children }: { count: number; children: React.ReactNode }) {
+  const cell = React.useRef<HTMLDivElement>(null);
+  const [show, setShow] = React.useState(false);
+
+  React.useEffect(() => {
+    const grid = cell.current?.parentElement;
+    if (!grid) return;
+    const measure = () => {
+      const tracks = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
+      setShow(tracks > 1 && count % tracks !== 0);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, [count]);
+
+  return (
+    <div ref={cell} className={cn('min-w-0', !show && 'hidden')} aria-hidden={!show || undefined}>
+      {children}
+    </div>
   );
 }
