@@ -36,6 +36,17 @@
 
 
 
+
+## 0.2.56
+
+### Added
+
+- GridFiller completes a short last row
+
+### Fixed
+
+- Every page opens at the top, back included
+
 ## 0.2.55
 
 ### Fixed
