@@ -37,6 +37,13 @@
 
 
 
+
+## 0.2.57
+
+### Fixed
+
+- Constrain banner media
+
 ## 0.2.56
 
 ### Added
