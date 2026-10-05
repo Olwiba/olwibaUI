@@ -55,8 +55,17 @@ export function MediaCard({
       {...props}
     >
       {banner && (
-        <div className={cn('w-full shrink-0 overflow-hidden', bannerAspectClass[bannerAspect])}>
-          {banner}
+        <div
+          className={cn(
+            'relative w-full shrink-0 overflow-hidden',
+            bannerAspectClass[bannerAspect],
+          )}
+        >
+          {/* The aspect ratio establishes this frame's height, but percentage
+              heights on ordinary-flow descendants still resolve as auto. Pin
+              the banner to the frame so carousels and portrait images cannot
+              grow to their natural height and be clipped by the card. */}
+          <div className="absolute inset-0 [&>*]:size-full">{banner}</div>
         </div>
       )}
       <div className="flex flex-1 flex-col gap-3 p-4">
