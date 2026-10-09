@@ -23,7 +23,7 @@ export function ViewToggle({ view, onChange, labels, className, ...props }: View
 
   return (
     <div
-      className={cn('inline-flex items-center rounded-md border p-0.5', className)}
+      className={cn('inline-flex items-center rounded-md border bg-app-chrome p-px', className)}
       role="group"
       aria-label="View mode"
       {...props}
@@ -33,8 +33,8 @@ export function ViewToggle({ view, onChange, labels, className, ...props }: View
           key={mode}
           type="button"
           size="sm"
-          variant={view === mode ? 'secondary' : 'ghost'}
-          className="h-7 px-2"
+          variant={view === mode ? 'default' : 'ghost'}
+          className="h-8 px-2"
           aria-label={label}
           aria-pressed={view === mode}
           onClick={() => onChange(mode)}

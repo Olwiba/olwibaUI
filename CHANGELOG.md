@@ -38,6 +38,11 @@
 
 
 
+
+## 0.2.58
+
+No user-facing changes.
+
 ## 0.2.57
 
 ### Fixed
