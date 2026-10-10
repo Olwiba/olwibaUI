@@ -39,6 +39,13 @@
 
 
 
+
+## 0.2.59
+
+### Added
+
+- MaxRows and completeRows for fluid AppGrids
+
 ## 0.2.58
 
 No user-facing changes.
