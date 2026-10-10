@@ -27,6 +27,12 @@ export interface DataViewProps<TData> {
   gridMinItemWidth?: number | string;
   /** With `gridMinItemWidth`, the most columns at any width. */
   gridMaxColumns?: number;
+  /**
+   * Hide the grid's trailing partial row, for a feed with more pages still to
+   * load: pass `hasNextPage`. See AppGrid's `completeRows`. The filler is
+   * withheld while this is on, since there is no gap left for it to fill.
+   */
+  gridCompleteRows?: boolean;
   gap?: 'none' | 'sm' | 'md' | 'lg';
   /**
    * One extra card after the items in the grid view, shown only while the
@@ -75,6 +81,7 @@ export function DataView<TData>({
   gridColumns = 3,
   gridMinItemWidth,
   gridMaxColumns,
+  gridCompleteRows,
   gap = 'sm',
   gridFiller,
   empty,
@@ -109,13 +116,14 @@ export function DataView<TData>({
       columns={gridColumns}
       minItemWidth={gridMinItemWidth}
       maxColumns={gridMaxColumns}
+      completeRows={gridCompleteRows}
       gap={gap}
       className={cn(className)}
     >
       {items.map((item) => (
         <React.Fragment key={getRowId(item)}>{renderCard(item)}</React.Fragment>
       ))}
-      {gridFiller && items.length > 0 && <GridFiller count={items.length}>{gridFiller}</GridFiller>}
+      {gridFiller && items.length > 0 && !gridCompleteRows && <GridFiller count={items.length}>{gridFiller}</GridFiller>}
     </AppGrid>
   );
 }
