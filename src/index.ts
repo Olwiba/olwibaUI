@@ -35,6 +35,13 @@ export {
 } from './app/AppShell';
 
 export {
+  IdentityAvatar,
+  identityGradient,
+  identitySeed,
+  type IdentityAvatarProps,
+} from './app/IdentityAvatar';
+
+export {
   classifyLink,
   externalLinkLabel,
   type ClassifiedLink,

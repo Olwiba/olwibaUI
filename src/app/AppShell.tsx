@@ -1,19 +1,15 @@
 'use client';
 
 import type { LucideIcon } from 'lucide-react';
-import { useCallback, useRef, type CSSProperties, type ReactNode } from 'react';
+import { useCallback, useRef, type ReactNode } from 'react';
 import {
   BellIcon,
-  BirdIcon,
   CreditCardIcon,
   LogOutIcon,
   MoreVerticalIcon,
   SettingsIcon,
 } from 'lucide-react';
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
   cn,
   DropdownMenu,
   DropdownMenuContent,
@@ -37,7 +33,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@olwiba/cn';
-import { useUIMode } from '../context/OlwibaUIContext';
+import { IdentityAvatar } from './IdentityAvatar';
 import { useAutoHideOnScroll } from '../hooks/use-auto-hide-on-scroll';
 
 // ─── Public types ─────────────────────────────────────────────────────────────
@@ -207,46 +203,8 @@ export interface AppShellProps {
 const RAIL_SQUARE =
   'group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!min-w-8 group-data-[collapsible=icon]:!max-w-8 group-data-[collapsible=icon]:!p-0 group-data-[collapsible=icon]:transition-[width,height]';
 
-/**
- * A stable miniature identity artwork, instead of one grey square or a pair
- * of initials for everybody.
- *
- * FNV-1a gives the same unsigned hash for the same name/email on every device.
- * Different byte ranges choose three hues and the gradient angle, so nearby
- * names do not merely receive nearby shades of the same two-colour gradient.
- *
- * Lightness stays in a bounded range so the white bird remains legible. The
- * radial highlight supplies depth without adding a fourth random colour.
- */
-function identityGradient(seed: string): CSSProperties {
-  let hash = 2166136261;
-  for (let i = 0; i < seed.length; i += 1) {
-    hash ^= seed.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  hash >>>= 0;
-
-  const firstHue = hash % 360;
-  const secondHue = (firstHue + 55 + ((hash >>> 8) % 70)) % 360;
-  const thirdHue = (firstHue + 190 + ((hash >>> 16) % 110)) % 360;
-  const angleHash = Math.imul(hash ^ (hash >>> 15), 2246822519) >>> 0;
-  const angle = angleHash % 360;
-
-  return {
-    backgroundImage: [
-      `radial-gradient(circle at 28% 18%, oklch(0.94 0.06 ${thirdHue} / 0.78), transparent 34%)`,
-      `linear-gradient(${angle}deg, oklch(0.68 0.18 ${firstHue}), oklch(0.55 0.2 ${secondHue}) 52%, oklch(0.62 0.18 ${thirdHue}))`,
-    ].join(', '),
-    color: 'oklch(0.98 0 0)',
-  };
-}
-
 function NavUser({ user }: { user: AppShellUser }) {
   const { isMobile } = useSidebar();
-  const uiMode = useUIMode();
-  const avatarMode = uiMode !== 'default' ? (uiMode as 'playful' | 'smooth') : undefined;
-  const identitySeed = `${user.name?.trim().toLocaleLowerCase() ?? ''}|${user.email.toLocaleLowerCase()}`;
-  const identityTint = identityGradient(identitySeed);
 
   return (
     <SidebarMenu>
@@ -264,17 +222,12 @@ function NavUser({ user }: { user: AppShellUser }) {
                 RAIL_SQUARE,
               )}
             >
-              <Avatar mode={avatarMode} size="sm">
-                {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                <AvatarFallback className="text-white" style={identityTint}>
-                  {user.avatarFallback ?? (
-                    <BirdIcon
-                      aria-hidden
-                      className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
-                    />
-                  )}
-                </AvatarFallback>
-              </Avatar>
+              <IdentityAvatar
+                name={user.name}
+                email={user.email}
+                image={user.avatar}
+                fallback={user.avatarFallback}
+              />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name ?? user.email}</span>
                 <span className="truncate text-xs text-muted-foreground">
@@ -292,17 +245,12 @@ function NavUser({ user }: { user: AppShellUser }) {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar mode={avatarMode} size="sm">
-                  {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
-                  <AvatarFallback className="text-white" style={identityTint}>
-                    {user.avatarFallback ?? (
-                      <BirdIcon
-                        aria-hidden
-                        className="size-5 drop-shadow-[0_1px_1px_rgb(0_0_0/0.3)]"
-                      />
-                    )}
-                  </AvatarFallback>
-                </Avatar>
+                <IdentityAvatar
+                name={user.name}
+                email={user.email}
+                image={user.avatar}
+                fallback={user.avatarFallback}
+              />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name ?? user.email}</span>
                   <span className="truncate text-xs text-muted-foreground">{user.email}</span>
