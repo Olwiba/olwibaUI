@@ -40,6 +40,13 @@
 
 
 
+
+## 0.2.60
+
+### Added
+
+- `IdentityAvatar` component, which exposes the account menu's avatar so you can use it on its own anywhere in your app.
+
 ## 0.2.59
 
 ### Added
