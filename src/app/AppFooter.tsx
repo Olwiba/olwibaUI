@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import type { HTMLAttributes, ReactNode } from 'react';
-import { cn } from '../lib/utils';
+import type { HTMLAttributes, ReactNode } from "react";
+import { cn } from "../lib/utils";
 
 export interface AppFooterProps extends HTMLAttributes<HTMLElement> {
   /** Leading content — a product line, build info, a rotating message. */
@@ -26,11 +26,11 @@ export function AppFooter({ start, end, children, className, ...props }: AppFoot
     <footer
       {...props}
       className={cn(
-        'border-t bg-app-chrome px-4 py-3 text-xs text-muted-foreground sm:px-6',
+        "border-t bg-app-chrome px-4 py-3 text-xs text-muted-foreground sm:px-6",
         className,
       )}
     >
-      <div className="flex min-w-0 items-center justify-between gap-3">
+      <div className="flex min-w-0 flex-col items-start justify-between gap-2 sm:flex-row sm:items-center sm:gap-3">
         <div className="min-w-0 font-medium text-foreground">{start ?? children}</div>
         {end && <div className="flex shrink-0 items-center gap-2">{end}</div>}
       </div>
