@@ -1,6 +1,6 @@
 // @olwiba/ui — App-level components, sections, and hooks built on @olwiba/cn
 
-export { cn } from './lib/utils';
+export { cn } from "./lib/utils";
 
 // ─── Context ──────────────────────────────────────────────────────────────────
 export {
@@ -9,14 +9,14 @@ export {
   useUIMode,
   type OlwibaUIProviderProps,
   type UIMode,
-} from './context/OlwibaUIContext';
+} from "./context/OlwibaUIContext";
 
 // ─── Primitives — mode-aware re-exports of @olwiba/cn components ─────────────
-export * from './primitives';
-export { Enchanted, type EnchantedProps } from '@olwiba/cn';
+export * from "./primitives";
+export { Enchanted, type EnchantedProps } from "@olwiba/cn";
 
 // ─── Layout — grid, stack, section primitives ────────────────────────────────
-export * from './layout';
+export * from "./layout";
 
 // ─── App — shells, auth, feedback ────────────────────────────────────────────
 export {
@@ -32,25 +32,25 @@ export {
   type AppNavItem,
   APP_SHELL_SCROLL_SELECTOR,
   APP_SHELL_SCROLL_RESTORATION_ID,
-} from './app/AppShell';
+} from "./app/AppShell";
 
 export {
   IdentityAvatar,
   identityGradient,
   identitySeed,
   type IdentityAvatarProps,
-} from './app/IdentityAvatar';
+} from "./app/IdentityAvatar";
 
 export {
   classifyLink,
   externalLinkLabel,
   type ClassifiedLink,
   type LinkIntent,
-} from './lib/link-intent';
+} from "./lib/link-intent";
 
-export { AppPageHero, type AppPageHeroProps } from './app/AppPageHero';
+export { AppPageHero, type AppPageHeroProps } from "./app/AppPageHero";
 
-export { AppFooter, type AppFooterProps } from './app/AppFooter';
+export { AppFooter, type AppFooterProps } from "./app/AppFooter";
 
 export {
   AuthSection,
@@ -58,16 +58,16 @@ export {
   type AuthFormProps,
   parseAuthFieldErrors,
   type AuthFieldErrors,
-} from './app/AuthSection';
+} from "./app/AuthSection";
 
 export {
   AuthCheckEmail,
   type AuthCheckEmailProps,
   AuthEmailVerified,
   type AuthEmailVerifiedProps,
-} from './app/AuthStatusCards';
+} from "./app/AuthStatusCards";
 
-export { inboxLinkFor, type InboxLink } from './lib/inbox-link';
+export { inboxLinkFor, type InboxLink } from "./lib/inbox-link";
 
 export {
   CookieConsentProvider,
@@ -78,18 +78,15 @@ export {
   readCookieConsent,
   COOKIE_CONSENT_COOKIE,
   type CookieConsentValue,
-} from './app/CookieConsent';
+} from "./app/CookieConsent";
 
-export {
-  SettingsSection,
-  type SettingsSectionProps,
-} from './app/SettingsSection';
+export { SettingsSection, type SettingsSectionProps } from "./app/SettingsSection";
 
 export {
   TeamMembersPanel,
   type TeamMembersPanelProps,
   type TeamMemberRecord,
-} from './app/TeamMembersPanel';
+} from "./app/TeamMembersPanel";
 
 export {
   BillingPanel,
@@ -97,102 +94,139 @@ export {
   type BillingUsageMetric,
   type BillingInvoice,
   type BillingPaymentMethod,
-} from './app/BillingPanel';
+} from "./app/BillingPanel";
 
 export {
   OnboardingWizard,
   type OnboardingWizardProps,
   type OnboardingStep,
-} from './app/OnboardingWizard';
+} from "./app/OnboardingWizard";
 
-export {
-  EmptyState,
-  type EmptyStateProps,
-} from './app/EmptyState';
+export { EmptyState, type EmptyStateProps } from "./app/EmptyState";
 
-export {
-  ErrorPage,
-  type ErrorPageProps,
-} from './app/ErrorPage';
+export { ErrorPage, type ErrorPageProps } from "./app/ErrorPage";
 
 export {
   UpgradePrompt,
   type UpgradePromptProps,
   type UpgradeComparisonRow,
-} from './app/UpgradePrompt';
+} from "./app/UpgradePrompt";
 
-export { UpdateBanner, type UpdateBannerProps } from './app/UpdateBanner';
+export { UpdateBanner, type UpdateBannerProps } from "./app/UpdateBanner";
 
 // ─── Marketing — page sections ────────────────────────────────────────────────
-export { SectionTitle, type SectionTitleProps } from './marketing/SectionTitle';
-export { marketingSectionSpacing, type MarketingSectionSpacing } from './marketing/section-spacing';
+export { SectionTitle, type SectionTitleProps } from "./marketing/SectionTitle";
+export { marketingSectionSpacing, type MarketingSectionSpacing } from "./marketing/section-spacing";
 export {
   MarketingSurfaceProvider,
   useMarketingSurface,
   useSectionSurface,
   type MarketingSurface,
-} from './marketing/section-surface';
-export { HeroSection, type HeroSectionProps } from './marketing/HeroSection';
-export { FeaturesSection, type FeaturesSectionProps } from './marketing/FeaturesSection';
-export { GroupedFeaturesSection, type GroupedFeaturesSectionProps, type GroupedFeatureGroup } from './marketing/GroupedFeaturesSection';
-export { StepsSection, type StepsSectionProps, type StepItem, type StepGroup } from './marketing/StepsSection';
-export { TechStackSection, type TechStackSectionProps, type TechStackItem } from './marketing/TechStackSection';
-export { FeatureMarqueeSection, type FeatureMarqueeSectionProps, type FeatureMarqueeRow, type FeatureMarqueeItem } from './marketing/FeatureMarqueeSection';
-export { CtaSection, type CtaSectionProps } from './marketing/CtaSection';
+} from "./marketing/section-surface";
+export { HeroSection, type HeroSectionProps } from "./marketing/HeroSection";
+export { FeaturesSection, type FeaturesSectionProps } from "./marketing/FeaturesSection";
+export {
+  GroupedFeaturesSection,
+  type GroupedFeaturesSectionProps,
+  type GroupedFeatureGroup,
+} from "./marketing/GroupedFeaturesSection";
+export {
+  StepsSection,
+  type StepsSectionProps,
+  type StepItem,
+  type StepGroup,
+} from "./marketing/StepsSection";
+export {
+  TechStackSection,
+  type TechStackSectionProps,
+  type TechStackItem,
+} from "./marketing/TechStackSection";
+export {
+  FeatureMarqueeSection,
+  type FeatureMarqueeSectionProps,
+  type FeatureMarqueeRow,
+  type FeatureMarqueeItem,
+} from "./marketing/FeatureMarqueeSection";
+export { CtaSection, type CtaSectionProps } from "./marketing/CtaSection";
 export {
   DownloadSection,
   type DownloadSectionProps,
   type DownloadGroup,
   type DownloadItem,
-} from './marketing/DownloadSection';
-export { PricingSection, type PricingSectionProps, type PricingPlan } from './marketing/PricingSection';
+} from "./marketing/DownloadSection";
+export {
+  PricingSection,
+  type PricingSectionProps,
+  type PricingPlan,
+} from "./marketing/PricingSection";
 export {
   PricingOfferBanner,
   PricingOfferPrice,
   applyPricingDiscount,
   type PricingOffer,
-} from './marketing/PricingOffer';
-export { TestimonialsSection, type TestimonialsSectionProps } from './marketing/TestimonialsSection';
-export { TeamSection, type TeamMember, type TeamSectionProps } from './marketing/TeamSection';
-export { FaqSection, type FaqSectionProps } from './marketing/FaqSection';
-export { StatsSection, type StatsSectionProps } from './marketing/StatsSection';
-export { NewsletterSection, type NewsletterSectionProps } from './marketing/NewsletterSection';
-export { ContactSection, type ContactSectionProps, type ContactInfoItem } from './marketing/ContactSection';
-export { ComparisonSection, type ComparisonSectionProps, type ComparisonColumn } from './marketing/ComparisonSection';
-export { QualificationSection, type QualificationSectionProps, type QualificationColumn } from './marketing/QualificationSection';
+} from "./marketing/PricingOffer";
+export {
+  TestimonialsSection,
+  type TestimonialsSectionProps,
+} from "./marketing/TestimonialsSection";
+export { TeamSection, type TeamMember, type TeamSectionProps } from "./marketing/TeamSection";
+export { FaqSection, type FaqSectionProps } from "./marketing/FaqSection";
+export { StatsSection, type StatsSectionProps } from "./marketing/StatsSection";
+export { NewsletterSection, type NewsletterSectionProps } from "./marketing/NewsletterSection";
+export {
+  ContactSection,
+  type ContactSectionProps,
+  type ContactInfoItem,
+  type PhoneCountryCode,
+} from "./marketing/ContactSection";
+export {
+  ComparisonSection,
+  type ComparisonSectionProps,
+  type ComparisonColumn,
+} from "./marketing/ComparisonSection";
+export {
+  QualificationSection,
+  type QualificationSectionProps,
+  type QualificationColumn,
+} from "./marketing/QualificationSection";
 
 // ─── Marketing — elements ─────────────────────────────────────────────────────
-export { Navbar, type NavbarProps } from './marketing/Navbar';
-export { Footer, type FooterProps } from './marketing/Footer';
-export { LogoStrip, type LogoStripProps } from './marketing/LogoStrip';
+export { Navbar, type NavbarProps } from "./marketing/Navbar";
+export { Footer, type FooterProps } from "./marketing/Footer";
+export { LogoStrip, type LogoStripProps } from "./marketing/LogoStrip";
 
 // ─── Layering ─────────────────────────────────────────────────────────────────
-export { Underlay, type UnderlayProps, type UnderlayVariant } from './overlays/Underlay';
-export { Overlay, type OverlayProps, type OverlayVariant } from './overlays/Overlay';
+export { Underlay, type UnderlayProps, type UnderlayVariant } from "./overlays/Underlay";
+export { Overlay, type OverlayProps, type OverlayVariant } from "./overlays/Overlay";
 
 // ─── Motion ───────────────────────────────────────────────────────────────────
-export { FadeIn, type FadeInProps } from './motion/FadeIn';
-export { StaggerChildren, type StaggerChildrenProps } from './motion/StaggerChildren';
-export { CountUp, type CountUpProps } from './motion/CountUp';
+export { FadeIn, type FadeInProps } from "./motion/FadeIn";
+export { StaggerChildren, type StaggerChildrenProps } from "./motion/StaggerChildren";
+export { CountUp, type CountUpProps } from "./motion/CountUp";
 export {
   AnimatedSwap,
   type AnimatedSwapProps,
   type AnimatedSwapEffect,
   type AnimatedSwapSpec,
-} from './motion/AnimatedSwap';
-export { CountdownTimer, type CountdownTimerProps } from './motion/CountdownTimer';
-export { AnimatedPill, type AnimatedPillProps } from './motion/AnimatedPill';
-export { PageTransition, type PageTransitionProps } from './motion/PageTransition';
+} from "./motion/AnimatedSwap";
+export { CountdownTimer, type CountdownTimerProps } from "./motion/CountdownTimer";
+export { AnimatedPill, type AnimatedPillProps } from "./motion/AnimatedPill";
+export { PageTransition, type PageTransitionProps } from "./motion/PageTransition";
 
 // ─── Mechanics — behavior wrappers that play any children ────────────────────
-export { Carousel, type CarouselProps } from './mechanics/Carousel';
-export { Sortable, type SortableProps } from './mechanics/Sortable';
+export { Carousel, type CarouselProps } from "./mechanics/Carousel";
+export { Sortable, type SortableProps } from "./mechanics/Sortable";
 
 // ─── Components — interactive ────────────────────────────────────────────────
-export { Spotlight, type SpotlightProps, type SpotlightGroup, type SpotlightItem } from './components/Spotlight';
-export { Dock, type DockProps, type DockItem } from './components/Dock';
-export { ContextMenu, type ContextMenuProps, type ContextMenuDef } from './components/ContextMenu';
-export { ConfirmDialog, type ConfirmDialogProps } from './components/ConfirmDialog';
+export {
+  Spotlight,
+  type SpotlightProps,
+  type SpotlightGroup,
+  type SpotlightItem,
+} from "./components/Spotlight";
+export { Dock, type DockProps, type DockItem } from "./components/Dock";
+export { ContextMenu, type ContextMenuProps, type ContextMenuDef } from "./components/ContextMenu";
+export { ConfirmDialog, type ConfirmDialogProps } from "./components/ConfirmDialog";
 export {
   CommandMenu,
   matchesCommandQuery,
@@ -200,78 +234,99 @@ export {
   type CommandMenuGroup,
   type CommandMenuItem,
   type CommandMenuScope,
-} from './components/CommandMenu';
+} from "./components/CommandMenu";
 
 // ─── Components — data ───────────────────────────────────────────────────────
-export { DataTable, type DataTableProps, type DataTableColumn } from './components/DataTable';
-export { LoadMore, type LoadMoreProps } from './components/LoadMore';
-export { DataView, type DataViewProps } from './app/DataView';
-export { Chart, type ChartProps, type ChartSeries } from './components/Chart';
-export { FileUpload, type FileUploadProps, type FileUploadEntry } from './components/FileUpload';
+export { DataTable, type DataTableProps, type DataTableColumn } from "./components/DataTable";
+export { LoadMore, type LoadMoreProps } from "./components/LoadMore";
+export { DataView, type DataViewProps } from "./app/DataView";
+export { Chart, type ChartProps, type ChartSeries } from "./components/Chart";
+export { FileUpload, type FileUploadProps, type FileUploadEntry } from "./components/FileUpload";
 
 // ─── Components — notifications ──────────────────────────────────────────────
 // Re-exported from @olwiba/cn, which owns the toast system end to end — see
 // the note in ./components/Notify.
-export { notify, dismissNotification, type NotifyOptions, type NotifyAction, type NotifyVariant } from './components/Notify';
-export { NotificationsPopover, type NotificationsPopoverProps, type NotificationItem } from './components/NotificationsPopover';
-export { ActivityFeed, type ActivityFeedProps, type ActivityFeedItem } from './components/ActivityFeed';
+export {
+  notify,
+  dismissNotification,
+  type NotifyOptions,
+  type NotifyAction,
+  type NotifyVariant,
+} from "./components/Notify";
+export {
+  NotificationsPopover,
+  type NotificationsPopoverProps,
+  type NotificationItem,
+} from "./components/NotificationsPopover";
+export {
+  ActivityFeed,
+  type ActivityFeedProps,
+  type ActivityFeedItem,
+} from "./components/ActivityFeed";
 
 // ─── Components — device mockups ────────────────────────────────────────────
-export { PhoneFrame, type PhoneFrameProps } from './components/PhoneFrame';
-export { AppScreen } from './components/AppScreen';
+export { PhoneFrame, type PhoneFrameProps } from "./components/PhoneFrame";
+export { AppScreen } from "./components/AppScreen";
 
 // ─── Components — cards ───────────────────────────────────────────────────────
-export { GlassCard, type GlassCardProps } from './components/GlassCard';
-export { FeatureCard, type FeatureCardProps } from './components/FeatureCard';
-export { StatCard, type StatCardProps } from './components/StatCard';
-export { TestimonialCard, type TestimonialCardProps } from './components/TestimonialCard';
-export { PricingCard, type PricingCardProps, type PricingFeature } from './components/PricingCard';
-export { ImageCard, type ImageCardProps } from './components/ImageCard';
-export { MediaCard, type MediaCardProps } from './components/MediaCard';
-export { ProductDemoMedia, type ProductDemoMediaProps } from './components/ProductDemoMedia';
-export { InspectableMedia, type InspectableMediaProps } from './components/InspectableMedia';
-export { ViewToggle, type ViewToggleProps } from './components/ViewToggle';
+export { GlassCard, type GlassCardProps } from "./components/GlassCard";
+export { FeatureCard, type FeatureCardProps } from "./components/FeatureCard";
+export { StatCard, type StatCardProps } from "./components/StatCard";
+export { TestimonialCard, type TestimonialCardProps } from "./components/TestimonialCard";
+export { PricingCard, type PricingCardProps, type PricingFeature } from "./components/PricingCard";
+export { ImageCard, type ImageCardProps } from "./components/ImageCard";
+export { MediaCard, type MediaCardProps } from "./components/MediaCard";
+export { ProductDemoMedia, type ProductDemoMediaProps } from "./components/ProductDemoMedia";
+export { InspectableMedia, type InspectableMediaProps } from "./components/InspectableMedia";
+export { ViewToggle, type ViewToggleProps } from "./components/ViewToggle";
 
 // ─── Components — diagram ────────────────────────────────────────────────────
-export { FlowConnector, type FlowConnectorProps } from './components/FlowConnector';
-export { FlowBracket, type FlowBracketProps } from './components/FlowBracket';
+export { FlowConnector, type FlowConnectorProps } from "./components/FlowConnector";
+export { FlowBracket, type FlowBracketProps } from "./components/FlowBracket";
 
 // ─── Components — utility ────────────────────────────────────────────────────
-export { FullPageSpinner } from './components/Spinner';
-export { PageHeader, type PageHeaderProps, type PageHeaderBreadcrumb, type PageHeaderBackButton } from './components/PageHeader';
-export { Suspensed } from './components/Suspensed';
+export { FullPageSpinner } from "./components/Spinner";
+export {
+  PageHeader,
+  type PageHeaderProps,
+  type PageHeaderBreadcrumb,
+  type PageHeaderBackButton,
+} from "./components/PageHeader";
+export { Suspensed } from "./components/Suspensed";
 // The theme and brand switches moved to @olwiba/cn so the docs header can
 // share them with the products; re-exported so imports from here keep working.
-export { ThemeSwitchMinimal, BrandColorSwitchMinimal } from '@olwiba/cn';
-export { ModeSwitchMinimal } from './components/ModeSwitchMinimal';
-export { ThemeColorUpdater } from './components/ThemeColorUpdater';
-export { VersionBanner } from './components/VersionBanner';
-export { DevBanner, type DevBannerProps } from './components/DevBanner';
-export { RegisterHotkeys, type Hotkey } from './components/RegisterHotkeys';
-export { RootErrorFallback } from './components/RootErrorFallback';
+export { ThemeSwitchMinimal, BrandColorSwitchMinimal } from "@olwiba/cn";
+export { ModeSwitchMinimal } from "./components/ModeSwitchMinimal";
+export { ThemeColorUpdater } from "./components/ThemeColorUpdater";
+export { VersionBanner } from "./components/VersionBanner";
+export { DevBanner, type DevBannerProps } from "./components/DevBanner";
+export { RegisterHotkeys, type Hotkey } from "./components/RegisterHotkeys";
+export { RootErrorFallback } from "./components/RootErrorFallback";
 
 // ─── Blog ────────────────────────────────────────────────────────────────────
-export { PostCard, type PostCardProps, type PostAuthor } from './blog/PostCard';
-export { PostList, type PostListProps } from './blog/PostList';
-export { ChangelogList, type ChangelogListProps } from './blog/ChangelogList';
-export { ChangelogCard, type ChangelogCardProps, type ChangelogHighlight, type ChangelogReleaseType } from './blog/ChangelogCard';
+export { PostCard, type PostCardProps, type PostAuthor } from "./blog/PostCard";
+export { PostList, type PostListProps } from "./blog/PostList";
+export { ChangelogList, type ChangelogListProps } from "./blog/ChangelogList";
+export {
+  ChangelogCard,
+  type ChangelogCardProps,
+  type ChangelogHighlight,
+  type ChangelogReleaseType,
+} from "./blog/ChangelogCard";
 
 // ─── MDX ──────────────────────────────────────────────────────────────────────
-export { MdxContent, type MdxContentProps } from './blog/MdxContent';
+export { MdxContent, type MdxContentProps } from "./blog/MdxContent";
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
-export { useMounted } from './hooks/use-mounted';
-export { useConfirm, type ConfirmOptions, type UseConfirmReturn } from './hooks/use-confirm';
-export { useControlledOpen, type UseControlledOpenReturn } from './hooks/use-controlled-open';
-export { useScrolledPast } from './hooks/use-scrolled-past';
-export {
-  useAutoHideOnScroll,
-  type AutoHideOnScrollOptions,
-} from './hooks/use-auto-hide-on-scroll';
-export { useCopyToClipboard } from './hooks/use-copy-to-clipboard';
-export { useDebounce } from './hooks/use-debounce';
-export { useIntersectionObserver } from './hooks/use-intersection-observer';
-export { useLocalStorage } from './hooks/use-local-storage';
-export { useViewMode, type ViewMode, type UseViewModeReturn } from './hooks/use-view-mode';
-export { useMediaQuery } from './hooks/use-media-query';
-export { usePagination, type UsePaginationReturn } from './hooks/use-pagination';
+export { useMounted } from "./hooks/use-mounted";
+export { useConfirm, type ConfirmOptions, type UseConfirmReturn } from "./hooks/use-confirm";
+export { useControlledOpen, type UseControlledOpenReturn } from "./hooks/use-controlled-open";
+export { useScrolledPast } from "./hooks/use-scrolled-past";
+export { useAutoHideOnScroll, type AutoHideOnScrollOptions } from "./hooks/use-auto-hide-on-scroll";
+export { useCopyToClipboard } from "./hooks/use-copy-to-clipboard";
+export { useDebounce } from "./hooks/use-debounce";
+export { useIntersectionObserver } from "./hooks/use-intersection-observer";
+export { useLocalStorage } from "./hooks/use-local-storage";
+export { useViewMode, type ViewMode, type UseViewModeReturn } from "./hooks/use-view-mode";
+export { useMediaQuery } from "./hooks/use-media-query";
+export { usePagination, type UsePaginationReturn } from "./hooks/use-pagination";
