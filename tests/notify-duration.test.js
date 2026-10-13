@@ -10,15 +10,23 @@ const calls = [];
 // unrelated import chain rather than the thing under test.
 const actualSonner = await import('sonner');
 
+const captureToast = (_title, options) => {
+  calls.push(options);
+  return 'toast-id';
+};
+
+const toast = Object.assign(captureToast, {
+  custom: (_render, options) => captureToast(undefined, options),
+  dismiss: () => {},
+  error: captureToast,
+  info: captureToast,
+  success: captureToast,
+  warning: captureToast,
+});
+
 mock.module('sonner', () => ({
   ...actualSonner,
-  toast: {
-    custom: (_render, options) => {
-      calls.push(options);
-      return 'toast-id';
-    },
-    dismiss: () => {},
-  },
+  toast,
 }));
 
 const { notify } = await import('../src/components/Notify.tsx');

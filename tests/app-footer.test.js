@@ -11,7 +11,7 @@ describe('AppFooter', () => {
 
     expect(markup).toContain('<footer');
     expect(markup).toContain('border-t');
-    expect(markup).toContain('bg-background');
+    expect(markup).toContain('bg-app-chrome');
     expect(markup).toContain('Genesis');
     expect(markup).toContain('Online');
   });
