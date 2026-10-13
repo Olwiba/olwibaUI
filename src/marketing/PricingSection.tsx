@@ -445,11 +445,11 @@ export function PricingSection({
 
           {/* Footnote */}
           {(cadenceFootnote || footnote) && (
-            <p className="mt-8 text-center text-sm text-muted-foreground">
+            <div className="mt-8 text-center text-sm text-muted-foreground">
               {cadenceFootnote}
               {cadenceFootnote && footnote ? ' ' : null}
               {footnote}
-            </p>
+            </div>
           )}
         </div>
       </div>
