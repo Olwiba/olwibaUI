@@ -41,6 +41,13 @@
 
 
 
+
+## 0.2.61
+
+### Fixed
+
+- Improve shared quality and accessibility (#1)
+
 ## 0.2.60
 
 ### Added
