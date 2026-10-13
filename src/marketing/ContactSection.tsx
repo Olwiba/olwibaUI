@@ -1,19 +1,21 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { ChevronDown, Mail, MessageSquare, Send, type LucideIcon } from 'lucide-react';
-import { cn, Label } from '@olwiba/cn';
-import { useSectionSurface, type MarketingSurface } from './section-surface';
-import { Badge } from '../primitives/Badge';
-import { Button } from '../primitives/Button';
-import { Input } from '../primitives/Input';
-import { Textarea } from '../primitives/Textarea';
+import * as React from "react";
+import { ChevronDown, Mail, MessageSquare, Send, type LucideIcon } from "lucide-react";
+import { cn, Label } from "@olwiba/cn";
+import { useSectionSurface, type MarketingSurface } from "./section-surface";
+import { Badge } from "../primitives/Badge";
+import { Button } from "../primitives/Button";
+import { Input } from "../primitives/Input";
+import { Textarea } from "../primitives/Textarea";
 
 export type ContactInfoItem = {
   label: string;
   value: string;
   icon?: LucideIcon;
 };
+
+export type PhoneCountryCode = "US" | "NZ" | "AU" | "UK" | "CA" | "EU";
 
 export interface ContactSectionProps {
   badge?: string;
@@ -22,7 +24,7 @@ export interface ContactSectionProps {
    * Heading element for the title. Pass `'h1'` when this section opens the
    * page, so the page has exactly one top-level heading. @default 'h2'
    */
-  titleAs?: 'h1' | 'h2';
+  titleAs?: "h1" | "h2";
   description?: string;
   contactInfo?: ContactInfoItem[];
   privacyHref?: string;
@@ -33,32 +35,34 @@ export interface ContactSectionProps {
   /** How the section sits on the page. @default 'card' */
   surface?: MarketingSurface;
   /** Give only the form a contained card surface while leaving the section header open. */
-  formSurface?: 'plain' | 'card';
+  formSurface?: "plain" | "card";
+  /** Initial country in the optional phone field. User changes remain uncontrolled. @default 'US' */
+  defaultPhoneCountry?: PhoneCountryCode;
 }
 
 const PHONE_PREFIXES = [
-  { label: 'US +1', value: '+1-US' },
-  { label: 'NZ +64', value: '+64-NZ' },
-  { label: 'AU +61', value: '+61-AU' },
-  { label: 'UK +44', value: '+44-UK' },
-  { label: 'CA +1', value: '+1-CA' },
-  { label: 'EU', value: '+0-EU' },
-];
+  { label: "US +1", value: "+1-US", country: "US" },
+  { label: "NZ +64", value: "+64-NZ", country: "NZ" },
+  { label: "AU +61", value: "+61-AU", country: "AU" },
+  { label: "UK +44", value: "+44-UK", country: "UK" },
+  { label: "CA +1", value: "+1-CA", country: "CA" },
+  { label: "EU", value: "+0-EU", country: "EU" },
+] as const;
 
 const defaults = {
-  badge: 'Contact',
+  badge: "Contact",
   title: "Let's talk",
   description:
     "Have a question or want to work together? Fill in the form and you'll hear back from the person who built it.",
-  successTitle: 'Message sent',
+  successTitle: "Message sent",
   successDescription: "Thanks for reaching out. You'll get a reply within one business day.",
-  sendAnotherLabel: 'Send another',
+  sendAnotherLabel: "Send another",
 };
 
 export function ContactSection({
   badge = defaults.badge,
   title = defaults.title,
-  titleAs: Title = 'h2',
+  titleAs: Title = "h2",
   description = defaults.description,
   contactInfo,
   privacyHref,
@@ -67,7 +71,8 @@ export function ContactSection({
   sendAnotherLabel = defaults.sendAnotherLabel,
   onSubmit,
   surface,
-  formSurface = 'plain',
+  formSurface = "plain",
+  defaultPhoneCountry = "US",
 }: ContactSectionProps = {}) {
   const [submitted, setSubmitted] = React.useState(false);
   const sectionClasses = useSectionSurface(surface);
@@ -81,7 +86,6 @@ export function ContactSection({
   return (
     <section className={sectionClasses}>
       <div className="px-6 py-14 sm:px-10 sm:py-20">
-
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           {badge && (
@@ -114,7 +118,12 @@ export function ContactSection({
             </div>
             <h3 className="mt-5 text-lg font-semibold">{successTitle}</h3>
             <p className="mt-2 text-sm text-muted-foreground">{successDescription}</p>
-            <Button variant="outline" size="sm" className="mt-6" onClick={() => setSubmitted(false)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-6"
+              onClick={() => setSubmitted(false)}
+            >
               {sendAnotherLabel}
             </Button>
           </div>
@@ -122,9 +131,9 @@ export function ContactSection({
           <form
             onSubmit={handleSubmit}
             className={cn(
-              'mx-auto mt-16 max-w-xl sm:mt-20',
-              formSurface === 'card' &&
-                'rounded-3xl border border-foreground/10 bg-card p-6 shadow-xl shadow-foreground/5 sm:p-10',
+              "mx-auto mt-16 max-w-xl sm:mt-20",
+              formSurface === "card" &&
+                "rounded-3xl border border-foreground/10 bg-card p-6 shadow-xl shadow-foreground/5 sm:p-10",
             )}
           >
             {/* Honeypot */}
@@ -173,8 +182,7 @@ export function ContactSection({
               {/* Company */}
               <div className="sm:col-span-2">
                 <Label htmlFor="contact-company" className="block text-sm/6 font-semibold">
-                  Company{' '}
-                  <span className="font-normal text-muted-foreground">(optional)</span>
+                  Company <span className="font-normal text-muted-foreground">(optional)</span>
                 </Label>
                 <div className="mt-2.5">
                   <Input
@@ -206,15 +214,17 @@ export function ContactSection({
               {/* Phone */}
               <div className="sm:col-span-2">
                 <Label htmlFor="contact-phone" className="block text-sm/6 font-semibold">
-                  Phone number{' '}
-                  <span className="font-normal text-muted-foreground">(optional)</span>
+                  Phone number <span className="font-normal text-muted-foreground">(optional)</span>
                 </Label>
                 <div className="mt-2.5 flex overflow-hidden rounded-md border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
                   <div className="relative flex shrink-0 items-center border-r border-input">
                     <select
                       name="countryCode"
                       aria-label="Country code"
-                      defaultValue="+1-US"
+                      defaultValue={
+                        PHONE_PREFIXES.find((prefix) => prefix.country === defaultPhoneCountry)!
+                          .value
+                      }
                       className="h-full appearance-none bg-transparent py-2 pl-3 pr-7 text-sm text-foreground focus:outline-none"
                     >
                       {PHONE_PREFIXES.map(({ label, value }) => (
@@ -272,7 +282,7 @@ export function ContactSection({
                     htmlFor="contact-privacy"
                     className="cursor-pointer text-sm font-normal leading-snug text-muted-foreground"
                   >
-                    By selecting this, you agree to our{' '}
+                    By selecting this, you agree to our{" "}
                     <a
                       href={privacyHref}
                       className="font-medium text-foreground underline-offset-2 hover:underline"
@@ -293,7 +303,6 @@ export function ContactSection({
             </div>
           </form>
         )}
-
       </div>
     </section>
   );

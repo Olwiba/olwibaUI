@@ -1,14 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Building2,
-  Eye,
-  EyeOff,
-  Loader2,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { Building2, Eye, EyeOff, Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import {
   Badge,
   CardContent,
@@ -26,11 +19,7 @@ import { Card } from "../primitives/Card";
 import { Input } from "../primitives/Input";
 import type { AppShellRenderLink } from "./AppShell";
 
-const defaultRenderLink: AppShellRenderLink = ({
-  href,
-  children,
-  className,
-}) => (
+const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
   <a href={href} className={className}>
     {children}
   </a>
@@ -105,22 +94,14 @@ function CenteredAuth({
 
 // ─── Split layout ─────────────────────────────────────────────────────────────
 
-function SplitAuth({
-  children,
-  panel,
-}: {
-  children: React.ReactNode;
-  panel?: React.ReactNode;
-}) {
+function SplitAuth({ children, panel }: { children: React.ReactNode; panel?: React.ReactNode }) {
   const defaultPanel = (
     <div className="flex flex-col gap-6">
       <Badge variant="secondary" className="w-fit">
         Welcome
       </Badge>
       <div className="space-y-3">
-        <h2 className="text-3xl font-semibold tracking-tight">
-          Build better, ship faster
-        </h2>
+        <h2 className="text-3xl font-semibold tracking-tight">Build better, ship faster</h2>
         <p className="max-w-md text-muted-foreground">
           Sign in to continue building with ready-made components and layouts.
         </p>
@@ -145,9 +126,7 @@ function SplitAuth({
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-muted" />
         <div className="relative z-10">{panel ?? defaultPanel}</div>
       </div>
-      <div className="flex items-center justify-center p-6 lg:p-10">
-        {children}
-      </div>
+      <div className="flex items-center justify-center p-6 lg:p-10">{children}</div>
     </section>
   );
 }
@@ -329,9 +308,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-function PasswordInput(
-  props: Omit<React.ComponentProps<typeof Input>, "type">,
-) {
+function PasswordInput(props: Omit<React.ComponentProps<typeof Input>, "type">) {
   const [visible, setVisible] = React.useState(false);
 
   return (
@@ -381,9 +358,7 @@ function DefaultForm({
   const [code, setCode] = React.useState("");
   const hasPrefill = !!(defaultEmail || defaultPassword);
   const prefillStyle = (active: boolean): React.CSSProperties | undefined =>
-    active
-      ? { animation: "auth-prefill 1.6s ease-out 0.35s 1 both" }
-      : undefined;
+    active ? { animation: "auth-prefill 1.6s ease-out 0.35s 1 both" } : undefined;
   const copy = authCopy[mode];
 
   return (
@@ -394,13 +369,14 @@ function DefaultForm({
       )}
       <CardHeader>
         {brand && <div className="mb-2">{brand}</div>}
-        <CardTitle>{copy.title}</CardTitle>
+        <CardTitle>
+          <h1>{copy.title}</h1>
+        </CardTitle>
         <CardDescription>
           {isVerify && destination ? (
             <>
               We sent a verification code to{" "}
-              <span className="font-medium text-foreground">{destination}</span>
-              .
+              <span className="font-medium text-foreground">{destination}</span>.
             </>
           ) : (
             copy.description

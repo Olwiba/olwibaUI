@@ -33,6 +33,8 @@ export interface PricingCadence {
   periodsPerYear?: number;
   /** Price suffix, e.g. "/ week". Falls back to `PricingPlan.periodDisplay`. */
   suffix?: string;
+  /** Cadence-specific billing explanation rendered before the section footnote. */
+  footnote?: React.ReactNode;
 }
 
 export interface PricingPlan {
@@ -138,7 +140,8 @@ export interface PricingSectionProps {
   saveBadge?: string;
   isAuthenticated?: boolean;
   renderLink?: AppShellRenderLink;
-  footnote?: string;
+  /** Common note shown after any cadence-specific billing explanation. */
+  footnote?: React.ReactNode;
   mode?: 'subscription' | 'one-time';
   foundingDeadline?: string;
   /** Symbol prepended to the computed price. Ignored by plans with `priceDisplay`. */
@@ -227,6 +230,7 @@ export function PricingSection({
     '';
   const [activeCadence, setActiveCadence] = React.useState(initialCadence);
   const cadence = cadences?.find((c) => c.key === activeCadence);
+  const cadenceFootnote = useCadences ? cadence?.footnote : undefined;
   const saveBadges = React.useMemo(
     () => (useCadences ? computeSaveBadges(plans, cadences!) : {}),
     [useCadences, plans, cadences],
@@ -440,10 +444,12 @@ export function PricingSection({
           </StaggerChildren>
 
           {/* Footnote */}
-          {footnote && (
-            <p className="mt-8 text-center text-sm text-muted-foreground">
+          {(cadenceFootnote || footnote) && (
+            <div className="mt-8 text-center text-sm text-muted-foreground">
+              {cadenceFootnote}
+              {cadenceFootnote && footnote ? ' ' : null}
               {footnote}
-            </p>
+            </div>
           )}
         </div>
       </div>

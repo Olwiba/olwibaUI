@@ -24,6 +24,14 @@ function StatusIcon({ children }: { children: React.ReactNode }) {
   );
 }
 
+function PageTitle({ children }: { children: React.ReactNode }) {
+  return typeof children === "string" || typeof children === "number" ? (
+    <h1>{children}</h1>
+  ) : (
+    children
+  );
+}
+
 function formatCountdown(seconds: number): string {
   const minutes = Math.floor(seconds / 60);
   return `${minutes}:${String(seconds % 60).padStart(2, "0")}`;
@@ -120,7 +128,9 @@ export function AuthCheckEmail({
         <StatusIcon>
           <MailCheck className="size-6" aria-hidden="true" />
         </StatusIcon>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+          <PageTitle>{title}</PageTitle>
+        </CardTitle>
         <CardDescription>
           We sent a confirmation link to{" "}
           <span className="font-medium text-foreground">{email}</span>. Open it to finish setting
@@ -211,7 +221,9 @@ export function AuthEmailVerified({
         <StatusIcon>
           <CheckCircle2 className="size-6" aria-hidden="true" />
         </StatusIcon>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+          <PageTitle>{title}</PageTitle>
+        </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
