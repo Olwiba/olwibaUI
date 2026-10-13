@@ -120,7 +120,9 @@ export function AuthCheckEmail({
         <StatusIcon>
           <MailCheck className="size-6" aria-hidden="true" />
         </StatusIcon>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+          <h1>{title}</h1>
+        </CardTitle>
         <CardDescription>
           We sent a confirmation link to{" "}
           <span className="font-medium text-foreground">{email}</span>. Open it to finish setting
@@ -211,7 +213,9 @@ export function AuthEmailVerified({
         <StatusIcon>
           <CheckCircle2 className="size-6" aria-hidden="true" />
         </StatusIcon>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+          <h1>{title}</h1>
+        </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
