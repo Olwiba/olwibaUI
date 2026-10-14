@@ -42,6 +42,11 @@
 
 
 
+
+## 0.2.62
+
+No user-facing changes.
+
 ## 0.2.61
 
 ### Fixed

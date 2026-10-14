@@ -67,7 +67,7 @@ type Controls = Omit<EmailExampleOptions, 'brandColor'>;
 export function EmailFrame({ id }: { id: string }) {
   const siteScheme = useResolvedTheme();
   const scheme = useSandboxTheme() ?? siteScheme;
-  const { activeTheme } = useThemeConfig();
+  const { activeTheme, customColor } = useThemeConfig();
 
   const [controls, setControls] = React.useState<Controls>({
     logo: defaultEmailOptions.logo,
@@ -77,7 +77,9 @@ export function EmailFrame({ id }: { id: string }) {
   // Typing in the footnote re-renders the email; deferring keeps the field
   // responsive while the frame catches up.
   const deferredControls = React.useDeferredValue(controls);
-  const brandColor = emailBrandFor(activeTheme);
+  // A custom brand colour is already hex, which is what email needs.
+  const brandColor =
+    activeTheme === 'custom' && customColor ? customColor : emailBrandFor(activeTheme);
   const options = React.useMemo<EmailExampleOptions>(
     () => ({ ...deferredControls, brandColor }),
     [deferredControls, brandColor],
