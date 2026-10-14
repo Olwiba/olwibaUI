@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { cn } from '@olwiba/cn';
 import { Button } from '../primitives/Button';
@@ -109,33 +109,35 @@ export function ErrorPage({
               Maybe you were looking for
             </p>
             <div className="mt-4 grid gap-3 text-left sm:grid-cols-2 lg:grid-cols-3">
-              {links.map((link) =>
-                renderLink({
-                  href: link.href,
-                  className:
-                    'group flex items-start gap-3 rounded-xl border bg-background/60 p-4 backdrop-blur transition-colors hover:border-primary/40 hover:bg-accent',
-                  children: (
-                    <>
-                      {link.icon && (
-                        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg border bg-muted text-muted-foreground">
-                          {link.icon}
-                        </span>
-                      )}
-                      <span className="min-w-0 grow">
-                        <span className="flex items-center gap-1 text-sm font-medium">
-                          {link.label}
-                          <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
-                        </span>
-                        {link.description && (
-                          <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
-                            {link.description}
+              {links.map((link) => (
+                <Fragment key={link.href}>
+                  {renderLink({
+                    href: link.href,
+                    className:
+                      'group flex items-start gap-3 rounded-xl border bg-background/60 p-4 backdrop-blur transition-colors hover:border-primary/40 hover:bg-accent',
+                    children: (
+                      <>
+                        {link.icon && (
+                          <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg border bg-muted text-muted-foreground">
+                            {link.icon}
                           </span>
                         )}
-                      </span>
-                    </>
-                  ),
-                }),
-              )}
+                        <span className="min-w-0 grow">
+                          <span className="flex items-center gap-1 text-sm font-medium">
+                            {link.label}
+                            <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                          </span>
+                          {link.description && (
+                            <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
+                              {link.description}
+                            </span>
+                          )}
+                        </span>
+                      </>
+                    ),
+                  })}
+                </Fragment>
+              ))}
             </div>
           </div>
         )}
