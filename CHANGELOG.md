@@ -43,6 +43,17 @@
 
 
 
+
+## 0.2.63
+
+### Changed
+
+- Skip declarations in watch mode
+
+### Fixed
+
+- Key error page links
+
 ## 0.2.62
 
 No user-facing changes.
