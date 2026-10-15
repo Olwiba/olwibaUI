@@ -16,4 +16,16 @@ describe("Footer", () => {
     expect(html).toContain("select-none");
     expect(html).toContain('data-slot="status-indicator-pulse"');
   });
+
+  test("keeps the status dot alive when a source is degraded", () => {
+    const html = renderToStaticMarkup(
+      <Footer
+        brand={{ name: "Nexus" }}
+        status={{ label: "some sources limited", severity: "degraded" }}
+      />,
+    );
+
+    expect(html).toContain("text-amber-500");
+    expect(html).toContain('data-slot="status-indicator-pulse"');
+  });
 });

@@ -71,7 +71,7 @@ export function Footer({
   const statusContent = status ? (
     <StatusIndicator
       className="leading-none"
-      pulse={statusSeverity === "operational"}
+      pulse
       dotClassName={SEVERITY_DOT[statusSeverity!]}
       size="sm"
     >
