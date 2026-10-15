@@ -72,7 +72,7 @@
   },
   "devDependencies": {
     "@content-collections/mdx": "^0.2.2",
-    "@olwiba/cn": "0.1.69",
+    "@olwiba/cn": "0.1.70",
     "@olwiba/docs": "0.1.57",
     "@olwiba/dx": "0.0.40",
     "@react-email/render": "^2.1.0",
