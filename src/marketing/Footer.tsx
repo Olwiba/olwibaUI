@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import type { ReactNode } from 'react';
-import { StatusIndicator } from '@olwiba/cn';
-import type { AppShellRenderLink } from '../app/AppShell';
+import type { ReactNode } from "react";
+import { StatusIndicator } from "@olwiba/cn";
+import type { AppShellRenderLink } from "../app/AppShell";
 
 export interface FooterProps {
   brand: { name: string; logo?: ReactNode; href?: string };
@@ -17,6 +17,8 @@ export interface FooterProps {
    */
   status?: {
     label: ReactNode;
+    /** Makes the complete pill a link, including its dot and tap target. */
+    href?: string;
     /**
      * Three states, because one service being unavailable is not the same
      * event as everything being unavailable. `operational` alone could only
@@ -24,7 +26,7 @@ export interface FooterProps {
      * a total one — and a pill that shouts at the same volume for both is
      * one people learn to stop reading.
      */
-    severity?: 'operational' | 'degraded' | 'down';
+    severity?: "operational" | "degraded" | "down";
     /** @deprecated Pass `severity`. Kept so existing callers keep working. */
     operational?: boolean;
   };
@@ -32,19 +34,24 @@ export interface FooterProps {
 }
 
 const SEVERITY_DOT = {
-  operational: 'text-emerald-500',
-  degraded: 'text-amber-500',
-  down: 'text-destructive',
+  operational: "text-emerald-500",
+  degraded: "text-amber-500",
+  down: "text-destructive",
 } as const;
 
 /** Falls back to the old boolean so callers that predate `severity` are unchanged. */
-function footerSeverity(status: { severity?: 'operational' | 'degraded' | 'down'; operational?: boolean }) {
+function footerSeverity(status: {
+  severity?: "operational" | "degraded" | "down";
+  operational?: boolean;
+}) {
   if (status.severity) return status.severity;
-  return status.operational !== false ? 'operational' : 'down';
+  return status.operational !== false ? "operational" : "down";
 }
 
 const defaultRenderLink: AppShellRenderLink = ({ href, children, className }) => (
-  <a href={href} className={className}>{children}</a>
+  <a href={href} className={className}>
+    {children}
+  </a>
 );
 
 export function Footer({
@@ -55,8 +62,22 @@ export function Footer({
   status,
   renderLink = defaultRenderLink,
 }: FooterProps) {
-  const brandHref = brand.href ?? '/';
-  const copyrightText = legal ?? `\u00A9 ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
+  const brandHref = brand.href ?? "/";
+  const copyrightText =
+    legal ?? `\u00A9 ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
+  const statusSeverity = status ? footerSeverity(status) : undefined;
+  const statusClassName =
+    "inline-flex touch-manipulation select-none items-center rounded-full border bg-muted/40 px-3 py-1 text-xs leading-none text-muted-foreground transition-colors hover:text-foreground";
+  const statusContent = status ? (
+    <StatusIndicator
+      className="leading-none"
+      pulse={statusSeverity === "operational"}
+      dotClassName={SEVERITY_DOT[statusSeverity!]}
+      size="sm"
+    >
+      {status.label}
+    </StatusIndicator>
+  ) : null;
 
   return (
     <footer className="overflow-hidden rounded-2xl border bg-card text-foreground">
@@ -65,7 +86,7 @@ export function Footer({
         <div className="flex justify-center">
           {renderLink({
             href: brandHref,
-            className: 'flex items-center gap-2',
+            className: "flex items-center gap-2",
             children: (
               <>
                 {brand.logo}
@@ -94,7 +115,8 @@ export function Footer({
               <div key={label}>
                 {renderLink({
                   href,
-                  className: 'text-sm/6 text-muted-foreground transition-colors hover:text-foreground',
+                  className:
+                    "text-sm/6 text-muted-foreground transition-colors hover:text-foreground",
                   children: label,
                 })}
               </div>
@@ -126,15 +148,16 @@ export function Footer({
         {/* Status */}
         {status && (
           <div className="mt-4 flex justify-center">
-            <div className="inline-flex items-center rounded-full border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
-              <StatusIndicator
-                pulse={footerSeverity(status) === 'operational'}
-                dotClassName={SEVERITY_DOT[footerSeverity(status)]}
-                size="sm"
-              >
-                {status.label}
-              </StatusIndicator>
-            </div>
+            {status.href ? (
+              renderLink({
+                href: status.href,
+                className: statusClassName,
+                "aria-label": `View system status: ${typeof status.label === "string" ? status.label : "current status"}`,
+                children: statusContent,
+              })
+            ) : (
+              <div className={statusClassName}>{statusContent}</div>
+            )}
           </div>
         )}
       </div>
