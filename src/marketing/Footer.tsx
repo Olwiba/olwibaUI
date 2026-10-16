@@ -67,7 +67,7 @@ export function Footer({
     legal ?? `\u00A9 ${new Date().getFullYear()} ${brand.name}. All rights reserved.`;
   const statusSeverity = status ? footerSeverity(status) : undefined;
   const statusClassName =
-    "inline-flex touch-manipulation select-none items-center rounded-full border bg-muted/40 px-3 py-1 text-xs leading-none text-muted-foreground transition-colors hover:text-foreground";
+    "inline-flex touch-manipulation select-none items-center rounded-full border bg-muted/40 px-3 py-2 text-xs leading-none text-muted-foreground transition-colors hover:text-foreground";
   const statusContent = status ? (
     <StatusIndicator
       className="leading-none"

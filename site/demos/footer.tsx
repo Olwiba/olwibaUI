@@ -37,6 +37,7 @@ export default function Demo() {
       brand={{ name: 'Nexus Inc', logo: <Zap className="size-4" /> }}
       navLinks={navLinks}
       socialLinks={socialLinks}
+      status={{ label: 'All systems operational', severity: 'operational', href: '/status' }}
     />
   );
 }

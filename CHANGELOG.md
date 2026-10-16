@@ -47,6 +47,11 @@
 
 
 
+
+## 0.2.67
+
+No user-facing changes.
+
 ## 0.2.66
 
 No user-facing changes.

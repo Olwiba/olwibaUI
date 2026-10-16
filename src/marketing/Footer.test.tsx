@@ -14,6 +14,7 @@ describe("Footer", () => {
     expect(html).toContain('href="/status"');
     expect(html).toContain("touch-manipulation");
     expect(html).toContain("select-none");
+    expect(html).toContain("px-3 py-2");
     expect(html).toContain('data-slot="status-indicator-pulse"');
   });
 
