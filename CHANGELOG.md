@@ -48,6 +48,14 @@
 
 
 
+
+## 0.2.68
+
+### Fixed
+
+- Pricing: the highlighted card now renders with a solid background.
+- Pricing: the featured section now keeps the same vertical spacing rhythm as the surrounding sections.
+
 ## 0.2.67
 
 No user-facing changes.
