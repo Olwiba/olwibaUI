@@ -75,7 +75,12 @@ export function PricingCard({
           : mode === 'smooth'
             ? 'rounded-3xl'
             : 'rounded-2xl',
-        highlighted ? 'border-primary bg-primary/5 shadow-sm' : 'bg-card',
+        // The highlighted tint is a layer over the card colour, never the
+        // background itself: a 5% tint alone is see-through, and the featured
+        // layout overlaps neighbouring cards and the section surface.
+        highlighted
+          ? 'border-primary bg-card bg-linear-to-b from-primary/5 to-primary/5 shadow-sm'
+          : 'bg-card',
         disabled && 'pointer-events-none opacity-40 select-none',
         mode !== 'playful' && className,
       )}

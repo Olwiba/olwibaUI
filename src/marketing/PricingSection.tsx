@@ -248,7 +248,8 @@ export function PricingSection({
       <div
         className={cn(
           'px-6',
-          featuredPair ? 'py-24 sm:py-32 lg:px-8' : 'py-14 sm:px-10 sm:py-20',
+          // Featured keeps the section rhythm; only its card padding grows.
+          featuredPair ? 'py-14 sm:py-20 lg:px-8' : 'py-14 sm:px-10 sm:py-20',
         )}
       >
         <div className="mx-auto max-w-5xl">
