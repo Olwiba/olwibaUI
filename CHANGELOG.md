@@ -49,6 +49,13 @@
 
 
 
+
+## 0.2.69
+
+### Added
+
+- Schema-driven filtering for `DataTable` and `FilterBar`: define filters from a schema instead of configuring each one by hand.
+
 ## 0.2.68
 
 ### Fixed
