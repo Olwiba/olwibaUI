@@ -1015,6 +1015,41 @@ export function ProjectsTable({ projects }: { projects: Project[] }) {
 ` }],
   },
 
+  'filter-bar': {
+    id: 'filter-bar',
+    title: 'FilterBar',
+    defaultViewport: 'desktop',
+    preview: React.lazy(() => import('~/demos/filter-bar')),
+    files: [{ path: 'components/DeploysTable.tsx', language: 'tsx', code: `import { DataTable, type DataTableColumn } from "@olwiba/ui";
+
+interface Deploy {
+  project: string;
+  status: "live" | "building" | "failed";
+  region: string;
+  builds: number;
+  deployedAt: string;
+}
+
+// Each column says how it filters. The table builds the filter bar from these
+// and filters its rows with them; there is no matching code to write.
+const columns: DataTableColumn<Deploy>[] = [
+  { accessorKey: "project", header: "Project", meta: { filter: { kind: "text" } } },
+  {
+    accessorKey: "status",
+    header: "Status",
+    meta: { filter: { kind: "enum", options: ["live", "building", "failed"] } },
+  },
+  { accessorKey: "region", header: "Region", meta: { filter: { kind: "enum" } } },
+  { accessorKey: "builds", header: "Builds", meta: { filter: { kind: "number" } } },
+  { accessorKey: "deployedAt", header: "Deployed", meta: { filter: { kind: "date" } } },
+];
+
+export function DeploysTable({ deploys }: { deploys: Deploy[] }) {
+  return <DataTable columns={columns} data={deploys} filterable />;
+}
+` }],
+  },
+
   'file-upload': {
     id: 'file-upload',
     title: 'FileUpload',

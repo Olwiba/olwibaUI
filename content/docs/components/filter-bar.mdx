@@ -1,0 +1,108 @@
+---
+title: FilterBar
+description: Structured filters declared on your table columns, shown as editable chips.
+---
+
+<div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
+  <CopyCommandButton command="bun add @olwiba/ui" />
+</div>
+
+<Sandbox id="filter-bar" />
+
+## Installation
+
+```sh
+bun add @olwiba/ui
+```
+
+## Usage
+
+The schema lives on the columns, next to how each one sorts and renders. Add
+`meta.filter` to the columns people should filter by and pass `filterable`:
+
+```tsx
+import { DataTable, type DataTableColumn } from "@olwiba/ui";
+
+const columns: DataTableColumn<Deploy>[] = [
+  { accessorKey: "project", header: "Project", meta: { filter: { kind: "text" } } },
+  {
+    accessorKey: "status",
+    header: "Status",
+    meta: { filter: { kind: "enum", options: ["live", "building", "failed"] } },
+  },
+  { accessorKey: "region", header: "Region", meta: { filter: { kind: "enum" } } },
+  { accessorKey: "builds", header: "Builds", meta: { filter: { kind: "number" } } },
+  { accessorKey: "deployedAt", header: "Deployed", meta: { filter: { kind: "date" } } },
+];
+
+<DataTable columns={columns} data={deploys} filterable />
+```
+
+The table builds the bar from those columns and filters its rows with
+TanStack's own column filters. There is no matching code to write.
+
+## Kinds
+
+The kind decides which conditions a column offers and what counts as a match.
+
+| Kind | Conditions | Values |
+| --- | --- | --- |
+| `enum` | is, is not | Picked from `options`, or from the distinct values in the data |
+| `text` | contains, does not contain, is exactly | Typed; case-insensitive |
+| `number` | `=`, `>`, `<` | Typed |
+| `date` | is within, is after, is before | Rolling windows (last 24 hours to 12 months), or a typed date |
+| `boolean` | is | Yes or No |
+
+Several values on one condition read as "any of". Several filters on the same
+column all have to hold, so "contains store" and "does not contain front" work
+together.
+
+## Notes
+
+- **Options from the data.** An `enum` without `options` offers the values the
+  table actually holds, so the list never names something that is not there.
+- **Large sets.** Give an `enum` a `loadOptions(query, signal)` to search as the
+  user types instead of listing everything.
+- **Your own matching.** A column with its own `filterFn` keeps it; the schema
+  still builds its chip.
+- **Controlled or not.** Pass `filters` and `onFiltersChange` to keep the
+  filters in the URL or send them to the server, or `defaultFilters` to start
+  filtered and let the table hold them.
+- **Disabled.** `filtersDisabled` shows the filters but locks them, for a view
+  someone can read but not change.
+- **Keyboard.** Arrow keys move through each list, Enter picks, Backspace in an
+  empty search goes back a step, Escape closes.
+
+## Without a table
+
+`FilterBar` also works alone, for card grids or server-side queries. Give it
+`fields` (an id, a label, `operators` and `options` or `loadOptions`) and decide
+what each filter means yourself, or reuse `matchesColumnFilter(kind, value,
+operator, values)` for the same matching the table uses.
+
+## API Reference
+
+<APIReference name="ColumnFilterSchema" props={[
+  { name: "kind", type: '"enum" | "text" | "number" | "date" | "boolean"', default: "required" },
+  { name: "label", type: "string", default: "the column header" },
+  { name: "options", type: "Array<string | { value, label }>", default: "distinct values in the data" },
+  { name: "loadOptions", type: "(query: string, signal: AbortSignal) => Promise<FilterOption[]>", default: "undefined" },
+  { name: "icon", type: "ReactNode", default: "undefined" },
+]} />
+
+<APIReference name="DataTable (filtering)" props={[
+  { name: "filterable", type: "boolean", default: "false" },
+  { name: "filters", type: "FilterValue[]", default: "undefined" },
+  { name: "defaultFilters", type: "FilterValue[]", default: "[]" },
+  { name: "onFiltersChange", type: "(filters: FilterValue[]) => void", default: "undefined" },
+  { name: "filtersDisabled", type: "boolean", default: "false" },
+]} />
+
+<APIReference name="FilterBar" props={[
+  { name: "fields", type: "FilterField[]", default: "required" },
+  { name: "value", type: "FilterValue[]", default: "required" },
+  { name: "onValueChange", type: "(value: FilterValue[]) => void", default: "required" },
+  { name: "addLabel", type: "string", default: '"Filter"' },
+  { name: "clearLabel", type: "string", default: '"Clear"' },
+  { name: "disabled", type: "boolean", default: "false" },
+]} />

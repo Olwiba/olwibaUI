@@ -6,6 +6,7 @@ import {
   type SortingState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -14,6 +15,8 @@ import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight, Search } fr
 import { Checkbox, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, cn } from '@olwiba/cn';
 import { Button } from '../primitives/Button';
 import { Input } from '../primitives/Input';
+import { FilterBar, type FilterValue } from './FilterBar';
+import { columnFilterFields, schemaFilterFn, toColumnFilters } from './data-table-filters';
 
 export interface DataTableProps<TData> {
   columns: ColumnDef<TData>[];
@@ -43,6 +46,19 @@ export interface DataTableProps<TData> {
     hasPrevious?: boolean;
     onPageChange: (pageIndex: number) => void;
   };
+  /**
+   * Shows a filter bar built from the columns that declare `meta.filter`, and
+   * filters the rows with it. Each column's `kind` decides its conditions and
+   * what matches; see `ColumnFilterSchema`.
+   */
+  filterable?: boolean;
+  /** Controlled filters. Omit to let the table hold them. */
+  filters?: FilterValue[];
+  /** Filters the table starts with when it holds them itself. */
+  defaultFilters?: FilterValue[];
+  onFiltersChange?: (filters: FilterValue[]) => void;
+  /** Shows the filters but stops them being changed. */
+  filtersDisabled?: boolean;
   /** Slot rendered top-right of the toolbar — e.g. an "Add" button. */
   toolbar?: React.ReactNode;
   onRowClick?: (row: TData) => void;
@@ -84,6 +100,11 @@ export function DataTable<TData>({
   onSelectionChange,
   pageSize = 10,
   pagination,
+  filterable = false,
+  filters: filtersProp,
+  defaultFilters,
+  onFiltersChange,
+  filtersDisabled = false,
   toolbar,
   onRowClick,
   emptyMessage = 'No results.',
@@ -92,16 +113,35 @@ export function DataTable<TData>({
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [rowSelection, setRowSelection] = React.useState({});
   const [globalFilter, setGlobalFilter] = React.useState('');
+  const [innerFilters, setInnerFilters] = React.useState<FilterValue[]>(defaultFilters ?? []);
+  const filters = filtersProp ?? innerFilters;
+  const setFilters = (next: FilterValue[]) => {
+    if (filtersProp === undefined) setInnerFilters(next);
+    onFiltersChange?.(next);
+  };
 
-  const allColumns = React.useMemo(
-    () => (selectable ? [selectColumn as ColumnDef<TData>, ...columns] : columns),
-    [selectable, columns],
+  // Columns that declare a filter schema get its matching, unless they bring their own filterFn.
+  const schemaColumns = React.useMemo(
+    () =>
+      columns.map((column) =>
+        column.meta?.filter && !column.filterFn ? { ...column, filterFn: schemaFilterFn as ColumnDef<TData>['filterFn'] } : column,
+      ),
+    [columns],
   );
+  const allColumns = React.useMemo(
+    () => (selectable ? [selectColumn as ColumnDef<TData>, ...schemaColumns] : schemaColumns),
+    [selectable, schemaColumns],
+  );
+  const filterFields = React.useMemo(
+    () => (filterable ? columnFilterFields(columns, data) : []),
+    [filterable, columns, data],
+  );
+  const columnFilters = React.useMemo(() => toColumnFilters(columns, filters), [columns, filters]);
 
   const table = useReactTable({
     data,
     columns: allColumns,
-    state: { sorting, rowSelection, globalFilter },
+    state: { sorting, rowSelection, globalFilter, columnFilters },
     onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
@@ -111,6 +151,8 @@ export function DataTable<TData>({
       return String(value ?? '').toLowerCase().includes(String(filterValue).toLowerCase());
     },
     getCoreRowModel: getCoreRowModel(),
+    // Without the filtered model neither the search box nor the column filters remove a single row.
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     // Server-paginated tables must not slice: `data` is already the page, and
     // running the client model over it would paginate a single page again.
@@ -157,8 +199,8 @@ export function DataTable<TData>({
 
   return (
     <div className={cn('space-y-4', className)}>
-      {(searchKey || toolbar) && (
-        <div className="flex items-center justify-between gap-4">
+      {(searchKey || toolbar || filterable) && (
+        <div className="flex flex-wrap items-center justify-between gap-4">
           {searchKey ? (
             <div className="relative max-w-sm flex-1">
               <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -169,7 +211,16 @@ export function DataTable<TData>({
                 className="pl-8"
               />
             </div>
-          ) : <div />}
+          ) : filterable ? null : <div />}
+          {filterable ? (
+            <FilterBar
+              className="min-w-0 flex-1"
+              fields={filterFields}
+              value={filters}
+              onValueChange={setFilters}
+              disabled={filtersDisabled}
+            />
+          ) : null}
           {toolbar}
         </div>
       )}

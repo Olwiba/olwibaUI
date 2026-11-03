@@ -238,6 +238,25 @@ export {
 
 // ─── Components — data ───────────────────────────────────────────────────────
 export { DataTable, type DataTableProps, type DataTableColumn } from "./components/DataTable";
+export {
+  FilterBar,
+  operatorsFor,
+  removeFilter,
+  summariseFilterValues,
+  upsertFilter,
+  type FilterBarProps,
+  type FilterField,
+  type FilterOperator,
+  type FilterOption,
+  type FilterValue,
+} from "./components/FilterBar";
+export {
+  COLUMN_FILTER_OPERATORS,
+  columnFilterFields,
+  matchesColumnFilter,
+  type ColumnFilterKind,
+  type ColumnFilterSchema,
+} from "./components/data-table-filters";
 export { LoadMore, type LoadMoreProps } from "./components/LoadMore";
 export { DataView, type DataViewProps } from "./app/DataView";
 export { Chart, type ChartProps, type ChartSeries } from "./components/Chart";
