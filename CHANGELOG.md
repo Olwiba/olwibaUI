@@ -50,6 +50,14 @@
 
 
 
+
+## 0.2.70
+
+### Fixed
+
+- Home page isometric previews now render correctly in light mode.
+- Home page tiles now follow the active theme.
+
 ## 0.2.69
 
 ### Added
