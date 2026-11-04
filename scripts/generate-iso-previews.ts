@@ -10,6 +10,8 @@ await generatePreviews({
   manifestPath: path.join(__dirname, '../site/iso-previews-manifest.json'),
   themes: ['light', 'dark'],
   viewport: { width: 1280, height: 800 },
+  // Most pages render their demo in a <Sandbox> iframe now; only a few still use ComponentPreview.
+  selector: '[data-slot="sandbox-preview"], [data-slot="component-preview-canvas"]',
   components: [
     { name: 'app-shell', urlPath: '/docs/app/app-shell' },
     { name: 'auth-section', urlPath: '/docs/app/auth-section' },

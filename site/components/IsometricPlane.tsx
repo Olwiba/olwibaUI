@@ -1,3 +1,5 @@
+// Copied from olwibaCN/src/components/IsometricPlane.tsx, the canonical version.
+// Change it there and copy it back; this copy had drifted months behind before.
 import * as React from 'react';
 
 export interface IsometricImage {
@@ -7,8 +9,19 @@ export interface IsometricImage {
   height?: number;
 }
 
+/** One capture set per page theme; the plane shows whichever matches the page. */
+export interface ThemedIsometricImages {
+  light: IsometricImage[];
+  dark: IsometricImage[];
+}
+
 export interface IsometricPlaneProps {
-  images: IsometricImage[];
+  /**
+   * The cards' screenshots. Pass `{ light, dark }` and the plane follows the
+   * page theme, which is what every docs site should do: light captures on a
+   * light page, dark on a dark one. A plain list is shown in both themes.
+   */
+  images: IsometricImage[] | ThemedIsometricImages;
   cols?: number;
   rows?: number;
   cardWidth?: number;
@@ -33,6 +46,38 @@ function buildGrid<T>(items: T[], rows: number, cols: number): T[][] {
   });
 }
 
+type IsoManifestEntry = { file: string; width: number; height: number; theme: string };
+
+/** Splits an iso-previews manifest into the light and dark sets the plane takes. */
+export function isoImagesByTheme(manifest: IsoManifestEntry[], base = '/iso-previews/'): ThemedIsometricImages {
+  const pick = (theme: string) =>
+    manifest
+      .filter((entry) => entry.theme === theme)
+      .map((entry) => ({ src: `${base}${entry.file}`, width: entry.width, height: entry.height }));
+  return { light: pick('light'), dark: pick('dark') };
+}
+
+/**
+ * The page's current colour scheme, from the `dark` class on <html>.
+ *
+ * Starts at 'light' so the server render and the first client render agree;
+ * the effect corrects it straight after hydration and follows theme switches.
+ */
+function useColorScheme(): 'light' | 'dark' {
+  const [scheme, setScheme] = React.useState<'light' | 'dark'>('light');
+
+  React.useEffect(() => {
+    const read = () =>
+      setScheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  return scheme;
+}
+
 const PORTRAIT_BASELINE = 16 / 9;
 
 function mobilePlaneScale(width: number, height: number) {
@@ -42,22 +87,34 @@ function mobilePlaneScale(width: number, height: number) {
 }
 
 export function IsometricPlane({
-  images,
+  images: imagesProp,
   cols = 13,
-  rows = 22,
+  rows = 11,
   cardWidth = 176,
   cardHeight = 'auto',
   scrollDuration = 75,
 }: IsometricPlaneProps) {
+  const scheme = useColorScheme();
+  const images = Array.isArray(imagesProp) ? imagesProp : imagesProp[scheme];
   const baseRows = React.useMemo(
     () => buildGrid(images, rows, cols),
     [images, rows, cols],
   );
 
+  // The card grid is deterministic (seeded RNG) and its chrome is theme-neutral
+  // (CSS variables), so the skeleton renders during SSR and animates from first
+  // paint. Only the <img> layer is client-gated: held until every unique image
+  // is fetched and decoded, so images fade in populated instead of popping in
+  // one by one. Server and first client render both have imagesReady=false,
+  // keeping hydration consistent.
   // The plane is decorative, but it was effectively invisible on a phone: the
   // desktop transform pushes it 180px right and scales it 1.6x, so on a 375px
   // viewport almost all of it sat outside the screen. Pulled back and scaled
   // down instead of hidden — the point of the thing is that it is seen.
+  //
+  // Server and first client render both assume wide, so hydration matches; the
+  // correction lands in the same frame as the effect. Acceptable for an
+  // aria-hidden background.
   const [isoNarrow, setIsoNarrow] = React.useState(false);
   const [isoNarrowScale, setIsoNarrowScale] = React.useState(1.2);
   React.useEffect(() => {
@@ -75,24 +132,53 @@ export function IsometricPlane({
     };
   }, []);
 
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
-  if (!mounted || images.length === 0) return null;
+  const [imagesReady, setImagesReady] = React.useState(false);
+  React.useEffect(() => {
+    setImagesReady(false);
+    if (images.length === 0) return;
+    let cancelled = false;
+    const srcs = [...new Set(images.map((img) => img.src))];
+    Promise.allSettled(
+      srcs.map(
+        (src) =>
+          new Promise<void>((resolve) => {
+            const img = new Image();
+            const settle = () => {
+              img.decode().catch(() => {}).finally(resolve);
+            };
+            img.onload = settle;
+            img.onerror = () => resolve();
+            img.src = src;
+            if (img.complete) settle();
+          }),
+      ),
+    ).then(() => {
+      if (!cancelled) setImagesReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [images]);
+
+  if (images.length === 0) return null;
 
   const h = cardHeight === 'auto' ? undefined : cardHeight;
   const tripled = [...baseRows, ...baseRows, ...baseRows];
 
+  // `contain: layout paint style` bounds layout/paint so style invalidations
+  // don't leak out of this subtree. `isolation: isolate` gives the subtree
+  // its own stacking context so the browser keeps it as one composited layer.
   return (
     <div
       className="absolute inset-0 overflow-hidden pointer-events-none select-none animate-iso-fadein"
       aria-hidden="true"
+      style={{ contain: 'layout paint style', isolation: 'isolate' }}
     >
       <div
-        className="absolute inset-0 flex items-center justify-center opacity-[0.18] dark:opacity-[0.12]"
+        className="absolute inset-0 flex items-center justify-center opacity-[0.38] dark:opacity-[0.22]"
         style={{ perspective: '700px', perspectiveOrigin: '50% 50%' }}
       >
         <div
-          className="transform-gpu"
           style={{
             transform: isoNarrow
               ? `translateX(0px) scale(${isoNarrowScale}) rotateX(55deg) rotateZ(-45deg)`
@@ -102,28 +188,50 @@ export function IsometricPlane({
           }}
         >
           <div
+            data-iso-scroll
             className="flex gap-3 will-change-transform"
-            style={{ animation: `iso-scroll ${scrollDuration}s linear infinite` }}
+            style={{
+              animation: `iso-scroll ${scrollDuration}s linear infinite`,
+              // Skip painting the back face of every card under preserve-3d.
+              backfaceVisibility: 'hidden',
+            }}
           >
             {Array.from({ length: cols }, (_, colIdx) => (
               <div key={colIdx} className="flex flex-col gap-3">
                 {tripled.map((row, rowIdx) => {
                   const img = row[colIdx];
+                  // Without a fixed height, size the empty card from the image's
+                  // intrinsic ratio so the SSR skeleton doesn't collapse.
+                  const ratio =
+                    h == null && img.width && img.height
+                      ? `${img.width} / ${img.height}`
+                      : undefined;
                   return (
                     <div
                       key={rowIdx}
-                      className="bg-card border rounded-lg shrink-0 overflow-hidden"
-                      style={{ width: cardWidth, height: h }}
+                      className="bg-card border border-border/80 shadow-sm shadow-black/[0.06] rounded-lg shrink-0 overflow-hidden dark:border-border dark:shadow-none"
+                      style={{
+                        width: cardWidth,
+                        height: h,
+                        aspectRatio: ratio,
+                        backfaceVisibility: 'hidden',
+                      }}
                     >
-                      <img
-                        src={img.src}
-                        alt={img.alt ?? ''}
-                        width={img.width}
-                        height={img.height}
-                        className={h ? 'w-full h-full object-cover' : 'w-full h-auto block'}
-                        loading="eager"
-                        decoding="async"
-                      />
+                      {imagesReady && (
+                        <img
+                          src={img.src}
+                          alt={img.alt ?? ''}
+                          width={img.width}
+                          height={img.height}
+                          className={
+                            h != null || ratio
+                              ? 'w-full h-full object-cover'
+                              : 'w-full h-auto block'
+                          }
+                          style={{ animation: 'iso-fadein 0.5s ease-out both' }}
+                          draggable={false}
+                        />
+                      )}
                     </div>
                   );
                 })}

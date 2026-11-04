@@ -3,280 +3,294 @@
     "name": "app-shell",
     "theme": "light",
     "file": "app-shell-light.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 300
   },
   {
     "name": "app-shell",
     "theme": "dark",
     "file": "app-shell-dark.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 300
   },
   {
     "name": "auth-section",
     "theme": "light",
     "file": "auth-section-light.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 560
   },
   {
     "name": "auth-section",
     "theme": "dark",
     "file": "auth-section-dark.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 560
   },
   {
     "name": "empty-state",
     "theme": "light",
     "file": "empty-state-light.png",
-    "width": 698,
-    "height": 382
+    "width": 635,
+    "height": 314
   },
   {
     "name": "empty-state",
     "theme": "dark",
     "file": "empty-state-dark.png",
-    "width": 698,
-    "height": 382
+    "width": 635,
+    "height": 314
   },
   {
     "name": "error-page",
     "theme": "light",
     "file": "error-page-light.png",
-    "width": 698,
-    "height": 626
+    "width": 635,
+    "height": 636
   },
   {
     "name": "error-page",
     "theme": "dark",
     "file": "error-page-dark.png",
-    "width": 698,
-    "height": 626
+    "width": 635,
+    "height": 636
   },
   {
     "name": "dock",
     "theme": "light",
     "file": "dock-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 256
   },
   {
     "name": "dock",
     "theme": "dark",
     "file": "dock-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 256
   },
   {
     "name": "feature-card",
     "theme": "light",
     "file": "feature-card-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 545
   },
   {
     "name": "feature-card",
     "theme": "dark",
     "file": "feature-card-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 545
   },
   {
     "name": "glass-card",
     "theme": "light",
     "file": "glass-card-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 214
   },
   {
     "name": "glass-card",
     "theme": "dark",
     "file": "glass-card-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 214
   },
   {
     "name": "image-card",
     "theme": "light",
     "file": "image-card-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 651
   },
   {
     "name": "image-card",
     "theme": "dark",
     "file": "image-card-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 651
   },
   {
     "name": "pricing-card",
     "theme": "light",
     "file": "pricing-card-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 862
   },
   {
     "name": "pricing-card",
     "theme": "dark",
     "file": "pricing-card-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 862
   },
   {
     "name": "spotlight",
     "theme": "light",
     "file": "spotlight-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 104
   },
   {
     "name": "spotlight",
     "theme": "dark",
     "file": "spotlight-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 104
   },
   {
     "name": "stat-card",
     "theme": "light",
     "file": "stat-card-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 464
   },
   {
     "name": "stat-card",
     "theme": "dark",
     "file": "stat-card-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 464
   },
   {
     "name": "testimonial-card",
     "theme": "light",
     "file": "testimonial-card-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 260
   },
   {
     "name": "testimonial-card",
     "theme": "dark",
     "file": "testimonial-card-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 260
   },
   {
     "name": "context-menu",
     "theme": "light",
     "file": "context-menu-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 192
   },
   {
     "name": "context-menu",
     "theme": "dark",
     "file": "context-menu-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 192
   },
   {
     "name": "confirm-dialog",
     "theme": "light",
     "file": "confirm-dialog-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 104
   },
   {
     "name": "confirm-dialog",
     "theme": "dark",
     "file": "confirm-dialog-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 104
   },
   {
     "name": "count-up",
     "theme": "light",
     "file": "count-up-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 174
   },
   {
     "name": "count-up",
     "theme": "dark",
     "file": "count-up-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 174
+  },
+  {
+    "name": "animated-swap",
+    "theme": "light",
+    "file": "animated-swap-light.png",
+    "width": 565,
+    "height": 238
+  },
+  {
+    "name": "animated-swap",
+    "theme": "dark",
+    "file": "animated-swap-dark.png",
+    "width": 565,
+    "height": 238
   },
   {
     "name": "fade-in",
     "theme": "light",
     "file": "fade-in-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 300
   },
   {
     "name": "fade-in",
     "theme": "dark",
     "file": "fade-in-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 300
   },
   {
     "name": "stagger-children",
     "theme": "light",
     "file": "stagger-children-light.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 310
   },
   {
     "name": "stagger-children",
     "theme": "dark",
     "file": "stagger-children-dark.png",
-    "width": 666,
-    "height": 320
+    "width": 569,
+    "height": 310
   },
   {
     "name": "contact-section",
     "theme": "light",
     "file": "contact-section-light.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 638
   },
   {
     "name": "contact-section",
     "theme": "dark",
     "file": "contact-section-dark.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 638
   },
   {
     "name": "cta-section",
     "theme": "light",
     "file": "cta-section-light.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 434
   },
   {
     "name": "cta-section",
     "theme": "dark",
     "file": "cta-section-dark.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 434
   },
   {
     "name": "faq-section",
     "theme": "light",
     "file": "faq-section-light.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 428
   },
   {
     "name": "faq-section",
     "theme": "dark",
     "file": "faq-section-dark.png",
-    "width": 666,
-    "height": 640
+    "width": 601,
+    "height": 428
   }
 ]
