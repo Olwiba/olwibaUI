@@ -51,6 +51,14 @@
 
 
 
+
+## 0.2.71
+
+### Added
+
+- Cohesive section layouts for marketing blocks, giving marketing pages a consistent structure across sections.
+- Markdown twins of docs site pages and an `llms.txt` index, so AI agents can read the documentation directly.
+
 ## 0.2.70
 
 ### Fixed

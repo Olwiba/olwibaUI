@@ -10,7 +10,7 @@ import { Button } from '../primitives/Button';
 import { Input } from '../primitives/Input';
 
 export interface NewsletterSectionProps {
-  badge?: string;
+  badge?: string | null;
   title?: string;
   description?: string;
   placeholder?: string;
@@ -20,6 +20,8 @@ export interface NewsletterSectionProps {
   successTitle?: string;
   successDescription?: string;
   onSubscribe?: (email: string) => void | Promise<void>;
+  /** Icon-free heading and signup form in two columns, stacked below lg. */
+  layout?: 'centered' | 'split';
   /** How the section sits on the page. @default 'card' */
   surface?: MarketingSurface;
 }
@@ -48,11 +50,13 @@ export function NewsletterSection({
   successTitle = defaults.successTitle,
   successDescription = defaults.successDescription,
   onSubscribe,
+  layout = 'centered',
   surface,
 }: NewsletterSectionProps = {}) {
   const [email, setEmail] = React.useState('');
   const [submitted, setSubmitted] = React.useState(false);
   const sectionClasses = useSectionSurface(surface);
+  const split = layout === 'split';
   // Read every render, never short-circuited on the prop: hook order must not change.
   const pageSurface = useMarketingSurface();
   // A panel clips a corner glow to its own rounded edge. With no panel the same
@@ -68,66 +72,107 @@ export function NewsletterSection({
   }
 
   return (
-    <section className={sectionClasses}>
+    <section className={sectionClasses} data-newsletter-layout={layout}>
       <div className="relative px-6 py-14 sm:px-10 sm:py-20">
+        {!split && (
+          <div
+            aria-hidden="true"
+            className={cn(
+              'pointer-events-none absolute inset-0',
+              open
+                ? 'bg-[radial-gradient(ellipse_closest-side_at_center,color-mix(in_srgb,var(--primary)_12%,transparent),transparent)]'
+                : 'bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--primary)_10%,transparent),transparent_60%)]',
+            )}
+          />
+        )}
         <div
-          aria-hidden="true"
           className={cn(
-            'pointer-events-none absolute inset-0',
-            open
-              ? 'bg-[radial-gradient(ellipse_closest-side_at_center,color-mix(in_srgb,var(--primary)_12%,transparent),transparent)]'
-              : 'bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--primary)_10%,transparent),transparent_60%)]',
+            'relative mx-auto',
+            split
+              ? 'grid max-w-6xl items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16'
+              : 'max-w-xl text-center',
           )}
-        />
-        <div className="relative mx-auto max-w-xl text-center">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <div className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <Mail className="size-4" />
-            </div>
-            <Badge variant="secondary" className={sectionBadgeClassName}>
-              {badge}
-            </Badge>
+        >
+          <div>
+            {(!split || badge) && (
+              <div className={cn('mb-4 flex items-center gap-2', !split && 'justify-center')}>
+                {!split && (
+                  <div className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Mail className="size-4" />
+                  </div>
+                )}
+                {badge && (
+                  <Badge variant="secondary" className={sectionBadgeClassName}>
+                    {badge}
+                  </Badge>
+                )}
+              </div>
+            )}
+            <h2
+              className={cn(
+                'text-balance font-semibold tracking-tight',
+                split ? 'max-w-lg text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl',
+              )}
+            >
+              {title}
+            </h2>
+            <p
+              className={cn(
+                'mt-4 text-pretty',
+                split
+                  ? 'max-w-lg text-base leading-relaxed text-foreground/75'
+                  : 'mx-auto max-w-sm text-muted-foreground',
+              )}
+            >
+              {description}
+            </p>
           </div>
-          <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h2>
-          <p className="mx-auto mt-4 max-w-sm text-pretty text-muted-foreground">{description}</p>
 
-          {submitted ? (
-            <div className="mt-8 rounded-2xl border bg-muted/50 px-6 py-5 text-sm">
-              <span className="font-medium">{successTitle}</span>{' '}
-              <span className="text-muted-foreground">{successDescription}</span>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <input
-                type="text"
-                name="company"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                className="hidden"
-              />
-              <Input
-                type="email"
-                placeholder={placeholder}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="flex-1"
-              />
-              <Button type="submit">
-                {submitLabel}
-                <ArrowRight className="ml-2 size-4" />
-              </Button>
-            </form>
-          )}
+          <div className={cn('min-w-0', !split && 'mt-8')}>
+            {submitted ? (
+              <div role="status" className="rounded-2xl border bg-muted/50 px-6 py-5 text-sm">
+                <span className="font-medium">{successTitle}</span>{' '}
+                <span className="text-muted-foreground">{successDescription}</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
+                <Input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  aria-label="Email address"
+                  placeholder={placeholder}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className={cn('min-w-0 flex-1', split && 'h-12 rounded-xl bg-card/80')}
+                />
+                <Button
+                  type="submit"
+                  className={split ? 'h-12 shrink-0 rounded-xl px-6' : undefined}
+                >
+                  {submitLabel}
+                  {!split && <ArrowRight className="ml-2 size-4" />}
+                </Button>
+              </form>
+            )}
 
-          <p className="mt-4 text-xs text-muted-foreground">
-            By subscribing you agree to our{' '}
-            <a href={privacyHref} className="underline underline-offset-4 hover:text-foreground">
-              {privacyLabel}
-            </a>
-            .
-          </p>
+            <p className="mt-4 text-xs text-muted-foreground">
+              By subscribing you agree to our{' '}
+              <a href={privacyHref} className="underline underline-offset-4 hover:text-foreground">
+                {privacyLabel}
+              </a>
+              .
+            </p>
+          </div>
         </div>
       </div>
     </section>

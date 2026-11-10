@@ -13,7 +13,13 @@ description: Email capture form section for marketing pages.
 
 ```tsx
 import { NewsletterSection } from "@olwiba/ui";
+
+<NewsletterSection layout="split" badge={null} surface="plain" privacyHref="/privacy" />
 ```
+
+The split layout is an icon-free, two-column composition for open marketing
+pages: the heading and copy sit beside the signup form, then stack below `lg`.
+The existing centered presentation remains the default.
 
 ## API Reference
 
@@ -22,7 +28,8 @@ before this section ships.
 
 <APIReference name="NewsletterSection" props={[
   { name: "onSubscribe", type: "(email: string) => void | Promise<void>", description: "Awaited before the success panel appears. The section never posts anywhere on its own." },
-  { name: "badge", type: "string", default: '"Newsletter"', description: "Badge above the title." },
+  { name: "layout", type: '"centered" | "split"', default: '"centered"', description: "Split puts an icon-free heading beside the signup form, stacking below lg." },
+  { name: "badge", type: "string | null", default: '"Newsletter"', description: "Badge above the title. Pass null to omit it." },
   { name: "title", type: "string", default: '"Stay in the loop"', description: "Section heading." },
   { name: "description", type: "string", default: "See source", description: "Copy under the heading." },
   { name: "placeholder", type: "string", default: '"you@company.com"', description: "Email field placeholder." },

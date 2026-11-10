@@ -302,6 +302,7 @@ export { ViewToggle, type ViewToggleProps } from "./components/ViewToggle";
 // ─── Components — diagram ────────────────────────────────────────────────────
 export { FlowConnector, type FlowConnectorProps } from "./components/FlowConnector";
 export { FlowBracket, type FlowBracketProps } from "./components/FlowBracket";
+export { FlowPulse, type FlowPulseProps } from "./components/FlowPulse";
 
 // ─── Components — utility ────────────────────────────────────────────────────
 export { FullPageSpinner } from "./components/Spinner";
