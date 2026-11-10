@@ -3,7 +3,8 @@
 import * as React from 'react';
 import { ArrowRight, Mail } from 'lucide-react';
 import { cn } from '@olwiba/cn';
-import { useSectionSurface, type MarketingSurface } from './section-surface';
+import { useMarketingSurface, useSectionSurface, type MarketingSurface } from './section-surface';
+import { sectionBadgeClassName } from './SectionTitle';
 import { Badge } from '../primitives/Badge';
 import { Button } from '../primitives/Button';
 import { Input } from '../primitives/Input';
@@ -52,6 +53,12 @@ export function NewsletterSection({
   const [email, setEmail] = React.useState('');
   const [submitted, setSubmitted] = React.useState(false);
   const sectionClasses = useSectionSurface(surface);
+  // Read every render, never short-circuited on the prop: hook order must not change.
+  const pageSurface = useMarketingSurface();
+  // A panel clips a corner glow to its own rounded edge. With no panel the same
+  // gradient ends in a hard rectangle, so the open section gets one that fades
+  // out before it reaches the section's bounds.
+  const open = (surface ?? pageSurface ?? 'card') === 'plain';
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -63,13 +70,21 @@ export function NewsletterSection({
   return (
     <section className={sectionClasses}>
       <div className="relative px-6 py-14 sm:px-10 sm:py-20">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.1),transparent_60%)]" />
+        <div
+          aria-hidden="true"
+          className={cn(
+            'pointer-events-none absolute inset-0',
+            open
+              ? 'bg-[radial-gradient(ellipse_closest-side_at_center,color-mix(in_srgb,var(--primary)_12%,transparent),transparent)]'
+              : 'bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--primary)_10%,transparent),transparent_60%)]',
+          )}
+        />
         <div className="relative mx-auto max-w-xl text-center">
           <div className="mb-4 flex items-center justify-center gap-2">
             <div className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <Mail className="size-4" />
             </div>
-            <Badge variant="secondary">
+            <Badge variant="secondary" className={sectionBadgeClassName}>
               {badge}
             </Badge>
           </div>

@@ -1,12 +1,33 @@
 import { describe, expect, test } from 'bun:test';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { CtaSection } from '../marketing/CtaSection';
+import { StepsSection } from '../marketing/StepsSection';
 import { CountUp } from './CountUp';
 import { FadeIn } from './FadeIn';
 import { PageTransition } from './PageTransition';
 import { StaggerChildren } from './StaggerChildren';
 
 describe('progressive motion server fallbacks', () => {
+  test('connected steps and their completed lines are visible before hydration', () => {
+    const html = renderToStaticMarkup(
+      <StepsSection
+        variant="connected"
+        surface="plain"
+        steps={[
+          { title: 'Generate', description: 'Start the project.' },
+          { title: 'Ship', description: 'Share the product.' },
+        ]}
+      />,
+    );
+
+    expect(html).toContain('Generate');
+    expect(html).toContain('Share the product.');
+    expect(html).toContain('data-step-connector-draw');
+    expect(html).toContain('data-reveal="static"');
+    expect(html).not.toContain('opacity-0');
+    expect(html).not.toContain('transition-delay');
+  });
+
   test('FadeIn keeps content visible before hydration', () => {
     const html = renderToStaticMarkup(<FadeIn>Useful content</FadeIn>);
 

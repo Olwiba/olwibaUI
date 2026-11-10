@@ -123,7 +123,7 @@ export function CtaSection(props: CtaSectionProps) {
   return (
     <section className={sectionClasses}>
       <div className="relative px-6 py-16 sm:px-10 sm:py-24">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.15),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--primary)_15%,transparent),transparent_70%)]" />
         <FadeIn direction="up">
           <div className="relative mx-auto max-w-2xl text-center">
             <div

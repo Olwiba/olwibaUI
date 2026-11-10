@@ -1,6 +1,6 @@
 ---
 title: StepsSection
-description: How-it-works steps — horizontal row by default, or a numbered vertical timeline with a fading accent line.
+description: How-it-works steps — a glowing connected sequence, a horizontal row, or a numbered vertical timeline.
 ---
 
 <div className="flex flex-col md:flex-row items-center justify-start gap-2 mb-2">
@@ -48,11 +48,36 @@ Timeline variant — numbered circles on a vertical accent line whose ends fade 
 
 Step descriptions are `ReactNode` — code chips, forms, and demo cards all work inline.
 
+### Connected steps
+
+Use centered emoji, titles and descriptions on an open section. Each step has
+a soft elliptical accent glow. A single scroll-triggered sequence draws each
+dashed accent connector to the next emoji before that emoji, copy and glow
+arrive. There are no tile borders or grey idle tracks. Desktop connectors join
+the emoji wrappers; reduced-motion and data-saver users see the complete sequence
+immediately. Steps form a row on desktop and stack with
+vertical connectors below the large breakpoint. Content remains visible before
+hydration and without JavaScript.
+
+```tsx
+<StepsSection
+  variant="connected"
+  surface="plain"
+  title="From idea to launch"
+  steps={[
+    { title: "Generate", description: "Choose the modules your product needs." },
+    { title: "Build", description: "Make the product yours." },
+    { title: "Ship", description: "Deploy and share it with your first customers." },
+  ]}
+/>
+```
+
 ## API Reference
 
 <APIReference name="StepsSection" props={[
   { name: "steps", type: "StepItem[]", description: "Steps for the default variant (or a single timeline group)." },
-  { name: "variant", type: '"default" | "timeline"', default: '"default"', description: "Layout variant." },
+  { name: "variant", type: '"default" | "timeline" | "connected"', default: '"default"', description: "Layout variant. Connected sequences coordinate scroll-drawn lines with each step's arrival and glow." },
+  { name: "surface", type: '"card" | "soft" | "plain"', default: '"card"', description: "Outer section surface. Use plain for connected steps on an open background." },
   { name: "groups", type: "StepGroup[]", description: "Timeline only — step groups with optional `after` content; overrides steps." },
   { name: "badge", type: "string", default: '"How it works"', description: "Badge above the title." },
   { name: "title", type: "string", default: '"From zero to shipped"', description: "Section heading." },

@@ -4,6 +4,16 @@ export default function Demo() {
   return (
     <div className="space-y-6">
       <StepsSection
+        variant="connected"
+        surface="plain"
+        title="From idea to launch"
+        steps={[
+          { title: 'Generate', description: 'Choose the modules your product needs.' },
+          { title: 'Build', description: 'Make the product yours.' },
+          { title: 'Ship', description: 'Deploy and share it with your first customers.' },
+        ]}
+      />
+      <StepsSection
         variant="timeline"
         badge="How it works"
         title="Up and running in minutes"
@@ -20,14 +30,17 @@ export default function Demo() {
                 description: (
                   <>
                     Add the bot to a group chat or DM, then send{' '}
-                    <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">!bot start</code>{' '}
+                    <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">
+                      !bot start
+                    </code>{' '}
                     to activate.
                   </>
                 ),
               },
               {
                 title: 'Add your first monitor',
-                description: 'Paste a search URL and the bot checks for new results every few minutes.',
+                description:
+                  'Paste a search URL and the bot checks for new results every few minutes.',
               },
             ],
             after: (

@@ -41,7 +41,7 @@ export function StatsSection({
   return (
     <section className={sectionClasses}>
       <div className="relative px-6 py-14 sm:px-10 sm:py-20">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,hsl(var(--primary)/0.08),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,color-mix(in_srgb,var(--primary)_8%,transparent),transparent_60%)]" />
         <div className="relative mx-auto max-w-4xl">
           <SectionTitle title={title} description={description} badge={badge} />
 
