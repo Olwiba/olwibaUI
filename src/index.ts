@@ -115,7 +115,11 @@ export {
 export { UpdateBanner, type UpdateBannerProps } from "./app/UpdateBanner";
 
 // ─── Marketing — page sections ────────────────────────────────────────────────
-export { SectionTitle, type SectionTitleProps } from "./marketing/SectionTitle";
+export {
+  SectionTitle,
+  sectionBadgeClassName,
+  type SectionTitleProps,
+} from "./marketing/SectionTitle";
 export { marketingSectionSpacing, type MarketingSectionSpacing } from "./marketing/section-spacing";
 export {
   MarketingSurfaceProvider,
