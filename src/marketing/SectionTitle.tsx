@@ -24,7 +24,7 @@ export interface SectionTitleProps {
 
 /** The eyebrow pill above a section heading; shared so every section's label matches. */
 export const sectionBadgeClassName =
-  'border-primary/25 bg-card/80 px-3 py-1 text-foreground shadow-[0_0_24px_-6px_color-mix(in_srgb,var(--primary)_32%,transparent)]';
+  'pointer-events-none cursor-default border-primary/25 bg-card/80 px-3 py-1 text-foreground shadow-[0_0_24px_-6px_color-mix(in_srgb,var(--primary)_32%,transparent)]';
 
 export function SectionTitle({
   title,
@@ -40,7 +40,11 @@ export function SectionTitle({
     <FadeIn direction="up">
       <div className={cn(start ? 'text-left' : 'text-center', className)}>
         {badge && (
-          <Badge variant="secondary" className={cn('mb-4', sectionBadgeClassName)}>
+          <Badge
+            variant="outline"
+            data-section-badge=""
+            className={cn('mb-4', sectionBadgeClassName)}
+          >
             {badge}
           </Badge>
         )}

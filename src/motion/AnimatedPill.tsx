@@ -60,6 +60,7 @@ export function AnimatedPill({ labels, interval = 3800, className }: AnimatedPil
   return (
     <span
       ref={pillRef}
+      data-section-badge=""
       className={cn(
         'inline-flex items-center overflow-hidden whitespace-nowrap rounded-full border bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground',
         className,
